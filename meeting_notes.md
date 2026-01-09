@@ -50,5 +50,27 @@ Quality Assurance Queen: Aino
 
 Let's communicate a lot and give feedback to each other
 
-Mohammad starts a Miro board on the modules, after that let's decide if we go with frontedn/backend teams or how we divide the work
+Mohammad starts a Miro board on the modules, after that let's decide if we go with frontend/backend teams or how we divide the work
 Let's get acquainted with React and NextJS, Mohammad will send links/videos
+
+
+***9 January 2026***
+
+Everybody works on one module that uses both frontend and backend.
+Let's think of a basic user flow beforehand, that everyone then implements
+Aino can be in some kind of charge on the UI/UX side of things (UI/UX designer...?)
+We make of course everything mobile compatible
+The decided tech stack is on the Miro board that Mohammad made
+
+Mohammad gives tips:
+	- NextJS has its own learning course!
+	- Also Traversy Media YouTube channel has good tutorials
+	- Codecademy has a good course on Typescript, and a course on NextJS
+
+
+_*Which modules do we prefer to do?*
+
+Aino: Events or Project Gallery module
+Roni: User profile module
+Laurens: Events or Project Gallery module
+Mohammad: Whatever is left
