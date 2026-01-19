@@ -1,4 +1,4 @@
-export default function Page() {
+export default function LoginForm() {
   return (
     <form>
       <input placeholder="Username" />
