@@ -1,9 +1,15 @@
-import LoginForm from "../../components/login/LoginForm";
-export default function Home() {
+import { GalleryVerticalEnd } from "lucide-react"
+
+import { LoginForm } from "@/components/login-form"
+
+export default function LoginPage() {
   return (
-    <div>
-      <h3> Login Page</h3>
-      <LoginForm />
-    </div>
-  );
+            <div className="flex flex-1 w-full items-center justify-center">
+          <div className="w-full max-w-xs">
+            <LoginForm />
+          </div>
+      </div>
+
+  
+  )
 }
