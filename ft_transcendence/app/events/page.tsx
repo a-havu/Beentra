@@ -1,5 +1,5 @@
 export const metadata ={
-  title:'terms page'
+  title:'Events'
 }
 
 export default function Home() {
