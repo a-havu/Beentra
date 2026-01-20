@@ -1,7 +1,10 @@
+import Menu from "./Menu";
+
 export default function Header() {
   return (
-    <div>
-      <h3> Header</h3>
-    </div>
+    <header className="flex flex-col items-center justify-center bg-gray-800 p-4 h-16 w-full">
+      <h3>My events&projects</h3>
+      <Menu />
+    </header>
   );
 }
