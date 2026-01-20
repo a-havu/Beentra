@@ -1,3 +1,7 @@
+export const metadata ={
+  title:'terms page'
+}
+
 export default function Home() {
   return (
     <div>
