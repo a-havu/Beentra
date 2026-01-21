@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -14,4 +14,12 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   role         String   @default("user")
+}
+
+model Page{
+  id Int @id @default(autoincrement())
+  title String
+  text String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
