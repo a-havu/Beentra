@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { createToken } from '@/lib/auth';
 import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
@@ -29,7 +30,9 @@ export async function POST(request: Request) {
         errorMessage: "password entered is not correct, please try again"
       }, { status: 401 })}
 
-    return NextResponse.json("you are logged in",{status:200})
+    const token = await createToken({userId:result.id, username: result.username})
+
+    return NextResponse.json({message: "you are logged in", token:token},{status:200})
   } catch (e) {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
 
