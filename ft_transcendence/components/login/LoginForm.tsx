@@ -1,3 +1,5 @@
+'use client';
+import { useState,FormEvent } from "react";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,10 +11,28 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
+
+
+
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+
+  const[userName, setUserName] = useState("")
+  const[password,setPassword] = useState("")
+
+
+
+  
+  const loginHandler = (e:React.FormEvent<HTMLFormElement>) =>{
+  e.preventDefault()
+
+  console.log("test login button: ", e.currentTarget)
+}
+
+
   return (
      <form className="p-6 md:p-8">
             <FieldGroup>
@@ -44,7 +64,7 @@ export function LoginForm({
                 <Input id="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit" onClick={loginHandler}>Login</Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with

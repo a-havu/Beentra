@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
 import { createToken } from '@/lib/auth';
 import bcrypt from 'bcryptjs'
@@ -32,7 +33,16 @@ export async function POST(request: Request) {
 
     const token = await createToken({userId:result.id, username: result.username})
 
-    return NextResponse.json({message: "you are logged in", token:token},{status:200})
+    const response = NextResponse.json({message: "you are logged in", token:token},{status:200})
+
+    response.cookies.set('auth-token',token, {
+      httpOnly:true,
+      sameSite:'lax',
+      maxAge:60 * 60 * 24
+    })
+
+    
+    return response
   } catch (e) {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
 
