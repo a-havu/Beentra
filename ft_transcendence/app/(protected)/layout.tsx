@@ -36,18 +36,9 @@ export default async function RootLayout({
       <body
         className={`flex flex-col min-h-screen bg-gray-100 ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Header */}
-        <header className="w-full h-16 bg-gray-800 flex items-center px-6 text-white">
-          <Header />
-        </header>
-
+    
         {/* Main fills remaining height */}
         <main className="flex-1 bg-gray-100 p-6">{children}</main>
-
-        {/* Footer */}
-        <footer className="w-full h-14 bg-gray-900 flex items-center justify-center text-white">
-          <Footer />
-        </footer>
       </body>
     </html>
   );

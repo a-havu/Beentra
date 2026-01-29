@@ -38,7 +38,7 @@ export async function requireAuth() {
   const session = await getSession();
   
   if (!session) {
-    redirect('/login?message=Please log in to access this page');
+    redirect('/login');
   }
   
   return session;

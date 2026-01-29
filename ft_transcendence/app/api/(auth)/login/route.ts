@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         message: "password entered is not correct, please try again"
       }, { status: 401 })}
 
-    const token = await createToken({userId:result.id, username: result.username})
+    const token = await createToken({userId:result.id, username: result.username, role:result.role})
 
     const response = NextResponse.json({success:true, message: "you are logged in", token:token},{status:200})
 
