@@ -11,6 +11,5 @@ export async function POST(request: Request) {
    return response
   } catch (e) {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
-
   }
 }
