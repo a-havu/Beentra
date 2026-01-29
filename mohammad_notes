@@ -1,0 +1,10 @@
+#special features:
+- i added a function to validate the .env file.
+so it will not work if you missed something in the .env file. or if the variable is empty.
+also if you entered wrong value for SALT_ROUNDS it will check these.
+
+#Authentication:
+i used jose library thats includes jwt.
+all auth function stored in lib/auth.ts
+then i have created a function for requireAuth pages, i wrapped it by the layout
+
