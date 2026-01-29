@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Header from "../components/main/Header";
-import Footer from "../components/main/Footer";
+import "../globals.css";
+import Header from "@/components/main/Header";
+import Footer from "@/components/main/Footer";
 import { validateEnv } from "@/lib/validation";
-
+import {requireAuth} from "@/lib/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +29,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  await requireAuth();
 
   return (
     <html lang="en">

@@ -2,15 +2,13 @@ import { NextRequest,NextResponse } from 'next/server'
 import {prisma} from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
-const SALT_ROUNDS = Number(process.env.SALT_ROUNDS ?? 10)
 
-if (!Number.isInteger(SALT_ROUNDS) || SALT_ROUNDS <= 0) {
-  throw new Error("Invalid SALT_ROUNDS env value")
-}
+
 
 
 export async function POST(request:Request){
     try{
+    const SALT_ROUNDS = Number(process.env.SALT_ROUNDS)
     //the request is a stream in nextjs, so you need a wait and change it to json.
     const body = await request.json()
     const{username, password} = body
