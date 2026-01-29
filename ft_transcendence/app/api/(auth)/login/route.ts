@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
 import { createToken } from '@/lib/auth';
 import bcrypt from 'bcryptjs'
@@ -21,19 +20,20 @@ export async function POST(request: Request) {
     })
 
     if (!result) {
-      return NextResponse.json({
-        errorMessage: "cannot find this username, please register first"
+      return NextResponse.json({success:false,
+        message: "cannot find this username, please register first"
       }, { status: 401 })
     }
 
     const isValid = await bcrypt.compare(password, result.passwordHash)
     if(!isValid){      return NextResponse.json({
-        errorMessage: "password entered is not correct, please try again"
+      success:false,
+        message: "password entered is not correct, please try again"
       }, { status: 401 })}
 
     const token = await createToken({userId:result.id, username: result.username})
 
-    const response = NextResponse.json({message: "you are logged in", token:token},{status:200})
+    const response = NextResponse.json({success:true, message: "you are logged in", token:token},{status:200})
 
     response.cookies.set('auth-token',token, {
       httpOnly:true,
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     
     return response
   } catch (e) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 })
+    return NextResponse.json({ success:false, error: "Server error" }, { status: 500 })
 
   }
 }
