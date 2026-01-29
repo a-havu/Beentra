@@ -1,8 +1,18 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
+
+const jwtSecret = process.env.JWT_SECRET;
+
+if (!jwtSecret || jwtSecret.trim() === '') {
+  throw new Error(
+    `JWT_SECRET environment variable is not defined or empty. Please check your .env file and ensure JWT_SECRET is set with a valid value.`
+  );
+}
+
+
 const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET
+  jwtSecret
 );
 
 export async function createToken(payload: any) {
