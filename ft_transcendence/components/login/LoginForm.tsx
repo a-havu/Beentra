@@ -10,8 +10,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-
-
+import { useRouter } from "next/navigation";
 
 
 
@@ -19,7 +18,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-
+  const router = useRouter()
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
 
@@ -38,8 +37,8 @@ export function LoginForm({
       }),
     })
     if (response.ok) {
-      // Login successful
-      console.log('Login successful');
+      router.refresh(); // Refresh server components (this updates the header!)
+      router.push('/'); // Navigate to home page
     } else {
       // Login failed
       console.log('Login failed');
@@ -82,6 +81,7 @@ export function LoginForm({
           <Input 
             id="password" 
             type="password" 
+            value={password}
             placeholder="********"
             onChange ={(e)=> setPassword(e.target.value)}
             required />
