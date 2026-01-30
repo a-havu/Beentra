@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id           Int      @id @default(autoincrement())
-  username     String   @unique
+  userEmail     String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -27,4 +27,5 @@ model Page{
 enum Role {
   user
   admin
+  moderator
 }

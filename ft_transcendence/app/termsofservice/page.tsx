@@ -1,10 +1,10 @@
 export const metadata ={
   title:'Terms'
 }
-export default function termsPage() {
+export default function termsofservice() {
   return (
     <div>
-      <h2>termsPage</h2>
+      <h2>Terms of Service</h2>
     </div>
   );
 }

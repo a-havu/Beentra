@@ -19,7 +19,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"form">) {
   const router = useRouter()
-  const [userName, setUserName] = useState("")
+  const [userEmail, setUserEmail] = useState("")
   const [password, setPassword] = useState("")
 
 
@@ -32,7 +32,7 @@ export function LoginForm({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: userName,
+        userEmail: userEmail,
         password: password,
       }),
     })
@@ -58,13 +58,13 @@ export function LoginForm({
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="username">Username</FieldLabel>
+          <FieldLabel htmlFor="userEmail">Email</FieldLabel>
           <Input
-            id="username"
-            type="text"
-            placeholder="Username"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            id="Email"
+            type="email"
+            placeholder="user@example.ps"
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
             required
           />
         </Field>

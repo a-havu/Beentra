@@ -6,22 +6,22 @@ import bcrypt from 'bcryptjs'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { username, password } = body
-    if (!username || !password) {
+    const { userEmail, password } = body
+    if (!userEmail || !password) {
       return NextResponse.json({
-        errorMessage: "missing Username or Password"
+        errorMessage: "missing Email or Password"
       }, { status: 400 })
     }
 
     const result = await prisma.user.findUnique({
       where: {
-        username: username,
+        userEmail: userEmail,
       },
     })
 
     if (!result) {
       return NextResponse.json({success:false,
-        message: "cannot find this username, please register first"
+        message: "cannot find this Email, please register first"
       }, { status: 401 })
     }
 
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         message: "password entered is not correct, please try again"
       }, { status: 401 })}
 
-    const token = await createToken({userId:result.id, username: result.username, role:result.role})
+    const token = await createToken({userId:result.id, userEmail: result.userEmail, role:result.role})
 
     const response = NextResponse.json({success:true, message: "you are logged in", token:token},{status:200})
 

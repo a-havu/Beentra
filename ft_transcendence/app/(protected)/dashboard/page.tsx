@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <div>
-      <h3>Welcome, {session.username}, you are {session.role}!</h3>
+      <h3>Welcome, {session.userEmail}, you are {session.role}!</h3>
       <h3> Dashboard Page</h3>
     </div>
   );
