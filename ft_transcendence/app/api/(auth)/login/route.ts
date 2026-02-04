@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     const result = await prisma.user.findUnique({
       where: {
-        userEmail: userEmail,
+        email: userEmail,
       },
     })
 
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         message: "password entered is not correct, please try again"
       }, { status: 401 })}
 
-    const token = await createToken({userId:result.id, userEmail: result.userEmail, role:result.role})
+    const token = await createToken({userId:result.id, email: result.email, role:result.role})
 
     const response = NextResponse.json({success:true, message: "you are logged in", token:token},{status:200})
 

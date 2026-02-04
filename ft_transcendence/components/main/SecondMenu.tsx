@@ -7,7 +7,7 @@ export default function SecondMenu() {
         <Link href="/terms">Terms</Link>
       </li>
       <li>
-        <Link href="/faqs">FAQ</Link>
+        <Link href="/privacy">Privacy</Link>
       </li>
     </ul>
   );

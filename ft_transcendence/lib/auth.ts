@@ -2,30 +2,35 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
 
-
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET
 );
 
+export type Session = {
+  userEmail: string;
+  role: string;
+  userId?: string;
+}
+
 export async function createToken(payload: any) {
-  return await new SignJWT(payload)
+  return await new SignJWT(payload as any)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
     .sign(secret);
 }
 
-export async function verifyToken(token: string) {
+export async function verifyToken(token: string) : Promise<Session | null>{
   try {
-    const { payload } = await jwtVerify(token, secret);
-    return payload;
+    const { payload } = await jwtVerify(token, secret) ;
+    return payload as Session;
   } catch (error) {
     return null;
   }
 }
 
 
-export async function getSession() {
+export async function getSession() : Promise<Session | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get('auth-token')?.value;
 
