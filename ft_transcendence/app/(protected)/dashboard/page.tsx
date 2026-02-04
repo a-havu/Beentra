@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export const metadata ={
@@ -18,6 +19,8 @@ export default async function Home() {
     <div>
       <h3>Welcome, {session.userEmail}, you are {session.role}!</h3>
       <h3> Dashboard Page</h3>
+      <Link href="/infoPages">manage pages</Link>
+      <></>
     </div>
   );
 }
