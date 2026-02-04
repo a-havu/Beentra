@@ -7,9 +7,9 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
+model User{
   id           Int      @id @default(autoincrement())
-  userEmail     String   @unique
+  email    String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
