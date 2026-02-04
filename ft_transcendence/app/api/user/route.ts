@@ -11,10 +11,10 @@ export async function POST(request:Request){
     const SALT_ROUNDS = Number(process.env.SALT_ROUNDS)
     //the request is a stream in nextjs, so you need a wait and change it to json.
     const body = await request.json()
-    const{username, password} = body
+    const{userEmail, password} = body
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
     const user = await prisma.user.create({
-        data:{username:username,passwordHash:hashedPassword}
+        data:{email:userEmail,passwordHash:hashedPassword}
     })
   
 
