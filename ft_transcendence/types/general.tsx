@@ -3,3 +3,8 @@ export type session_data={
   email:string,
   role:string
 }
+
+export type PageData ={
+  pageTitle:string,
+  pageText:string
+}

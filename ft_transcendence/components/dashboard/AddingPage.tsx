@@ -13,23 +13,21 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 
+import {addPage} from '@/app/(protected)/actions'
+export default async function AddingPage(){
 
-import {session_data} from '@/types/session' //import types from types file
 
-export default function AddingPage(user_data:session_data){
 
-  const session = user_data
-  console.log(session);
+
+  
   async function createPage(formData:FormData){
       'use server'
 
-      const rawFormData = {
-        pageTitle: formData.get('pageTitle'),
-        pageText:formData.get('pageText')
-      }
-      console.log("session:", session.email);
-      console.log(rawFormData)
-
+    try{
+      await addPage(formData);
+    }catch(e){
+      console.log(e);
+    }
   }
 
 

@@ -29,7 +29,7 @@ export default async function InfoPages() {
         <h3> Info pages management</h3>
       </div>
       
-      <div className="adding-page m-7 bg-white p-4"><AddingPage user_data={session}/></div>
+      <div className="adding-page m-7 bg-white p-4"><AddingPage/></div>
       
       <div className="page-list m-7">
             <ul>
