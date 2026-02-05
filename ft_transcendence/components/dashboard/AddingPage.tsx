@@ -13,24 +13,8 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 
-import {addPage} from '@/app/(protected)/actions'
+import {createPage} from '@/app/(protected)/actions'
 export default async function AddingPage(){
-
-
-
-
-  
-  async function createPage(formData:FormData){
-      'use server'
-
-    try{
-      await addPage(formData);
-    }catch(e){
-      console.log(e);
-    }
-  }
-
-
 
     return (
             <div className="flex flex-col">

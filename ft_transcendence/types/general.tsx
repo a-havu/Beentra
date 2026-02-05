@@ -1,10 +1,11 @@
 export type session_data={
   userId:string,
   email:string,
-  role:string
+  role:number
 }
 
 export type PageData ={
   pageTitle:string,
-  pageText:string
+  pageText:string,
+  authorId:number
 }
