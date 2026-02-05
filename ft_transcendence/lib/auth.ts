@@ -7,7 +7,7 @@ const secret = new TextEncoder().encode(
 );
 
 export type Session = {
-  userEmail: string;
+  email: string;
   role: string;
   userId?: string;
 }
