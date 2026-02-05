@@ -32,3 +32,18 @@ enum Role {
   admin
   moderator
 }
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  timeFrom    DateTime
+  timeTo      DateTime
+  location    String
+  organizer   String
+  image       String?     
+  description String?
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
