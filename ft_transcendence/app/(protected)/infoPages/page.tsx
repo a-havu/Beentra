@@ -21,21 +21,25 @@ export default async function InfoPages() {
 
   return (
     <div>
-      <div>      <h3> Info pages management</h3>
-      <h3>Welcome, {session.userEmail}, you are {session.role}!</h3></div>
-
-      <div className="adding-page"><AddingPage /></div>
-      <div className="page-list">
-          <ul>
-        {pages.map(page => (
-          <li key={page.id}>{page.title}</li>
-        )
-          
-        )}
-        </ul>
+      <div>
+        <h3>Welcome, {session.email}, you are {session.role}!</h3>
       </div>
       
+      <div>
+        <h3> Info pages management</h3>
+      </div>
       
+      <div className="adding-page m-7 bg-white p-4"><AddingPage user_data={session}/></div>
+      
+      <div className="page-list m-7">
+            <ul>
+          {pages.map(page => (
+            <li key={page.id}>{page.title}</li>
+          )
+            
+          )}
+          </ul>
+        </div>
     </div>
   );
 }
