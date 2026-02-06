@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CustomButton from "../ui/SubmitFormButton";
 
 export default function CreateEvent() {
   const [title, setTitle] = useState("");
@@ -13,8 +14,10 @@ export default function CreateEvent() {
   const [image, setImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await fetch("/api/events", { method: "POST" });
+
     console.log("Event Created:", {
       title,
       date,
@@ -41,7 +44,7 @@ export default function CreateEvent() {
         {/* Name */}
         <div className="mb-4">
           <label
-            htmlFor="name"
+            htmlFor="title"
             className="block text-sm font-medium text-gray-700"
           >
             Title:
@@ -77,7 +80,10 @@ export default function CreateEvent() {
 
         {/* Time (from - to) */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="timeFrom"
+            className="block text-sm font-medium text-gray-700"
+          >
             Time:
           </label>
           <div className="flex space-x-4">
@@ -202,12 +208,7 @@ export default function CreateEvent() {
         </div>
 
         {/* Publish Button */}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-        >
-          Publish
-        </button>
+        <CustomButton type="submit">Publish Event</CustomButton>
       </form>
     </div>
   );
