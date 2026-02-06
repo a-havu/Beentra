@@ -34,3 +34,8 @@ try{
 }
  
 }
+
+
+export async function deletePage(id:number){
+  console.log(id);
+}
