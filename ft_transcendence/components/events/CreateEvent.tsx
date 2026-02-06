@@ -16,19 +16,32 @@ export default function CreateEvent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("/api/events", { method: "POST" });
 
-    console.log("Event Created:", {
-      title,
-      date,
-      timeFrom,
-      timeTo,
-      location,
-      organizer,
-      type,
-      image,
-      description,
+    const res = await fetch("/api/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        date,
+        timeFrom,
+        timeTo,
+        location,
+        organizer,
+        type,
+        image,
+        description,
+      }),
     });
+
+    if (!res.ok) {
+      console.error("Failed to create event");
+      return;
+    }
+
+    const data = await res.json();
+    console.log("Event Created:", data);
   };
 
   return (
