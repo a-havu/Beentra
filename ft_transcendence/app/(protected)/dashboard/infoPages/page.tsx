@@ -2,8 +2,8 @@ import { getSession } from "@/lib/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from '@/lib/prisma';
-import AddingPage from "@/components/dashboard/AddingPage";
-
+import AddingPage from "@/components/dashboard/pages/AddingPage";
+import FetchPages from "@/components/dashboard/pages/FetchPages";
 export const metadata ={
   title:'Dashboard'
 }
@@ -17,8 +17,7 @@ export default async function InfoPages() {
     redirect('/')
   }
 
-  const pages = await prisma.page.findMany()
-
+ 
   return (
     <div>
       <div>
@@ -29,17 +28,15 @@ export default async function InfoPages() {
         <h3> Info pages management</h3>
       </div>
       
-      <div className="adding-page m-7 bg-white p-4"><AddingPage/></div>
-      
-      <div className="page-list m-7">
-            <ul>
-          {pages.map(page => (
-            <li key={page.id}>{page.title}</li>
-          )
-            
-          )}
-          </ul>
+      <div className="adding-page m-7 bg-white p-4">
+        <AddingPage/>
         </div>
+      
+
+      <div className="">
+        <FetchPages />
+      </div>
+      
     </div>
   );
 }

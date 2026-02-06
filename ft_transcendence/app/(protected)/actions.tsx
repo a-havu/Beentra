@@ -6,9 +6,8 @@ import {getSession} from '@/lib/auth'
 
 
 export async function createPage(formData:FormData){
-    'use server'
-   
-    const session = await getSession()
+try{
+   const session = await getSession()
     if (!session?.userId) {
         throw new Error('Unauthorized')
   }
@@ -20,7 +19,18 @@ export async function createPage(formData:FormData){
     throw new Error('Invalid form data')
   }
 
-    const result = prisma.page.create({
+    const result = await prisma.page.create({
         data: {title, text, authorId: session.userId,}
     })
+
+    return ({success: true, data:result})
+}   catch(error){
+  console.log('error creating page', error)
+  return{
+    success:false,
+    error: error instanceof Error ? error.message : 'Unknown error' // innstance of Error is to check if the error is a real error object
+
+  }
+}
+ 
 }
