@@ -1,7 +1,7 @@
 'use server'
 import { prisma } from '@/lib/prisma';
 import {getSession} from '@/lib/auth'
-
+import { revalidatePath } from 'next/cache'
 
 
 
@@ -22,7 +22,7 @@ try{
     const result = await prisma.page.create({
         data: {title, text, authorId: session.userId,}
     })
-
+    revalidatePath('/dashboard/infoPages')
     return ({success: true, data:result})
 }   catch(error){
   console.log('error creating page', error)
@@ -37,5 +37,23 @@ try{
 
 
 export async function deletePage(id:number){
+  try{
+    const session = await getSession()
+    if (!session?.userId) {
+        throw new Error('Unauthorized')
+  }
+    const foundId = await prisma.page.findUnique({where :{id:id}})
+    if(!foundId)
+        return ({success:false, error:"this page is not existed"})
+    const deleted = await prisma.page.delete({where:{id:id}})
+    revalidatePath('/dashboard/infoPages')
+    return({success:true, data:deleted})
+  }
+  catch(error){
+    return({success:false, error:error})
+  }
+}
+
+export async function updatePage(id:number){
   console.log(id);
 }
