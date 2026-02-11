@@ -15,7 +15,6 @@ type FormFields = {
   date: string;
 };
  
-type Errors = Partial<FormFields>;
 
 export function RegistrationForm() {
   const [form, setForm] = useState<FormFields>({
@@ -28,38 +27,19 @@ export function RegistrationForm() {
     date: "",
   });
 
-  const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
   }
 
-  function validate(): Errors {
-    const errs: Errors = {};
-    if (!form.fname.trim()) errs.fname = "First name is required";
-    if (!form.lname.trim()) errs.lname = "Last name is required";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      errs.email = "Enter a valid email";
-    if (!/^\+?[\d\s]{7,15}$/.test(form.phone))
-      errs.phone = "Enter a valid phone number";
-    if (!form.date) errs.date = "Date of birth is required";
-    if (form.password.length < 8) errs.password = "Min. 8 characters";
-    if (form.confirm !== form.password) errs.confirm = "Passwords do not match";
-    return errs;
-  }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      return;
-    }
 
     // TODO: await fetch('/api/register', { method: 'POST', body: JSON.stringify(form) })
+
     setSubmitted(true);
   }
 
@@ -80,9 +60,6 @@ export function RegistrationForm() {
             value={form.fname}
             onChange={handleChange}
           />
-          {errors.fname && (
-            <p className="text-sm text-red-500">{errors.fname}</p>
-          )}
         </div>
 
         <div>
@@ -95,9 +72,6 @@ export function RegistrationForm() {
             value={form.lname}
             onChange={handleChange}
           />
-          {errors.lname && (
-            <p className="text-sm text-red-500">{errors.lname}</p>
-          )}
         </div>
 
         <div>
@@ -110,9 +84,6 @@ export function RegistrationForm() {
             value={form.phone}
             onChange={handleChange}
           />
-          {errors.phone && (
-            <p className="text-sm text-red-500">{errors.phone}</p>
-          )}
         </div>
 
         <div>
@@ -124,7 +95,6 @@ export function RegistrationForm() {
             value={form.date}
             onChange={handleChange}
           />
-          {errors.date && <p className="text-sm text-red-500">{errors.date}</p>}
         </div>
 
         <div>
@@ -137,9 +107,6 @@ export function RegistrationForm() {
             value={form.email}
             onChange={handleChange}
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email}</p>
-          )}
         </div>
 
         <div>
@@ -152,9 +119,6 @@ export function RegistrationForm() {
             value={form.password}
             onChange={handleChange}
           />
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password}</p>
-          )}
         </div>
 
         <div>
@@ -167,9 +131,6 @@ export function RegistrationForm() {
             value={form.confirm}
             onChange={handleChange}
           />
-          {errors.confirm && (
-            <p className="text-sm text-red-500">{errors.confirm}</p>
-          )}
         </div>
         <Button type="submit">
           Create Account
