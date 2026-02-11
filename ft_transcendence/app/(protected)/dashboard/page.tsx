@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Header } from "@/components/dashboard/Header";
 
 export const metadata = {
   title: "Dashboard",
@@ -13,6 +14,13 @@ export default async function Home() {
     redirect("/login");
   }
 
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <Header userEmail={userEmail} />
+    </div>
+  );
+
+  /*
   return (
     <div>
       <h3>
@@ -28,5 +36,5 @@ export default async function Home() {
         </Link>
       </div>
     </div>
-  );
+  ); */
 }
