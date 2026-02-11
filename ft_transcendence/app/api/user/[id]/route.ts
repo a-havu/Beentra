@@ -13,7 +13,6 @@ export async function GET(
       where: { id: userId },
       select: {
         id: true,
-        name: true,
         email: true,
         role: true,
         createdAt: true,
@@ -34,6 +33,8 @@ export async function GET(
   }
 }
 
+/* ----------------------------------------------------------------------------------- */
+
 // Update a user
 export async function PUT(
   request: Request,
@@ -46,7 +47,6 @@ export async function PUT(
 
     const updateData: any = {};
 
-    if (name) updateData.name = name;
     if (email) updateData.email = email;
     if (role) updateData.role = role;
 
@@ -70,7 +70,6 @@ export async function PUT(
       data: updateData,
       select: {
         id: true,
-        name: true,
         email: true,
         role: true,
         createdAt: true,
@@ -88,6 +87,9 @@ export async function PUT(
     );
   }
 }
+
+/* ----------------------------------------------------------------------------------- */
+
 // DELETE a user
 export async function DELETE(
   request: Request,

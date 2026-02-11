@@ -8,8 +8,8 @@ export async function POST(request:Request){
       const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
     //the request is a stream in nextjs, so you need a wait and change it to json.
       const body = await request.json();
-      const { name, email, password } = body;
-      if (!name || !email || !password) {
+      const { email, password } = body;
+      if (!email || !password) {
         return NextResponse.json(
           { error: "Name:, email and password are required" },
           {status: 400}
@@ -32,7 +32,6 @@ export async function POST(request:Request){
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
     const user = await prisma.user.create({
       data: {
-        name: name,
         email: email,
         passwordHash: hashedPassword
       }
@@ -52,7 +51,6 @@ export async function GET() {
     const users = await prisma.user.findMany({
       select: {
         id: true,
-        name: true,
         email: true,
         role: true,
         createdAt: true,
@@ -71,7 +69,8 @@ export async function GET() {
       { status: 500 }
     )
   }
+}
 
   export async function DELETE() {
-
+	console.log("delete");
 }
