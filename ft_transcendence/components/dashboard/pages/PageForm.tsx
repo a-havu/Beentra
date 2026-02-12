@@ -1,7 +1,9 @@
 "use client";
 
 import { createPage, updatePage } from "@/app/(protected)/actions";
-
+import * as z from 'zod'
+import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor'
+import { useState } from "react";
 import {
   Field,
   FieldDescription,
@@ -34,7 +36,13 @@ type PageFormProps ={
 
 export default function PageForm({id = null, initialData = null}:PageFormProps) {
 
+  const [content, setContent] = useState(initialData?.text || "");
+
+
   async function handleSubmit(formData: FormData) {
+    formData.set("pageText", content);
+    
+    
     let result:ActionResult;
 
     if(id){
@@ -76,14 +84,10 @@ export default function PageForm({id = null, initialData = null}:PageFormProps) 
 
             <Field>
               <FieldLabel htmlFor="block-end-textarea">Page Content</FieldLabel>
-              <InputGroup>
-                <InputGroupTextarea
-                  id="block-end-textarea"
-                  name="pageText"
-                  placeholder="Write a comment..."
-                  defaultValue={initialData?.text}
+                 <SimpleEditor 
+                 content={content}
+                onUpdate={setContent}
                 />
-              </InputGroup>
             </Field>
 
             <button type="submit" className="mt-4">
