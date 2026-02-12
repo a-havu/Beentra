@@ -1,6 +1,6 @@
 "use client";
 
-import { createPage } from "@/app/(protected)/actions";
+import { createPage, updatePage } from "@/app/(protected)/actions";
 
 import {
   Field,
@@ -17,14 +17,41 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group";
 
-export default function AddingPage() {
+
+type ActionResult = {
+  success:boolean;
+  error?:string;
+}
+
+type PageFormProps ={
+  id?:number | null;
+  initialData:{
+    title:string,
+    text:string,
+  } | null
+}
+
+
+export default function PageForm({id = null, initialData = null}:PageFormProps) {
+
   async function handleSubmit(formData: FormData) {
-    const result = await createPage(formData);
-    if (result.success) {
-      alert("Page created!");
-    } else {
-      alert("Error: " + result.error);
+    let result:ActionResult;
+
+    if(id){
+      const updatePageWithId = updatePage.bind(null, id);
+      result = await updatePageWithId(formData);
     }
+    else{
+        result = await createPage(formData);
+      }        
+    if (!result.success) {
+      alert("Error: " + result.error);
+      return;
+    }
+    
+   alert(id ? "Page updated!" : "Page created!");
+      
+    
   }
 
   return (
@@ -42,6 +69,7 @@ export default function AddingPage() {
                   id="block-end-input"
                   placeholder="page title"
                   name="pageTitle"
+                  defaultValue={initialData?.title}
                 />
               </InputGroup>
             </Field>
@@ -53,12 +81,13 @@ export default function AddingPage() {
                   id="block-end-textarea"
                   name="pageText"
                   placeholder="Write a comment..."
+                  defaultValue={initialData?.text}
                 />
               </InputGroup>
             </Field>
 
             <button type="submit" className="mt-4">
-              Submit
+              {id?'update':'submit'}
             </button>
           </FieldGroup>
         </form>

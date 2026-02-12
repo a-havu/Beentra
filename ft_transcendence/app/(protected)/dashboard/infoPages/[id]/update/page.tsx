@@ -1,14 +1,31 @@
-import AddingPage from "@/components/dashboard/pages/AddingPage"
+import PageForm from "@/components/dashboard/pages/PageForm"
+import { prisma } from "@/lib/prisma"
 
 
 export default async function UpdatePage({ params }: { params: { id: string } }) {
   const {id} = await params
 
+  const initialData = await prisma.page.findUnique({
+    where:{id:Number(id)}
+  })
+
+  if(!initialData)
+    throw new Error("no page found")
+
+
+
   return (
     <>
-    <AddingPage />
-      <h2>Editing page</h2>
-      <h3>Editing {id} page</h3>
+    <PageForm
+    id={initialData.id}
+    initialData={
+      {title:initialData.title,
+        text:initialData.text,
+      }
+    }
+    
+    
+    />
     </>
   )
 }

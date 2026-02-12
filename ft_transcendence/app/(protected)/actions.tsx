@@ -54,6 +54,39 @@ export async function deletePage(id:number){
   }
 }
 
-export async function updatePage(id:number){
-  console.log(id);
+export async function updatePage(id:number, formData:FormData){
+  try{
+
+const session = await getSession()
+    if (!session?.userId) {
+        throw new Error('Unauthorized')
+  }
+    if(!formData)
+      throw new Error("no data send from form")
+
+    const title=  formData.get("pageTitle") as string
+    const text=  formData.get("pageText") as string
+
+    if(!title || !text)
+      throw new Error("Title and text are required")
+
+    const updateUser = await prisma.page.update({
+      where: {
+        id:id,
+      },
+      data: {title, text, authorId: session.userId,}
+
+    })
+    revalidatePath("/infoPages"); // for cache revalidation
+    return({success:true, data:updateUser})
+
+
+  }catch(error){
+    console.error("Update page error:",error )
+    return({success:false, error:error instanceof Error? error.message :"Faild to update page"})
+  }
+
+
+
+
 }
