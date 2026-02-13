@@ -53,7 +53,6 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
 						Reset Counter
 					</button>
 				</div>
-
 			</main>
 		</div>
 	);
@@ -69,6 +68,9 @@ function WelcomeView() {
 			<p className="text-lg text-gray-600 mb-8">
 				Select an option from the sidebar to get started
 			</p>
+			<div>
+				asdasd
+			</div>
 		</div>
 	);
 }
