@@ -1,15 +1,16 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
+import GoogleProvider from "next-auth/providers/google";
 
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET
 );
 
 export type Session = {
-  userEmail: string;
+  email: string;
   role: string;
-  userId?: string;
+  userId?: number;
 }
 
 export async function createToken(payload: any) {
