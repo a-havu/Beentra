@@ -18,7 +18,6 @@ export async function POST(request: Request) {
         email: userEmail,
       },
     })
-
     if (!result) {
       return NextResponse.json({success:false,
         message: "cannot find this Email, please register first"
@@ -41,7 +40,7 @@ export async function POST(request: Request) {
       maxAge:60 * 60 * 24
     })
 
-    
+
     return response
   } catch (e) {
     return NextResponse.json({ success:false, error: "Server error" }, { status: 500 })
