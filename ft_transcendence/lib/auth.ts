@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
+import GoogleProvider from "next-auth/providers/google";
 
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET
