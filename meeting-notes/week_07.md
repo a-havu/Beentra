@@ -1,4 +1,4 @@
-**Toady's meeting notes** *(week 07)*
+*week 07*
 
 **Module Review:**
 - Went through all chosen modules in detail.
