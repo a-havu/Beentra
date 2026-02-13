@@ -1,51 +1,48 @@
-'use client';
+"use client";
 import { useState, FormEvent } from "react";
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-
-
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const router = useRouter()
-  const [userEmail, setUserEmail] = useState("")
-  const [password, setPassword] = useState("")
-
+  const router = useRouter();
+  const [userEmail, setUserEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const loginHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try{
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userEmail: userEmail,
-        password: password,
-      }),
-    })
-    if (response.ok) {
-      router.refresh(); // Refresh server components (this updates the header!)
-      router.push('/'); // Navigate to home page
-    } else {
-      // Login failed
-      console.log('Login failed');
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: userEmail,
+          password: password,
+        }),
+      });
+      if (response.ok) {
+        router.refresh(); // Refresh server components (this updates the header!)
+        router.push("/"); // Navigate to home page
+      } else {
+        // Login failed
+        console.log("Login failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
-  }catch (error) {
-    console.error('Error:', error);
-  }
   };
 
   return (
@@ -78,13 +75,14 @@ export function LoginForm({
               Forgot your password?
             </a>
           </div>
-          <Input 
-            id="password" 
-            type="password" 
+          <Input
+            id="password"
+            type="password"
             value={password}
             placeholder="********"
-            onChange ={(e)=> setPassword(e.target.value)}
-            required />
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </Field>
         <Field>
           <Button type="submit">Login</Button>
@@ -126,5 +124,5 @@ export function LoginForm({
         </FieldDescription>
       </FieldGroup>
     </form>
-  )
+  );
 }
