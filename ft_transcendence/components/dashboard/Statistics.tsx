@@ -4,8 +4,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-
-
 export function Statistics() {
 
 	const [userCount, setUserCount] = useState<number | null>(null);
