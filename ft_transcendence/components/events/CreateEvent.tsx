@@ -1,60 +1,64 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import CustomButton from "../ui/SubmitFormButton";
 
+type FormValues = {
+  title: string;
+  date: string;
+  timeFrom: string;
+  timeTo: string;
+  location: string;
+  organizer: string;
+  type: "Student" | "External";
+  image: FileList | null;
+  description: string;
+};
+
 export default function CreateEvent() {
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [timeFrom, setTimeFrom] = useState("");
-  const [timeTo, setTimeTo] = useState("");
-  const [location, setLocation] = useState("");
-  const [organizer, setOrganizer] = useState("");
-  const [type, setType] = useState("Student");
-  const [image, setImage] = useState<File | null>(null);
-  const [description, setDescription] = useState("");
+  const { register, handleSubmit, reset } = useForm<FormValues>({
+    defaultValues: {
+      type: "Student",
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const formData = { ...data, image: data.image?.[0] || null };
 
-    const res = await fetch("/api/events", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        date,
-        timeFrom,
-        timeTo,
-        location,
-        organizer,
-        type,
-        image,
-        description,
-      }),
-    });
+      const res = await fetch("/api/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!res.ok) {
-      console.error("Failed to create event");
-      return;
+      if (!res.ok) {
+        console.error("Failed to create event");
+        return;
+      }
+
+      const result = await res.json();
+      console.log("Event Created:", result);
+
+      reset();
+    } catch (error) {
+      console.error("Error creating event:", error);
     }
-
-    const data = await res.json();
-    console.log("Event Created:", data);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md"
       >
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Create Event
         </h2>
 
-        {/* Name */}
+        {/* Title */}
         <div className="mb-4">
           <label
             htmlFor="title"
@@ -63,11 +67,8 @@ export default function CreateEvent() {
             Title:
           </label>
           <input
-            type="text"
             id="title"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            {...register("title", { required: true })}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
             placeholder="Enter event title"
           />
@@ -84,14 +85,12 @@ export default function CreateEvent() {
           <input
             type="date"
             id="date"
-            name="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            {...register("date", { required: true })}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
           />
         </div>
 
-        {/* Time (from - to) */}
+        {/* Time */}
         <div className="mb-4">
           <label
             htmlFor="timeFrom"
@@ -102,21 +101,13 @@ export default function CreateEvent() {
           <div className="flex space-x-4">
             <input
               type="time"
-              id="timeFrom"
-              name="timeFrom"
-              value={timeFrom}
-              onChange={(e) => setTimeFrom(e.target.value)}
+              {...register("timeFrom", { required: true })}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-              placeholder="From"
             />
             <input
               type="time"
-              id="timeTo"
-              name="timeTo"
-              value={timeTo}
-              onChange={(e) => setTimeTo(e.target.value)}
+              {...register("timeTo", { required: true })}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-              placeholder="To"
             />
           </div>
         </div>
@@ -130,11 +121,7 @@ export default function CreateEvent() {
             Location:
           </label>
           <input
-            type="text"
-            id="location"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            {...register("location", { required: true })}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
             placeholder="Enter location"
           />
@@ -149,11 +136,7 @@ export default function CreateEvent() {
             Organizer:
           </label>
           <input
-            type="text"
-            id="organizer"
-            name="organizer"
-            value={organizer}
-            onChange={(e) => setOrganizer(e.target.value)}
+            {...register("organizer", { required: true })}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
             placeholder="Enter organizer name"
           />
@@ -168,18 +151,11 @@ export default function CreateEvent() {
             Type:
           </label>
           <select
-            id="type"
-            name="type"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
+            {...register("type", { required: true })}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
           >
-            <option value="Student" className="text-blue-500">
-              Student
-            </option>
-            <option value="External" className="text-red-500">
-              External
-            </option>
+            <option value="Student">Student</option>
+            <option value="External">External</option>
           </select>
         </div>
 
@@ -193,11 +169,7 @@ export default function CreateEvent() {
           </label>
           <input
             type="file"
-            id="image"
-            name="image"
-            onChange={(e) =>
-              setImage(e.target.files ? e.target.files[0] : null)
-            }
+            {...register("image")}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
           />
         </div>
@@ -211,16 +183,12 @@ export default function CreateEvent() {
             Description:
           </label>
           <textarea
-            id="description"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            {...register("description")}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
             placeholder="Enter event description"
           />
         </div>
 
-        {/* Publish Button */}
         <CustomButton type="submit">Publish Event</CustomButton>
       </form>
     </div>
