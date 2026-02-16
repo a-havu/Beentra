@@ -9,7 +9,7 @@ const secret = new TextEncoder().encode(
 export type Session = {
   email: string;
   role: string;
-  userId?: string;
+  userId?: number;
 }
 
 export async function createToken(payload: any) {

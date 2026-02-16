@@ -10,16 +10,20 @@ datasource db {
 model User{
   id           Int      @id @default(autoincrement())
   email    String   @unique
+  name     String
   passwordHash String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   role         String   @default("user")
+  pages Page[]
 }
 
 model Page{
   id Int @id @default(autoincrement())
   title String
   text String
+  authorId Int 
+  author User @relation(fields:[authorId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
