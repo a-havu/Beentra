@@ -43,8 +43,13 @@ a {
     }
 }
 
+
 .general-form {
 
     @apply flex flex-col gap-4;
+<<<<<<< HEAD
 >>>>>>> c1b851d (adding style, general component as Input)
 }
+=======
+}
+>>>>>>> 342206b (Added statistics component, that calls a new api endpoint)

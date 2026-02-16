@@ -4,6 +4,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 342206b (Added statistics component, that calls a new api endpoint)
 export function Statistics() {
 
 	const [userCount, setUserCount] = useState<number | null>(null);
