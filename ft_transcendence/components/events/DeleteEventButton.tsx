@@ -2,9 +2,10 @@
 
 type Props = {
   id: string;
+  onDeleted?: () => void;
 };
 
-const DeleteEventButton = ({ id }: Props) => {
+const DeleteEventButton = ({ id, onDeleted }: Props) => {
   const handleDelete = async () => {
     const res = await fetch(`/api/events/${id}`, {
       method: "DELETE",
@@ -14,7 +15,7 @@ const DeleteEventButton = ({ id }: Props) => {
       console.error("Failed to delete event");
       return;
     }
-
+    onDeleted?.();
     console.log("Event deleted");
   };
 

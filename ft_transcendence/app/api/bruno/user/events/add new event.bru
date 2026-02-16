@@ -1,0 +1,24 @@
+meta {
+  name: add new event
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/events
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "event1",
+    "date": "2026-02-24",
+    "timeFrom": "19:30",
+    "timeTo": "20:00",
+    "location": "hive",
+    "organizer": "laurens",
+    "description": "hello"
+  }
+  
+}
