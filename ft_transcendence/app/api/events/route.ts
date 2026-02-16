@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
@@ -29,6 +29,16 @@ export async function POST(request: Request) {
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+
+// export async function DELETE() {
+//   try {
+//     const status = await prisma.event.delete(id)
+//     return NextResponse.json(status);
+//   } catch (error) {
+//     console.error("Error:", error);
+//     return new NextResponse("Internal Server Error", { status: 500 });
+//   }
+// }
 
 export async function GET() {
   const events = await prisma.event.findMany();
