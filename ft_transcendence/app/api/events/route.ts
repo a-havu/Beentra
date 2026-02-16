@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log("DEBUG\n", body.date, body.timeFrom, body.timeTo);
     return NextResponse.json(event);
   } catch (error) {
     console.error("Error:", error);

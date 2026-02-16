@@ -192,7 +192,14 @@ export function EventsTable() {
                       <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
                         Edit
                       </button>
-                      <DeleteEventButton id={event.id} />
+                      <DeleteEventButton
+                        id={event.id}
+                        onDeleted={() => {
+                          setEvents((prev) =>
+                            prev.filter((e) => e.id !== event.id)
+                          );
+                        }}
+                      />
                     </div>
                   </td>
                 </tr>
