@@ -1,37 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-//import { input } from "@/components/ui/input";
-//import { Button } from "@/components/ui/button";
-///import { label } from "@/components/ui/label";
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { on } from "events";
-
-export const registerSchema = z
-  .object({
-    fname: z.string().min(1, "Required field"),
-    lname: z.string().min(1, "Required field"),
-    phone: z.string().regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number"),
-    /*date: z
-    .string()
-    .optional()
-    .refine(
-    (val) => {
-      if (!val) return true;  // skip validation if empty
-      const date = new Date(val);
-      const now = new Date();
-      return date < now;
-    }, { message: "invalid date" }),*/
-    email: z.string().email("Invalid email"),
-    password: z.string().min(8, "Min. 8 characters"),
-    confirm: z.string(),
-  })
-  .refine((data) => data.password === data.confirm, {
-    message: "Passwords don't match",
-    path: ["confirm"],
-  });
+import { registerSchema } from "@/lib/validation";
 
 type FormFields = z.infer<typeof registerSchema>;
 
@@ -52,7 +25,7 @@ export function RegistrationForm() {
 
     try {
       const response = await fetch("/api/register", {
-        method: "GET",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
@@ -60,7 +33,7 @@ export function RegistrationForm() {
       const result = await response.json();
       console.log("Response data:", result);
       if (!response.ok) {
-        setServerError(result.message);
+        setServerError(result.error || "Registration failed");
         return;
       }
       setSubmitted(true);
@@ -104,6 +77,19 @@ export function RegistrationForm() {
         </div>
 
         <div>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            placeholder="Choose a username"
+            {...register("username")}
+          />
+          {errors.username && (
+            <p className="text-sm text-red-500">{errors.username.message}</p>
+          )}
+        </div>
+
+        <div>
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -129,13 +115,6 @@ export function RegistrationForm() {
           )}
         </div>
 
-        <div>
-          <label htmlFor="date">Date of Birth</label>
-          <input id="date" type="date" {...register("date")} />
-          {errors.date && (
-            <p className="text-sm text-red-500">{errors.date.message}</p>
-          )}
-        </div>
 
         <div>
           <label htmlFor="password">Password</label>
