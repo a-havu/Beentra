@@ -77,7 +77,7 @@ export function UsersTable() {
 	}
 
 	return (
-		<div className="bg-white rounded-lg shadow p-6">
+		<div className="bg-white rounded-lg shadow p-5">
 			<div className="flex justify-between items-center mb-6">
 				<h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
 				<button className="p-4
