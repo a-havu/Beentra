@@ -1,40 +1,52 @@
+// import { getSession } from "@/lib/auth";
+// import { redirect } from "next/navigation";
+// import { Sidebar } from "@/components/dashboard/Sidebar";
+// import { UsersTable } from "@/components/dashboard/UsersTable";
+
+// export const metadata = {
+//   title: "Dashboard",
+// };
+
+// export default async function Home() {
+//   const session = await getSession();
+
+//   if (!session || session.role != "admin") {
+//     redirect("/login");
+//   }
+
+//   return (
+//     <div className="flex min-h-screen bg-gray-50">
+// 		{/* Sidebar */}
+//       <Sidebar userEmail={session.email} />
+
+// 	  <main className="flex-1 p-8">
+// 		<UsersTable/>
+// 	  </main>
+//     </div>
+//   );
+// }
+
+
 import { getSession } from "@/lib/auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardContent } from "@/components/dashboard/DashboardContent";
 
 export const metadata = {
-  title: "Dashboard",
-};
+  title: 'Dashboard'
+}
 
 export default async function Home() {
   const session = await getSession();
 
-  if (!session || session.role != "admin") {
-    redirect("/login");
+  let userEmail = session?.email;
+
+  if (!userEmail) {
+    userEmail = "testuser@beentra.com"
   }
 
-  return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Header userEmail={userEmail} />
-    </div>
-  );
+  if(session?.role != 'admin'){
+    redirect('/')
+  }
 
-  /*
-  return (
-    <div>
-      <h3>
-        Welcome, {session.email}, you are {session.role}!
-      </h3>
-      <h3> Dashboard Page</h3>
-      <div className="m-2">
-        <Link
-          className="px-4 py-2 bg-blue-600 text-white rounded m"
-          href="dashboard/infoPages"
-        >
-          manage pages
-        </Link>
-      </div>
-    </div>
-  ); */
+  return <DashboardContent userEmail={userEmail} />;
 }

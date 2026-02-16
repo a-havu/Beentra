@@ -55,3 +55,18 @@ backend.
         
         (warning: deletes all data) or manually roll back by deleting the migration file and running migrations again.
 
+
+
+
+
+# pages (terms and privacy)
+i created a page management module connected with dashboard.
+so now we can add more pages, delete and update them,
+
+i used serveractions, because this is not a public api. it will be only for admin use.
+i have created the forms using formdata, and actions.
+
+after all done, i tried to use Tiptab as a rich text editor for pages. so we can edit.
+
+
+

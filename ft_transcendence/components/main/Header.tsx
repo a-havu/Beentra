@@ -6,15 +6,15 @@ import LogoutButton from "@/components/login/LogoutButton";
 
 export default async function Header() {
   const session = await getSession();
-    
+
   return (
-    <header className="flex flex-row items-center justify-between bg-gray-800 p-4 h-16 w-full">
+    <header className="flex flex-row items-center justify-between p-4 h-16 w-full">
       <h3><Link href="/">Beentra</Link></h3>
       <Menu />
       <div className="header-login-form">
         {session? <LogoutButton /> :<Link href='/login'>Login</Link>}
       </div>
-      
+
     </header>
   );
 }

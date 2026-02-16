@@ -1,9 +1,9 @@
 import { getSession } from "@/lib/auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { prisma } from '@/lib/prisma';
-import AddingPage from "@/components/dashboard/pages/AddingPage";
 import FetchPages from "@/components/dashboard/pages/FetchPages";
+import PageForm from "@/components/dashboard/pages/PageForm";
+
+
 export const metadata ={
   title:'Dashboard'
 }
@@ -29,7 +29,7 @@ export default async function InfoPages() {
       </div>
       
       <div className="adding-page m-7 bg-white p-4">
-        <AddingPage/>
+        <PageForm/>
         </div>
       
 
