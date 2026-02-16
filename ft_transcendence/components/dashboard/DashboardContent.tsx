@@ -30,6 +30,7 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
 function WelcomeView() {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	// const [numOfUsers, setNumOfUsers] = useState<number | null>(null);
 	// const [numOfEvents, setNumOfEvents] = useState<number | null>(null);
@@ -67,6 +68,8 @@ function WelcomeView() {
 
 
 >>>>>>> 342206b (Added statistics component, that calls a new api endpoint)
+=======
+>>>>>>> a5e985d (UI changed)
   return (
     <div className="bg-white rounded-lg shadow p-12 text-center">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -76,6 +79,7 @@ function WelcomeView() {
         Select an option from the sidebar to get started
       </p>
 	  <Statistics />
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	  {/* <div className="bg-gray-200 rounded-lg shadow p-12 text-center">
@@ -88,6 +92,8 @@ function WelcomeView() {
 		</p>
 	  </div> */}
 >>>>>>> 342206b (Added statistics component, that calls a new api endpoint)
+=======
+>>>>>>> a5e985d (UI changed)
     </div>
   );
 }
