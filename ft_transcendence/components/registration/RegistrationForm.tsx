@@ -1,20 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+//import { input } from "@/components/ui/input";
+//import { Button } from "@/components/ui/button";
+///import { label } from "@/components/ui/label";
 import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { on } from "events";
 
-const schema = z
+export const registerSchema = z
   .object({
     fname: z.string().min(1, "Required field"),
     lname: z.string().min(1, "Required field"),
     phone: z.string().regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number"),
-    date: z
+    /*date: z
     .string()
     .optional()
     .refine(
@@ -23,7 +23,7 @@ const schema = z
       const date = new Date(val);
       const now = new Date();
       return date < now;
-    }, { message: "invalid date" }),
+    }, { message: "invalid date" }),*/
     email: z.string().email("Invalid email"),
     password: z.string().min(8, "Min. 8 characters"),
     confirm: z.string(),
@@ -33,7 +33,7 @@ const schema = z
     path: ["confirm"],
   });
 
-type FormFields = z.infer<typeof schema>;
+type FormFields = z.infer<typeof registerSchema>;
 
 export function RegistrationForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -44,7 +44,7 @@ export function RegistrationForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormFields>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(registerSchema),
   });
 
   async function onSubmit(form: FormFields) {
@@ -80,8 +80,8 @@ export function RegistrationForm() {
         className="flex flex-col gap-4"
       >
         <div>
-          <Label htmlFor="fname">First Name</Label>
-          <Input
+          <label htmlFor="fname">First Name</label>
+          <input
             id="fname"
             type="text"
             {...register("fname")}
@@ -92,8 +92,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="lname">Last Name</Label>
-          <Input
+          <label htmlFor="lname">Last Name</label>
+          <input
             id="lname"
             type="text"
             {...register("lname")}
@@ -104,8 +104,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
+          <label htmlFor="email">Email</label>
+          <input
             id="email"
             type="email"
             placeholder="name@example.com"
@@ -117,8 +117,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input
+          <label htmlFor="phone">Phone Number</label>
+          <input
             id="phone"
             type="tel"
             placeholder="+358 40 123 4567"
@@ -130,16 +130,16 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="date">Date of Birth</Label>
-          <Input id="date" type="date" {...register("date")} />
+          <label htmlFor="date">Date of Birth</label>
+          <input id="date" type="date" {...register("date")} />
           {errors.date && (
             <p className="text-sm text-red-500">{errors.date.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="password">Password</Label>
-          <Input
+          <label htmlFor="password">Password</label>
+          <input
             id="password"
             type="password"
             placeholder="Enter password"
@@ -151,8 +151,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="confirm">Confirm Password</Label>
-          <Input
+          <label htmlFor="confirm">Confirm Password</label>
+          <input
             id="confirm"
             type="password"
             placeholder="Confirm your password"
@@ -165,9 +165,9 @@ export function RegistrationForm() {
 
         {serverError && <p className="text-sm text-red-500">{serverError}</p>}
 
-        <Button type="submit">
+        <button type="submit">
           Create Account
-        </Button>
+        </button>
       </form>
     </div>
   );
