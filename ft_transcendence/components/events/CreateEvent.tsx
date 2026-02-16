@@ -48,7 +48,7 @@ export default function CreateEvent() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md gap-5"
+        className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md"
       >
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Create Event
