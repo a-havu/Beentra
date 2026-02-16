@@ -1,14 +1,28 @@
 'use client';
-import { useState } from "react";
+import { z, ZodType } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-export function LoginForm() {
-  const router = useRouter()
-  const [userEmail, setUserEmail] = useState("")
-  const [password, setPassword] = useState("")
+interface FormData {
+  userEmail: string,
+  password: string,
+}
 
-  const loginHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+export function LoginForm() {
+  const zodSchema: ZodType<FormData> = z.object({
+    userEmail: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+  })
+
+  const router = useRouter()
+
+  // Add formState with errors here
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(zodSchema)
+  })
+
+  const loginHandler = async (data: FormData) => {
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -16,8 +30,8 @@ export function LoginForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userEmail: userEmail,
-          password: password,
+          userEmail: data.userEmail,
+          password: data.password,
         }),
       })
       if (response.ok) {
@@ -32,44 +46,43 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={loginHandler}>
+    <form onSubmit={handleSubmit(loginHandler)}>
       <h1>Welcome back</h1>
       <p>Login to your personal Hive life</p>
-
       <div>
         <label htmlFor="userEmail">Email</label>
         <input
+          {...register("userEmail")}
           id="userEmail"
           type="email"
           placeholder="user@example.ps"
-          value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
-          required
         />
+        {errors.userEmail && (
+          <p style={{ color: 'red', fontSize: '14px' }}>
+            {errors.userEmail.message}
+          </p>
+        )}
       </div>
-
       <div>
         <label htmlFor="password">Password</label>
-        <a href="#">Forgot your password?</a>
         <input
+          {...register("password")}
           id="password"
           type="password"
-          value={password}
           placeholder="********"
-          onChange={(e) => setPassword(e.target.value)}
-          required
         />
+        {errors.password && (
+          <p style={{ color: 'red', fontSize: '14px' }}>
+            {errors.password.message}
+          </p>
+        )}
       </div>
-
       <button type="submit">Login</button>
-
       <hr />
       <p>Or continue with</p>
-
       <button type="button">Github</button>
       <button type="button">Google</button>
       <button type="button">Intra42</button>
-
       <p>Don't have an account? <a href="/registration">Sign up</a></p>
     </form>
   )
