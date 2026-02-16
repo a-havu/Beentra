@@ -6,6 +6,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+<<<<<<< HEAD
+=======
+/* Remove the * selector block or comment it out */
+>>>>>>> bb4c2cb (updating globals.ss)
 
 html,
 body {
