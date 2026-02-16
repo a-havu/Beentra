@@ -41,6 +41,18 @@ export async function POST(request: NextRequest) {
 // }
 
 export async function GET() {
-  const events = await prisma.event.findMany();
-  return NextResponse.json(events);
+  try {
+    const events = await prisma.event.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return NextResponse.json(events);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
