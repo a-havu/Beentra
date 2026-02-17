@@ -1,14 +1,14 @@
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { UseFormRegister, FieldErrors } from "react-hook-form";
 
 interface inputTypes {
-  label: string,
-  name: string,
-  id: string,
-  type: string,
-  placeholder: string,
-  required?: boolean,
-  register?: UseFormRegister<any>,
-  errors?: FieldErrors,
+  label: string;
+  name: string;
+  id: string;
+  type: string;
+  placeholder: string;
+  required?: boolean;
+  register?: UseFormRegister<any>;
+  errors?: FieldErrors;
 }
 
 export default function Input({
@@ -19,22 +19,22 @@ export default function Input({
   placeholder,
   required = false,
   register,
-  errors
+  errors,
 }: inputTypes) {
   return (
     <div className="flex flex-row gap-2">
       <label htmlFor={id}>{label}</label>
       <input
-        {...register(name)}
+        {...(register ? register(name) : {})}
         id={id}
         type={type}
         placeholder={placeholder}
       />
       {errors?.[name] && (
-        <p style={{ color: 'red', fontSize: '14px' }}>
+        <p style={{ color: "red", fontSize: "14px" }}>
           {errors[name]?.message as string}
         </p>
       )}
     </div>
-  )
+  );
 }
