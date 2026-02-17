@@ -4,14 +4,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 342206b (Added statistics component, that calls a new api endpoint)
-=======
->>>>>>> a5e985d (UI changed)
 export function Statistics() {
 
 	const [userCount, setUserCount] = useState<number | null>(null);
@@ -35,13 +29,13 @@ export function Statistics() {
 
 	return (
 		<div className="bg-gray-200 rounded-lg shadow p-12 text-center">
-		This will have the stats
-		<p>
-			Total number of Users: {userCount}
-		</p>
-		<p>
-			Total number of Events: {eventCount}
-		</p>
-	  </div>
+			This will have the stats
+			<p>
+				Total number of Users: {userCount}
+			</p>
+			<p>
+				Total number of Events: {eventCount}
+			</p>
+		</div>
 	);
 }
