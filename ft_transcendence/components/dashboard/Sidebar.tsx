@@ -40,6 +40,12 @@ export function Sidebar({
           Projects
         </button>
         <button
+          onClick={() => onButtonClick("add-page")}
+          className="w-full text-center px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition"
+        >
+          Add Page
+        </button>
+        <button
           onClick={() => onButtonClick("welcome")}
           className="w-full text-center px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition"
         >

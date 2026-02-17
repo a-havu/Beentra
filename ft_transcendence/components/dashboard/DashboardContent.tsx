@@ -5,6 +5,7 @@ import { Sidebar } from "./Sidebar";
 import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
 import { Statistics } from "./Statistics";
+import PageForm from "./pages/PageForm";
 
 export function DashboardContent({ userEmail }: { userEmail: string }) {
 	const [activeView, setActiveView] = useState("welcome");
@@ -21,6 +22,7 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
 				{activeView === "users" && <UsersTable />}
 				{activeView === "events" && <EventsTable />}
 				{activeView === "projects" && <p>Projects section!</p>}
+				{activeView === "add-page" && <PageForm initialData={null} />}
 			</main>
 		</div>
 	);
@@ -28,41 +30,6 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
 
 // Default welcome message
 function WelcomeView() {
-
-	// const [numOfUsers, setNumOfUsers] = useState<number | null>(null);
-	// const [numOfEvents, setNumOfEvents] = useState<number | null>(null);
-
-	// useEffect(() => {
-	// 	async function fetchStats() {
-	// 	try {
-	// 		const resUsers = await fetch('/api/user');
-	// 		if (!resUsers.ok) {
-	// 			throw new Error("Failed to fetch users");
-	// 		}
-
-	// 		const resEvents = await fetch('/api/events');
-	// 		if (!resEvents.ok) {
-	// 			throw new Error("Failed to fetch events");
-	// 		}
-
-	// 		const dataUsers = await resUsers.json();
-	// 		const dataEvents = await resEvents.json();
-
-	// 		// const userCount = dataUsers.length;
-	// 		// const eventCount = dataEvents.length;
-
-	// 		const userCount = await prisma.user.count();
-	// 		const eventCount = await prisma.event.count();
-
-	// 		setNumOfUsers(userCount);
-	// 		setNumOfEvents(eventCount);
-	// 	} catch {
-	// 		console.log("Error");
-	// 	}
-	// }
-	// fetchStats();
-	// }, []);
-
 
 	return (
 		<div className="bg-white rounded-lg shadow p-12 text-center">
