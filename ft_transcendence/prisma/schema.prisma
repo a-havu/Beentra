@@ -9,20 +9,20 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(cuid())
   fname         String
   lname         String
-  username      String    @unique
-  phone         String    @unique
+  username      String?   @unique
+  phone         String?   @unique
   email         String    @unique
-  passwordHash  String
+  passwordHash  String?
+  name          String
+  image         String?
+  emailVerified Boolean   @default(false)
+  role          Role      @default(user)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  role          String    @default("user")
   pages         Page[]
-  name          String
-  emailVerified Boolean   @default(false)
-  image         String?
   sessions      Session[]
   accounts      Account[]
 
@@ -33,7 +33,7 @@ model Page {
   id        Int      @id @default(autoincrement())
   title     String
   text      String
-  authorId  Int
+  authorId  String
   author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
