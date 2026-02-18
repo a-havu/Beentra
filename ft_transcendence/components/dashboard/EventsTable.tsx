@@ -139,7 +139,7 @@ export function EventsTable() {
                         id={event.id}
                         onDeleted={() => {
                           setEvents((prev) =>
-                            prev.filter((e) => e.id !== event.id)
+                            prev.filter((e) => e.id !== event.id),
                           );
                         }}
                       />
