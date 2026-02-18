@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 
 import { validateEnv } from "@/lib/validation";
-import { requireAuth } from "@/lib/auth";
 import Header from "@/components/main/Header";
 import Footer from "@/components/main/Footer";
 
@@ -29,7 +28,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await requireAuth();
+
 
   return (
     <html lang="en">

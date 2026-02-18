@@ -1,15 +1,11 @@
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { prisma } from '@/lib/prisma';
-import { createToken } from '@/lib/auth';
-import bcrypt from 'bcryptjs'
+// app/api/logout/route.ts
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
 
-export async function POST(request: Request) {
-  try {
-    const response = NextResponse.json({success: 'true'})
-    response.cookies.delete("auth-token");
-   return response
-  } catch (e) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 })
-  }
+export async function POST() {
+  await auth.api.signOut({
+    headers: await headers()
+  })
+
+  return Response.json({ success: true })
 }
