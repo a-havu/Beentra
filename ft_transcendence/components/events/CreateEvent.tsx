@@ -1,19 +1,11 @@
 "use client";
 
 import EventForm from "./EventForm";
+import { schema } from "./EventForm";
 import { SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 
-type FormValues = {
-  title: string;
-  date: Date;
-  timeFrom: string;
-  timeTo: string;
-  location: string;
-  organizer: string;
-  type: "Student" | "External";
-  image?: FileList | null;
-  description?: string;
-};
+type FormValues = z.input<typeof schema>;
 
 export default function CreateEvent() {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -45,6 +37,7 @@ export default function CreateEvent() {
         type: "Student",
       }}
       submitLabel="Create Event"
+      mode="create"
     />
   );
 }
