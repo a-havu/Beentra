@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { createToken } from '@/lib/auth';
-import bcrypt from 'bcryptjs'
+import { auth } from '@/lib/auth';
 
 export async function POST(request: Request) {
   try {
+    console.log("Login API called")
     const body = await request.json()
+    console.log("Login API called:", body)
     const { userEmail, password } = body
     if (!userEmail || !password) {
       return NextResponse.json({
@@ -13,37 +13,16 @@ export async function POST(request: Request) {
       }, { status: 400 })
     }
 
-    const result = await prisma.user.findUnique({
-      where: {
+    const result = await auth.api.signInEmail({
+      body: {
         email: userEmail,
+        password,
       },
+      asResponse: true,
     })
-    if (!result) {
-      return NextResponse.json({success:false,
-        message: "cannot find this Email, please register first"
-      }, { status: 401 })
-    }
-
-    const isValid = await bcrypt.compare(password, result.passwordHash)
-    if(!isValid){      return NextResponse.json({
-      success:false,
-        message: "password entered is not correct, please try again"
-      }, { status: 401 })}
-
-    const token = await createToken({userId:result.id, email: result.email, role:result.role})
-
-    const response = NextResponse.json({success:true, message: "you are logged in", token:token},{status:200})
-
-    response.cookies.set('auth-token',token, {
-      httpOnly:true,
-      sameSite:'lax',
-      maxAge:60 * 60 * 24
-    })
-
-
-    return response
+    return result;
   } catch (e) {
-    return NextResponse.json({ success:false, error: "Server error" }, { status: 500 })
+    return NextResponse.json({ success: false, error: `Server error: ${e}` }, { status: 500 })
 
   }
 }
