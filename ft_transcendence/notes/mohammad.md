@@ -54,10 +54,13 @@ backend.
         npx prisma migrate reset
         
         (warning: deletes all data) or manually roll back by deleting the migration file and running migrations again.
+    # i added a seed file, so after you reset the migrations, then generate, then you can run this command : npx prisna db seed
+    
 
 
+# i changed the whole approach used for login and session, now we are using better-auth. which handle session and cookies automatically. i did this so the oauth works fine and also the 2fa.
 
-
+# i changed also the check for authorization, now i am using middleware (proxy.ts).
 
 # pages (terms and privacy)
 i created a page management module connected with dashboard.
@@ -67,6 +70,3 @@ i used serveractions, because this is not a public api. it will be only for admi
 i have created the forms using formdata, and actions.
 
 after all done, i tried to use Tiptab as a rich text editor for pages. so we can edit.
-
-
-
