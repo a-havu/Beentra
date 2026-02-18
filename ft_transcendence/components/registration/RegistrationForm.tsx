@@ -5,6 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "@/lib/validation";
+import Input from "@/components/ui/Input";
+import CustomButton from "@/components/ui/SubmitFormButton";
 
 type FormFields = z.infer<typeof registerSchema>;
 
@@ -48,13 +50,11 @@ export function RegistrationForm() {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
-          <label htmlFor="fname">First Name</label>
-          <input
+          <Input
+            label="First Name"
+            placeholder={""}
             id="fname"
             type="text"
             {...register("fname")}
@@ -65,8 +65,9 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <label htmlFor="lname">Last Name</label>
-          <input
+          <Input
+            label="Last Name" 
+            placeholder={""}
             id="lname"
             type="text"
             {...register("lname")}
@@ -77,11 +78,11 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <label htmlFor="username">Username</label>
-          <input
+          <Input
+            label="Username"
+            placeholder={""}
             id="username"
             type="text"
-            placeholder="Choose a username"
             {...register("username")}
           />
           {errors.username && (
@@ -90,11 +91,11 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <label htmlFor="email">Email</label>
-          <input
+          <Input
+            label="Email"
+            placeholder={""}
             id="email"
             type="email"
-            placeholder="name@example.com"
             {...register("email")}
           />
           {errors.email && (
@@ -103,11 +104,11 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <label htmlFor="phone">Phone Number</label>
-          <input
+          <Input
+            label="Phone Number"
+            placeholder={"+358 40 123 4567"}
             id="phone"
             type="tel"
-            placeholder="+358 40 123 4567"
             {...register("phone")}
           />
           {errors.phone && (
@@ -115,13 +116,12 @@ export function RegistrationForm() {
           )}
         </div>
 
-
         <div>
-          <label htmlFor="password">Password</label>
-          <input
+          <Input
+            label="password"
+            placeholder={"Enter password"}
             id="password"
             type="password"
-            placeholder="Enter password"
             {...register("password")}
           />
           {errors.password && (
@@ -130,11 +130,11 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <label htmlFor="confirm">Confirm Password</label>
-          <input
+          <Input
+            label="confirm"
+            placeholder={"Confirm your password"}
             id="confirm"
             type="password"
-            placeholder="Confirm your password"
             {...register("confirm")}
           />
           {errors.confirm && (
@@ -144,9 +144,7 @@ export function RegistrationForm() {
 
         {serverError && <p className="text-sm text-red-500">{serverError}</p>}
 
-        <button type="submit">
-          Create Account
-        </button>
+        <CustomButton type="submit">Create Account</CustomButton>
       </form>
     </div>
   );
