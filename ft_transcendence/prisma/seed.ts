@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs"
 import { createId } from "@paralleldrive/cuid2"
 
 async function main() {
