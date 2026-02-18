@@ -1,17 +1,23 @@
 "use client";
 
+<<<<<<< HEAD
 import { useState } from "react";
 import { ConfirmationModal } from "../ui/ConfirmationModal";
 
+=======
+>>>>>>> staged
 type Props = {
   id: string;
   onDeleted?: () => void;
 };
 
 const DeleteEventButton = ({ id, onDeleted }: Props) => {
+<<<<<<< HEAD
 
   const [showModal, setShowModal] = useState(false);
 
+=======
+>>>>>>> staged
   const handleDelete = async () => {
     const res = await fetch(`/api/events/${id}`, {
       method: "DELETE",
@@ -23,6 +29,7 @@ const DeleteEventButton = ({ id, onDeleted }: Props) => {
     }
     onDeleted?.();
     console.log("Event deleted");
+<<<<<<< HEAD
     setShowModal(false);
   };
 
@@ -47,6 +54,17 @@ const DeleteEventButton = ({ id, onDeleted }: Props) => {
         onCancel={handleCancel}
       />
     </>
+=======
+  };
+
+  return (
+    <button
+      onClick={handleDelete}
+      className="bg-red-500 text-white px-4 py-2 rounded"
+    >
+      Delete
+    </button>
+>>>>>>> staged
   );
 };
 

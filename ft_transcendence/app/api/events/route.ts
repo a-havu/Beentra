@@ -5,10 +5,17 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    //convert the date into DateTime for prisma
     const date = new Date(body.date);
-    const timeFrom = new Date(`${body.date}T${body.timeFrom}`);
-    const timeTo = new Date(`${body.date}T${body.timeTo}`);
+    const datePart = body.date.split("T")[0];
+    const timeFrom = new Date(`${datePart}T${body.timeFrom}:00`);
+    const timeTo = new Date(`${datePart}T${body.timeTo}:00`);
+
+    console.log("DEBUG\n", date, timeFrom, timeTo);
+    console.log("\nDEBUG2\n", body.date, body.timeFrom, body.timeTo);
+
+    if (isNaN(timeFrom.getTime()) || isNaN(timeTo.getTime())) {
+      return new NextResponse("Invalid timeFrom or timeTo", { status: 400 });
+    }
 
     const event = await prisma.event.create({
       data: {
@@ -18,8 +25,8 @@ export async function POST(request: NextRequest) {
         timeTo,
         location: body.location,
         organizer: body.organizer,
-        image: body.image,
-        description: body.description,
+        image: body.image || null,
+        description: body.description || "",
       },
     });
 
