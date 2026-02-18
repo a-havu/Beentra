@@ -1,50 +1,52 @@
 "use client";
 
-import EventForm from "./EventForm";
-import { SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { ConfirmationModal } from "../ui/ConfirmationModal";
 
-type FormValues = {
-  title: string;
-  date: Date;
-  timeFrom: string;
-  timeTo: string;
-  location: string;
-  organizer: string;
-  type: "Student" | "External";
-  image?: FileList | null;
-  description?: string;
+type Props = {
+  id: string;
+  onDeleted?: () => void;
 };
 
-export default function CreateEvent() {
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    try {
-      const formData = { ...data, image: data.image?.[0] || null };
+const DeleteEventButton = ({ id, onDeleted }: Props) => {
+  const [showModal, setShowModal] = useState(false);
 
-      const res = await fetch("/api/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+  const handleDelete = async () => {
+    const res = await fetch(`/api/events/${id}`, {
+      method: "DELETE",
+    });
 
-      if (!res.ok) {
-        throw new Error("Failed to create event");
-      }
-
-      console.log("Event created successfully!");
-    } catch (error) {
-      console.error("Error creating event:", error);
+    if (!res.ok) {
+      console.error("Failed to delete event");
+      return;
     }
+    onDeleted?.();
+    console.log("Event deleted");
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
   };
 
   return (
-    <EventForm
-      onSubmit={onSubmit}
-      defaultValues={{
-        type: "Student",
-      }}
-      submitLabel="Create Event"
-    />
+    <>
+      <button
+        //onClick={handleDelete}
+        onClick={() => setShowModal(true)}
+        className="bg-red-500 hover:bg-red-800 text-white px-4 py-2 rounded"
+      >
+        Delete
+      </button>
+
+      <ConfirmationModal
+        isOpen={showModal}
+        message="Are you sure you want to delete?"
+        onConfirm={handleDelete}
+        onCancel={handleCancel}
+      />
+    </>
   );
-}
+};
+
+export default DeleteEventButton;
