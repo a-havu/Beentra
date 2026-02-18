@@ -1,52 +1,43 @@
 "use client";
 
-import { useState } from "react";
-import { ConfirmationModal } from "../ui/ConfirmationModal";
+import EventForm from "./EventForm";
+import { schema } from "./EventForm";
+import { SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 
-type Props = {
-  id: string;
-  onDeleted?: () => void;
-};
+type FormValues = z.input<typeof schema>;
 
-const DeleteEventButton = ({ id, onDeleted }: Props) => {
-  const [showModal, setShowModal] = useState(false);
+export default function CreateEvent() {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const formData = { ...data, image: data.image?.[0] || null };
 
-  const handleDelete = async () => {
-    const res = await fetch(`/api/events/${id}`, {
-      method: "DELETE",
-    });
+      const res = await fetch("/api/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!res.ok) {
-      console.error("Failed to delete event");
-      return;
+      if (!res.ok) {
+        throw new Error("Failed to create event");
+      }
+
+      console.log("Event created successfully!");
+    } catch (error) {
+      console.error("Error creating event:", error);
     }
-    onDeleted?.();
-    console.log("Event deleted");
-    setShowModal(false);
-  };
-
-  const handleCancel = () => {
-    setShowModal(false);
   };
 
   return (
-    <>
-      <button
-        //onClick={handleDelete}
-        onClick={() => setShowModal(true)}
-        className="bg-red-500 hover:bg-red-800 text-white px-4 py-2 rounded"
-      >
-        Delete
-      </button>
-
-      <ConfirmationModal
-        isOpen={showModal}
-        message="Are you sure you want to delete?"
-        onConfirm={handleDelete}
-        onCancel={handleCancel}
-      />
-    </>
+    <EventForm
+      onSubmit={onSubmit}
+      defaultValues={{
+        type: "Student",
+      }}
+      submitLabel="Create Event"
+      mode="create"
+    />
   );
-};
-
-export default DeleteEventButton;
+}

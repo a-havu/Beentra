@@ -10,9 +10,6 @@ export async function POST(request: NextRequest) {
     const timeFrom = new Date(`${datePart}T${body.timeFrom}:00`);
     const timeTo = new Date(`${datePart}T${body.timeTo}:00`);
 
-    console.log("DEBUG\n", date, timeFrom, timeTo);
-    console.log("\nDEBUG2\n", body.date, body.timeFrom, body.timeTo);
-
     if (isNaN(timeFrom.getTime()) || isNaN(timeTo.getTime())) {
       return new NextResponse("Invalid timeFrom or timeTo", { status: 400 });
     }
