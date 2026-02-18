@@ -1,11 +1,22 @@
 'use server'
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache'
-
+import { auth } from '@/lib/auth'
+import { headers } from "next/headers"
+import { redirect } from "next/navigation";
 
 
 export async function createPage(formData: FormData) {
   try {
+
+    const session = await auth.api.getSession({
+      headers: await headers()
+    })
+
+    if (!session || session.user.role != 'admin') {
+      redirect('/')
+    }
+
     const title = formData.get("pageTitle")
     const text = formData.get("pageText")
 
@@ -14,7 +25,7 @@ export async function createPage(formData: FormData) {
     }
 
     const result = await prisma.page.create({
-      data: { title, text, authorId: session.userId, }
+      data: { title, text, authorId: session?.user.id, }
     })
     revalidatePath('/dashboard/infoPages')
     return ({ success: true, data: result })
@@ -32,10 +43,14 @@ export async function createPage(formData: FormData) {
 
 export async function deletePage(id: number) {
   try {
-    const session = await getSession()
-    if (!session?.userId) {
-      throw new Error('Unauthorized')
+    const session = await auth.api.getSession({
+      headers: await headers()
+    })
+
+    if (!session || session.user.role != 'admin') {
+      redirect('/')
     }
+
     const foundId = await prisma.page.findUnique({ where: { id: id } })
     if (!foundId)
       return ({ success: false, error: "this page is not existed" })
@@ -51,10 +66,14 @@ export async function deletePage(id: number) {
 export async function updatePage(id: number, formData: FormData) {
   try {
 
-    const session = await getSession()
-    if (!session?.userId) {
-      throw new Error('Unauthorized')
+    const session = await auth.api.getSession({
+      headers: await headers()
+    })
+
+    if (!session || session.user.role != 'admin') {
+      redirect('/')
     }
+
     if (!formData)
       throw new Error("no data send from form")
 
