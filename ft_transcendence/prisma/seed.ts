@@ -1,8 +1,20 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma"
 import { createId } from "@paralleldrive/cuid2"
+import { scrypt, randomBytes } from "crypto"
+import { promisify } from "util"
+
+const scryptAsync = promisify(scrypt)
+
+async function hashPassword(password: string): Promise<string> {
+  const salt = randomBytes(16).toString("hex")
+  const buf = (await scryptAsync(password, salt, 64)) as Buffer
+  return `${buf.toString("hex")}:${salt}`
+}
 
 async function main() {
   const userId = createId()
+  const hashedPassword = await hashPassword("ABCD@123456")
+
   await prisma.user.create({
     data: {
       id: userId,
@@ -18,7 +30,7 @@ async function main() {
           id: createId(),
           accountId: userId,
           providerId: "credential",
-          password: await bcrypt.hash("ABCD@123456", 10),
+          password: hashedPassword,
           createdAt: new Date(),
           updatedAt: new Date(),
         }
