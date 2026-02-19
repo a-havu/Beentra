@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function PUT(
@@ -7,30 +7,29 @@ export async function PUT(
 ) {
   try {
     const { id } = await context.params;
-    console.log("ID = ", id);
     const body = await request.json();
-    //VALIDATION
-    const date = new Date(body.date);
-    const timeFrom = new Date(`${body.date}T${body.timeFrom}`);
-    const timeTo = new Date(`${body.date}T${body.timeTo}`);
+
+    const data: any = {};
+    if (body.title !== undefined) data.title = body.title;
+    if (body.date !== undefined) data.date = new Date(body.date);
+    const datePart = body.date.split("T")[0];
+    if (body.timeFrom !== undefined)
+      data.timeFrom = new Date(`${datePart}T${body.timeFrom}:00`);
+    if (body.timeTo !== undefined)
+      data.timeTo = new Date(`${datePart}T${body.timeTo}:00`);
+    if (body.location !== undefined) data.location = body.location;
+    if (body.organizer !== undefined) data.organizer = body.organizer;
+    if (body.description !== undefined) data.description = body.description;
+    if (body.image !== undefined) data.image = body.image;
+
     const updatedEvent = await prisma.event.update({
       where: { id },
-      data: {
-        title: body.title,
-        date: date,
-        timeFrom: timeFrom,
-        timeTo: timeTo,
-        location: body.location,
-        organizer: body.organizer,
-        description: body.description,
-        image: body.image,
-      },
+      data,
     });
+
     return NextResponse.json(updatedEvent);
-  } catch (err: any) {
-    if (err.code === "P2025") {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
-    }
+  } catch (error) {
+    console.error("Error updating event:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -40,16 +39,16 @@ export async function PUT(
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params;
     const event = await prisma.event.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
     if (!event) {
       return NextResponse.json({ error: "Event not found" }, { status: 404 });
     }
-    // edit event
     return NextResponse.json(event);
   } catch (error) {
     console.error("Error fetching events:", error);
