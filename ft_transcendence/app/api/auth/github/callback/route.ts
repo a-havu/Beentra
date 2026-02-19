@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server"
-
+import { prisma } from "@/lib/prisma"
 /**
  * first the provider response with code.
  * then we send this by POST to the provider with the clientid and the secret.
@@ -47,6 +47,28 @@ export async function GET(request: NextRequest){
     })
 
     const gitHubUser = await userRes.json()
+
+
+     const emailRes = await fetch('https://api.github.com/user/emails', {
+    headers: {
+      'Authorization': `token ${access_token}`,
+      'Accept': 'application/json'
+    }
+  })
+
+  const emails = await emailRes.json()
+  const primaryEmail = emails.find((e)=>e.primary)?.email
+
+  if(!primaryEmail){
+    return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/login?error=no_email`)
+  }
+
+  let user = await prisma.user.findUnique({
+    where:{
+        email : primaryEmail
+    }
+  })
+
 
     console.log("gitHubUser:", gitHubUser);
 
