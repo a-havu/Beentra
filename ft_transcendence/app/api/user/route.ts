@@ -11,7 +11,7 @@ export async function POST(request:Request){
       const { email, password } = body;
       if (!email || !password) {
         return NextResponse.json(
-          { error: "Name:, email and password are required" },
+          { error: "Email and password are required" },
           {status: 400}
         )
       }
@@ -41,7 +41,7 @@ export async function POST(request:Request){
     return NextResponse.json(user)
 }catch (error) {
     console.error('Error:', error);
-    return new NextResponse('Internal Server Error', { status: 500 });
+    return new NextResponse(`Internal Server Error:${error}`, { status: 500 });
   }
     }
 

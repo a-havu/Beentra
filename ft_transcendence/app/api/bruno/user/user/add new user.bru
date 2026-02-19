@@ -5,14 +5,19 @@ meta {
 }
 
 post {
-  url: http://localhost:3000/api/user
+  url: http://localhost:3000/api/register
   body: json
   auth: none
 }
 
 body:json {
   {
-    "userEmail": "admin@beentra.fi",
-    "password": "123456"
+    "email": "admin@beentra.fi",
+    "password": "ABCD@123456",
+    "confirm":"ABCD@123456",
+    "fname":"mohammad",
+    "lname" :"khlouf",
+    "username":"mkhlouf",
+    "phone":"0405859362"
   }
 }
