@@ -26,24 +26,12 @@ export async function POST(request: NextRequest) {
         description: body.description || "",
       },
     });
-
-    console.log("DEBUG\n", body.date, body.timeFrom, body.timeTo);
     return NextResponse.json(event);
   } catch (error) {
     console.error("Error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
-
-// export async function DELETE() {
-//   try {
-//     const status = await prisma.event.delete(id)
-//     return NextResponse.json(status);
-//   } catch (error) {
-//     console.error("Error:", error);
-//     return new NextResponse("Internal Server Error", { status: 500 });
-//   }
-// }
 
 export async function GET() {
   try {
