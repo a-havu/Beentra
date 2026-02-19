@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Input from '../ui/Input';
+import Link from 'next/link';
+
+
 
 interface FormData {
   userEmail: string,
@@ -23,7 +26,7 @@ export function LoginForm() {
 
   const loginHandler = async (data: FormData) => {
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +78,7 @@ export function LoginForm() {
       <hr />
       <p>Or continue with</p>
       <div className="flex flex-row gap-2">
-        <button type="button">Github</button>
+        <Link href="/api/auth/github"><button type="button">Github</button></Link>
         <button type="button">Google</button>
         <button type="button">Intra42</button>
       </div>
