@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import DeleteEventButton from "../events/DeleteEventButton";
 import EditEvent from "../events/EditEvent";
+import { Button } from "../ui/Button";
 
 type Event = {
   id: string;
