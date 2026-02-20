@@ -1,5 +1,4 @@
-import { UsersTable } from "./UsersTable";
-import { useState } from "react";
+
 import { Button } from "../ui/Button";
 
 export function Sidebar({
@@ -10,7 +9,7 @@ export function Sidebar({
   onButtonClick: any;
 }) {
   return (
-    <aside className="flex flex-col gap-5 w-64 bg-white shadow-lg p-6 border-r border-gray-300">
+    <aside className="flex flex-col gap-5 w-64 rounded-xl bg-white shadow-lg p-6 border-r border-gray-300">
       <div className="flex flex-col mb-8">
         <h1 className="text-2xl text-center font-bold text-gray-900">
           Admin Dashboard
