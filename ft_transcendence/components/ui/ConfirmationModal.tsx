@@ -5,7 +5,7 @@ import { Button } from "./Button";
 type ConfirmationProps = {
   isOpen: boolean;
   message: string;
-  onConfirm: () => void; // Function for when cornfirm is clicked
+  onConfirm?: () => void; // Function for when cornfirm is clicked
   onCancel: () => void; // Function for when cancel is clicked
 };
 

@@ -142,6 +142,7 @@ export function EventsTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [addingEvent, setAddingEvent] = useState(false);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -197,7 +198,14 @@ export function EventsTable() {
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
-          <button
+          <Button
+		  	variant="adding"
+			size="large"
+			onClick={() => setAddingEvent(true)}
+		  	>
+				Add event
+		  </Button>
+		  {/* <button
             className="p-4
 				 text-left
 				 px-4
@@ -215,7 +223,7 @@ export function EventsTable() {
 				 hover:text-white transition"
           >
             Add Event
-          </button>
+          </button> */}
         </div>
         <div>
           {/* Table header */}
