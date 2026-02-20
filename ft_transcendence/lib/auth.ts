@@ -39,13 +39,3 @@ export async function getSession() : Promise<Session | null> {
 
   return await verifyToken(token);
 }
-
-export async function requireAuth() {
-  const session = await getSession();
-  
-  if (!session) {
-    redirect('/login');
-  }
-  
-  return session;
-}
