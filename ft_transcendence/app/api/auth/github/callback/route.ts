@@ -95,8 +95,9 @@ export async function GET(request: NextRequest) {
     user = userAccount.user;
   } else {
     user = await prisma.user.findUnique({
-      where: { email: primaryEmail },
-    });
+      where:{email:primaryEmail}
+    })
+    
     if (!user) {
       user = await prisma.user.create({
         data: {
