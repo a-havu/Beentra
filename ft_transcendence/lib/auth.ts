@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import { redirect } from "next/navigation";
-import GoogleProvider from "next-auth/providers/google";
+import type { JWTPayload } from "jose";
+
 
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET
@@ -13,11 +13,17 @@ export type Session = {
   userId?: number;
 }
 
-export async function createToken(payload: any) {
-  return await new SignJWT(payload as any)
-    .setProtectedHeader({ alg: 'HS256' })
+interface TokenPayload extends JWTPayload{
+  userId: string;
+  email: string;
+  role: string;
+}
+
+export async function createToken(payload: TokenPayload): Promise<string> {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime('7d')
+    .setExpirationTime("7d")
     .sign(secret);
 }
 

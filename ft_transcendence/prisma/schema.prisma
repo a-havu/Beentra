@@ -9,15 +9,16 @@ datasource db {
 
 model User{
   id           String         @id @default(cuid())
-  fname        String
-  lname        String
+  fname        String?
+  lname        String?
   username     String   @unique
-  phone        String   @unique
+  phone        String?   @unique
   email        String   @unique
-  passwordHash String
+  passwordHash String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  role         String   @default("user")
+  role         String   @default("admin")
+  avatarUrl    String?
   pages Page[]
   oauthAccount OauthAccount[]
 }
