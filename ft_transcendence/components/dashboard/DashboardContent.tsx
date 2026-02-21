@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
-import { Statistics } from "./Statistics";
 import PageForm from "./pages/PageForm";
+import WelcomeView from "./WelcomeView";
 
 export function DashboardContent({ userEmail }: { userEmail: string }) {
   const [activeView, setActiveView] = useState("welcome");
@@ -28,17 +28,4 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
   );
 }
 
-// Default welcome message
-function WelcomeView() {
-  return (
-    <div className="bg-white rounded-lg shadow p-12 text-center">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">
-        Welcome to Admin Dashboard
-      </h1>
-      <p className="text-lg text-gray-600 mb-8">
-        Select an option from the sidebar to get started
-      </p>
-      <Statistics />
-    </div>
-  );
-}
+
