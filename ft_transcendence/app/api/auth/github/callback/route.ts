@@ -95,9 +95,9 @@ export async function GET(request: NextRequest) {
     user = userAccount.user;
   } else {
     user = await prisma.user.findUnique({
-      where:{email:primaryEmail}
+      where: { email: primaryEmail }
     })
-    
+
     if (!user) {
       user = await prisma.user.create({
         data: {
@@ -123,6 +123,7 @@ export async function GET(request: NextRequest) {
     userId: user.id,
     email: primaryEmail,
     role: user.role,
+    avatar_url: user.avatarUrl,
   });
 
   const response = NextResponse.redirect(new URL("/", request.url));
