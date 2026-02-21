@@ -128,6 +128,7 @@ import DeleteEventButton from "../events/DeleteEventButton";
 import EditEvent from "../events/EditEvent";
 import { Button } from "../ui/Button";
 import FunctionalButtons from "./pages/FunctionalButtons";
+import AddEvent from "./AddEvent";
 
 type Event = {
   id: string;
@@ -195,35 +196,17 @@ export function EventsTable() {
 
   return (
     <>
+      <AddEvent></AddEvent>
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
           <Button
-		  	variant="adding"
-			size="large"
-			onClick={() => setAddingEvent(true)}
-		  	>
-				Add event
-		  </Button>
-		  {/* <button
-            className="p-4
-				 text-left
-				 px-4
-				 py-3
-				 bg-green-300
-				 border
-				 shadow-lg
-				 border-gray-300
-				 rounded-lg
-				 text-lg
-				 font-bold
-				 text-gray-900
-				 hover:bg-green-600
-				 hover:border-white
-				 hover:text-white transition"
+            variant="adding"
+            size="large"
+            onClick={() => setAddingEvent(true)}
           >
-            Add Event
-          </button> */}
+            Add event
+          </Button>
         </div>
         <div>
           {/* Table header */}
@@ -267,19 +250,12 @@ export function EventsTable() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-						<Button
-							variant="edit"
-							onClick={() => setEditingId(event.id)}
-							>
-								Edit
-						</Button>
-                        {/* <button
-                          onClick={() => setEditingId(event.id)}px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm
-                          className=""
+                        <Button
+                          variant="edit"
+                          onClick={() => setEditingId(event.id)}
                         >
                           Edit
-                        </button> */}
-
+                        </Button>
                         <DeleteEventButton
                           id={event.id}
                           onDeleted={() => {
