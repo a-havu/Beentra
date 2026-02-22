@@ -43,5 +43,5 @@ a {
 .dropdown-menu-logHeader {
     width: 10rem;
     height: 6rem;
-    background-color: navy;
+    @apply bg-gray-800 rounded-lg p-3 shadow-md;
 }
