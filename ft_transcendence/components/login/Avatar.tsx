@@ -35,9 +35,9 @@ export function Avatar({ avatar_url }: avatar) {
       {open && (
         <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-gray-800 rounded-lg z-50 p-2">
 
-          <Link href="/events"> <button>My Profile</button> </Link>
-          <Link href="/events"> <button> My Events</button> </Link>
-          <Link href="/events"><button> My Projects</button> </Link>
+          <Link href="/profile"> <button className="cursor-pointer">My Profile</button> </Link>
+          <Link href="/events"> <button className="cursor-pointer"> My Events</button> </Link>
+          <Link href="/projects"><button className="cursor-pointer"> My Projects</button> </Link>
           <LogoutButton />
         </div>
       )}
