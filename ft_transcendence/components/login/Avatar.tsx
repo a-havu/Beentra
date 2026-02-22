@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import LogoutButton from "./LogoutButton"
 import Link from 'next/link';
 
@@ -10,9 +10,18 @@ interface avatar {
 
 export function Avatar({ avatar_url }: avatar) {
   const [open, setOpen] = useState(false)
-
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
   return (
-    <div className="relative z-150">
+    <div className="relative z-150" ref={ref}>
       <button onClick={() => setOpen(!open)}>
         <Image
           src={avatar_url}
