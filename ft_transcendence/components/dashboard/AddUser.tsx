@@ -17,6 +17,7 @@ function AddUser() {
 			<Button
 				variant="adding"
 				onClick={() => setShowModal(true)}
+				size="large"
 			>
 				Add User
 			</Button>

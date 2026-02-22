@@ -17,6 +17,7 @@ function AddEvent() {
 			<Button
 				variant="adding"
 				onClick={() => setShowModal(true)}
+				size="large"
 			>
 				Add Event
 			</Button>
