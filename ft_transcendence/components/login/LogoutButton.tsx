@@ -6,5 +6,5 @@ export default function LogoutButton() {
     window.location.href = '/';
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return <button onClick={handleLogout} className="flex items-center justify-start cursor-pointer">Logout</button>;
 }
