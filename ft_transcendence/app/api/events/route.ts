@@ -45,7 +45,7 @@ export async function GET() {
   try {
     const events = await prisma.event.findMany({
       orderBy: {
-        createdAt: "desc",
+        date: "desc",
       },
     });
     return NextResponse.json(events);
