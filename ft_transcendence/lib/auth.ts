@@ -10,7 +10,7 @@ const secret = new TextEncoder().encode(
 export type Session = {
   email: string
   role: string
-  userId?: number
+  userId?: string
   avatar_url: string
 }
 

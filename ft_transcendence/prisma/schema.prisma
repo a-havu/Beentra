@@ -21,6 +21,8 @@ model User{
   avatarUrl    String?  //must add default profile picture
   pages Page[]
   oauthAccount OauthAccount[]
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
 }
 
 model Page{
