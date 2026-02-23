@@ -34,8 +34,7 @@ export function validateEnv() {
 
 export const registerSchema = z
   .object({
-    fname: z.string().min(2, "Required field"),
-    lname: z.string().min(2, "Required field"),
+    fullName: z.string().min(2, "Full name is required"),
     username: z
       .string()
       .min(3, "Min. 3 characters")
