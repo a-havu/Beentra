@@ -3,12 +3,19 @@ import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import LogoutButton from "./LogoutButton"
 import Link from 'next/link';
+import { getSession } from '@/lib/auth';
 
-interface avatar {
+
+interface avatarProps {
   avatar_url: string
+  userId : string
 }
 
-export function Avatar({ avatar_url }: avatar) {
+
+
+
+export function Avatar({ avatar_url, userId }: avatarProps) {
+  
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -35,7 +42,7 @@ export function Avatar({ avatar_url }: avatar) {
       {open && (
         <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-gray-800 rounded-lg z-50 p-2">
 
-          <Link href="/profile"> <button className="cursor-pointer">My Profile</button> </Link>
+          <Link href={`/profile/${userId}`}> <button className="cursor-pointer">My Profile</button> </Link>
           <Link href="/events"> <button className="cursor-pointer"> My Events</button> </Link>
           <Link href="/projects"><button className="cursor-pointer"> My Projects</button> </Link>
           <LogoutButton />
