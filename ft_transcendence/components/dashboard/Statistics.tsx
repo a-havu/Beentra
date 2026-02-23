@@ -28,14 +28,18 @@ export function Statistics() {
 	}, []);
 
 	return (
-		<div className="bg-gray-200 rounded-lg shadow p-12 text-center">
-			This will have the stats
-			<p>
-				Total number of Users: {userCount}
-			</p>
-			<p>
-				Total number of Events: {eventCount}
-			</p>
+		// Main container
+		<div className="bg-gray-100 rounded-lg p-6 flex gap-4">
+			{/* Single information box inside the main container */}
+			<div className=" flex-1 bg-white rounded-lg p-6">
+      			<p className="text-lg text-gray-600">Total Users</p>
+      			<p className="text-3xl font-bold text-gray-900">{userCount}</p>
+			</div>
+			{/* Box 2 - Events */}
+			<div className="flex-1 bg-white rounded-lg p-6">
+				<p className="text-lg text-gray-600">Total Events</p>
+				<p className="text-3xl font-bold text-gray-900">{eventCount}</p>
+			</div>
 		</div>
 	);
 }

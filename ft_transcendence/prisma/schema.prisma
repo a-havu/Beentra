@@ -24,10 +24,10 @@ model User{
 }
 
 model Page{
-  id           String         @id @default(cuid())
-  title String
-  text String
-  authorId String
+  id          String   @id @default(cuid())
+  title 	String
+  text 		String
+  authorId 	String
   author User @relation(fields:[authorId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
