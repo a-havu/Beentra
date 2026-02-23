@@ -24,7 +24,7 @@ export function RegistrationForm() {
     setServerError("");
 
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -53,26 +53,14 @@ export function RegistrationForm() {
         className="flex flex-col gap-4"
       >
         <div>
-          <label htmlFor="fname">First Name</label>
+          <label htmlFor="fullName">Full Name</label>
           <input
-            id="fname"
+            id="fullName"
             type="text"
-            {...register("fname")}
+            {...register("fullName")}
           />
-          {errors.fname && (
-            <p className="text-sm text-red-500">{errors.fname.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="lname">Last Name</label>
-          <input
-            id="lname"
-            type="text"
-            {...register("lname")}
-          />
-          {errors.lname && (
-            <p className="text-sm text-red-500">{errors.lname.message}</p>
+          {errors.fullName && (
+            <p className="text-sm text-red-500">{errors.fullName.message}</p>
           )}
         </div>
 
