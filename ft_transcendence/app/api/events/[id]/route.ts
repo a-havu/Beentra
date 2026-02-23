@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { eventSchema } from "@/lib/validation";
 
 export async function PUT(
   request: Request,
@@ -22,6 +23,14 @@ export async function PUT(
     if (body.description !== undefined) data.description = body.description;
     if (body.image !== undefined) data.image = body.image;
 
+    const result = eventSchema.safeParse(body);
+    if (!result.success) {
+      console.error("Validation errors:", result.error.issues);
+      return NextResponse.json(
+        { error: "Invalid input", details: result.error.issues },
+        { status: 400 }
+      );
+    }
     const updatedEvent = await prisma.event.update({
       where: { id },
       data,
