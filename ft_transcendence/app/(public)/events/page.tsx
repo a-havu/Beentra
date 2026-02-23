@@ -1,6 +1,7 @@
 import { EventsTable } from "@/components/dashboard/EventsTable";
 import CreateEvent from "@/components/events/CreateEvent";
 import Calendar from "@/components/events/Calendar";
+import AddEvent from "@/components/dashboard/AddEvent";
 // import DisplayEventList from "@/components/events/DisplayEventList";
 
 export const metadata = {
@@ -10,6 +11,7 @@ export const metadata = {
 export default function EventsPage() {
   return (
     <div className="w-full p-10">
+      <AddEvent />
       <div className="w-full max-w-6xl mx-auto">
         <Calendar />
       </div>

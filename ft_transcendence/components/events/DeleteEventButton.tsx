@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ConfirmationModal } from "../ui/ConfirmationModal";
+import { Button } from "../ui/Button";
 
 type Props = {
   id: string;
@@ -31,13 +32,13 @@ const DeleteEventButton = ({ id, onDeleted }: Props) => {
 
   return (
     <>
-      <button
-        //onClick={handleDelete}
-        onClick={() => setShowModal(true)}
-        className="bg-red-500 hover:bg-red-800 text-white px-4 py-2 rounded"
-      >
-        Delete
-      </button>
+	<Button
+		variant="delete"
+		onClick={() => setShowModal(true)}
+		size="medium"
+		>
+		Delete
+	</Button>
 
       <ConfirmationModal
         isOpen={showModal}

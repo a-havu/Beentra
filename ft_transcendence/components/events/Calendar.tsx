@@ -3,29 +3,48 @@
 import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { Event } from "@/lib/generated/prisma/client";
-// import interactionPlugin from "@fullcalendar/interaction";
 import { EventInput } from "@fullcalendar/core";
+import ShowEvent from "./ShowEvent";
+
+
+type EventAPI = Omit<
+  Event,
+  "date" | "timeFrom" | "timeTo" | "createdAt" | "updatedAt"
+> & {
+  date: string;
+  timeFrom: string;
+  timeTo: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export default function Calendar() {
   const [events, setEvents] = useState<EventInput[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchEvents() {
       const res = await fetch("/api/events");
-      const data: Event[] = await res.json();
+      const data: EventAPI[] = await res.json();
 
-      const formatted: EventInput[] = data.map((event) => ({
+      const parsed: Event[] = data.map((event) => ({
+        ...event,
+        date: new Date(event.date),
+        timeFrom: new Date(event.timeFrom),
+        timeTo: new Date(event.timeTo),
+        createdAt: new Date(event.createdAt),
+        updatedAt: new Date(event.updatedAt),
+      }));
+
+      const formatted: EventInput[] = parsed.map((event) => ({
         id: event.id,
         title: event.title,
         start: event.timeFrom,
         end: event.timeTo,
-        extendedProps: {
-          description: event.description,
-          location: event.location,
-          organizer: event.organizer,
-          image: event.image,
-        },
+        extendedProps: event,
       }));
 
       setEvents(formatted);
@@ -35,22 +54,28 @@ export default function Calendar() {
   }, []);
 
   return (
-    <FullCalendar
-      plugins={[dayGridPlugin]}
-      initialView="dayGridMonth"
-      events={events}
-      eventClick={(info) => {
-        const { description, location } = info.event.extendedProps as {
-          description?: string;
-          location?: string;
-        };
+    <>
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin]}
+        headerToolbar={{
+          left: "prev,next,today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek",
+        }}
+        initialView="timeGridWeek"
+        events={events}
+        eventClick={(info) => {
+          const eventData = info.event.extendedProps as Event;
+          setSelectedEvent(eventData);
+          setIsModalOpen(true);
+        }}
+      />
 
-        alert(
-          `${info.event.title}\n\n${description ?? ""}\n\nLocation: ${
-            location ?? ""
-          }`
-        );
-      }}
-    />
+      <ShowEvent
+        event={selectedEvent}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   );
 }
