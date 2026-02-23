@@ -1,11 +1,11 @@
 "use client";
 
 import EventForm from "./EventForm";
-import { schema } from "./EventForm";
+import { eventSchema } from "@/lib/validation";
 import { SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
-type FormValues = z.input<typeof schema>;
+type FormValues = z.input<typeof eventSchema>;
 
 export default function CreateEvent() {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {

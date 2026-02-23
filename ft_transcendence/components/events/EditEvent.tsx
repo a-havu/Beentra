@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import EventForm from "./EventForm";
-import { schema } from "./EventForm";
+import { eventSchema } from "@/lib/validation";
 import { z } from "zod";
 
-type FormValues = z.input<typeof schema>;
+type FormValues = z.input<typeof eventSchema>;
 
 type Props = {
   id: string;

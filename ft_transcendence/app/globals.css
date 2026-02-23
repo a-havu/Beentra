@@ -10,38 +10,97 @@
 
 html,
 body {
-    max-width: 100vw;
-    overflow-x: hidden;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
-    color: #000;
-    background: #fff;
+  color: #000;
+  background: #fff;
 }
 
 .dark body {
-    color: #fff;
-    background: #000;
+  color: #fff;
+  background: #000;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
-    }
+  html {
+    color-scheme: dark;
+  }
 }
 
 .general-form {
-    @apply flex flex-col gap-4;
+  @apply flex flex-col gap-4;
 }
 
-
 .dropdown-menu-logHeader {
-    width: 10rem;
-    height: 6rem;
-    @apply bg-gray-800 rounded-lg p-3 shadow-md;
+  width: 10rem;
+  height: 6rem;
+  @apply bg-gray-800 rounded-lg p-3 shadow-md;
+}
+
+/* =============================== */
+/*       MODERN CALENDAR STYLE     */
+/* =============================== */
+
+/* Toolbar */
+.fc-toolbar {
+  @apply mb-6 flex flex-wrap items-center justify-between gap-4;
+}
+
+.fc-toolbar-title {
+  @apply text-2xl font-semibold tracking-wide;
+}
+
+/* Buttons */
+.fc-button {
+  @apply rounded-full border-0 px-4 py-2 text-sm font-medium transition-all;
+}
+
+.fc-button-primary {
+  @apply bg-gray-900 text-white;
+}
+
+.fc-button:hover {
+  @apply scale-105 opacity-90;
+}
+
+/* Active button */
+.fc-button-active {
+  @apply bg-blue-600 text-white;
+}
+
+/* Calendar cells */
+.fc-daygrid-day {
+  @apply rounded-2xl border border-gray-200 p-2 transition-all;
+}
+
+/* Dark mode */
+.dark .fc-daygrid-day {
+  @apply border-gray-700;
+}
+
+/* Today */
+.fc-day-today {
+  @apply bg-blue-50 rounded-2xl;
+}
+
+.dark .fc-day-today {
+  @apply bg-blue-950;
+}
+
+/* Events */
+.fc-event {
+  @apply rounded-xl px-3 py-1 text-sm font-medium shadow-md transition-all;
+}
+
+/* Event hover */
+.fc-event:hover {
+  @apply scale-[1.03] opacity-95;
 }
