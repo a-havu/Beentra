@@ -8,13 +8,20 @@ import EditEvent from "../events/EditEvent";
 import { Button } from "../ui/Button";
 import FunctionalButtons from "./pages/FunctionalButtons";
 import AddEvent from "./AddEvent";
+import ShowEvent from "../events/ShowEvent";
 
 type Event = {
   id: string;
   title: string;
+  date: Date;
+  timeFrom: Date;
+  timeTo: Date;
   location: string;
   organizer: string;
-  description: string;
+  image: string | null;
+  description: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export function EventsTable() {
@@ -23,6 +30,8 @@ export function EventsTable() {
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [addingEvent, setAddingEvent] = useState(false);
+  const [showModal, setShowModal] = useState(false); //
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -80,14 +89,6 @@ export function EventsTable() {
           <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
 
           <AddEvent />
-          {/*}
-          <Button
-            variant="adding"
-            size="large"
-            onClick={() => setAddingEvent(true)}
-          >
-            Add event
-          </Button>*/}
         </div>
         <div>
           {/* Table header */}
@@ -114,11 +115,12 @@ export function EventsTable() {
 
             {/* Table Body */}
             <tbody className="divide-y divide-gray-200">
-              {events.map((event) => {
+              {events.map((event, index) => {
                 return (
-                  <tr key={event.id} className="hover:bg-gray-50 transition">
+                  <tr key={event.id} className="hover:bg-gray-50 transition cursor-pointer"
+				  onClick={() => setSelectedEvent(event)}>
                     <td className="px6 py-4 text-center text-sm text-gray-900">
-                      {event.id}
+                      {index + 1}
                     </td>
                     <td className="px6 py-4 text-center text-sm text-gray-600">
                       {event.title}
@@ -130,7 +132,10 @@ export function EventsTable() {
                       {event.organizer}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex gap-2">
+                      <div
+					  className="flex gap-2"
+					  onClick={(e) => e.stopPropagation()}
+					  >
                         <Button
                           variant="edit"
                           onClick={() => setEditingId(event.id)}
@@ -145,6 +150,11 @@ export function EventsTable() {
                             );
                           }}
                         />
+						{/* <ShowEvent
+							event={event}
+							isOpen={showModal}
+							onClose={() => setShowModal(false)}
+							/> */}
                       </div>
                     </td>
                   </tr>
@@ -154,6 +164,14 @@ export function EventsTable() {
           </table>
         </div>
       </div>
+	  {selectedEvent && (
+		<ShowEvent
+			event={selectedEvent}
+			isOpen={!!selectedEvent}
+			onClose={() => setSelectedEvent(null)}
+			/>
+	  )}
+
       {editingId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg w-full max-w-2xl relative">

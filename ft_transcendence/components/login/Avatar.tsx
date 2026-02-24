@@ -15,7 +15,7 @@ interface avatarProps {
 
 
 export function Avatar({ avatar_url, userId }: avatarProps) {
-  
+
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -29,7 +29,7 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
   }, [])
   return (
     <div className="relative z-150" ref={ref}>
-      <button onClick={() => setOpen(!open)}>
+      <button className='cursor-pointer' onClick={() => setOpen(!open)}>
         <Image
           src={avatar_url}
           alt='Avatar picture'

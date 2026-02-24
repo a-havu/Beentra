@@ -5,6 +5,7 @@ import AddUser from "./AddUser";
 
 type User = {
 	id: number;
+	username: string;
 	email: string;
 	role: string;
 	createdAt: string;
@@ -13,7 +14,7 @@ type User = {
 // The table component
 export function UsersTable() {
 
-	// Usestes for users, loading screen and for errors.
+	// Usestates for users, loading screen and for errors.
 	const [users, setUsers] = useState<User[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -83,22 +84,6 @@ export function UsersTable() {
 				<h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
 
 				<AddUser />
-				{/*}
-				<button className="p-4
-				 text-left
-				 px-4
-				 py-3
-				 bg-green-300
-				 border
-				 shadow-lg
-				 border-gray-300
-				 rounded-lg
-				 text-lg
-				 font-bold
-				 text-gray-900
-				 hover:bg-green-600
-				 hover:border-white
-				 hover:text-white transition">Add User</button>*/}
 			</div>
 			<div>
 				{/* Table header */}
@@ -106,19 +91,20 @@ export function UsersTable() {
 					<thead className="bg-gray-50 border-b-2 border-gray-200">
 						<tr>
 							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">ID</th>
+							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Username</th>
 							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Email</th>
 							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Role</th>
-							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Created At</th>
 							<th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Modify</th>
 						</tr>
 					</thead>
 
 					{/* Table Body */}
 					<tbody className="divide-y divide-gray-200">
-						{users.map((user) => {
+						{users.map((user, index) => {
 							return (
 								<tr key={user.id} className="hover:bg-gray-50 transition">
-									<td className="px-6 py-4 text-center text-sm text-gray-900">{user.id}</td>
+									<td className="px-6 py-4 text-center text-sm text-gray-900">{index + 1}</td>
+									<td className="px-6 py-4 text-center text-sm text-gray-900">{user.username}</td>
 									<td className="px-6 py-4 text-center text-sm text-gray-600">{user.email}</td>
 									<td className="px-6 py-4 text-center">
 										<span className={`px-3 py-1 rounded-full text-center text-xs font-semibold
@@ -128,7 +114,6 @@ export function UsersTable() {
 											{user.role}
 										</span>
 									</td>
-									<td className="px-6 py-4 text-center text-sm text-gray-600">{user.createdAt}</td>
 									<td className="px-6 py-4">
 										<div className="flex gap-2">
 											<button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
