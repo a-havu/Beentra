@@ -8,24 +8,27 @@ datasource db {
 }
 
 model User{
-  id           Int      @id @default(autoincrement())
-  fname        String
-  lname        String
+  id           String         @id @default(cuid())
+  fullName     String?
   username     String   @unique
-  phone        String   @unique
+  phone        String?   @unique
   email        String   @unique
-  passwordHash String
+  passwordHash String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  role         String   @default("user")
+  role         String   @default("admin")
+  avatarUrl    String?  //must add default profile picture
   pages Page[]
+  oauthAccount OauthAccount[]
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
 }
 
 model Page{
-  id Int @id @default(autoincrement())
-  title String
-  text String
-  authorId Int
+  id          String   @id @default(cuid())
+  title 	String
+  text 		String
+  authorId 	String
   author User @relation(fields:[authorId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -50,4 +53,18 @@ model Event {
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+
+model OauthAccount {
+  id             String   @id @default(cuid())
+  userId         String
+  provider       String   // 'github', 'google', etc.
+  providerUserId String   // github's user id
+  accessToken    String?
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerUserId]) // one record per provider per user
 }

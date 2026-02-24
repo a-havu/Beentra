@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { useEffect } from "react";
+import AddUser from "./AddUser";
 
 type User = {
 	id: number;
@@ -80,6 +81,9 @@ export function UsersTable() {
 		<div className="bg-white rounded-lg shadow p-5">
 			<div className="flex justify-between items-center mb-6">
 				<h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
+
+				<AddUser />
+				{/*}
 				<button className="p-4
 				 text-left
 				 px-4
@@ -94,7 +98,7 @@ export function UsersTable() {
 				 text-gray-900
 				 hover:bg-green-600
 				 hover:border-white
-				 hover:text-white transition">Add User</button>
+				 hover:text-white transition">Add User</button>*/}
 			</div>
 			<div>
 				{/* Table header */}
