@@ -16,8 +16,10 @@ export default async function ProfilePage({params}:{params:Promise<profilePagePa
     const {id} = await params
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${id}`)
+    if(!response.ok){
+        
+    }
     const userData:UserData = await response.json()
-
     return(
         <div>
             {`hello ${userData.email}`}
