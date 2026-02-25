@@ -68,3 +68,13 @@ model OauthAccount {
 
   @@unique([provider, providerUserId]) // one record per provider per user
 }
+
+
+model Project {
+	id				String
+	projectName		String
+	oneLiner		String
+	links			String?
+	techStack		String?
+	description		String?
+}

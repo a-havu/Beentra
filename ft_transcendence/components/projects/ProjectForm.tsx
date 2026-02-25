@@ -1,0 +1,75 @@
+'use client'
+
+import { useForm, SubmitHandler } from "react-hook-form";         
+import Input from "@/components/ui/Input";
+import { Button } from "../ui/Button";
+import { z } from "zod";
+import { projectSchema } from "@/lib/validation";
+
+
+type FormValues = z.input<typeof projectSchema>;
+
+type ProjectFormProps = {
+	onSubmit: SubmitHandler<FormValues>;
+};
+
+export default function ProjectForm({ onSubmit }: ProjectFormProps) {
+	const { register,
+		handleSubmit,
+		formState: { errors } } = useForm<FormValues>();
+	return (<form
+		onSubmit={handleSubmit(onSubmit)}>
+		<Input
+		label="Project Name"
+		name="projectName"
+		id="projectName"
+		type="text"
+		placeholder="Project name"
+		required={true}
+		register={register}
+		errors={errors}
+		 />
+		<Input
+		label="One Liner"
+		name="oneLiner"
+		id="oneLiner"
+		type="text"
+		placeholder="Short description"
+		required={true}
+		register={register}
+		errors={errors}
+		 />
+		<Input
+		label="Links"
+		name="links"
+		id="links"
+		type="text"
+		placeholder="github, website, etc."
+		required={false}
+		register={register}
+		errors={errors}
+		 />
+		<Input
+		label="Tech Stack"
+		name="techStack"
+		id="techStack"
+		type="text"
+		placeholder="Tech stack"
+		required={false}
+		register={register}
+		errors={errors}
+		 />
+		 <Input
+		label="Description"
+		name="description"
+		id="description"
+		type="text"
+		placeholder="Description"
+		required={false}
+		register={register}
+		errors={errors}
+		 />
+		 <Button type="submit"
+		 variant="adding">Create Project :)</Button>
+	</form>)
+}

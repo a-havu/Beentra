@@ -113,3 +113,12 @@ export const eventSchema = z
       path: ["timeTo"],
     }
   );
+
+
+export const projectSchema = z.object({
+  projectName: z.string().min(2, "Project name too short").max(50, "Project name too long"),
+  oneLiner: z.string().min(2, "One-liner too short").max(100, "One-liner too long"),
+  links: z.string().optional(),
+  techStack: z.string().optional(),
+  description: z.string().optional(),
+});
