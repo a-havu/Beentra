@@ -1,12 +1,10 @@
 
-
 "use client";
 import { useState } from "react";
 import { useEffect } from "react";
 import DeleteEventButton from "../events/DeleteEventButton";
 import EditEvent from "../events/EditEvent";
 import { Button } from "../ui/Button";
-import FunctionalButtons from "./pages/FunctionalButtons";
 import AddEvent from "./AddEvent";
 import ShowEvent from "../events/ShowEvent";
 
@@ -29,8 +27,6 @@ export function EventsTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [addingEvent, setAddingEvent] = useState(false);
-  const [showModal, setShowModal] = useState(false); //
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
@@ -118,7 +114,7 @@ export function EventsTable() {
               {events.map((event, index) => {
                 return (
                   <tr key={event.id} className="hover:bg-gray-50 transition cursor-pointer"
-				  onClick={() => setSelectedEvent(event)}>
+                    onClick={() => setSelectedEvent(event)}>
                     <td className="px6 py-4 text-center text-sm text-gray-900">
                       {index + 1}
                     </td>
@@ -133,9 +129,9 @@ export function EventsTable() {
                     </td>
                     <td className="px-6 py-4">
                       <div
-					  className="flex gap-2"
-					  onClick={(e) => e.stopPropagation()}
-					  >
+                        className="flex gap-2"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <Button
                           variant="edit"
                           onClick={() => setEditingId(event.id)}
@@ -150,11 +146,6 @@ export function EventsTable() {
                             );
                           }}
                         />
-						{/* <ShowEvent
-							event={event}
-							isOpen={showModal}
-							onClose={() => setShowModal(false)}
-							/> */}
                       </div>
                     </td>
                   </tr>
@@ -164,13 +155,13 @@ export function EventsTable() {
           </table>
         </div>
       </div>
-	  {selectedEvent && (
-		<ShowEvent
-			event={selectedEvent}
-			isOpen={!!selectedEvent}
-			onClose={() => setSelectedEvent(null)}
-			/>
-	  )}
+      {selectedEvent && (
+        <ShowEvent
+          event={selectedEvent}
+          isOpen={!!selectedEvent} // Turns the value to a boolean and then checks if its true or not (is there event or not)
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
 
       {editingId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
