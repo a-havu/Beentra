@@ -12,11 +12,11 @@ export async function PUT(request: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { id: session?.userId },
     });
-    if(!user)
+    if (!user)
       return NextResponse.json({ error: "cannot find the user id" }, { status: 400 });
     if (user.twoFactorEnabled)
-        return NextResponse.json({ error: "already verified" }, { status: 400 });
-      
+      return NextResponse.json({ error: "already verified" }, { status: 400 });
+
     if (!user.twoFactorSecret)
       return NextResponse.json({ error: "no tfa secret stored" }, { status: 400 });
 
