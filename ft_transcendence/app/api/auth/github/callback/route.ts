@@ -120,7 +120,6 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  console.log('user:', user.id, 'twoFactorEnabled:', user.twoFactorEnabled);
 
 
   if (user.twoFactorEnabled) {
