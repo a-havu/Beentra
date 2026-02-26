@@ -1,19 +1,24 @@
-'use client'
-
-import { useSearchParams } from "next/navigation";
-import VerifyTfa from "@/components/login/VerifyTfa";
-
+"use client";
+import { useSearchParams, useRouter } from "next/navigation";
+import TfaCodeInput from "@/components/login/TfaCodeInput";
 
 export default function VerifyLogin() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
-
+  const token = searchParams.get("token");
   if (!token) return <p>Invalid or expired link.</p>;
-
   return (
     <>
-      <h2>verify code:</h2>
-      <VerifyTfa token={token} />
+      <h2>Verify code:</h2>
+      <TfaCodeInput
+        temptoken={token}
+        apiUrl="/api/auth/2fa/verify"
+        method="POST"
+        onSuccess={async () => {
+          await router.refresh();
+          router.push("/");
+        }}
+      />
     </>
   );
 }

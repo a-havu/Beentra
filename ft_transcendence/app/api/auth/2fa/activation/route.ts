@@ -13,12 +13,18 @@ export async function PUT(request: NextRequest) {
       where: { id: session?.userId },
     });
     if (!user)
-      return NextResponse.json({ error: "cannot find the user id" }, { status: 400 });
+      return NextResponse.json(
+        { error: "cannot find the user id" },
+        { status: 400 },
+      );
     if (user.twoFactorEnabled)
       return NextResponse.json({ error: "already verified" }, { status: 400 });
 
     if (!user.twoFactorSecret)
-      return NextResponse.json({ error: "no tfa secret stored" }, { status: 400 });
+      return NextResponse.json(
+        { error: "no tfa secret stored" },
+        { status: 400 },
+      );
 
     const isValid = await verify({ secret: user.twoFactorSecret, token: code });
 
@@ -34,6 +40,9 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (e) {
     console.log(e);
-    return NextResponse.json({ error: e }, { status: 400 });
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Something went wrong" },
+      { status: 500 },
+    );
   }
 }
