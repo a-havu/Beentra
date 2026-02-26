@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     const { code, temptoken } = await request.json();
 
-    if (!code || code.length !== 6)
+    if (!code || code.length !== 6 || !temptoken)
       return NextResponse.json(
         { error: "Code must be 6 digits" },
         { status: 400 },
@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24,
     });
 
+    response.cookies.delete('tfa-temp-token');
     return response;
   } catch (e) {
     console.log(e);
