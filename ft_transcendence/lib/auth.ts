@@ -29,6 +29,14 @@ export async function createToken(payload: TokenPayload): Promise<string> {
     .sign(secret);
 }
 
+export async function createTempToken(payload: { userId: string }): Promise<string> {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("5m")
+    .sign(secret);
+}
+
 export async function verifyToken(token: string): Promise<Session | null> {
   try {
     const { payload } = await jwtVerify(token, secret);

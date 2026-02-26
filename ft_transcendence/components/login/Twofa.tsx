@@ -2,47 +2,53 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import VerifyTfa from "./VerifyTfa";
-interface twoFaProps {
+import TfaCodeInput from "./TfaCodeInput";
+
+interface TwoFaProps {
   status: boolean;
 }
 
-export default function Twofa({ status }: twoFaProps) {
-  const [twofaStatus, settwofaStatus] = useState(status);
+export default function Twofa({ status }: TwoFaProps) {
+  const [twofaStatus, setTwofaStatus] = useState(status);
   const [qrCode, setQrCode] = useState<string | null>(null);
 
-  const handleStatus = async () => {
-    try{
-        if (!twofaStatus) {
-          const response = await fetch("/api/auth/2fa/setup");
-          if(!response.ok)
-            throw new Error('Fetching data failed')
-
-          const data = await response.json();
-          setQrCode(data.qrCode);
-        }
-        else {
-            const response = await fetch("/api/auth/2fa/setup", {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                twoFactorEnabled: false,
-                twoFactorSecret: null,
-              }),
-            });
-            if (!response.ok) {
-              throw new Error("failed to deactivate 2fa");
-            }
-            setQrCode(null);
-            settwofaStatus(false);
-            }
-        }catch (e) {
-        console.log("error while deactivating 2fa:", e);
-      }
+  const enableTwoFactor = async () => {
+    try {
+      const response = await fetch("/api/auth/2fa/setup");
+      if (!response.ok) throw new Error("Fetching data failed");
+      const data = await response.json();
+      setQrCode(data.qrCode);
+    } catch (e) {
+      console.log("Error while activating 2fa:", e);
     }
-  
+  };
+
+  const disableTwoFactor = async () => {
+    try {
+      const response = await fetch("/api/auth/2fa/setup", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          twoFactorEnabled: false,
+          twoFactorSecret: null,
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to deactivate 2fa");
+      setQrCode(null);
+      setTwofaStatus(false);
+    } catch (e) {
+      console.log("Error while deactivating 2fa:", e);
+    }
+  };
+
+  const handleStatus = async () => {
+    if (!twofaStatus) {
+      await enableTwoFactor();
+    } else {
+      await disableTwoFactor();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-row gap-4">
@@ -54,13 +60,17 @@ export default function Twofa({ status }: twoFaProps) {
       {qrCode && (
         <div>
           <p>
-            scan this code with Authenticator App like Google Authenticator
+            Scan this code with an Authenticator app like Google Authenticator
           </p>
-          <Image src={qrCode} alt="Qr Code" width={200} height={200} />
-          <VerifyTfa onSuccess={()=>{
-               settwofaStatus(true);
-      setQrCode(null);
-          }}/>
+          <Image src={qrCode} alt="QR Code" width={200} height={200} />
+          <TfaCodeInput
+            apiUrl="/api/auth/2fa/activation"
+            method="PUT"
+            onSuccess={() => {
+              setTwofaStatus(true);
+              setQrCode(null);
+            }}
+          />
         </div>
       )}
     </div>
