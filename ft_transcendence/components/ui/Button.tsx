@@ -39,7 +39,7 @@ export function Button({
     <button
 	type={type}
 	onClick={onClick}
-	className={`rounded-lg transition ${buttonStyle} ${buttonSize}`}
+	className={`rounded-lg transition cursor-pointer ${buttonStyle} ${buttonSize}`}
 	>
       {children}
     </button>

@@ -6,6 +6,7 @@ import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
 import PageForm from "./pages/PageForm";
 import WelcomeView from "./WelcomeView";
+import FetchPages from "./pages/FetchPages";
 
 export function DashboardContent({ userEmail }: { userEmail: string }) {
   const [activeView, setActiveView] = useState("welcome");
@@ -23,6 +24,7 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
         {activeView === "events" && <EventsTable />}
         {activeView === "projects" && <p>Projects section!</p>}
         {activeView === "add-page" && <PageForm initialData={null} />}
+		{/* {activeView === "pages" && <FetchPages />} */}
       </main>
     </div>
   );
