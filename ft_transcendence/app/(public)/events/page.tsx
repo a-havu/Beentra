@@ -12,7 +12,7 @@ export default function EventsPage() {
   return (
     <div className="w-full p-10">
       <AddEvent />
-      <div className="w-full max-w-6xl mx-auto">
+      <div className="w-full max-w-4xl mx-auto h-full max-h-4xl">
         <Calendar />
       </div>
     </div>

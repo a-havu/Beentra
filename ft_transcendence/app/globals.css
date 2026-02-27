@@ -46,61 +46,58 @@ a {
 }
 
 /* =============================== */
-/*       MODERN CALENDAR STYLE     */
+/*       FULLCALENDAR STYLE     */
 /* =============================== */
 
-/* Toolbar */
-.fc-toolbar {
-  @apply mb-6 flex flex-wrap items-center justify-between gap-4;
+.fc .fc-timegrid-event,
+.fc .fc-daygrid-event {
+  @apply text-black rounded-xl px-3 py-1 text-sm font-medium transition-all shadow-md;
+  background: linear-gradient(145deg, #ffffff 0%, #f5f5f5 40%, #f6f6f6 100%);
+
+  border: none;
 }
 
-.fc-toolbar-title {
-  @apply text-2xl font-semibold tracking-wide;
+.fc .fc-scrollgrid {
+  @apply rounded-xl overflow-hidden;
 }
 
-/* Buttons */
-.fc-button {
-  @apply rounded-full border-0 px-4 py-2 text-sm font-medium transition-all;
+.fc {
+  --fc-event-text-color: #3f3f3f;
+  --fc-button-bg-color: transparent;
+  --fc-button-text-color: #3f3f3f;
+  --fc-button-border-color: #3f3f3f;
+  --fc-button-active-bg-color: #dbdbdb;
+  --fc-button-hover-bg-color: #f3f4f6; /* light gray */
+  --fc-button-hover-border-color: #f6663e;
+  --fc-button-active-bg-color: #e5e7eb;
+  --fc-border-color: rgba(0, 0, 0, 0.03);
 }
 
-.fc-button-primary {
-  @apply bg-gray-900 text-white;
-}
-
-.fc-button:hover {
-  @apply scale-105 opacity-90;
-}
-
-/* Active button */
-.fc-button-active {
-  @apply bg-blue-600 text-white;
-}
-
-/* Calendar cells */
-.fc-daygrid-day {
-  @apply rounded-2xl border border-gray-200 p-2 transition-all;
-}
-
-/* Dark mode */
-.dark .fc-daygrid-day {
-  @apply border-gray-700;
-}
-
-/* Today */
-.fc-day-today {
-  @apply bg-blue-50 rounded-2xl;
-}
-
-.dark .fc-day-today {
-  @apply bg-blue-950;
-}
-
-/* Events */
-.fc-event {
-  @apply rounded-xl px-3 py-1 text-sm font-medium shadow-md transition-all;
-}
-
-/* Event hover */
 .fc-event:hover {
   @apply scale-[1.03] opacity-95;
+}
+
+.fc .fc-col-header {
+  @apply font-normal text-sm text-gray-600;
+}
+
+/* Scroll container inside calendar */
+.fc .fc-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Webkit browsers */
+.fc .fc-scroller::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.fc .fc-scroller::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 9999px;
+}
+
+.fc .fc-scroller::-webkit-scrollbar-track {
+  background: transparent;
 }

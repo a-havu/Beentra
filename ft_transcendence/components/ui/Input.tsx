@@ -21,6 +21,8 @@ export default function Input({
   register,
   errors,
 }: inputTypes) {
+  const errorMessage = errors?.[name]?.message;
+
   return (
     <div className="flex flex-row gap-2">
       <label htmlFor={id}>{label}</label>
@@ -30,10 +32,8 @@ export default function Input({
         type={type}
         placeholder={placeholder}
       />
-      {errors?.[name] && (
-        <p style={{ color: "red", fontSize: "14px" }}>
-          {errors[name]?.message as string}
-        </p>
+      {typeof errorMessage === "string" && (
+        <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>
       )}
     </div>
   );
