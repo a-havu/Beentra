@@ -84,9 +84,9 @@ function ShowUser({ user, isOpen, onClose }: UserProps) {
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				<Button variant="edit" onClick={onClose}>
+				{/* <Button variant="edit" onClick={onClose}>
 					Edit
-				</Button>
+				</Button> */}
 				<Button variant="secondary" onClick={onClose}>
 					Close
 				</Button>

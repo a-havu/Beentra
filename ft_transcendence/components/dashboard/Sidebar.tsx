@@ -40,6 +40,13 @@ export function Sidebar({
         >
           Projects
       </Button>
+	  <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("pages")}
+        >
+          Pages
+      </Button>
       <Button
         variant="sidebar"
         size="medium"

@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import AddUser from "./AddUser";
 import ShowUser from "./ShowUser";
+import DeleteUser from "./DeleteUser";
 
 type User = {
-	id: number;
+	id: string;
 	username: string;
 	email: string;
 	role: string;
@@ -107,7 +108,7 @@ export function UsersTable() {
 						<tbody className="divide-y divide-gray-200">
 							{users.map((user, index) => {
 								return (
-									<tr key={user.id} className="hover:bg-gray-50 transition"
+									<tr key={user.id} className="hover:bg-gray-50 transition cursor-pointer"
 										onClick={() => setSelectedUser(user)}>
 										<td className="px-6 py-4 text-center text-sm text-gray-900">{index + 1}</td>
 										<td className="px-6 py-4 text-center text-sm text-gray-900">{user.username}</td>
@@ -121,13 +122,23 @@ export function UsersTable() {
 											</span>
 										</td>
 										<td className="px-6 py-4">
-											<div className="flex gap-2">
+											<div className="flex gap-2"
+											onClick={(e) => e.stopPropagation()}
+											>
 												<button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
 													Edit
 												</button>
-												<button className="px-3 py-1 bg-red-500 text-center text-white rounded hover:bg-red-600 text-sm">
+												<DeleteUser
+													id={user.id}
+													onDeleted={() => {
+														setUsers((prev) =>
+															prev.filter((e) => e.id !== users.id)
+													);
+													}}
+													/>
+												{/* <button className="px-3 py-1 bg-red-500 text-center text-white rounded hover:bg-red-600 text-sm">
 													Delete
-												</button>
+												</button> */}
 											</div>
 										</td>
 									</tr>
