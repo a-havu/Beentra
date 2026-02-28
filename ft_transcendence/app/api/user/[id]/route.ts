@@ -8,9 +8,9 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    const {id} = await params;
+    const { id } = await params;
     const user = await prisma.user.findUnique({
-      where: { id: id}
+      where: { id: id },
     });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -59,7 +59,7 @@ export async function PUT(
     // Update the user
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: updateData
+      data: updateData,
     });
 
     return NextResponse.json(updatedUser);
@@ -77,31 +77,30 @@ export async function PUT(
 // DELETE a user
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const userId = parseInt(params.id);
-
     // Check if user exists
+    const { id } = await params;
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id },
     });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Prevent deleting admin users
-    if (user.role === "admin") {
-      return NextResponse.json(
-        { error: "Cannot delete admin users" },
-        { status: 403 },
-      );
-    }
+    // // Prevent deleting admin users
+    // if (user.role === "admin") {
+    //   return NextResponse.json(
+    //     { error: "Cannot delete admin users" },
+    //     { status: 403 },
+    //   );
+    // }
 
     // Delete the user
     await prisma.user.delete({
-      where: { id: userId },
+      where: { id },
     });
 
     return NextResponse.json(

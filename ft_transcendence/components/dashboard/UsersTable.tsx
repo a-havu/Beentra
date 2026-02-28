@@ -2,21 +2,27 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import AddUser from "./AddUser";
+import ShowUser from "./ShowUser";
+import DeleteUser from "./DeleteUser";
 
 type User = {
-	id: number;
+	id: string;
+	username: string;
 	email: string;
 	role: string;
+	fullName?: string | null;
+	phone?: string | null;
 	createdAt: string;
 }
 
 // The table component
 export function UsersTable() {
 
-	// Usestes for users, loading screen and for errors.
+	// Usestates for users, loading screen and for errors.
 	const [users, setUsers] = useState<User[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
 	useEffect(() => {
 		// Function to fetch users from API
@@ -78,73 +84,79 @@ export function UsersTable() {
 	}
 
 	return (
-		<div className="bg-white rounded-lg shadow p-5">
-			<div className="flex justify-between items-center mb-6">
-				<h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
+		<>
+			<div className="bg-white rounded-lg shadow p-5">
+				<div className="flex justify-between items-center mb-6">
+					<h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
 
-				<AddUser />
-				{/*}
-				<button className="p-4
-				 text-left
-				 px-4
-				 py-3
-				 bg-green-300
-				 border
-				 shadow-lg
-				 border-gray-300
-				 rounded-lg
-				 text-lg
-				 font-bold
-				 text-gray-900
-				 hover:bg-green-600
-				 hover:border-white
-				 hover:text-white transition">Add User</button>*/}
-			</div>
-			<div>
-				{/* Table header */}
-				<table className="w-full">
-					<thead className="bg-gray-50 border-b-2 border-gray-200">
-						<tr>
-							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">ID</th>
-							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Email</th>
-							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Role</th>
-							<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Created At</th>
-							<th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Modify</th>
-						</tr>
-					</thead>
+					<AddUser />
+				</div>
+				<div>
+					{/* Table header */}
+					<table className="w-full">
+						<thead className="bg-gray-50 border-b-2 border-gray-200">
+							<tr>
+								<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">ID</th>
+								<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Username</th>
+								<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Email</th>
+								<th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">Role</th>
+								<th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Modify</th>
+							</tr>
+						</thead>
 
-					{/* Table Body */}
-					<tbody className="divide-y divide-gray-200">
-						{users.map((user) => {
-							return (
-								<tr key={user.id} className="hover:bg-gray-50 transition">
-									<td className="px-6 py-4 text-center text-sm text-gray-900">{user.id}</td>
-									<td className="px-6 py-4 text-center text-sm text-gray-600">{user.email}</td>
-									<td className="px-6 py-4 text-center">
-										<span className={`px-3 py-1 rounded-full text-center text-xs font-semibold
+						{/* Table Body */}
+						<tbody className="divide-y divide-gray-200">
+							{users.map((user, index) => {
+								return (
+									<tr key={user.id} className="hover:bg-gray-50 transition cursor-pointer"
+										onClick={() => setSelectedUser(user)}>
+										<td className="px-6 py-4 text-center text-sm text-gray-900">{index + 1}</td>
+										<td className="px-6 py-4 text-center text-sm text-gray-900">{user.username}</td>
+										<td className="px-6 py-4 text-center text-sm text-gray-600">{user.email}</td>
+										<td className="px-6 py-4 text-center">
+											<span className={`px-3 py-1 rounded-full text-center text-xs font-semibold
 											${user.role === 'admin'
-												? 'bg-purple-100 text-purple-800'
-												: 'bg-blue-100 text-blue-800'}`}>
-											{user.role}
-										</span>
-									</td>
-									<td className="px-6 py-4 text-center text-sm text-gray-600">{user.createdAt}</td>
-									<td className="px-6 py-4">
-										<div className="flex gap-2">
-											<button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
-												Edit
-											</button>
-											<button className="px-3 py-1 bg-red-500 text-center text-white rounded hover:bg-red-600 text-sm">
-												Delete
-											</button>
-										</div>
-									</td>
-								</tr>
-							)
-						})}
-					</tbody>
-				</table>
+													? 'bg-purple-100 text-purple-800'
+													: 'bg-blue-100 text-blue-800'}`}>
+												{user.role}
+											</span>
+										</td>
+										<td className="px-6 py-4">
+											<div className="flex gap-2"
+											onClick={(e) => e.stopPropagation()}
+											>
+												<button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
+													Edit
+												</button>
+												<DeleteUser
+													id={user.id}
+													onDeleted={() => {
+														setUsers((prev) =>
+															prev.filter((e) => e.id !== users.id)
+													);
+													}}
+													/>
+												{/* <button className="px-3 py-1 bg-red-500 text-center text-white rounded hover:bg-red-600 text-sm">
+													Delete
+												</button> */}
+											</div>
+										</td>
+									</tr>
+								)
+							})}
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
+			{
+				selectedUser && (
+					<ShowUser
+						user={selectedUser}
+						isOpen={!!selectedUser}
+						onClose={() => setSelectedUser(null)}
+					/>
+				)
+			}
+		</>
 	);
 }

@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validation";
-import bcrypt from 'bcryptjs'
-
+import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
   try {
@@ -57,7 +56,6 @@ export async function POST(request: Request) {
   }
 }
 
-
 export async function GET() {
   try {
     const users = await prisma.user.findMany({
@@ -67,19 +65,21 @@ export async function GET() {
         role: true,
         createdAt: true,
         updatedAt: true,
-        passwordHash: false
+        passwordHash: false,
+        username: true,
+        fullName: true,
       },
       orderBy: {
-        createdAt: "desc"
-      }
-    })
-    return NextResponse.json(users)
+        createdAt: "desc",
+      },
+    });
+    return NextResponse.json(users);
   } catch (error) {
-    console.error('Error fetching users:', error)
+    console.error("Error fetching users:", error);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    )
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 

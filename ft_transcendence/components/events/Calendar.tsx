@@ -8,7 +8,6 @@ import { Event } from "@/lib/generated/prisma/client";
 import { EventInput } from "@fullcalendar/core";
 import ShowEvent from "./ShowEvent";
 
-
 type EventAPI = Omit<
   Event,
   "date" | "timeFrom" | "timeTo" | "createdAt" | "updatedAt"
@@ -63,6 +62,7 @@ export default function Calendar() {
           right: "dayGridMonth,timeGridWeek",
         }}
         initialView="timeGridWeek"
+        allDaySlot={false}
         events={events}
         eventClick={(info) => {
           const eventData = info.event.extendedProps as Event;
