@@ -31,6 +31,7 @@ export default function Input({
         id={id}
         type={type}
         placeholder={placeholder}
+        required={required}
       />
       {typeof errorMessage === "string" && (
         <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>

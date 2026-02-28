@@ -1,5 +1,8 @@
 import Input from "../ui/Input";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+
 
 interface TfaCodeInputProps {
   onSuccess: () => void;
@@ -7,6 +10,11 @@ interface TfaCodeInputProps {
   method: "PUT" | "POST";
   temptoken?: string;
 }
+const zodSchema = z.object({
+  code: z.string().length(6, { message: "Code must be exactly 6 digits" }).regex(/^\d+$/, { message: "Code must be digits" })
+})
+
+type FormData = z.infer<typeof zodSchema>
 
 export default function TfaCodeInput({
   onSuccess,
@@ -14,12 +22,16 @@ export default function TfaCodeInput({
   method,
   temptoken,
 }: TfaCodeInputProps) {
+
+
+
+
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<{ code: string }>();
+  } = useForm<FormData>({ resolver: zodResolver(zodSchema) });
 
   const checkCode = async ({ code }: { code: string }) => {
     try {
@@ -50,6 +62,7 @@ export default function TfaCodeInput({
         register={register}
         errors={errors}
       />
+
       <button type="submit">Submit</button>
     </form>
   );

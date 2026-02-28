@@ -69,4 +69,14 @@ i have created the forms using formdata, and actions.
 after all done, i tried to use Tiptab as a rich text editor for pages. so we can edit.
 
 
+# oauth
+for oAuth done manually without any extra libraries, if the user is created before it will merge the login by oauth tothe user, if it is not then it will create new user.
 
+
+# 2fa
+fot 2fa i used otplib then have 3 apis for activation, verfiction and setup.
+
+
+# for zod validation
+i created a file in types, with name of zod schemas, and also i take the type from it, so there is no need to create interface for typescript again.
+export type loginFormTypes = z.infer<typeof loginZodSchema> // this will create the types also from zod object so no need to re declare it again

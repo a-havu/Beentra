@@ -120,12 +120,18 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  console.log('user:', user.id, 'twoFactorEnabled:', user.twoFactorEnabled);
 
 
   if (user.twoFactorEnabled) {
     const tempToken = await createTempToken({ userId: user.id });
-    return NextResponse.redirect(new URL(`/logintfa?token=${tempToken}`, request.url));
+    const response = NextResponse.redirect(new URL('/logintfa', request.url));
+    response.cookies.set('tfa-temp-token', tempToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: 60 * 5,
+      path: '/',
+    });
+    return response;
   }
 
   const token = await createToken({
