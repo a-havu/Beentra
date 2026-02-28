@@ -17,7 +17,7 @@ model User{
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   role         String   @default("admin")
-  avatarUrl    String?  //must add default profile picture
+  avatarUrl    String?  @default("/default-profile-picture.jpg")
   pages Page[]
   oauthAccount OauthAccount[]
   twoFactorEnabled Boolean @default(false)
