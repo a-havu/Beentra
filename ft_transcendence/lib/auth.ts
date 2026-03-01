@@ -18,7 +18,7 @@ interface TokenPayload extends JWTPayload {
   userId: string
   email: string
   role: string
-  avatar_url: string
+  avatar_url: string | null
 }
 
 export async function createToken(payload: TokenPayload): Promise<string> {
