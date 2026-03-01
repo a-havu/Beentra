@@ -32,10 +32,11 @@ export function LoginForm() {
         }),
       })
       if (response.ok) {
-        router.refresh();
-        router.push('/');
+        const responseData = await response.json();
+        router.push(responseData.twoFactor ? '/logintfa' : '/');
       } else {
-        console.log('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
     } catch (error) {
       console.error('Error:', error);

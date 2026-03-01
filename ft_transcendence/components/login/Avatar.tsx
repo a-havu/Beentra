@@ -8,7 +8,7 @@ import { getSession } from '@/lib/auth';
 
 interface avatarProps {
   avatar_url: string
-  userId : string
+  userId: string
 }
 
 
@@ -31,7 +31,7 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
     <div className="relative z-150" ref={ref}>
       <button className='cursor-pointer' onClick={() => setOpen(!open)}>
         <Image
-          src={avatar_url}
+          src={avatar_url || '/default-profile-picture.jpg'}
           alt='Avatar picture'
           width={32}
           height={32}

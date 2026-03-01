@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { createToken } from '@/lib/auth';
 import bcrypt from 'bcryptjs'
 import { loginZodSchema } from '@/types/zodScemas'
+import { createTempToken } from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
@@ -34,6 +35,14 @@ export async function POST(request: Request) {
       }, { status: 401 })
     }
 
+    if (!result.passwordHash) {
+      return NextResponse.json({
+        success: false,
+        message: "your are not registed by credintials please user github or other providers"
+      }, { status: 401 })
+    }
+
+
     const isValid = await bcrypt.compare(password, result.passwordHash)
     if (!isValid) {
       return NextResponse.json({
@@ -42,9 +51,24 @@ export async function POST(request: Request) {
       }, { status: 401 })
     }
 
+    if (result.twoFactorEnabled) {
+      const tempToken = await createTempToken({ userId: result.id });
+      const response = NextResponse.json({
+        sucess: true, twoFactor: true
+      }, { status: 200 })
+      response.cookies.set('tfa-temp-token', tempToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 60 * 5,
+        path: '/',
+      });
+      return response;
+    }
+
     const token = await createToken({
-      userId: result.id, email: result.email, role: result.role, avatar_url: "/avatar.png"
+      userId: result.id, email: result.email, role: result.role, avatar_url: result.avatarUrl,
     })
+
 
     const response = NextResponse.json({ success: true, message: "you are logged in", token: token }, { status: 200 })
 
