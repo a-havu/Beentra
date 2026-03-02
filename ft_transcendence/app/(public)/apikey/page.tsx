@@ -12,7 +12,7 @@ export default function ApiKeyPage(){
         resolver : zodResolver(UserEmailZodSchema)
     })
     
-    const onSubmit=async (data:{email:string})=>{
+    const onSubmit=async (data:EmailInputType)=>{
         const response = await fetch('/api/apikey',{
             method:'POST',
             headers:{
@@ -22,15 +22,13 @@ export default function ApiKeyPage(){
         }
 
         )
-        console.log("test", response)
-
     }
 
     return(<>
     <h3>API KEY generating page</h3>
     <p>welcome to our publi api</p>
     <form onSubmit={handleSubmit(onSubmit)}>
-        <Input label='your email' placeholder='enter your Email' id='userEmail' required  type='email' {...register("userEmail")}/>
+        <Input label='your email' name ="userEmail" placeholder='enter your Email' id='userEmail' required  type='email' register={register}/>
         <p><span className="bg-red-600">{errors?.userEmail?.message}</span></p>
         <button>Submit</button>
     </form>

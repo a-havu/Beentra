@@ -68,3 +68,10 @@ model OauthAccount {
 
   @@unique([provider, providerUserId]) // one record per provider per user
 }
+
+
+model apikey{
+  id             String   @id @default(cuid())
+  email           String
+  key             String
+}
