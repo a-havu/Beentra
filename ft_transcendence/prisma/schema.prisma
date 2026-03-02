@@ -72,6 +72,8 @@ model OauthAccount {
 
 model apikey{
   id             String   @id @default(cuid())
-  email           String
-  key             String
+  email           String @unique
+  key             String @unique
+   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
