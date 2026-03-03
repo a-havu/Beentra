@@ -17,7 +17,7 @@ export default function ApiKeyPage() {
       const response = await fetch('/api/apikey', {
         method: 'POST',
         headers: {
-          'content-type': 'text/javascript',
+          'content-type': 'application/json',
         },
         body: JSON.stringify(data),
       }

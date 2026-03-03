@@ -1,40 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
+import crypto from 'crypto'
 import { prisma } from "@/lib/prisma";
-
+import { apikeyEmail } from '@/lib/nodemailer'
 
 export async function POST(request: NextRequest) {
   try {
 
     const { userEmail } = await request.json()
-    const hashedKey = await bcrypt.hash(userEmail, 10)
+    const apiKey = crypto.randomBytes(32).toString('hex')
 
-    const existedEmail = await prisma.apikey.findUnique({
-      where: { email: userEmail }
-    })
-    if (existedEmail) {
-      return NextResponse.json(
-        { error: 'this email already asked for api before' }, { status: 400 }
-      )
-    }
-
-    const newKey = await prisma.apikey.create({
-      data: {
+    await prisma.apikey.upsert({
+      where: { email: userEmail },
+      update: {
+        key: apiKey,
+      },
+      create: {
         email: userEmail,
-        key: hashedKey
+        key: apiKey,
       }
     })
-
-    if (!newKey) {
-      return NextResponse.json(
-        { error: "error while storing apikey" },
-        { status: 400 },)
-    }
-
+    await apikeyEmail({ email: userEmail, apikey: apiKey })
 
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (e) {
-
+    console.log('Error:', e)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 
 }
