@@ -1,10 +1,18 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer'
 
-const resend = new Resend('re_JQVh5tLz_2SsVGMR6qHTeDqMt37xcg2yT');
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD
+  }
+})
 
-resend.emails.send({
-  from: 'onboarding@resend.dev',
-  to: 'mohammad.khlouf@gmail.com',
-  subject: 'Hello World',
-  html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
-});
+export async function apikeyEmail(data: { email: string, apikey: string }): Promise<void> {
+  await transporter.sendMail({
+    from: process.env.GMAIL_USER,
+    to: data.email,
+    subject: 'Beentra public API key',
+    html: `<p>Here is your public API key:</p> <p>${data.apikey}</p>`
+  })
+}
