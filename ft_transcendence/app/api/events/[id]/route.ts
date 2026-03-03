@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { eventSchema } from "@/lib/validation";
+import { eventSchemaServer } from "@/lib/validation";
 
 export async function PUT(
   request: Request,
@@ -10,30 +10,29 @@ export async function PUT(
     const { id } = await context.params;
     const body = await request.json();
 
-    const data: any = {};
-    if (body.title !== undefined) data.title = body.title;
-    if (body.date !== undefined) data.date = new Date(body.date);
-    const datePart = body.date.split("T")[0];
-    if (body.timeFrom !== undefined)
-      data.timeFrom = new Date(`${datePart}T${body.timeFrom}:00`);
-    if (body.timeTo !== undefined)
-      data.timeTo = new Date(`${datePart}T${body.timeTo}:00`);
-    if (body.location !== undefined) data.location = body.location;
-    if (body.organizer !== undefined) data.organizer = body.organizer;
-    if (body.description !== undefined) data.description = body.description;
-    if (body.image !== undefined) data.image = body.image;
-
-    const result = eventSchema.safeParse(body);
+    const result = eventSchemaServer.safeParse(body);
     if (!result.success) {
-      console.error("Validation errors:", result.error.issues);
       return NextResponse.json(
         { error: "Invalid input", details: result.error.issues },
         { status: 400 }
       );
     }
+
+    const { title, date, timeFrom, timeTo, location, organizer, image, description } = result.data;
+    const datePart = date.toISOString().split("T")[0];
+
     const updatedEvent = await prisma.event.update({
       where: { id },
-      data,
+      data: {
+        title,
+        date,
+        timeFrom: new Date(`${datePart}T${timeFrom}:00`),
+        timeTo: new Date(`${datePart}T${timeTo}:00`),
+        location,
+        organizer,
+        image: image ?? null,
+        description: description ?? "",
+      },
     });
 
     return NextResponse.json(updatedEvent);
