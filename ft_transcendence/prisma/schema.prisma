@@ -22,6 +22,8 @@ model User{
   oauthAccount OauthAccount[]
   twoFactorEnabled Boolean @default(false)
   twoFactorSecret  String?
+  createdEvents      Event[]             @relation("EventCreator")
+  eventSubscriptions EventSubscription[]
 }
 
 model Page{
@@ -43,6 +45,7 @@ enum Role {
 model Event {
   id          String   @id @default(cuid())
   title       String
+  type        String   @default("Student")
   date        DateTime
   timeFrom    DateTime
   timeTo      DateTime
@@ -50,9 +53,24 @@ model Event {
   organizer   String
   image       String?
   description String?
+  maxSpots    Int      @default(0)
+  creatorId   String?
+  creator     User?    @relation("EventCreator", fields: [creatorId], references: [id])
+  subscriptions EventSubscription[]
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model EventSubscription {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([eventId, userId])
 }
 
 
@@ -69,11 +87,10 @@ model OauthAccount {
   @@unique([provider, providerUserId]) // one record per provider per user
 }
 
-
-model apikey{
-  id             String   @id @default(cuid())
-  email           String @unique
-  key             String @unique
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model apikey {
+  id        String   @id
+  email     String   @unique
+  key       String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime
 }

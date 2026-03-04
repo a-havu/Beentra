@@ -74,6 +74,7 @@ const eventSchemaBase = z.object({
   organizer: z.string().min(2, "Organizer too short").max(30, "Organizer too long"),
   type: z.enum(["Student", "External"]),
   description: z.string().optional(),
+  maxSpots: z.coerce.number().int().min(0, "Spots must be 0 or more").default(0),
 });
 
 // Frontend schema — image is a FileList (browser File object)
@@ -105,7 +106,8 @@ export const eventSchema = eventSchemaBase
 // Backend schema — image is a URL string
 export const eventSchemaServer = eventSchemaBase
   .extend({
-    image: z.string().optional(),
+    image: z.string().nullable().optional(),
+    creatorId: z.string().optional(),
   })
   .refine(
     (data) => data.date >= new Date(new Date().setHours(0, 0, 0, 0)),
@@ -115,3 +117,8 @@ export const eventSchemaServer = eventSchemaBase
     (data) => data.timeTo > data.timeFrom,
     { message: "End time must be after start time", path: ["timeTo"] }
   );
+
+export const subscribeSchema = z.object({
+  eventId: z.string().min(1, "Event ID required"),
+  userId: z.string().min(1, "User ID required"),
+});
