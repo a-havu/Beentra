@@ -1,0 +1,17 @@
+meta {
+  name: edit existing event
+  type: http
+  seq: 1
+}
+
+put {
+  url: http://localhost:3000/api/events/cmluqufp90001rz08f9y6gpnr
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "event2"
+  }
+}

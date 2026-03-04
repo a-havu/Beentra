@@ -1,31 +1,3 @@
-// import { getSession } from "@/lib/auth";
-// import { redirect } from "next/navigation";
-// import { Sidebar } from "@/components/dashboard/Sidebar";
-// import { UsersTable } from "@/components/dashboard/UsersTable";
-
-// export const metadata = {
-//   title: "Dashboard",
-// };
-
-// export default async function Home() {
-//   const session = await getSession();
-
-//   if (!session || session.role != "admin") {
-//     redirect("/login");
-//   }
-
-//   return (
-//     <div className="flex min-h-screen bg-gray-50">
-// 		{/* Sidebar */}
-//       <Sidebar userEmail={session.email} />
-
-// 	  <main className="flex-1 p-8">
-// 		<UsersTable/>
-// 	  </main>
-//     </div>
-//   );
-// }
-
 
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -48,5 +20,7 @@ export default async function Home() {
     redirect('/')
   }
 
-  return <DashboardContent userEmail={userEmail} />;
+  return (
+  <DashboardContent userEmail={userEmail} />
+  );
 }

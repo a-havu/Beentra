@@ -1,63 +1,66 @@
-import { UsersTable } from "./UsersTable";
-import { useState } from "react";
 
-// export function Sidebar ({ userEmail}: { userEmail: string}) {
-//     return (
-//         <aside className="w-64 bg-white shadow-lg p-6 border-r border-gray-300">
-//             <div className="mb-8">
-//                 <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-//                 <p className="text-sm text-gray-600">Welcome, {userEmail}</p>
-//             </div>
-//             <nav className="space-y-3">
-//             <button className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition">
-//                 Users
-//                 </button>
-//             <button className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition">
-//                 Events
-//                 </button>
-//             <button className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition">
-//                 Projects
-//                 </button>
-//             </nav>
-//         </aside>
-//     );
-// }
+import { Button } from "../ui/Button";
 
-export function Sidebar({ userEmail, onButtonClick }: { userEmail: string, onButtonClick: any }) {
+export function Sidebar({
+  userEmail,
+  onButtonClick,
+}: {
+  userEmail: string;
+  onButtonClick: any;
+}) {
   return (
-    <aside className="w-64 bg-white shadow-lg p-6 border-r border-gray-300">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="text-sm text-gray-600">Welcome, {userEmail}</p>
+    <aside className="flex flex-col gap-5 w-64 rounded-xl bg-white shadow-lg p-6 border-r border-gray-300">
+      <div className="flex flex-col mb-8">
+        <h1 className="text-2xl text-center font-bold text-gray-900">
+          Admin Dashboard
+        </h1>
+        <p className="text-sm text-center text-gray-600">
+          Welcome, {userEmail}
+        </p>
       </div>
-
-      <nav className="space-y-3">
-        <button
-          onClick={() => onButtonClick("users")}
-          className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition"
+      <nav className="flex flex-col items-center gap-3 space-y-3">
+      <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("users")}
         >
-          Users
-        </button>
-
-        <button
-          onClick={() => onButtonClick("events")}
-          className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition"
+              Users
+      </Button>
+      <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("events")}
         >
           Events
-        </button>
-
-        <button
-          onClick={() => onButtonClick("projects")}
-          className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition"
+      </Button>
+      <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("projects")}
         >
           Projects
-        </button>
-		<button
-          onClick={() => onButtonClick("welcome")}
-          className="w-full text-left px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition"
+      </Button>
+	  <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("pages")}
+        >
+          Pages
+      </Button>
+      <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("add-page")}
+        >
+          Add Page
+      </Button>
+      <Button
+        variant="sidebar"
+        size="medium"
+        onClick={() => onButtonClick("welcome")}
         >
           Back Home
-        </button>
+      </Button>
       </nav>
     </aside>
   );

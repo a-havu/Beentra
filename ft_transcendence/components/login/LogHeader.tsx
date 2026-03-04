@@ -1,0 +1,16 @@
+
+
+import { getSession } from "@/lib/auth"
+import { Avatar } from "./Avatar"
+import Link from "next/link"
+
+
+export default async function LogHeader() {
+  const session = await getSession()
+
+  return (
+    <div className="header-login-form">
+      {session && session.userId ? <Avatar avatar_url={session.avatar_url} userId={session.userId} /> : <Link href="/login">Login</Link>}
+    </div>
+  )
+}

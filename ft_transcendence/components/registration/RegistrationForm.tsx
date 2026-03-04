@@ -1,39 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { on } from "events";
+import { registerSchema } from "@/lib/validation";
 
-const schema = z
-  .object({
-    fname: z.string().min(1, "Required field"),
-    lname: z.string().min(1, "Required field"),
-    phone: z.string().regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number"),
-    date: z
-    .string()
-    .optional()
-    .refine(
-    (val) => {
-      if (!val) return true;  // skip validation if empty
-      const date = new Date(val);
-      const now = new Date();
-      return date < now;
-    }, { message: "invalid date" }),
-    email: z.string().email("Invalid email"),
-    password: z.string().min(8, "Min. 8 characters"),
-    confirm: z.string(),
-  })
-  .refine((data) => data.password === data.confirm, {
-    message: "Passwords don't match",
-    path: ["confirm"],
-  });
-
-type FormFields = z.infer<typeof schema>;
+type FormFields = z.infer<typeof registerSchema>;
 
 export function RegistrationForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -44,23 +17,23 @@ export function RegistrationForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormFields>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(registerSchema),
   });
 
   async function onSubmit(form: FormFields) {
     setServerError("");
 
     try {
-      const response = await fetch("/api/register", {
-        method: "GET",
+      const response = await fetch("/api/user", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
       const result = await response.json();
-      console.log("Response data:", result);
+
       if (!response.ok) {
-        setServerError(result.message);
+        setServerError(result.error || "Registration failed");
         return;
       }
       setSubmitted(true);
@@ -80,32 +53,33 @@ export function RegistrationForm() {
         className="flex flex-col gap-4"
       >
         <div>
-          <Label htmlFor="fname">First Name</Label>
-          <Input
-            id="fname"
+          <label htmlFor="fullName">Full Name</label>
+          <input
+            id="fullName"
             type="text"
-            {...register("fname")}
+            {...register("fullName")}
           />
-          {errors.fname && (
-            <p className="text-sm text-red-500">{errors.fname.message}</p>
+          {errors.fullName && (
+            <p className="text-sm text-red-500">{errors.fullName.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="lname">Last Name</Label>
-          <Input
-            id="lname"
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
             type="text"
-            {...register("lname")}
+            placeholder="Choose a username"
+            {...register("username")}
           />
-          {errors.lname && (
-            <p className="text-sm text-red-500">{errors.lname.message}</p>
+          {errors.username && (
+            <p className="text-sm text-red-500">{errors.username.message}</p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
+          <label htmlFor="email">Email</label>
+          <input
             id="email"
             type="email"
             placeholder="name@example.com"
@@ -117,8 +91,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input
+          <label htmlFor="phone">Phone Number</label>
+          <input
             id="phone"
             type="tel"
             placeholder="+358 40 123 4567"
@@ -129,17 +103,10 @@ export function RegistrationForm() {
           )}
         </div>
 
-        <div>
-          <Label htmlFor="date">Date of Birth</Label>
-          <Input id="date" type="date" {...register("date")} />
-          {errors.date && (
-            <p className="text-sm text-red-500">{errors.date.message}</p>
-          )}
-        </div>
 
         <div>
-          <Label htmlFor="password">Password</Label>
-          <Input
+          <label htmlFor="password">Password</label>
+          <input
             id="password"
             type="password"
             placeholder="Enter password"
@@ -151,8 +118,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <Label htmlFor="confirm">Confirm Password</Label>
-          <Input
+          <label htmlFor="confirm">Confirm Password</label>
+          <input
             id="confirm"
             type="password"
             placeholder="Confirm your password"
@@ -165,9 +132,9 @@ export function RegistrationForm() {
 
         {serverError && <p className="text-sm text-red-500">{serverError}</p>}
 
-        <Button type="submit">
+        <button type="submit">
           Create Account
-        </Button>
+        </button>
       </form>
     </div>
   );

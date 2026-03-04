@@ -1,30 +1,42 @@
 'use client';
-import { useState } from "react";
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Input from '../ui/Input';
+import Link from 'next/link';
+import { loginZodSchema, loginFormTypes } from '@/types/zodScemas'
+
+
+
+
+
+
 
 export function LoginForm() {
   const router = useRouter()
-  const [userEmail, setUserEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const { register, handleSubmit, formState: { errors } } = useForm<loginFormTypes>({
+    resolver: zodResolver(loginZodSchema)
+  })
 
-  const loginHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const loginHandler = async (data: loginFormTypes) => {
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userEmail: userEmail,
-          password: password,
+          userEmail: data.userEmail,
+          password: data.password,
         }),
       })
       if (response.ok) {
-        router.refresh();
-        router.push('/');
+        const responseData = await response.json();
+        router.push(responseData.twoFactor ? '/logintfa' : '/');
       } else {
-        console.log('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -32,43 +44,40 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={loginHandler}>
+    <form onSubmit={handleSubmit(loginHandler)} className="general-form">
       <h1>Welcome back</h1>
       <p>Login to your personal Hive life</p>
 
-      <div>
-        <label htmlFor="userEmail">Email</label>
-        <input
-          id="userEmail"
-          type="email"
-          placeholder="user@example.ps"
-          value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
-          required
-        />
-      </div>
+      {/* Use Input component for email too */}
+      <Input
+        label="Email"
+        name="userEmail"
+        id="userEmail"
+        type="email"
+        placeholder="user@example.ps"
+        register={register}
+        errors={errors}
+      />
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <a href="#">Forgot your password?</a>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          placeholder="********"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
+      {/* Corrected password input */}
+      <Input
+        label="Password"
+        name="password"
+        id="password"
+        type="password"
+        placeholder="********"
+        register={register}
+        errors={errors}
+      />
 
       <button type="submit">Login</button>
-
       <hr />
       <p>Or continue with</p>
-
-      <button type="button">Github</button>
-      <button type="button">Google</button>
-      <button type="button">Intra42</button>
+      <div className="flex flex-row gap-2">
+        <Link href="/api/auth/github"><button type="button">Github</button></Link>
+        <button type="button">Google</button>
+        <button type="button">Intra42</button>
+      </div>
 
       <p>Don't have an account? <a href="/registration">Sign up</a></p>
     </form>
