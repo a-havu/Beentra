@@ -1,31 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import EventCard from "./EventCard";
-
-type EventData = {
-  id: string;
-  title: string;
-  date: string;
-  timeFrom: string;
-  timeTo: string;
-  location: string;
-  organizer: string;
-  image: string | null;
-  description: string | null;
-};
+import EventCard, { EventData } from "./EventCard";
 
 const EventList = () => {
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchEvents() {
+    async function fetchAll() {
       try {
-        const res = await fetch("/api/events");
-        if (!res.ok) throw new Error("Failed to fetch events");
-        const data: EventData[] = await res.json();
+        const [eventsRes, meRes] = await Promise.all([
+          fetch("/api/events"),
+          fetch("/api/auth/me"),
+        ]);
+
+        if (!eventsRes.ok) throw new Error("Failed to fetch events");
+        const data: EventData[] = await eventsRes.json();
+
+        if (meRes.ok) {
+          const me = await meRes.json();
+          setCurrentUserId(me.userId ?? null);
+        }
 
         const today = new Date();
         const todaysEvents = data.filter((event) => {
@@ -45,7 +43,7 @@ const EventList = () => {
       }
     }
 
-    fetchEvents();
+    fetchAll();
   }, []);
 
   if (loading) return <p>Loading events...</p>;
@@ -54,7 +52,7 @@ const EventList = () => {
   return (
     <div>
       {events.map((event) => (
-        <EventCard key={event.id} event={event} />
+        <EventCard key={event.id} event={event} currentUserId={currentUserId} />
       ))}
     </div>
   );

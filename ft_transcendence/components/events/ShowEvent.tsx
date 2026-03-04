@@ -3,18 +3,37 @@
 import { useState } from "react";
 import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
-import ModalHeader from "../ui/ModalHeader";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
-import { Event } from "@/lib/generated/prisma/client";
 
-type ShowEventProps = {
-  event: Event | null;
-  isOpen: boolean;
-  onClose: () => void;
+type ShowEventData = {
+  id: string;
+  title: string;
+  type: string;
+  date: Date | string;
+  timeFrom: Date | string;
+  timeTo: Date | string;
+  location: string;
+  organizer: string;
+  description?: string | null;
+  creatorId?: string | null;
+  maxSpots: number;
+  subscriberCount: number;
+  isSubscribed: boolean;
 };
 
-export default function ShowEvent({ event, isOpen, onClose }: ShowEventProps) {
+type ShowEventProps = {
+  event: ShowEventData | null;
+  isOpen: boolean;
+  onClose: () => void;
+  currentUserId?: string | null;
+};
+
+export default function ShowEvent({ event, isOpen, onClose, currentUserId }: ShowEventProps) {
+  const [subscriberCount, setSubscriberCount] = useState(event?.subscriberCount ?? 0);
+  const [isSubscribed, setIsSubscribed] = useState(event?.isSubscribed ?? false);
+  const [loading, setLoading] = useState(false);
+
   if (!event) return null;
 
   const formatDate = (value: Date | string) => {
@@ -27,6 +46,24 @@ export default function ShowEvent({ event, isOpen, onClose }: ShowEventProps) {
       hour: "2-digit",
       minute: "2-digit",
     });
+  };
+
+  const isCreator = currentUserId && event.creatorId === currentUserId;
+  const showSubscribeButton = currentUserId && !isCreator;
+  const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
+
+  const handleSubscribe = async () => {
+    setLoading(true);
+    try {
+      const method = isSubscribed ? "DELETE" : "POST";
+      const res = await fetch(`/api/events/${event.id}/subscribe`, { method });
+      if (res.ok) {
+        setIsSubscribed(!isSubscribed);
+        setSubscriberCount((c) => c + (isSubscribed ? -1 : 1));
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +84,20 @@ export default function ShowEvent({ event, isOpen, onClose }: ShowEventProps) {
           <strong>Organizer:</strong> {event.organizer}
         </p>
         <p className="mt-4">{event.description}</p>
+        {event.maxSpots > 0 && (
+          <p className="mt-2">
+            <strong>Spots:</strong> {subscriberCount}/{event.maxSpots} taken
+          </p>
+        )}
+        {showSubscribeButton && (
+          <button
+            onClick={handleSubscribe}
+            disabled={loading || (!isSubscribed && isFull)}
+            className="mt-3"
+          >
+            {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
+          </button>
+        )}
       </ModalBody>
 
       <ModalFooter>
