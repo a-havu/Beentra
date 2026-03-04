@@ -16,7 +16,7 @@ model User{
   passwordHash String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  role         String   @default("admin")
+  role         Role   @default(admin)
   avatarUrl    String?
   pages Page[]
   oauthAccount OauthAccount[]
@@ -51,11 +51,18 @@ model Event {
   timeTo      DateTime
   location    String
   organizer   String
-  image       String?
+  thumbnail       String?
   description String?
   maxSpots    Int      @default(0)
+
   creatorId   String?
   creator     User?    @relation("EventCreator", fields: [creatorId], references: [id])
+
+
+  publicCreatorId String?
+  publicCreator ApiKey?  @relation(fields: [publicCreatorId], references: [id])
+
+
   subscriptions EventSubscription[]
 
   createdAt  DateTime @default(now())
@@ -87,10 +94,13 @@ model OauthAccount {
   @@unique([provider, providerUserId]) // one record per provider per user
 }
 
-model apikey {
-  id        String   @id
-  email     String   @unique
-  key       String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime
+model ApiKey {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  key          String   @unique
+  publicUserId String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  events       Event[]
 }
