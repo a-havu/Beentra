@@ -19,10 +19,17 @@ export async function POST(request: NextRequest) {
         key: apiKey,
       }
     })
-    await apikeyEmail({ email: userEmail, apikey: apiKey })
+    const emailSentStatus = await apikeyEmail({ email: userEmail, apikey: apiKey })
 
-    return NextResponse.json({ success: true }, { status: 200 })
-  } catch (e) {
+    if (!emailSentStatus) {
+      await prisma.apikey.delete({
+        where: { email: userEmail }
+      })
+      return NextResponse.json({ success: false, message: 'Failed to send email' }, { status: 500 })
+    }
+    return NextResponse.json({ success: true, message: 'API key sent to your email' }, { status: 200 })
+  }
+  catch (e) {
     console.log('Error:', e)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
