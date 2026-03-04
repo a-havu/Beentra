@@ -134,6 +134,16 @@ export default function EventForm({
         register={register}
         errors={errors}
       />
+      <Input
+        label="Max Spots"
+        name="maxSpots"
+        id="maxSpots"
+        type="number"
+        placeholder="0 = unlimited"
+        required={false}
+        register={register}
+        errors={errors}
+      />
       <CustomButton type="submit">{submitLabel}</CustomButton>
     </form>
   );

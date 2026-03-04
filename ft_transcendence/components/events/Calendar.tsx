@@ -4,32 +4,65 @@ import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { Event } from "@/lib/generated/prisma/client";
 import { EventInput } from "@fullcalendar/core";
 import ShowEvent from "./ShowEvent";
 
-type EventAPI = Omit<
-  Event,
-  "date" | "timeFrom" | "timeTo" | "createdAt" | "updatedAt"
-> & {
+type EventAPI = {
+  id: string;
+  title: string;
+  type: string;
   date: string;
   timeFrom: string;
   timeTo: string;
+  location: string;
+  organizer: string;
+  image: string | null;
+  description: string | null;
+  creatorId: string | null;
+  maxSpots: number;
+  subscriberCount: number;
+  isSubscribed: boolean;
   createdAt: string;
   updatedAt: string;
 };
 
+type ShowEventData = {
+  id: string;
+  title: string;
+  type: string;
+  date: Date;
+  timeFrom: Date;
+  timeTo: Date;
+  location: string;
+  organizer: string;
+  description: string | null;
+  creatorId: string | null;
+  maxSpots: number;
+  subscriberCount: number;
+  isSubscribed: boolean;
+};
+
 export default function Calendar() {
   const [events, setEvents] = useState<EventInput[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<ShowEventData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchEvents() {
+    async function fetchAll() {
       try {
-        const res = await fetch("/api/events");
-        if (!res.ok) throw new Error("Failed to fetch events");
-        const data: EventAPI[] = await res.json();
+        const [eventsRes, meRes] = await Promise.all([
+          fetch("/api/events"),
+          fetch("/api/auth/me"),
+        ]);
+
+        if (!eventsRes.ok) throw new Error("Failed to fetch events");
+        const data: EventAPI[] = await eventsRes.json();
+
+        if (meRes.ok) {
+          const me = await meRes.json();
+          setCurrentUserId(me.userId ?? null);
+        }
 
         const formatted: EventInput[] = data.map((event) => ({
           id: event.id,
@@ -41,8 +74,6 @@ export default function Calendar() {
             date: new Date(event.date),
             timeFrom: new Date(event.timeFrom),
             timeTo: new Date(event.timeTo),
-            createdAt: new Date(event.createdAt),
-            updatedAt: new Date(event.updatedAt),
           },
         }));
 
@@ -52,7 +83,7 @@ export default function Calendar() {
       }
     }
 
-    fetchEvents();
+    fetchAll();
   }, []);
 
   return (
@@ -69,7 +100,7 @@ export default function Calendar() {
         height="80vh"
         events={events}
         eventClick={(info) => {
-          const eventData = info.event.extendedProps as Event;
+          const eventData = info.event.extendedProps as ShowEventData;
           setSelectedEvent(eventData);
           setIsModalOpen(true);
         }}
@@ -79,6 +110,7 @@ export default function Calendar() {
         event={selectedEvent}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        currentUserId={currentUserId}
       />
     </>
   );
