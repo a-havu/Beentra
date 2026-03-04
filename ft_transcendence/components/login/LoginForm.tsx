@@ -1,45 +1,48 @@
-'use client';
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+"use client";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import Input from '../ui/Input';
-import Link from 'next/link';
-import { loginZodSchema, loginFormTypes } from '@/types/zodScemas'
-
-
-
-
-
-
+import Input from "../ui/Input";
+import Link from "next/link";
+import { loginZodSchema, loginFormTypes } from "@/types/zodScemas";
 
 export function LoginForm() {
-  const router = useRouter()
-  const { register, handleSubmit, formState: { errors } } = useForm<loginFormTypes>({
-    resolver: zodResolver(loginZodSchema)
-  })
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginFormTypes>({
+    resolver: zodResolver(loginZodSchema),
+  });
 
   const loginHandler = async (data: loginFormTypes) => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userEmail: data.userEmail,
           password: data.password,
         }),
-      })
+      });
+
       if (response.ok) {
         const responseData = await response.json();
-        router.push(responseData.twoFactor ? '/logintfa' : '/');
+        if (responseData.twoFactor) router.push("/logintfa");
+        else {
+          router.push("/");
+          router.refresh();
+        }
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+        throw new Error(errorData.message || "Login failed");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -74,12 +77,16 @@ export function LoginForm() {
       <hr />
       <p>Or continue with</p>
       <div className="flex flex-row gap-2">
-        <Link href="/api/auth/github"><button type="button">Github</button></Link>
+        <Link href="/api/auth/github">
+          <button type="button">Github</button>
+        </Link>
         <button type="button">Google</button>
         <button type="button">Intra42</button>
       </div>
 
-      <p>Don't have an account? <a href="/registration">Sign up</a></p>
+      <p>
+        Don't have an account? <a href="/registration">Sign up</a>
+      </p>
     </form>
-  )
+  );
 }
