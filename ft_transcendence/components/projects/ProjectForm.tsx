@@ -17,8 +17,13 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
 	const { register,
 		handleSubmit,
 		formState: { errors } } = useForm<FormValues>();
-	return (<form
-		onSubmit={handleSubmit(onSubmit)}>
+	const submitHandler = (data: FormValues) => {
+
+	}
+
+	return (
+	<form
+		onSubmit={handleSubmit(submitHandler)}>
 		<Input
 		label="Project Name"
 		name="projectName"
@@ -40,9 +45,9 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
 		errors={errors}
 		 />
 		<Input
-		label="Links"
-		name="links"
-		id="links"
+		label="Link"
+		name="link"
+		id="link"
 		type="text"
 		placeholder="github, website, etc."
 		required={false}

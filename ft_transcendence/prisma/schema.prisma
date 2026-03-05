@@ -74,7 +74,7 @@ model Project {
 	id				String
 	projectName		String
 	oneLiner		String
-	links			String?
+	link			String?
 	techStack		String?
 	description		String?
 }
