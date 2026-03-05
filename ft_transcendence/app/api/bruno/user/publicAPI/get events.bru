@@ -1,0 +1,20 @@
+meta {
+  name: get events
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3000/api/events
+  body: none
+  auth: inherit
+}
+
+headers {
+  x-api-key: fd1bccbc0304e581ae4c265e270dcad0bc59d8a2015db8a1fbadf7cbf3a96f02
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

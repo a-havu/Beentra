@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const { userEmail } = await request.json()
     const apiKey = crypto.randomBytes(32).toString('hex')
 
-    await prisma.apikey.upsert({
+    await prisma.publicApiUser.upsert({
       where: { email: userEmail },
       update: {
         key: apiKey,
@@ -17,12 +17,13 @@ export async function POST(request: NextRequest) {
       create: {
         email: userEmail,
         key: apiKey,
+        publicUserId: crypto.randomUUID(),
       }
     })
     const emailSentStatus = await apikeyEmail({ email: userEmail, apikey: apiKey })
 
     if (!emailSentStatus) {
-      await prisma.apikey.delete({
+      await prisma.publicApiUser.delete({
         where: { email: userEmail }
       })
       return NextResponse.json({ success: false, message: 'Failed to send email' }, { status: 500 })
