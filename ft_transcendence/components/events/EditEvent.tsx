@@ -50,6 +50,7 @@ const EditEvent = ({ id }: Props) => {
           type: event.type,
           image: event.image,
           description: event.description,
+          maxSpots: event.maxSpots ?? 0,
         });
         console.log("date: \n", event.date);
         setLoading(false);

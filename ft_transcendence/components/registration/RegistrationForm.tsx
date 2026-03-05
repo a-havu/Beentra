@@ -31,7 +31,7 @@ export function RegistrationForm() {
       });
 
       const result = await response.json();
-      console.log("Response data:", result);
+
       if (!response.ok) {
         setServerError(result.error || "Registration failed");
         return;

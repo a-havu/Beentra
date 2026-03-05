@@ -18,7 +18,7 @@ interface TokenPayload extends JWTPayload {
   userId: string
   email: string
   role: string
-  avatar_url: string
+  avatar_url: string | null
 }
 
 export async function createToken(payload: TokenPayload): Promise<string> {
@@ -26,6 +26,14 @@ export async function createToken(payload: TokenPayload): Promise<string> {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
+    .sign(secret);
+}
+
+export async function createTempToken(payload: { userId: string }): Promise<string> {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("5m")
     .sign(secret);
 }
 

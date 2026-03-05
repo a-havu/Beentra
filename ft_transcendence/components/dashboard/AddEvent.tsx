@@ -26,16 +26,16 @@ function AddEvent() {
 				isOpen={showModal}
 				onClose={() => setShowModal(false)}
 			>
-				{/* 
+{/*
 				<ModalHeader>
 					<h2>Add New Event</h2>
-				</ModalHeader>
-				*/}
+				</ModalHeader> */}
+
 				<ModalBody>
 					<CreateEvent />
 				</ModalBody>
 				<ModalFooter>
-					{/* 
+					{/*
 					<Button
 						variant="adding"
 						onClick={handleAddEvent}

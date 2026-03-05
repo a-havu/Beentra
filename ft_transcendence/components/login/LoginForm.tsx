@@ -1,49 +1,48 @@
-'use client';
-import { z, ZodType } from 'zod'
-import { useForm } from 'react-hook-form'
+"use client";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import Input from '../ui/Input';
-import Link from 'next/link';
-
-
-
-interface FormData {
-  userEmail: string,
-  password: string,
-}
+import Input from "../ui/Input";
+import Link from "next/link";
+import { loginZodSchema, loginFormTypes } from "@/types/zodScemas";
 
 export function LoginForm() {
-  const zodSchema: ZodType<FormData> = z.object({
-    userEmail: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
-  })
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginFormTypes>({
+    resolver: zodResolver(loginZodSchema),
+  });
 
-  const router = useRouter()
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(zodSchema)
-  })
-
-  const loginHandler = async (data: FormData) => {
+  const loginHandler = async (data: loginFormTypes) => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userEmail: data.userEmail,
           password: data.password,
         }),
-      })
+      });
+
       if (response.ok) {
-        router.refresh();
-        router.push('/');
+        const responseData = await response.json();
+        if (responseData.twoFactor) router.push("/logintfa");
+        else {
+          router.push("/");
+          router.refresh();
+        }
       } else {
-        console.log('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -78,12 +77,16 @@ export function LoginForm() {
       <hr />
       <p>Or continue with</p>
       <div className="flex flex-row gap-2">
-        <Link href="/api/auth/github"><button type="button">Github</button></Link>
+        <Link href="/api/auth/github">
+          <button type="button">Github</button>
+        </Link>
         <button type="button">Google</button>
         <button type="button">Intra42</button>
       </div>
 
-      <p>Don't have an account? <a href="/registration">Sign up</a></p>
+      <p>
+        Don't have an account? <a href="/registration">Sign up</a>
+      </p>
     </form>
-  )
+  );
 }
