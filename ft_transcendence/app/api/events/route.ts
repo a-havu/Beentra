@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         timeTo: new Date(`${datePart}T${timeTo}:00`),
         location,
         organizer,
-        thumbnail: image ?? null,
+        image: image ?? null,
         description: description ?? "",
         maxSpots: maxSpots ?? 0,
         creatorId: session?.userId ?? null,
