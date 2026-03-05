@@ -64,23 +64,23 @@ export const registerSchema = z
 
 const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
-export const eventSchema = z
-  .object({
-    title: z.string().min(2, "Title too short").max(30, "Title too long"),
-    date: z.coerce.date(),
-    timeFrom: z.string().regex(timeRegex, "Invalid time format"),
-    timeTo: z.string().regex(timeRegex, "Invalid time format"),
-    location: z
-      .string()
-      .min(2, "Location too short")
-      .max(30, "Location too long"),
-    organizer: z
-      .string()
-      .min(2, "Organizer too short")
-      .max(30, "Organizer too long"),
-    type: z.enum(["Student", "External"]),
-    image: z
-      .any()
+// Shared base fields — no image, no refinements (so .extend() works on both schemas)
+const eventSchemaBase = z.object({
+  title: z.string().min(2, "Title too short").max(30, "Title too long"),
+  date: z.coerce.date(),
+  timeFrom: z.string().regex(timeRegex, "Invalid time format"),
+  timeTo: z.string().regex(timeRegex, "Invalid time format"),
+  location: z.string().min(2, "Location too short").max(30, "Location too long"),
+  organizer: z.string().min(2, "Organizer too short").max(30, "Organizer too long"),
+  type: z.enum(["Student", "External"]),
+  description: z.string().optional(),
+  maxSpots: z.coerce.number().int().min(0, "Spots must be 0 or more").default(0),
+});
+
+// Frontend schema — image is a FileList (browser File object)
+export const eventSchema = eventSchemaBase
+  .extend({
+    image: (z.custom<FileList>())
       .optional()
       .refine(
         (file) => !file || file.length === 0 || file[0]?.size <= 1_000_000,
@@ -93,23 +93,32 @@ export const eventSchema = z
           ["image/jpeg", "image/png", "image/webp"].includes(file[0]?.type),
         "Only JPG, PNG, WEBP allowed"
       ),
-    description: z.string().optional(),
   })
   .refine(
-    (data) => {
-      return data.date >= new Date(new Date().setHours(0, 0, 0, 0));
-    },
-    {
-      message: "Date cannot be in the past",
-      path: ["date"],
-    }
+    (data) => data.date >= new Date(new Date().setHours(0, 0, 0, 0)),
+    { message: "Date cannot be in the past", path: ["date"] }
   )
   .refine(
-    (data) => {
-      return data.timeTo > data.timeFrom;
-    },
-    {
-      message: "End time must be after start time",
-      path: ["timeTo"],
-    }
+    (data) => data.timeTo > data.timeFrom,
+    { message: "End time must be after start time", path: ["timeTo"] }
   );
+
+// Backend schema — image is a URL string
+export const eventSchemaServer = eventSchemaBase
+  .extend({
+    image: z.string().nullable().optional(),
+    creatorId: z.string().optional(),
+  })
+  .refine(
+    (data) => data.date >= new Date(new Date().setHours(0, 0, 0, 0)),
+    { message: "Date cannot be in the past", path: ["date"] }
+  )
+  .refine(
+    (data) => data.timeTo > data.timeFrom,
+    { message: "End time must be after start time", path: ["timeTo"] }
+  );
+
+export const subscribeSchema = z.object({
+  eventId: z.string().min(1, "Event ID required"),
+  userId: z.string().min(1, "User ID required"),
+});

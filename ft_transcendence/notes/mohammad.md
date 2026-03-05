@@ -80,3 +80,14 @@ fot 2fa i used otplib then have 3 apis for activation, verfiction and setup.
 # for zod validation
 i created a file in types, with name of zod schemas, and also i take the type from it, so there is no need to create interface for typescript again.
 export type loginFormTypes = z.infer<typeof loginZodSchema> // this will create the types also from zod object so no need to re declare it again
+
+
+
+#Public API:
+
+for this feature, i have added a page so any one want to use our api, must register first and receive an api key via email.
+
+so i added the nodemailer package and type, so i can configure goole.
+i used my email for now, to send messages from Beentra.
+
+i have changed also the proxy.ts, to include the public apis and allow them.

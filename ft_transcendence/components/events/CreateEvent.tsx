@@ -14,7 +14,13 @@ type Props = {
 export default function CreateEvent({ onSuccess }: Props) {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const formData = { ...data, image: data.image?.[0] || null };
+      // Omit the FileList — send undefined so the key is excluded from JSON
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { image: _image, ...rest } = data;
+      const formData = {
+        ...rest,
+        maxSpots: rest.maxSpots ?? 0,
+      };
 
       const res = await fetch("/api/events", {
         method: "POST",
@@ -25,7 +31,8 @@ export default function CreateEvent({ onSuccess }: Props) {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to create event");
+        const err = await res.json().catch(() => ({}));
+        throw new Error(`Failed to create event (${res.status}): ${JSON.stringify(err)}`);
       }
 
       console.log("Event created successfully!");
@@ -44,6 +51,7 @@ export default function CreateEvent({ onSuccess }: Props) {
       onSubmit={onSubmit}
       defaultValues={{
         type: "Student",
+        maxSpots: 0,
       }}
       submitLabel="Create Event"
       mode="create"

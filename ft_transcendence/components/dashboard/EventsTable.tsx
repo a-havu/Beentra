@@ -13,6 +13,7 @@ import ModalFooter from "../ui/ModalFooter";
 type Event = {
   id: string;
   title: string;
+  type: string;
   date: Date;
   timeFrom: Date;
   timeTo: Date;
@@ -20,6 +21,10 @@ type Event = {
   organizer: string;
   image: string | null;
   description: string | null;
+  creatorId: string | null;
+  maxSpots: number;
+  subscriberCount: number;
+  isSubscribed: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
