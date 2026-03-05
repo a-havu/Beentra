@@ -12,11 +12,22 @@ export async function POST(request: NextRequest) {
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid input", details: result.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const { title, type, date, timeFrom, timeTo, location, organizer, image, description, maxSpots } = result.data;
+    const {
+      title,
+      type,
+      date,
+      timeFrom,
+      timeTo,
+      location,
+      organizer,
+      image,
+      description,
+      maxSpots,
+    } = result.data;
     const datePart = date.toISOString().split("T")[0];
 
     const event = await prisma.event.create({
@@ -28,7 +39,7 @@ export async function POST(request: NextRequest) {
         timeTo: new Date(`${datePart}T${timeTo}:00`),
         location,
         organizer,
-        image: image ?? null,
+        thumbnail: image ?? null,
         description: description ?? "",
         maxSpots: maxSpots ?? 0,
         creatorId: session?.userId ?? null,
@@ -37,7 +48,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(event);
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -68,7 +82,7 @@ export async function GET() {
     console.error("Error fetching events:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

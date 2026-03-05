@@ -43,6 +43,9 @@ const EventCard = ({ event, currentUserId }: Props) => {
   const showSubscribeButton = currentUserId && !isCreator;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
+  console.log(event.creatorId)
+  console.log(currentUserId)
+
   const handleSubscribe = async () => {
     setLoading(true);
     try {

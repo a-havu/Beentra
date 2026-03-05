@@ -5,7 +5,7 @@ import { getSession } from "@/lib/auth";
 
 export async function PUT(
   request: Request,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
@@ -29,11 +29,22 @@ export async function PUT(
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid input", details: result.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const { title, type, date, timeFrom, timeTo, location, organizer, image, description, maxSpots } = result.data;
+    const {
+      title,
+      type,
+      date,
+      timeFrom,
+      timeTo,
+      location,
+      organizer,
+      image,
+      description,
+      maxSpots,
+    } = result.data;
     const datePart = date.toISOString().split("T")[0];
 
     const updatedEvent = await prisma.event.update({
@@ -57,14 +68,14 @@ export async function PUT(
     console.error("Error updating event:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function GET(
   request: Request,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
@@ -93,14 +104,14 @@ export async function GET(
     console.error("Error fetching events:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
@@ -123,13 +134,13 @@ export async function DELETE(
 
     return NextResponse.json(
       { message: "event deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error deleting event:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
