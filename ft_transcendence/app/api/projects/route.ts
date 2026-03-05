@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       data: {
         projectName: body.projectName,
 		oneLiner: body.oneLiner,
-		links: body.links,
+		link: body.link,
 		techStack: body.techStack,
 		description: body.description,
       },

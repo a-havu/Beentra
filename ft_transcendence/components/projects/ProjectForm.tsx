@@ -5,22 +5,27 @@ import Input from "@/components/ui/Input";
 import { Button } from "../ui/Button";
 import { z } from "zod";
 import { projectSchema } from "@/lib/validation";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 
 
 type FormValues = z.input<typeof projectSchema>;
 
 type ProjectFormProps = {
 	onSubmit: SubmitHandler<FormValues>;
+	mode: "create" | "edit";
 };
 
-export default function ProjectForm({ onSubmit }: ProjectFormProps) {
+export default function ProjectForm({
+	onSubmit,
+	mode = "create"
+}: ProjectFormProps) {
 	const { register,
 		handleSubmit,
-		formState: { errors } } = useForm<FormValues>();
-	const submitHandler = (data: FormValues) => {
-
-	}
-
+		formState: { errors },
+	 } = useForm<FormValues>({resolver: zodResolver(projectSchema)});
+	const submitHandler: SubmitHandler<FormValues> = (data) => {
+		onSubmit(data);
+	};
 	return (
 	<form
 		onSubmit={handleSubmit(submitHandler)}>
