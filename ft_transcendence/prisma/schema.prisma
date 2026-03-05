@@ -51,20 +51,18 @@ model Event {
   timeTo      DateTime
   location    String
   organizer   String
-  thumbnail   String?
+  image       String?
   description String?
   maxSpots    Int      @default(0)
-
-  creatorId String?
-  creator   User?   @relation("EventCreator", fields: [creatorId], references: [id])
+  creatorId   String?
+  creator     User?    @relation("EventCreator", fields: [creatorId], references: [id])
+  subscriptions EventSubscription[]
 
   publicCreatorId String?
   publicCreator   PublicApiUser? @relation(fields: [publicCreatorId], references: [id])
 
-  subscriptions EventSubscription[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model EventSubscription {
