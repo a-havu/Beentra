@@ -1,0 +1,1 @@
+ALTER TABLE "Event" RENAME COLUMN "thumbnail" TO "image";
