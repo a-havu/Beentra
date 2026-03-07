@@ -1,27 +1,39 @@
-"use client";
+"use client"; // Marks this as a Client Component so hooks and browser APIs work
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // Used to navigate between pages
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod"; // Connects Zod schema validation to react-hook-form
 import { useForm } from "react-hook-form";
-import { registerSchema } from "@/lib/validation";
+import { registerSchema } from "@/lib/validation"; // Zod schema that defines required fields and validation rules
 
+// Infer the TypeScript type from the Zod schema so form fields are type-safe
 type FormFields = z.infer<typeof registerSchema>;
 
+/**
+ * RegistrationForm — handles new user sign-up.
+ * Validates input via Zod, submits to POST /api/user,
+ * and redirects to /login on success.
+ */
 export function RegistrationForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [serverError, setServerError] = useState("");
+  const router = useRouter(); // Used to redirect to /login after successful registration
+  const [serverError, setServerError] = useState(""); // Stores error messages returned from the API
 
+  // Set up react-hook-form with Zod schema validation
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    register,      // Registers each input field into the form
+    handleSubmit,  // Wraps onSubmit — runs validation before calling it
+    formState: { errors }, // Per-field validation errors from Zod
   } = useForm<FormFields>({
     resolver: zodResolver(registerSchema),
   });
 
+  /**
+   * onSubmit — called after client-side validation passes.
+   * Posts form data to the API; on success redirects to login page.
+   */
   async function onSubmit(form: FormFields) {
-    setServerError("");
+    setServerError(""); // Clear any previous server error before retrying
 
     try {
       const response = await fetch("/api/user", {
@@ -33,17 +45,17 @@ export function RegistrationForm() {
       const result = await response.json();
 
       if (!response.ok) {
+        // Show the server-side error (e.g. duplicate email/username)
         setServerError(result.error || "Registration failed");
         return;
       }
-      setSubmitted(true);
+
+      // Account created successfully — redirect user to the login page
+      router.push("/login");
     } catch (error) {
+      // Network or unexpected errors
       setServerError("An unexpected error occurred. Please try again.");
     }
-  }
-
-  if (submitted) {
-    return <p>Account created!</p>;
   }
 
   return (
