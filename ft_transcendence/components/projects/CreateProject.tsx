@@ -23,14 +23,17 @@ export default function CreateProject() {
 
 if (res.ok) {
 	setShowForm(false);
-	}
+}
 };
 return (
-    <>
+    <div className="flex flex-col items-center gap-4">
       <Button onClick={() => setShowForm(true)} type="button">
-        Create Project by clicking this button
+        Create Project
       </Button>
-      {showForm && <ProjectForm mode="create" onSubmit={handleSubmit} />}
-    </>
+      {showForm && <ProjectForm
+	  mode="create"
+	  onSubmit={handleSubmit}
+	  onCloseAction={() => setShowForm(false)} />}
+    </div>
   );
 };

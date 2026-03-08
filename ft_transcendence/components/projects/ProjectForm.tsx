@@ -13,11 +13,13 @@ type FormValues = z.input<typeof projectSchema>;
 type ProjectFormProps = {
 	onSubmit: SubmitHandler<FormValues>;
 	mode: "create" | "edit";
+	onCloseAction?: () => void;
 };
 
 export default function ProjectForm({
 	onSubmit,
-	mode = "create"
+	mode = "create",
+	onCloseAction,
 }: ProjectFormProps) {
 	const { register,
 		handleSubmit,
@@ -27,8 +29,9 @@ export default function ProjectForm({
 		onSubmit(data);
 	};
 	return (
-	<form
-		onSubmit={handleSubmit(submitHandler)}>
+		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+	<form className="bg-white p-6 rounded-lg"
+	onSubmit={handleSubmit(submitHandler)}>
 		<Input
 		label="Project Name"
 		name="projectName"
@@ -81,5 +84,13 @@ export default function ProjectForm({
 		 />
 		 <Button type="submit"
 		 variant="adding">Create Project :)</Button>
-	</form>)
+		 {onCloseAction && (
+			<Button type="button"
+			variant="secondary"
+			onClick={onCloseAction}
+			>Cancel</Button>
+		 )}
+	</form></div>)
 }
+
+// TODO: add image upload, and maybe multiple links?
