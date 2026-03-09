@@ -25,13 +25,14 @@ export default function Input({
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id}>{label}</label>
+      <label className="p-2" htmlFor={id}>{label}</label>
       <input
         {...(register ? register(name) : {})}
         id={id}
         type={type}
         placeholder={placeholder}
         required={required}
+        className=" bg-white ml-2 p-2 rounded-lg"
       />
       {typeof errorMessage === "string" && (
         <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>

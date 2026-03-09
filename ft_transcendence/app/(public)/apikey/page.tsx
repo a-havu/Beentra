@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { EmailInputType, UserEmailZodSchema } from "@/types/zodScemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/Button";
 
 export default function ApiKeyPage() {
   const [success, setSuccess] = useState(false);
@@ -56,7 +57,10 @@ export default function ApiKeyPage() {
           <p>
             <span className="bg-red-600">{errors?.userEmail?.message}</span>
           </p>
-          <button disabled={success}>{success ? "Done ✅" : "Submit"}</button>
+          <Button 
+          variant="adding"
+          onClick={handleSubmit(onSubmithandler)}
+          disabled={success}> {success ? "Done ✅" : "Submit"}</Button>
         </form>
       </div>
     </>
