@@ -1,6 +1,10 @@
 import CreateProject from "@/components/projects/CreateProject";
 import DisplayProjects from "@/components/projects/DisplayProjects";
- 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects",
+};
 
 export default function ProjectsPage() {
   return (
