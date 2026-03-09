@@ -7,7 +7,6 @@ import { z } from "zod";
 import { projectSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 
-
 type FormValues = z.input<typeof projectSchema>;
 
 type ProjectFormProps = {
@@ -82,6 +81,16 @@ export default function ProjectForm({
 		register={register}
 		errors={errors}
 		 />
+		<Input
+		label="Image"
+		name="image"
+		id="image"
+		type="file"
+		placeholder="Upload Image"
+		required={false}
+		register={register}
+		errors={errors}
+		/>
 		 <Button type="submit"
 		 variant="adding">Create Project :)</Button>
 		 {onCloseAction && (
