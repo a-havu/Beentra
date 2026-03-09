@@ -6,6 +6,7 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset"; // The type of the button
   variant?: "primary" | "secondary" | "sidebar" | "delete" | "adding" | "edit";
   size?: "small" | "medium" | "large";
+  disabled?: true | false;
 };
 
 export function Button({
@@ -14,6 +15,7 @@ export function Button({
   type = "button",
   variant = "primary",
   size = "medium",
+  disabled = false,
 }: ButtonProps) {
   const variantStyles = {
     primary: "bg-blue-600 hover:bg-blue-700 text-white",
@@ -38,7 +40,8 @@ export function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`rounded-lg transition cursor-pointer ${buttonStyle} ${buttonSize}`}
+      disabled={disabled}
+      className={`rounded-full transition cursor-pointer ${buttonStyle} ${buttonSize} disabled:opacity-50 disabled:cursor-not-allowed w-28 self-end`}
     >
       {children}
     </button>
