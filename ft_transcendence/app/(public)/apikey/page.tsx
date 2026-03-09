@@ -40,9 +40,7 @@ export default function ApiKeyPage() {
   };
 
   return (
-    <>
-   
-      <div className="bentra-form-container">
+      <div className="beentra-form-container">
         <form className="beentra-form" onSubmit={handleSubmit(onSubmithandler)}>
           <FormTitle title="API KEY generating" subTitle="welcome to our public api"/>
           <Input
@@ -63,6 +61,5 @@ export default function ApiKeyPage() {
           disabled={success}> {success ? "Done ✅" : "Submit"}</Button>
         </form>
       </div>
-    </>
   );
 }

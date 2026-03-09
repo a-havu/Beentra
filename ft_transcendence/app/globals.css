@@ -120,8 +120,8 @@ a {
 
 /*Beentra General styles*/
 
-.bentra-form-container {
-    @apply  flex  flex-col items-center content-center w-full rounded-2xl;
+.beentra-form-container {
+    @apply  flex  flex-col flex-1 items-center justify-center w-full rounded-2xl;
 }
 
 .beentra-form {

@@ -47,7 +47,7 @@ export function LoginForm() {
   };
 
   return (
-  <div className="bentra-form-container">
+  <div className="beentra-form-container">
     <form onSubmit={handleSubmit(loginHandler)} className="beentra-form">
       <h1>Welcome back</h1>
       <p>Login to your personal Hive life</p>
