@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useEffect } from "react";
-import DeleteEventButton from "../events/DeleteEventButton";
-import EditEvent from "../events/EditEvent";
 import { Button } from "../ui/Button";
-import AddEvent from "./AddEvent";
-import ShowEvent from "../events/ShowEvent";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";

@@ -9,25 +9,26 @@ import ShowEvent from "../events/ShowEvent";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
+import { Event } from "@/lib/generated/prisma/client";
 
-type Event = {
-  id: string;
-  title: string;
-  type: string;
-  date: Date;
-  timeFrom: Date;
-  timeTo: Date;
-  location: string;
-  organizer: string;
-  image: string | null;
-  description: string | null;
-  creatorId: string | null;
-  maxSpots: number;
-  subscriberCount: number;
-  isSubscribed: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
+// type Event = {
+//   id: string;
+//   title: string;
+//   type: string;
+//   date: Date;
+//   timeFrom: Date;
+//   timeTo: Date;
+//   location: string;
+//   organizer: string;
+//   image: string | null;
+//   description: string | null;
+//   creatorId: string | null;
+//   maxSpots: number;
+//   subscriberCount: number;
+//   isSubscribed: boolean;
+//   createdAt: Date;
+//   updatedAt: Date;
+// };
 
 export function EventsTable() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -76,7 +77,7 @@ export function EventsTable() {
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow p-12 text-center">
-        <p className="text-gray-600">Loading users...</p>
+        <p className="text-gray-600">Loading events...</p>
       </div>
     );
   }
