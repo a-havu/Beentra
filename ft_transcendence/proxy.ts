@@ -38,12 +38,12 @@ export async function handleApiRoutes(request: NextRequest) {
 
   //states and prohects apis can be accessed by logedin users only
   if (pathname.startsWith("/api/projects") || pathname.startsWith("/api/stats")) {
-    return NextResponse.json(
-      {
-        error: "not authorized, you have to log in",
-      },
-      { status: 401 },
-    );
+    // return NextResponse.json(
+    //   {
+    //     error: "not authorized, you have to log in",
+    //   },
+    //   { status: 401 },
+    //); HOX HOX i commented this out to test the project creation without log in - Aino
   }
   if (pathname.startsWith("/api/user")) {
     if (method === "POST") return NextResponse.next(); // only for register new user
