@@ -9,37 +9,32 @@ datasource db {
 
 model User {
   id                 String              @id @default(cuid())
-  fullName           String?
-  username           String              @unique
-  phone              String?             @unique
-  email              String              @unique
   passwordHash       String?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
-  role               Role                @default(admin)
+  email              String              @unique
+  phone              String?             @unique
+  username           String              @unique
   avatarUrl          String?
-  pages              Page[]
-  oauthAccount       OauthAccount[]
   twoFactorEnabled   Boolean             @default(false)
   twoFactorSecret    String?
+  fullName           String?
+  role               Role                @default(admin)
   createdEvents      Event[]             @relation("EventCreator")
   eventSubscriptions EventSubscription[]
+  oauthAccount       OauthAccount[]
+  pages              Page[]
+  createdProjects	 Project[] 			 @relation("ProjectCreator")
 }
 
 model Page {
   id        String   @id @default(cuid())
   title     String
   text      String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-enum Role {
-  user
-  admin
-  moderator
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
 }
 
 model Event {
@@ -69,9 +64,9 @@ model EventSubscription {
   id        String   @id @default(cuid())
   eventId   String
   userId    String
+  createdAt DateTime @default(now())
   event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
 
   @@unique([eventId, userId])
 }
@@ -79,14 +74,13 @@ model EventSubscription {
 model OauthAccount {
   id             String   @id @default(cuid())
   userId         String
-  provider       String // 'github', 'google', etc.
-  providerUserId String // github's user id
+  provider       String
+  providerUserId String
   accessToken    String?
   createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
 
-  user User @relation(fields: [userId], references: [id])
-
-  @@unique([provider, providerUserId]) // one record per provider per user
+  @@unique([provider, providerUserId])
 }
 
 model PublicApiUser {
@@ -96,6 +90,25 @@ model PublicApiUser {
   publicUserId String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  requestCount Int      @default(0)
+  resetAt      DateTime @default(now())
+  events       Event[]
+}
 
-  events Event[]
+enum Role {
+  user
+  admin
+  moderator
+}
+
+model Project {
+  id          String  @id @default(cuid())
+  projectName String
+  oneLiner    String
+  link        String?
+  techStack   String?
+  description String?
+  createdAt   DateTime @default(now())
+  creatorId   String?
+  creator     User?   @relation("ProjectCreator", fields: [creatorId], references: [id])
 }

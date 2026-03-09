@@ -103,6 +103,14 @@ export const eventSchema = eventSchemaBase
     { message: "End time must be after start time", path: ["timeTo"] }
   );
 
+
+export const projectSchema = z.object({
+  projectName: z.string().min(2, "Project name too short").max(50, "Project name too long"),
+  oneLiner: z.string().min(2, "One-liner too short").max(100, "One-liner too long"),
+  link: z.string().optional(),
+  techStack: z.string().optional(),
+  description: z.string().optional(),
+});
 // Backend schema — image is a URL string
 export const eventSchemaServer = eventSchemaBase
   .extend({
