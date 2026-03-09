@@ -19,8 +19,11 @@ export async function PUT(
       return NextResponse.json({ error: "Event not found" }, { status: 404 });
     }
 
-    // Only creator (or events with no creator) can edit
-    if (existing.creatorId && existing.creatorId !== session.userId) {
+    if (
+      existing.creatorId &&
+      existing.creatorId !== session.userId &&
+      session.role !== "admin"
+    ) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -33,7 +36,18 @@ export async function PUT(
       );
     }
 
-    const { title, type, date, timeFrom, timeTo, location, organizer, image, description, maxSpots } = result.data;
+    const {
+      title,
+      type,
+      date,
+      timeFrom,
+      timeTo,
+      location,
+      organizer,
+      image,
+      description,
+      maxSpots,
+    } = result.data;
     const datePart = date.toISOString().split("T")[0];
 
     const updatedEvent = await prisma.event.update({
@@ -115,7 +129,11 @@ export async function DELETE(
       return NextResponse.json({ error: "event not found" }, { status: 404 });
     }
 
-    if (event.creatorId && event.creatorId !== session.userId) {
+    if (
+      event.creatorId &&
+      event.creatorId !== session.userId &&
+      session.role !== "admin"
+    ) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
