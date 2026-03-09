@@ -16,7 +16,8 @@ body {
 
 body {
     color: #000;
-    background: #fff;
+    /* background: #fff; */
+    background: linear-gradient(180deg, #FFEAD8 0%, #FBFFCD 100%);
 }
 
 .dark body {
