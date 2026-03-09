@@ -6,7 +6,7 @@ import { useState } from "react";
 import { EmailInputType, UserEmailZodSchema } from "@/types/zodScemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/Button";
-
+import FormTitle from '@/components/ui/FormTitle'
 export default function ApiKeyPage() {
   const [success, setSuccess] = useState(false);
 
@@ -41,10 +41,10 @@ export default function ApiKeyPage() {
 
   return (
     <>
-      <h3>API KEY generating page</h3>
-      <p>welcome to our publi api</p>
+   
       <div className="bentra-form-container">
         <form className="beentra-form" onSubmit={handleSubmit(onSubmithandler)}>
+          <FormTitle title="API KEY generating" subTitle="welcome to our public api"/>
           <Input
             label="your email"
             name="userEmail"
