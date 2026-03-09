@@ -7,7 +7,11 @@ import { z } from "zod";
 
 type FormValues = z.input<typeof eventSchema>;
 
-export default function CreateEvent() {
+type Props = {
+  onSuccess?: () => void; // A void function that we can send, for example to close the modal
+};
+
+export default function CreateEvent({ onSuccess }: Props) {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       // Omit the FileList — send undefined so the key is excluded from JSON
@@ -32,6 +36,11 @@ export default function CreateEvent() {
       }
 
       console.log("Event created successfully!");
+
+      // If there is a function sent, lets run it
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.error("Error creating event:", error);
     }
