@@ -20,6 +20,7 @@ type FormFields = z.infer<typeof registerSchema>;
 export function RegistrationForm() {
   const router = useRouter(); // Used to redirect to /login after successful registration
   const [serverError, setServerError] = useState(""); // Stores error messages returned from the API
+  const [submitted, setSubmitted] = useState(false); // Tracks successful submission to disable the button
 
   // Set up react-hook-form with Zod schema validation
   const {
@@ -49,6 +50,7 @@ export function RegistrationForm() {
         return;
       }
       setSubmitted(true);
+      router.push("/login");
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
     }

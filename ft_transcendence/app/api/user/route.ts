@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
 
+// create a user
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -83,6 +84,8 @@ export async function POST(request: Request) {
   }
 }
 
+/* ----------------------------------------------------------------------------------- */
+
 export async function GET() {
   try {
     const users = await prisma.user.findMany({
@@ -110,6 +113,5 @@ export async function GET() {
   }
 }
 
-export async function DELETE() {
-  console.log("delete");
-}
+
+/* ----------------------------------------------------------------------------------- */
