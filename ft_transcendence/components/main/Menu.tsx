@@ -9,9 +9,6 @@ export default function Menu() {
       <li>
         <Link href="/events">Events</Link>
       </li>
-      <li>
-        <Link href="/apikey">Public API</Link>
-      </li>
     </ul>
   );
 }
