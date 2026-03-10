@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { EmailInputType, UserEmailZodSchema } from "@/types/zodScemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/Button";
 
 export default function ApiKeyPage() {
   const [success, setSuccess] = useState(false);
@@ -42,21 +43,26 @@ export default function ApiKeyPage() {
     <>
       <h3>API KEY generating page</h3>
       <p>welcome to our publi api</p>
-      <form onSubmit={handleSubmit(onSubmithandler)}>
-        <Input
-          label="your email"
-          name="userEmail"
-          placeholder="enter your Email"
-          id="userEmail"
-          required
-          type="email"
-          register={register}
-        />
-        <p>
-          <span className="bg-red-600">{errors?.userEmail?.message}</span>
-        </p>
-        <button disabled={success}>{success ? "Done ✅" : "Submit"}</button>
-      </form>
+      <div className="bentra-form-container">
+        <form className="beentra-form" onSubmit={handleSubmit(onSubmithandler)}>
+          <Input
+            label="your email"
+            name="userEmail"
+            placeholder="enter your Email"
+            id="userEmail"
+            required
+            type="email"
+            register={register}
+          />
+          <p>
+            <span className="bg-red-600">{errors?.userEmail?.message}</span>
+          </p>
+          <Button 
+          variant="adding"
+          onClick={handleSubmit(onSubmithandler)}
+          disabled={success}> {success ? "Done ✅" : "Submit"}</Button>
+        </form>
+      </div>
     </>
   );
 }

@@ -38,24 +38,26 @@ model Page {
 }
 
 model Event {
-  id              String              @id @default(cuid())
-  title           String
-  date            DateTime
-  timeFrom        DateTime
-  timeTo          DateTime
-  location        String
-  organizer       String
-  description     String?
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
-  creatorId       String?
-  maxSpots        Int                 @default(0)
+  id          String   @id @default(cuid())
+  title       String
+  type        String   @default("Student")
+  date        DateTime
+  timeFrom    DateTime
+  timeTo      DateTime
+  location    String
+  organizer   String
+  image       String?
+  description String?
+  maxSpots    Int      @default(0)
+  creatorId   String?
+  creator     User?    @relation("EventCreator", fields: [creatorId], references: [id])
+  subscriptions EventSubscription[]
+
   publicCreatorId String?
-  type            String              @default("Student")
-  image           String?
-  creator         User?               @relation("EventCreator", fields: [creatorId], references: [id])
-  publicCreator   PublicApiUser?      @relation(fields: [publicCreatorId], references: [id])
-  subscriptions   EventSubscription[]
+  publicCreator   PublicApiUser? @relation(fields: [publicCreatorId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model EventSubscription {
