@@ -4,10 +4,8 @@ export const metadata ={
 }
 export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans dark:bg-black">
-      <main>
+      <div>
         <h1>Hello Team</h1>
-      </main>
-    </div>
+      </div>
   );
 }
