@@ -20,14 +20,21 @@ so the user cannot send huge number of requests.
 */
 
 
+const PUBLIC_PATHS = ["/login", "/registration", "/apikey", "/privacy", "/terms"];
 
 //this for handling calls to dashboard, only the admin can access it.
-export async function handleDashboardRoutes(request: NextRequest) {
-  const session = await getSession();
-  if (!session) return NextResponse.redirect(new URL("/login", request.url));
-  if (session.role !== "admin")
-    return NextResponse.redirect(new URL("/", request.url));
+export async function handleProtectedRoutes(request: NextRequest, pathname:string) {
+  if (PUBLIC_PATHS.includes(pathname)) {
+    return NextResponse.next();
+  }
 
+  const session = await getSession();
+
+  if (!session) return NextResponse.redirect(new URL("/login", request.url));
+  if(pathname.startsWith("/dashboard")){
+    if (session.role !== "admin")
+        return NextResponse.redirect(new URL("/", request.url));
+  }
   return NextResponse.next();
 }
 
@@ -132,11 +139,8 @@ export async function proxy(request: NextRequest) {
     return handleApiRoutes(request);
   }
 
-  if (pathname.startsWith("/dashboard")) {
-    return handleDashboardRoutes(request);
-  }
-
-  return NextResponse.next();
+  
+  return handleProtectedRoutes(request, pathname);
 }catch(error){
   return NextResponse.json({
       error: error instanceof Error ? error.message : "Internal server error"
@@ -145,6 +149,8 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/api/:path*"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
 };
 
