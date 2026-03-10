@@ -33,7 +33,7 @@ export default async function RootLayout({
 
 
   return (
-<>
+<div className="container w-7xl self-centered">
         {/* Header */}
         <header className="w-full h-16 flex items-center px-6 text-[#7A3D02]">
           <Header />
@@ -46,6 +46,6 @@ export default async function RootLayout({
         <footer className="w-full h-14 flex items-center justify-center text-[#7A3D02]">
           <Footer />
         </footer>
-</>
+</div>
   );
 }

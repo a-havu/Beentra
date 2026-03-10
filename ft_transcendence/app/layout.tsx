@@ -15,7 +15,7 @@ validateEnv();
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`flex flex-col min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`flex flex-col min-h-screen items-center justify-center ${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
