@@ -28,8 +28,8 @@ export default function ProjectForm({
 		onSubmit(data);
 	};
 	return (
-		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-	<form className="bg-white p-6 rounded-lg"
+		<div className="bentra-form-container">
+	<form className="beentra-form"
 	onSubmit={handleSubmit(submitHandler)}>
 		<Input
 		label="Project Name"
@@ -92,7 +92,7 @@ export default function ProjectForm({
 		errors={errors}
 		/>
 		 <Button type="submit"
-		 variant="adding">Create Project :)</Button>
+		 variant="adding">Create</Button>
 		 {onCloseAction && (
 			<Button type="button"
 			variant="secondary"

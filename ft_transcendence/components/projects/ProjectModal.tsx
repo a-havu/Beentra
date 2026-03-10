@@ -12,16 +12,16 @@ type Project = {
 
 export default function ProjectModal({
   project,
-  onCloseAction,
+  onClose,
 }: {
   project: Project;
-  onCloseAction: () => void;
+  onClose: () => void;
 }) {
   console.log(project);
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onCloseAction}
+      onClick={onClose}
     >
       <div
         className="bg-white rounded-2xl p-6 max-w-lg w-full mx-4 shadow-xl overflow-y-auto max-h-[80vh]"
@@ -50,7 +50,7 @@ export default function ProjectModal({
             Visit project →
           </a>
         )}
-        <button onClick={onCloseAction} className="mt-6 w-full py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">
+        <button onClick={onClose} className="mt-6 w-full py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">
           Close
         </button>
       </div>

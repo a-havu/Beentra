@@ -18,9 +18,12 @@ After discussing with product owner Laurens, we came up with a very different co
 The simplest way to upload & store images with our stack would be to use a third-party service Uploadthing, which requires a sign-up.
 That's a problem when looking into the future - i don't want my personal email address to be tied to this project, if Hive decides to keep using it.
 
-there are two options:
-1. create a project email account and access Uploadthing from there
-2. communicate with Hive staff about storing images on their servers/through their API
+*options:*
+1. create a project email account and access Uploadthing (or some other third-party service) from there
+2. communicate with Hive staff about storing images locally on their servers/through their API
+3. store imgs directly to DB as bytes - this could bloat the DB and be bad for performance
+4. MinIO? requires a server to host MinIO on?
 
 Also questions for others:
 - do we want to indicate if the current logged-in user has created the project/event? so that in the calendar/project grid view it would be highlighted somehow?
+- concerning forms: we want to indicate that a field is required
