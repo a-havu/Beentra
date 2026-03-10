@@ -17,9 +17,8 @@ export default function ProjectCard({
       onClick={onClick}
       className="cursor-pointer rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white"
     >
-      {/* Placeholder image */}
       <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-4xl">
-        🐈
+        🐝
       </div>
       <div className="p-4">
         <h2 className="font-semibold text-lg">{project.projectName}</h2>

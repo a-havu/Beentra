@@ -109,4 +109,5 @@ model Project {
   createdAt   DateTime @default(now())
   creatorId   String?
   creator     User?   @relation("ProjectCreator", fields: [creatorId], references: [id])
+  image       String?
 }
