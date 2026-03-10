@@ -7,6 +7,7 @@ type Project = {
   techStack?: string | null;
   description?: string | null;
   creator?: { username: string } | null;
+  image?: string | null;
 };
 
 export default function ProjectModal({
@@ -16,6 +17,7 @@ export default function ProjectModal({
   project: Project;
   onClose: () => void;
 }) {
+  console.log(project);
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -26,7 +28,10 @@ export default function ProjectModal({
         onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
       >
         <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center text-6xl mb-4">
-          🐈
+          {project.image
+            ? <img src={project.image} alt={project.projectName} />
+            : <span>🐝</span>
+          }
         </div>
         <h2 className="text-2xl font-bold">{project.projectName}</h2>
         {project.creator && (

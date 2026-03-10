@@ -1,9 +1,27 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getSession } from "./lib/auth";
 import { prisma } from "@/lib/prisma";
-import { publicApiUser } from '@prisma/client'
 
 
+/*
+PublicApi:
+the user will call the public apis. if the user has the key then he can go the needed work.
+the publicapiuser can access only events, he can:
+1. get all events.
+2. get one event.
+3. add his events.
+4. edit his events
+5. delete his events
+
+rate limitation:
+the user has 100 requests per hour, after the hour it will be rested to 0 again.
+so the user cannot send huge number of requests.
+
+*/
+
+
+
+//this for handling calls to dashboard, only the admin can access it.
 export async function handleDashboardRoutes(request: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.redirect(new URL("/login", request.url));
@@ -13,18 +31,51 @@ export async function handleDashboardRoutes(request: NextRequest) {
   return NextResponse.next();
 }
 
+
+// this function will check if the api key is correct and already registerd.
+//then will check if it is allowed by the rate limit.
 async function checkPublicUser(apiKey: string | null) {
   const publicUser = await prisma.publicApiUser.findUnique({
     where: { key: apiKey ?? undefined }
   })
+
   if (!publicUser) {
     return NextResponse.json({
       error: "Not authorized, cannot find a publicUser with this apiKey"
     }, { status: 401 })
   }
+
+  //initialize the restAttime
+  const now = new Date();
+  
+  // check if the time is not setted yet or is more than 1 hour then rest  
+  if (!publicUser.resetAt || new Date() >= publicUser.resetAt){
+    await prisma.publicApiUser.update({
+      where: { id: publicUser.id },
+      data: {
+        requestCount: 0,
+        resetAt: new Date(now.getTime() + 60 * 60 * 1000) // 1 hour from now
+      }
+    })
+    publicUser.requestCount = 0
+  }
+
+
+  if(publicUser.requestCount >=100){
+    return NextResponse.json({
+      error: "Rate limit exceeded (100 requests per hour)"
+    }, { status: 429 })
+  }
+
+  await prisma.publicApiUser.update({
+      where: { id: publicUser.id },
+      data: {
+        requestCount: { increment: 1 }
+      }
+    })
 }
 
-
+//to hanlde api calls.
 export async function handleApiRoutes(request: NextRequest) {
   //if you loged in then you can access all apis
   const session = await getSession();
@@ -36,14 +87,14 @@ export async function handleApiRoutes(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const method = request.method;
 
-  //states and prohects apis can be accessed by logedin users only
+  //states and protected apis can be accessed by logedin users only
   if (pathname.startsWith("/api/projects") || pathname.startsWith("/api/stats")) {
-    // return NextResponse.json(
-    //   {
-    //     error: "not authorized, you have to log in",
-    //   },
-    //   { status: 401 },
-    //); HOX HOX i commented this out to test the project creation without log in - Aino
+    return NextResponse.json(
+      {
+        error: "not authorized, you have to log in",
+      },
+      { status: 401 },
+    );
   }
   if (pathname.startsWith("/api/user")) {
     if (method === "POST") return NextResponse.next(); // only for register new user
@@ -74,6 +125,7 @@ export async function handleApiRoutes(request: NextRequest) {
 }
 
 export async function proxy(request: NextRequest) {
+  try{
   const pathname = request.nextUrl.pathname;
 
   if (pathname.startsWith("/api")) {
@@ -85,8 +137,14 @@ export async function proxy(request: NextRequest) {
   }
 
   return NextResponse.next();
+}catch(error){
+  return NextResponse.json({
+      error: error instanceof Error ? error.message : "Internal server error"
+    }, { status: 500 })
+}
 }
 
 export const config = {
   matcher: ["/dashboard/:path*", "/api/:path*"],
 };
+

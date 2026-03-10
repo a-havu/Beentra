@@ -47,7 +47,8 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(loginHandler)} className="general-form">
+  <div className="beentra-form-container">
+    <form onSubmit={handleSubmit(loginHandler)} className="beentra-form">
       <h1>Welcome back</h1>
       <p>Login to your personal Hive life</p>
 
@@ -88,5 +89,6 @@ export function LoginForm() {
         Don't have an account? <a href="/registration">Sign up</a>
       </p>
     </form>
+    </div>
   );
 }

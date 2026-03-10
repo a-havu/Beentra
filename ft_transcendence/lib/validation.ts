@@ -32,6 +32,7 @@ export function validateEnv() {
   console.log("✅ Environment variables validated successfully");
 }
 
+// New user sign-up — all fields required, confirm must match password
 export const registerSchema = z
   .object({
     fullName: z.string().min(2, "Full name is required"),
@@ -130,3 +131,30 @@ export const subscribeSchema = z.object({
   eventId: z.string().min(1, "Event ID required"),
   userId: z.string().min(1, "User ID required"),
 });
+
+// Validates a route param ID (e.g. /api/user/[id])
+export const idSchema = z.object({
+  id: z.string().min(1, "ID is required"),
+});
+
+// Updating an existing user — all fields optional, confirm only required if password is provided
+export const updateUserSchema = z
+  .object({
+    fullName: z.string().min(2, "Full name is required").optional(),
+    username: z
+      .string()
+      .min(3, "Min. 3 characters")
+      .max(20, "Max. 20 characters")
+      .optional(),
+    phone: z
+      .string()
+      .regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number")
+      .optional(),
+    email: z.string().email("Invalid email").optional(),
+    password: z.string().min(8, "Min. 8 characters").optional(),
+    confirm: z.string().optional(),
+  })
+  .refine((data) => !data.password || data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ["confirm"],
+  });
