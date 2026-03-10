@@ -18,6 +18,7 @@ type FormFields = z.infer<typeof registerSchema>;
  * and redirects to /login on success.
  */
 export function RegistrationForm() {
+  const [submitted, setSubmitted] = useState(false);
   const router = useRouter(); // Used to redirect to /login after successful registration
   const [serverError, setServerError] = useState(""); // Stores error messages returned from the API
   const [submitted, setSubmitted] = useState(false); // Tracks successful submission to disable the button
@@ -57,7 +58,7 @@ export function RegistrationForm() {
   }
 
   return (
-    <div className="bentra-form-container">
+    <div className="beentra-form-container">
       <div className="beentra-form">
         <Input label="Full Name" name="fullName" id="fullName" type="text" placeholder="Full name" register={register} />
         {errors.fullName && <p className="text-sm text-red-500">{errors.fullName.message}</p>}
