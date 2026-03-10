@@ -11,6 +11,7 @@ type Project = {
   techStack?: string | null;
   description?: string | null;
   creator?: { username: string } | null;
+  image?: string | null;
 };
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {

@@ -6,14 +6,14 @@ import { projectSchema } from '@/lib/validation';
 import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
 import React, { useState } from 'react';
-import error from 'next/error';
+import { useRouter } from 'next/navigation';
 
 type FormValues = z.input<typeof projectSchema>;
 
 export default function CreateProject() {
 	const [showForm, setShowForm] = useState(false);
+	const router = useRouter();
 	const handleSubmit: SubmitHandler<FormValues> = async (data) => {
-		console.error("ERROR", error);
 	const res = await fetch("/api/projects", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -23,6 +23,7 @@ export default function CreateProject() {
 
 if (res.ok) {
 	setShowForm(false);
+	router.refresh(); // this is for updating the project display grid instantly when the form is submitted
 }
 };
 return (
