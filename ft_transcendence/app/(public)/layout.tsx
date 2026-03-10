@@ -43,7 +43,7 @@ export default async function RootLayout({
         </header>
 
         {/* Main fills remaining height */}
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex flex-col  flex-1 p-6 ">{children}</main>
 
         {/* Footer */}
         <footer className="w-full h-14 flex items-center justify-center text-[#7A3D02]">
