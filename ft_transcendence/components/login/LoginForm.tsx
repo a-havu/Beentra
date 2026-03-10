@@ -91,7 +91,8 @@ export function LoginForm() {
       <a className="self-center" href="/registration"><Button>Sign up</Button></a>
       </div>
     <div className="staticPages self-center">
-    <h4>Read our <Link href='/terms'>terms</Link> and <Link href='/privacy'>privacy</Link></h4>
+    <h4 className="self-center">Read our <Link href='/terms'>terms</Link> and <Link href='/privacy'>privacy</Link></h4>
+    <h4 className="self-center">for developers you can check our <Link href='/publicapi'>public API</Link> </h4>
     </div>
       
     </form>
