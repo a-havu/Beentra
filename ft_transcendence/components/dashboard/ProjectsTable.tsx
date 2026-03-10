@@ -6,23 +6,32 @@ import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import { User } from "@/lib/generated/prisma/client";
-import { Project } from "@/lib/generated/prisma/client";
+// import { Project } from "@/lib/generated/prisma/client";
 import ShowProject from "./ShowProject";
 import { set } from "zod";
+import CreateProject from "../projects/CreateProject";
+import ProjectForm from "../projects/ProjectForm";
+import AddProject from "./AddProject";
 
-// type Props = {
-// 	id: 			string,
-// 	projectName: 	string,
-// 	oneLiner:		string,
-// 	link?:			string,
-// 	techStack?:		string,
-// 	description:	string,
-// 	createdAt:		DateTime,
-// 	creatorId?: 	string,
-// 	creator?:		User
-// }
+type Project = {
+  id: string;
+  projectName: string;
+  oneLiner: string;
+  link: string | null;
+  techStack: string | null;
+  description: string | null;
+  createdAt: Date;
+  creatorId: string | null;
+  creator: {
+    id: string;
+    username: string;
+    fullName: string | null;
+  } | null;
+  image: string | null;
+}
 
 export function ProjectsTable() {
+	const [showModal, setShowModal] = useState(false);
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -93,7 +102,9 @@ export function ProjectsTable() {
 		<div className="bg-white rounded-lg shadow p-6">
 			<div className="flex justify-between items-center mb-6">
 				<h2 className="text-2xl font-bold text-blue-900">Project Management</h2>
-				<Button>Add Project</Button>
+				<AddProject
+					onSuccess={reRender}
+				/>
 			</div>
 			<div>
 				{/* Table header */}
@@ -131,7 +142,7 @@ export function ProjectsTable() {
 											{project.projectName}
 										</td>
 										<td className="px6 py-4 text-center text-sm text-gray-900">
-											Not working yet
+											{project.creator?.username ?? "Unknown"}
 										</td>
 										<td className="px-6 py-4">
                       <div

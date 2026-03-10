@@ -10,17 +10,17 @@ export async function POST(request: NextRequest) {
       console.error("Validation errors:", result.error.issues);
       return NextResponse.json(
         { error: "Invalid input", details: result.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const project = await prisma.project.create({
       data: {
         projectName: body.projectName,
-		oneLiner: body.oneLiner,
-		link: body.link,
-		techStack: body.techStack,
-		description: body.description,
+        oneLiner: body.oneLiner,
+        link: body.link,
+        techStack: body.techStack,
+        description: body.description,
       },
     });
     return NextResponse.json(project);
@@ -33,6 +33,15 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
+      include: {
+        creator: {
+          select: {
+            id: true,
+            username: true,
+            fullName: true,
+          },
+        },
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -42,7 +51,7 @@ export async function GET() {
     console.error("Error fetching projects:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
