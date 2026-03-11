@@ -23,7 +23,6 @@ export default async function FeaturedProjects({ projects }: { projects: Project
             <ul className="featured-div">
                 {projects.map((project) => (
                     <ProjectCard
-                    className="featured-card"
                         key={project.id}
                         project={project}
                         onClick={() => setSelected(project)}

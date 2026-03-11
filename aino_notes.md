@@ -29,3 +29,4 @@ TODO:
 - design menu
 - add more information to cards on project grid - name, date, tech stack
 - "My projects" -> new API endpoints so users can see their own projects
+- API endpoint for deleting projects
