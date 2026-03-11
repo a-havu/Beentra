@@ -9,7 +9,7 @@ type Project = {
 
 export default function ProjectCard({ project}: { project: Project;}) {
   return (
-    <Link href={`/projects/${project.id}`}>
+    <Link className="flex-1 min-w-0" href={`/projects/${project.id}`}>
       <div className="project-card">
       <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-4xl">
         🐝
