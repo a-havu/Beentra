@@ -256,7 +256,7 @@ export function SimpleEditor({ content: initialContent = "", onUpdate }: SimpleE
   }, [isMobile, mobileView])
 
   return (
-    <div className="simple-editor-wrapper">
+    <div className="simple-editor-wrapper w-full">
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
           ref={toolbarRef}
