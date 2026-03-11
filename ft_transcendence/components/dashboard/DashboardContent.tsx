@@ -6,6 +6,7 @@ import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
 import PageForm from "./pages/PageForm";
 import WelcomeView from "./WelcomeView";
+import { ProjectsTable } from "./ProjectsTable";
 
 // the fetchPages is a component sent by props.
 export function DashboardContent({ userEmail, fetchPages }: { userEmail: string, fetchPages: React.ReactNode }) {
@@ -22,7 +23,7 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
         {activeView === "welcome" && <WelcomeView />}
         {activeView === "users" && <UsersTable />}
         {activeView === "events" && <EventsTable />}
-        {activeView === "projects" && <WelcomeView />}
+        {activeView === "projects" && <ProjectsTable />}
         {activeView === "add-page" && <PageForm initialData={null} />}
         {activeView === "pages" && fetchPages}
       </main>
