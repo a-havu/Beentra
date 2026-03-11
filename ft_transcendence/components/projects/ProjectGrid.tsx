@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
-import ProjectModal from "@/components/projects/ProjectModal";
+//import ProjectModal from "@/components/projects/ProjectModal";
 
 type Project = {
   id: string;
@@ -25,13 +25,9 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           <ProjectCard
             key={project.id}
             project={project}
-            onClick={() => setSelected(project)}
           />
         ))}
       </div>
-      {selected && (
-        <ProjectModal project={selected} onClose={() => setSelected(null)} />
-      )}
     </>
   );
 }
