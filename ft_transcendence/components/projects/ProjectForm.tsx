@@ -28,8 +28,8 @@ export default function ProjectForm({
 		onSubmit(data);
 	};
 	return (
-		<div className="bentra-form-container">
-	<form className="beentra-form"
+		<div className="beentra-form-container modal-form-container">
+	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
 		<Input
 		label="Project Name"
