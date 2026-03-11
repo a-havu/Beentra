@@ -2,6 +2,7 @@
 
 import { createPage, updatePage } from "@/app/(protected)/actions";
 import { useState } from "react";
+import MinimalEditor from "@/components/tiptap/MinimalEditor";
 
 type ActionResult = {
   success: boolean;
@@ -57,7 +58,7 @@ export default function PageForm({ id = null, initialData = null }: PageFormProp
         </div>
 
         <div>
-          <label htmlFor="pageContent">Page Content</label>
+            <MinimalEditor content={content} onUpdate={setContent} />
 
         </div>
 
