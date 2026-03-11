@@ -40,7 +40,7 @@ export default async function RootLayout({
         </header>
 
         {/* Main fills remaining height */}
-        <main className="flex-1 bg-gray-100 p-6">{children}</main>
+        <main className="flex-1 bg-gray-100 p-6 overflow-auto min-w-0">{children}</main>
 
         {/* Footer */}
         <footer className="w-full h-14 bg-gray-900 flex items-center justify-center text-white">
