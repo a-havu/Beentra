@@ -1,7 +1,6 @@
 "use client";
 
 import { createPage, updatePage } from "@/app/(protected)/actions";
-import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor'
 import { useState } from "react";
 
 type ActionResult = {
@@ -59,10 +58,7 @@ export default function PageForm({ id = null, initialData = null }: PageFormProp
 
         <div>
           <label htmlFor="pageContent">Page Content</label>
-          <SimpleEditor 
-            content={content}
-            onUpdate={setContent}
-          />
+
         </div>
 
         <button type="submit">
