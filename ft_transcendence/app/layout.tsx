@@ -16,7 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${workSans.variable} ${afacadFlux.variable}`}>
       <body className={`flex flex-col min-h-screen items-center justify-center ${workSans.variable} ${afacadFlux.variable} antialiased`}>
-        {children}
+          <div className="flex flex-col h-full w-full max-w-7xl min-w-0 overflow-hidden">
+          {children}
+        </div>
       </body>
     </html>
   );
