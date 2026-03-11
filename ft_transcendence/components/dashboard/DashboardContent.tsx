@@ -6,10 +6,9 @@ import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
 import PageForm from "./pages/PageForm";
 import WelcomeView from "./WelcomeView";
-import FetchPages from "./pages/FetchPages";
-import { ProjectsTable } from "./ProjectsTable";
 
-export function DashboardContent({ userEmail }: { userEmail: string }) {
+// the fetchPages is a component sent by props.
+export function DashboardContent({ userEmail, fetchPages }: { userEmail: string, fetchPages: React.ReactNode }) {
   const [activeView, setActiveView] = useState("welcome");
 
   const handleButtonClick = (view: string) => {
@@ -23,9 +22,9 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
         {activeView === "welcome" && <WelcomeView />}
         {activeView === "users" && <UsersTable />}
         {activeView === "events" && <EventsTable />}
-        {activeView === "projects" && <ProjectsTable />}
+        {activeView === "projects" && <WelcomeView />}
         {activeView === "add-page" && <PageForm initialData={null} />}
-		{/* {activeView === "pages" && <FetchPages />} */}
+        {activeView === "pages" && fetchPages}
       </main>
     </div>
   );

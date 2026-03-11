@@ -2,6 +2,7 @@
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardContent } from "@/components/dashboard/DashboardContent";
+import FetchPages from "@/components/dashboard/pages/FetchPages";
 
 export const metadata = {
   title: 'Dashboard'
@@ -19,8 +20,9 @@ export default async function Home() {
   if(session?.role != 'admin'){
     redirect('/')
   }
+// because the FetchPages is a server component, then we can send it as props. 
 
   return (
-  <DashboardContent userEmail={userEmail} />
+  <DashboardContent userEmail={userEmail} fetchPages={<FetchPages />}/>
   );
 }

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import Header from "../../components/main/Header";
-import Footer from "../../components/main/Footer";
+import "@/app/globals.css";
 import { validateEnv } from "@/lib/validation";
 
 
@@ -32,19 +30,7 @@ export default async function RootLayout({
 }>) {
 
 
-return (
-  <>
-    <header className="h-16 flex items-center px-6 text-[#7A3D02]">
-      <Header />
-    </header>
-
-    <main className="flex flex-col flex-1 p-6">
-      {children}
-    </main>
-
-    <footer className="h-14 flex items-center justify-center text-[#7A3D02]">
-      <Footer />
-    </footer>
-  </>
-);
+  return (
+        <main className="flex flex-col  flex-1 p-6 ">{children}</main>
+  );
 }
