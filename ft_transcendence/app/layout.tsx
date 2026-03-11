@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`flex flex-col h-screen items-center ${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex flex-col h-full w-full max-w-7xl">
+        <div className="flex flex-col h-full w-full max-w-7xl min-w-0 overflow-hidden">
           {children}
         </div>
       </body>
