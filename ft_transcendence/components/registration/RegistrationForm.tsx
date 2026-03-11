@@ -18,7 +18,6 @@ type FormFields = z.infer<typeof registerSchema>;
  * and redirects to /login on success.
  */
 export function RegistrationForm() {
-  const [submitted, setSubmitted] = useState(false);
   const router = useRouter(); // Used to redirect to /login after successful registration
   const [serverError, setServerError] = useState(""); // Stores error messages returned from the API
   const [submitted, setSubmitted] = useState(false); // Tracks successful submission to disable the button
