@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Work_Sans, Afacad_Flux } from "next/font/google";
 import "../globals.css";
 import Header from "../../components/main/Header";
 import Footer from "../../components/main/Footer";
 import { validateEnv } from "@/lib/validation";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const afacadFlux = Afacad_Flux({
+  variable: "--font-afacad-flux",
   subsets: ["latin"],
 });
 

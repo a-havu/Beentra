@@ -1,5 +1,5 @@
 'use client'
-
+// HOX HOX this component can be discarded, as we're using a separate project page
 type Project = {
   projectName: string;
   oneLiner: string;
