@@ -7,7 +7,6 @@ import { z } from "zod";
 import { projectSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 
-
 type FormValues = z.input<typeof projectSchema>;
 
 type ProjectFormProps = {
@@ -29,8 +28,8 @@ export default function ProjectForm({
 		onSubmit(data);
 	};
 	return (
-		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-	<form className="bg-white p-6 rounded-lg"
+		<div className="beentra-form-container modal-form-container">
+	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
 		<Input
 		label="Project Name"
@@ -82,8 +81,18 @@ export default function ProjectForm({
 		register={register}
 		errors={errors}
 		 />
+		<Input
+		label="Image"
+		name="image"
+		id="image"
+		type="file"
+		placeholder="Upload Image"
+		required={false}
+		register={register}
+		errors={errors}
+		/>
 		 <Button type="submit"
-		 variant="adding">Create Project :)</Button>
+		 variant="adding">Create</Button>
 		 {onCloseAction && (
 			<Button type="button"
 			variant="secondary"

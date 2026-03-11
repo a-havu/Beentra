@@ -33,10 +33,7 @@ export default async function RootLayout({
 
 
   return (
-    <html lang="en">
-      <body
-        className={`flex flex-col min-h-screen bg-gray-100 ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <>
         {/* Header */}
         <header className="w-full h-16 bg-blue-800 flex items-center px-6 text-white">
           <Header />
@@ -49,7 +46,6 @@ export default async function RootLayout({
         <footer className="w-full h-14 bg-gray-900 flex items-center justify-center text-white">
           <Footer />
         </footer>
-      </body>
-    </html>
+</>
   );
 }

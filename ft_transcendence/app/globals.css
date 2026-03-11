@@ -120,7 +120,15 @@ a {
 
 /*Beentra General styles*/
 
-.bentra-form-container {
+.modal-form-container {
+	@apply fixed inset-0 bg-black/50 z-50 justify-center;
+}
+
+.modal-form {
+	@apply overflow-y-auto max-h-[80vh];
+}
+
+.beentra-form-container {
     @apply  flex  flex-col items-center content-center w-full rounded-2xl;
 }
 

@@ -57,7 +57,7 @@ export function RegistrationForm() {
   }
 
   return (
-    <div className="bentra-form-container">
+    <div className="beentra-form-container">
       <div className="beentra-form">
         <Input label="Full Name" name="fullName" id="fullName" type="text" placeholder="Full name" register={register} />
         {errors.fullName && <p className="text-sm text-red-500">{errors.fullName.message}</p>}
