@@ -41,11 +41,11 @@ export default function PageForm({ id = null, initialData = null }: PageFormProp
   }
 
   return (
-    <div>
+    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden">
       <h1>Adding new page</h1>
       
       <form action={handleSubmit}>
-        <div>
+        <div >
           <label htmlFor="pageTitle">Page Title</label>
           <input
             id="pageTitle"

@@ -138,3 +138,10 @@ a {
 
 
 /*end of /*Beentra General styles*/
+
+
+.ProseMirror {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
