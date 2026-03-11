@@ -120,12 +120,20 @@ a {
 
 /*Beentra General styles*/
 
+.modal-form-container {
+	@apply fixed inset-0 bg-black/50 z-50 justify-center;
+}
+
+.modal-form {
+	@apply overflow-y-auto max-h-[80vh];
+}
+
 .beentra-form-container {
-    @apply  flex  flex-col items-center content-center w-full rounded-2xl fixed inset-0 bg-black/50 z-50 justify-center;
+    @apply  flex  flex-col items-center content-center w-full rounded-2xl;
 }
 
 .beentra-form {
-    @apply flex flex-col bg-[#CDCEFF] w-xl rounded-2xl self-center p-10 border border-solid gap-4 overflow-y-auto max-h-[80vh];
+    @apply flex flex-col bg-[#CDCEFF] w-xl rounded-2xl self-center p-10 border border-solid gap-4;
 }
 
 

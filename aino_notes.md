@@ -24,6 +24,9 @@ That's a problem when looking into the future - i don't want my personal email a
 3. store imgs directly to DB as bytes - this could bloat the DB and be bad for performance
 4. MinIO? requires a server to host MinIO on?
 
-Also questions for others:
-- do we want to indicate if the current logged-in user has created the project/event? so that in the calendar/project grid view it would be highlighted somehow?
-- concerning forms: we want to indicate that a field is required
+TODO:
+make beentra@gmail.com account
+concerning forms: we want to indicate that a field is required
+projectform: creator->User, from the session?
+design menu
+add more information to cards on project grid - name, date, tech stack
