@@ -1,4 +1,4 @@
-## Some web design notes
+*Some web design notes*
 
 The essential steps in web design:
 1. Planning and strategy (why, what, who, how?)
