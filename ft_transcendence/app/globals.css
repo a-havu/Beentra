@@ -138,3 +138,19 @@ a {
 
 
 /*end of /*Beentra General styles*/
+
+/* Project Display styles */
+
+.project-card {
+    @apply cursor-pointer rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white;
+}
+
+.featured-div {
+    @apply w-60 flex flex-col gap-4;
+}
+
+.featured-card {
+    @apply h-40 ;
+}
+
+/* End of Project Display styles */
