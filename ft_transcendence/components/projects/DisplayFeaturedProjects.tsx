@@ -14,11 +14,11 @@ type Project = {
   image?: string | null;
 };
 
-export default async function FeaturedProjects({ projects }: { projects: Project[] }) {
+export default function FeaturedProjects({ projects }: { projects: Project[] }) {
     const [selected, setSelected] = useState<Project | null>(null);
 
     return (
-        <div>
+        <div className="flex flex-col w-full">
             <h2>Featured Projects</h2>
             <ul className="featured-div">
                 {projects.map((project) => (
