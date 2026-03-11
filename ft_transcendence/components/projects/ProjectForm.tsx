@@ -6,6 +6,8 @@ import { Button } from "../ui/Button";
 import { z } from "zod";
 import { projectSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { uploadImage } from "@/lib/uploadImage";
+import { useState } from "react";
 
 type FormValues = z.input<typeof projectSchema>;
 
@@ -20,12 +22,19 @@ export default function ProjectForm({
 	mode = "create",
 	onCloseAction,
 }: ProjectFormProps) {
+	const [imageFile, setImageFile] = useState<File | null>(null);
+
 	const { register,
 		handleSubmit,
 		formState: { errors },
 	 } = useForm<FormValues>({resolver: zodResolver(projectSchema)});
-	const submitHandler: SubmitHandler<FormValues> = (data) => {
-		onSubmit(data);
+
+	const submitHandler: SubmitHandler<FormValues> = async (data) => {
+		let imageUrl: string | null = null;
+		if (imageFile) {
+			imageUrl = await uploadImage(imageFile);
+		}
+		onSubmit({...data, image: imageUrl});
 	};
 	return (
 		<div className="beentra-form-container modal-form-container">
@@ -81,7 +90,7 @@ export default function ProjectForm({
 		register={register}
 		errors={errors}
 		 />
-		<Input
+		{/* <Input
 		label="Image"
 		name="image"
 		id="image"
@@ -90,7 +99,15 @@ export default function ProjectForm({
 		required={false}
 		register={register}
 		errors={errors}
-		/>
+		/> */}
+		<div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Image</label>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+          />
+        </div>
 		 <Button type="submit"
 		 variant="adding">Create</Button>
 		 {onCloseAction && (
