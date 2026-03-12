@@ -111,6 +111,7 @@ export const projectSchema = z.object({
   link: z.string().optional(),
   techStack: z.string().optional(),
   description: z.string().optional(),
+  image: z.string().nullable().optional(),
 });
 // Backend schema — image is a URL string
 export const eventSchemaServer = eventSchemaBase
@@ -151,7 +152,7 @@ export const updateUserSchema = z
       .regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number")
       .optional(),
     email: z.string().email("Invalid email").optional(),
-    password: z.string().min(8, "Min. 8 characters").optional(),
+    password: z.union([z.string().min(8, "Min. 8 characters"), z.literal("")]).optional(),
     confirm: z.string().optional(),
   })
   .refine((data) => !data.password || data.password === data.confirm, {

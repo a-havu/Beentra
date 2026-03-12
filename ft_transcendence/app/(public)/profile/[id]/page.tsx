@@ -1,29 +1,44 @@
-import 'dotenv/config'
-import Twofa from '@/components/login/Twofa'
+import { getSession } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import ProfileForm from "@/components/profile/ProfileForm";
 
-interface UserData {
-  id: string
-  email: string
-  username: string
-  twoFactorEnabled: boolean
-}
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const session = await getSession();
 
-interface profilePageParams{
-    id:string,
-}
+  const user = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      fullName: true,
+      username: true,
+      email: true,
+      phone: true,
+      role: true,
+      twoFactorEnabled: true,
+      avatarUrl: true,
+      createdAt: true,
+    },
+  });
 
-export default async function ProfilePage({params}:{params:Promise<profilePageParams>}){
-    const {id} = await params
+  if (!user) {
+    return (
+      <div className="beentra-form-container py-10">
+        <p className="text-gray-600">User not found.</p>
+      </div>
+    );
+  }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${id}`)
-    if(!response.ok){
-        
-    }
-    const userData:UserData = await response.json()
-    return(
-        <div>
-            {`hello ${userData.email}`}
-            <Twofa status={userData.twoFactorEnabled}/>
-        </div>
-    )
+  const userData = {
+    ...user,
+    createdAt: user.createdAt.toISOString(),
+  };
+
+  const isOwner = session?.userId === id;
+
+  return <ProfileForm user={userData} isOwner={isOwner} />;
 }
