@@ -16,7 +16,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
       {project.techStack && <p>Tech stack: {project.techStack}</p>}
       {project.link && <p>Link: <a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
       {project.description && <p>{project.description}</p>}
-      <div className="relative max-w-full">
+      <br />
+      <div className="relative max-w-lg">
         {project.image ? (
           <Image
             src={project.image}
@@ -24,7 +25,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             width={0}
             height={0}
             sizes="100w"
-            className="w-auto h-auto max-w-full rounded-lg"
+            className="w-full h-auto max-h-96 rounded-lg object-contain"
           />
         ) : (
           <span className="text-4-xl">🐝</span>
