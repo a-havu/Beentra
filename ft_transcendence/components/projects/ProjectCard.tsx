@@ -15,7 +15,7 @@ export default function ProjectCard({
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white"
+      className="beentra-card cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow"
     >
       <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-4xl">
         🐝
