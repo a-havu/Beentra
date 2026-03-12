@@ -40,15 +40,6 @@ export async function POST(request: Request) {
         { status: 409 },
       );
     }
-    const existingPhone = await prisma.user.findUnique({
-      where: { phone: validatedData.phone },
-    });
-    if (existingPhone) {
-      return NextResponse.json(
-        { error: "Phone number already exists" },
-        { status: 409 },
-      );
-    }
     // hash the password before storing
     const hashedPassword = await bcrypt.hash(validatedData.password, 10);
 
@@ -57,7 +48,6 @@ export async function POST(request: Request) {
       data: {
         fullName: validatedData.fullName,
         username: validatedData.username,
-        phone: validatedData.phone,
         email: validatedData.email,
         passwordHash: hashedPassword, // store the hashed password
       },

@@ -17,11 +17,18 @@ export default async function ProfilePage({
       fullName: true,
       username: true,
       email: true,
-      phone: true,
       role: true,
       twoFactorEnabled: true,
       avatarUrl: true,
       createdAt: true,
+      createdProjects: {
+        select: {
+          id: true,
+          projectName: true,
+          oneLiner: true,
+        },
+        orderBy: { createdAt: "desc" },
+      },
     },
   });
 

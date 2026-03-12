@@ -11,7 +11,6 @@ type User = {
   email: string;
   role: string;
   fullName?: string | null;
-  phone?: string | null;
   createdAt: string;
 };
 

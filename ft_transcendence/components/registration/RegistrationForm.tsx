@@ -68,9 +68,6 @@ export function RegistrationForm() {
         <Input label="Email" name="email" id="email" type="email" placeholder="name@example.com" register={register} />
         {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
 
-        <Input label="Phone Number" name="phone" id="phone" type="tel" placeholder="+358 40 123 4567" register={register} />
-        {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
-
         <Input label="Password" name="password" id="password" type="password" placeholder="Enter password" register={register} />
         {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
 
