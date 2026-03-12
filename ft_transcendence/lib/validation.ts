@@ -111,6 +111,7 @@ export const projectSchema = z.object({
   link: z.string().optional(),
   techStack: z.string().optional(),
   description: z.string().optional(),
+  image: z.string().nullable().optional(),
 });
 // Backend schema — image is a URL string
 export const eventSchemaServer = eventSchemaBase

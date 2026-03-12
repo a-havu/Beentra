@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { projectSchema } from "@/lib/validation";
+import ImageKit from "imagekit";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,6 +22,7 @@ export async function POST(request: NextRequest) {
 		link: body.link,
 		techStack: body.techStack,
 		description: body.description,
+    image: body.image,
       },
     });
     return NextResponse.json(project);
@@ -46,3 +48,9 @@ export async function GET() {
     );
   }
 }
+
+const imagekit = new ImageKit({
+  publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+  urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
+});
