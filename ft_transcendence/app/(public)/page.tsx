@@ -1,11 +1,10 @@
 import Calendar from "@/components/events/Calendar";
 import AddEvent from "@/components/dashboard/AddEvent";
 import EventList from "@/components/events/EventList";
+import FeaturedProjects from "@/components/projects/FeaturedProjects";
 
 
 
-
-import Image from "next/image";
 export const metadata ={
   title:'ft_transcendence'
 }
@@ -29,7 +28,7 @@ export default function HomePage() {
               </div>
         </div>
         <div className="projects-section">
-              <h1>featured Projects </h1>
+                <FeaturedProjects />
         </div>
         
       </div>
