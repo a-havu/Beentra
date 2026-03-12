@@ -40,7 +40,6 @@ export const registerSchema = z
       .string()
       .min(3, "Min. 3 characters")
       .max(20, "Max. 20 characters"),
-    phone: z.string().regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number"),
     date: z
       .string()
       .optional()
@@ -140,15 +139,12 @@ export const idSchema = z.object({
 // Updating an existing user — all fields optional, confirm only required if password is provided
 export const updateUserSchema = z
   .object({
+    avatarUrl: z.string().optional(),
     fullName: z.string().min(2, "Full name is required").optional(),
     username: z
       .string()
       .min(3, "Min. 3 characters")
       .max(20, "Max. 20 characters")
-      .optional(),
-    phone: z
-      .string()
-      .regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number")
       .optional(),
     email: z.string().email("Invalid email").optional(),
     password: z.union([z.string().min(8, "Min. 8 characters"), z.literal("")]).optional(),
