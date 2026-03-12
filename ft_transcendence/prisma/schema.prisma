@@ -27,9 +27,17 @@ model User {
   createdProjects	 Project[] 			 @relation("ProjectCreator")
 }
 
+
+
+enum PageTitle {
+  terms
+  privacy
+}
+
+
 model Page {
   id        String   @id @default(cuid())
-  title     String
+  title     PageTitle   @unique
   text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
