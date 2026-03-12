@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import TfaCodeInput from "./TfaCodeInput";
+import { Button } from "@/components/ui/Button";
 
 interface TwoFaProps {
   status: boolean;
@@ -53,9 +54,12 @@ export default function Twofa({ status }: TwoFaProps) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-row gap-4">
         <h3>2fa status:</h3>
-        <button className="cursor-pointer" onClick={handleStatus}>
+        <Button
+          variant={twofaStatus ? "delete" : "adding"}
+          onClick={handleStatus}
+        >
           {twofaStatus ? "Deactivate" : "Activate"}
-        </button>
+        </Button>
       </div>
       {qrCode && (
         <div>
