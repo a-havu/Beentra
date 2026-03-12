@@ -90,18 +90,8 @@ export default function ProjectForm({
 		register={register}
 		errors={errors}
 		 />
-		{/* <Input
-		label="Image"
-		name="image"
-		id="image"
-		type="file"
-		placeholder="Upload Image"
-		required={false}
-		register={register}
-		errors={errors}
-		/> */}
-		<div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Image</label>
+		<div>
+          <label>Image</label><br />
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp"
