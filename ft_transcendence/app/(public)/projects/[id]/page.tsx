@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-
+import Image from "next/image";
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -12,11 +12,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   return (
     <div>
       <h1>{project.projectName}</h1><br />
-      <p>{project.oneLiner}</p>
-      <img src="https://headsupfortails.com/cdn/shop/articles/Kitten_Blog_images__Rottweiler_Dog_Breed_Guide-_Temperament_Appearance_Care_History.jpg?v=1759301197" alt={project.projectName} className="w-full h-64 object-cover rounded-lg mb-4" />
+      {project.oneLiner && <p>{project.oneLiner}</p>}
       {project.techStack && <p>Tech stack: {project.techStack}</p>}
       {project.link && <p>Link: <a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
       {project.description && <p>{project.description}</p>}
+      <br />
+      <div className="relative max-w-lg">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.projectName} image`}
+            width={0}
+            height={0}
+            sizes="100w"
+            className="w-full h-auto max-h-96 rounded-lg object-contain"
+          />
+        ) : (
+          <span className="text-4-xl">🐝</span>
+        )}
+        </div>
     </div>
   );
 }

@@ -146,11 +146,11 @@ a {
 /* Project Display styles */
 
 .project-card {
-    @apply cursor-pointer rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white;
+    @apply flex-1 cursor-pointer rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white;
 }
 
 .featured-div {
-    @apply w-60 h-full flex flex-col gap-4;
+    @apply  h-full w-full flex flex-row gap-4;
 }
 
 
