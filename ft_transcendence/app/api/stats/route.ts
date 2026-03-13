@@ -5,11 +5,14 @@ export async function GET() {
   try {
     const userCount = await prisma.user.count();
     const eventCount = await prisma.event.count();
+    const projectCount = await prisma.project.count();
 
     return NextResponse.json({
       users: userCount,
       events: eventCount,
+      projects: projectCount,
     });
+
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
