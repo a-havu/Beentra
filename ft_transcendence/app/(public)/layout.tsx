@@ -32,19 +32,19 @@ export default async function RootLayout({
 }>) {
 
 
-return (
-  <>
-    <header className="h-16 shrink-0 flex items-center px-6 text-[#7A3D02]">
-      <Header />
-    </header>
+  return (
+    <>
+      <header className="h-16 flex items-center px-6 text-[#7A3D02]">
+        <Header />
+      </header>
 
-    <main className="flex flex-col flex-1 p-6">
-      {children}
-    </main>
+      <main className="flex flex-col h-dvh flex-1 p-6">
+        {children}
+      </main>
 
-    <footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
-      <Footer />
-    </footer>
-  </>
-);
+      <footer className="h-14 flex items-center justify-center text-[#7A3D02]">
+        <Footer />
+      </footer>
+    </>
+  );
 }

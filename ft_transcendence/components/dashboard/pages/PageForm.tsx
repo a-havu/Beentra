@@ -3,6 +3,7 @@
 import { createPage, updatePage } from "@/app/(protected)/actions";
 import { useState } from "react";
 import MinimalEditor from "@/components/tiptap/MinimalEditor";
+import { PageZodType } from '@/types/zodScemas'
 
 type ActionResult = {
   success: boolean;
@@ -11,10 +12,7 @@ type ActionResult = {
 
 type PageFormProps = {
   id?: number | null;
-  initialData: {
-    title: string,
-    text: string,
-  } | null
+  initialData: Partial<PageZodType> | null
 }
 
 export default function PageForm({ id = null, initialData = null }: PageFormProps) {
@@ -44,7 +42,7 @@ export default function PageForm({ id = null, initialData = null }: PageFormProp
   return (
     <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden">
       <h1>Adding new page</h1>
-      
+
       <form action={handleSubmit}>
         <div >
           <label htmlFor="pageTitle">Page Title</label>
@@ -58,7 +56,7 @@ export default function PageForm({ id = null, initialData = null }: PageFormProp
         </div>
 
         <div>
-            <MinimalEditor content={content} onUpdate={setContent} />
+          <MinimalEditor content={content} onUpdate={setContent} />
 
         </div>
 

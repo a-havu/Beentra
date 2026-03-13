@@ -40,7 +40,7 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
       </button>
 
       {open && (
-        <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-gray-800 rounded-lg z-50 p-2">
+        <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-[#FDF7D2] rounded-lg z-50 p-2">
 
           <Link href={`/profile/${userId}`}> <button className="cursor-pointer">My Profile</button> </Link>
           <Link href="/events"> <button className="cursor-pointer"> My Events</button> </Link>
