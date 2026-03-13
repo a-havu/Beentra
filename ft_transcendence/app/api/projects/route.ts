@@ -15,14 +15,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const uploadResponse = await imagekit.upload({
+      file: body.image,
+      fileName: body.imageName ?? "project-image",
+      folder: "projects",
+    });
+
     const project = await prisma.project.create({
       data: {
         projectName: body.projectName,
-		oneLiner: body.oneLiner,
-		link: body.link,
-		techStack: body.techStack,
-		description: body.description,
-    image: body.image,
+        oneLiner: body.oneLiner,
+        link: body.link,
+        techStack: body.techStack,
+        description: body.description,
+        image: uploadResponse.url,
+        imagekitFileId: uploadResponse.fileId,
       },
     });
     return NextResponse.json(project);

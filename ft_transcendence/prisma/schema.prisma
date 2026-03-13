@@ -110,14 +110,15 @@ enum Role {
 }
 
 model Project {
-  id          String  @id @default(cuid())
-  projectName String
-  oneLiner    String
-  link        String?
-  techStack   String?
-  description String?
-  createdAt   DateTime @default(now())
-  creatorId   String?
-  creator     User?   @relation("ProjectCreator", fields: [creatorId], references: [id])
-  image       String?
+  id              String  @id @default(cuid())
+  projectName     String
+  oneLiner        String
+  link            String?
+  techStack       String?
+  description     String?
+  createdAt       DateTime @default(now())
+  creatorId       String?
+  creator         User?   @relation("ProjectCreator", fields: [creatorId], references: [id])
+  image           String?
+  imagekitFileId  String?
 }
