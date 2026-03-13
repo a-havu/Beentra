@@ -9,9 +9,10 @@ type FormValues = z.input<typeof eventSchema>;
 
 type Props = {
   id: string;
+  onSuccess?: () => void;
 };
 
-const EditEvent = ({ id }: Props) => {
+const EditEvent = ({ id, onSuccess }: Props) => {
   const [defaultValues, setDefaultValues] = useState<Partial<FormValues>>();
   const [loading, setLoading] = useState(true);
 
@@ -50,6 +51,7 @@ const EditEvent = ({ id }: Props) => {
           type: event.type,
           image: event.image,
           description: event.description,
+          maxSpots: event.maxSpots ?? 0,
         });
         console.log("date: \n", event.date);
         setLoading(false);
@@ -76,6 +78,10 @@ const EditEvent = ({ id }: Props) => {
       }
 
       console.log("Event updated successfully!");
+
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.error("Error updating event:", error);
     }

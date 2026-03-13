@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -7,10 +6,14 @@ import EditEvent from "../events/EditEvent";
 import { Button } from "../ui/Button";
 import AddEvent from "./AddEvent";
 import ShowEvent from "../events/ShowEvent";
+import Modal from "../ui/Modal";
+import ModalBody from "../ui/ModalBody";
+import ModalFooter from "../ui/ModalFooter";
 
 type Event = {
   id: string;
   title: string;
+  type: string;
   date: Date;
   timeFrom: Date;
   timeTo: Date;
@@ -18,6 +21,10 @@ type Event = {
   organizer: string;
   image: string | null;
   description: string | null;
+  creatorId: string | null;
+  maxSpots: number;
+  subscriberCount: number;
+  isSubscribed: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -30,31 +37,41 @@ export function EventsTable() {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
-    async function fetchEvents() {
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/events", {
-          method: "GET",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch Events");
-        }
-
-        const data = await response.json();
-
-        setEvents(data);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching events: ", err);
-        setError("Failed to load events. Please try again");
-      } finally {
-        setIsLoading(false);
-      }
-    }
     fetchEvents();
   }, []);
+
+  const fetchEvents = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await fetch("/api/events", {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch Events");
+      }
+
+      const data = await response.json();
+
+      setEvents(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching events: ", err);
+      setError("Failed to load events. Please try again");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSuccess = () => {
+    setEditingId(null);
+    fetchEvents();
+  };
+
+  const reRender = () => {
+    fetchEvents();
+  };
 
   if (isLoading) {
     return (
@@ -84,7 +101,7 @@ export function EventsTable() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
 
-          <AddEvent />
+          <AddEvent onSuccess={reRender} />
         </div>
         <div>
           {/* Table header */}
@@ -113,8 +130,11 @@ export function EventsTable() {
             <tbody className="divide-y divide-gray-200">
               {events.map((event, index) => {
                 return (
-                  <tr key={event.id} className="hover:bg-gray-50 transition cursor-pointer"
-                    onClick={() => setSelectedEvent(event)}>
+                  <tr
+                    key={event.id}
+                    className="hover:bg-gray-50 transition cursor-pointer"
+                    onClick={() => setSelectedEvent(event)}
+                  >
                     <td className="px6 py-4 text-center text-sm text-gray-900">
                       {index + 1}
                     </td>
@@ -142,7 +162,7 @@ export function EventsTable() {
                           id={event.id}
                           onDeleted={() => {
                             setEvents((prev) =>
-                              prev.filter((e) => e.id !== event.id)
+                              prev.filter((e) => e.id !== event.id),
                             );
                           }}
                         />
@@ -164,18 +184,28 @@ export function EventsTable() {
       )}
 
       {editingId && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-2xl relative">
-            <button
-              onClick={() => setEditingId(null)}
-              className="absolute top-2 right-2 text-gray-600"
-            >
-              ✕
-            </button>
+        <Modal isOpen={!!editingId}>
+          <ModalBody>
+            <EditEvent id={editingId} onSuccess={handleSuccess} />
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={() => setEditingId(null)}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+        // <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        //   <div className="bg-white p-6 rounded-lg w-full max-w-2xl relative">
+        //     <button
+        //       onClick={() => setEditingId(null)}
+        //       className="absolute top-2 right-2 text-gray-600"
+        //     >
+        //       ✕
+        //     </button>
 
-            <EditEvent id={editingId} />
-          </div>
-        </div>
+        //     <EditEvent id={editingId} />
+        //   </div>
+        // </div>
       )}
     </>
   );

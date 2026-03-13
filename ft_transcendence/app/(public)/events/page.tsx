@@ -1,5 +1,3 @@
-import { EventsTable } from "@/components/dashboard/EventsTable";
-import CreateEvent from "@/components/events/CreateEvent";
 import Calendar from "@/components/events/Calendar";
 import AddEvent from "@/components/dashboard/AddEvent";
 import EventList from "@/components/events/EventList";

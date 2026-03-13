@@ -32,6 +32,7 @@ export function validateEnv() {
   console.log("✅ Environment variables validated successfully");
 }
 
+// New user sign-up — all fields required, confirm must match password
 export const registerSchema = z
   .object({
     fullName: z.string().min(2, "Full name is required"),
@@ -74,6 +75,7 @@ const eventSchemaBase = z.object({
   organizer: z.string().min(2, "Organizer too short").max(30, "Organizer too long"),
   type: z.enum(["Student", "External"]),
   description: z.string().optional(),
+  maxSpots: z.coerce.number().int().min(0, "Spots must be 0 or more").default(0),
 });
 
 // Frontend schema — image is a FileList (browser File object)
@@ -102,10 +104,20 @@ export const eventSchema = eventSchemaBase
     { message: "End time must be after start time", path: ["timeTo"] }
   );
 
+
+export const projectSchema = z.object({
+  projectName: z.string().min(2, "Project name too short").max(50, "Project name too long"),
+  oneLiner: z.string().min(2, "One-liner too short").max(100, "One-liner too long"),
+  link: z.string().optional(),
+  techStack: z.string().optional(),
+  description: z.string().optional(),
+  image: z.string().nullable().optional(),
+});
 // Backend schema — image is a URL string
 export const eventSchemaServer = eventSchemaBase
   .extend({
-    image: z.string().optional(),
+    image: z.string().nullable().optional(),
+    creatorId: z.string().optional(),
   })
   .refine(
     (data) => data.date >= new Date(new Date().setHours(0, 0, 0, 0)),
@@ -115,3 +127,35 @@ export const eventSchemaServer = eventSchemaBase
     (data) => data.timeTo > data.timeFrom,
     { message: "End time must be after start time", path: ["timeTo"] }
   );
+
+export const subscribeSchema = z.object({
+  eventId: z.string().min(1, "Event ID required"),
+  userId: z.string().min(1, "User ID required"),
+});
+
+// Validates a route param ID (e.g. /api/user/[id])
+export const idSchema = z.object({
+  id: z.string().min(1, "ID is required"),
+});
+
+// Updating an existing user — all fields optional, confirm only required if password is provided
+export const updateUserSchema = z
+  .object({
+    fullName: z.string().min(2, "Full name is required").optional(),
+    username: z
+      .string()
+      .min(3, "Min. 3 characters")
+      .max(20, "Max. 20 characters")
+      .optional(),
+    phone: z
+      .string()
+      .regex(/^\+?[\d\s]{7,15}$/, "Invalid phone number")
+      .optional(),
+    email: z.string().email("Invalid email").optional(),
+    password: z.union([z.string().min(8, "Min. 8 characters"), z.literal("")]).optional(),
+    confirm: z.string().optional(),
+  })
+  .refine((data) => !data.password || data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ["confirm"],
+  });

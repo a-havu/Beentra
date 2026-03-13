@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { eventSchema, eventSchemaServer } from "./validation";
+import { eventSchema, eventSchemaServer, subscribeSchema } from "./validation";
 
 const tomorrow = new Date(Date.now() + 86_400_000).toISOString();
 
@@ -99,5 +99,62 @@ describe("eventSchemaServer (backend)", () => {
     const result = eventSchemaServer.safeParse({ ...validBase, organizer: "X" });
     expect(result.success).toBe(false);
     expect(result.error?.issues[0].message).toBe("Organizer too short");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// maxSpots validation
+// ---------------------------------------------------------------------------
+
+describe("maxSpots validation", () => {
+  it("passes when maxSpots is 0 (unlimited)", () => {
+    const result = eventSchemaServer.safeParse({ ...validBase, maxSpots: 0 });
+    expect(result.success).toBe(true);
+  });
+
+  it("passes when maxSpots is a positive integer", () => {
+    const result = eventSchemaServer.safeParse({ ...validBase, maxSpots: 50 });
+    expect(result.success).toBe(true);
+    expect(result.data?.maxSpots).toBe(50);
+  });
+
+  it("fails when maxSpots is negative", () => {
+    const result = eventSchemaServer.safeParse({ ...validBase, maxSpots: -1 });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe("Spots must be 0 or more");
+  });
+
+  it("defaults to 0 when maxSpots is omitted", () => {
+    const result = eventSchemaServer.safeParse(validBase);
+    expect(result.success).toBe(true);
+    expect(result.data?.maxSpots).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// subscribeSchema
+// ---------------------------------------------------------------------------
+
+describe("subscribeSchema", () => {
+  it("passes with valid eventId and userId", () => {
+    const result = subscribeSchema.safeParse({ eventId: "abc123", userId: "user456" });
+    expect(result.success).toBe(true);
+  });
+
+  it("fails when eventId is empty", () => {
+    const result = subscribeSchema.safeParse({ eventId: "", userId: "user456" });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe("Event ID required");
+  });
+
+  it("fails when userId is empty", () => {
+    const result = subscribeSchema.safeParse({ eventId: "abc123", userId: "" });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe("User ID required");
+  });
+
+  it("fails when both fields are missing", () => {
+    const result = subscribeSchema.safeParse({});
+    expect(result.success).toBe(false);
   });
 });

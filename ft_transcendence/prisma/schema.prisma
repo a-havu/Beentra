@@ -7,31 +7,100 @@ datasource db {
   provider = "postgresql"
 }
 
-model User{
-  id           String         @id @default(cuid())
-  fullName     String?
-  username     String   @unique
-  phone        String?   @unique
-  email        String   @unique
-  passwordHash String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  role         String   @default("admin")
-  avatarUrl    String?
-  pages Page[]
-  oauthAccount OauthAccount[]
-  twoFactorEnabled Boolean @default(false)
-  twoFactorSecret  String?
+model User {
+  id                 String              @id @default(cuid())
+  passwordHash       String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  email              String              @unique
+  phone              String?             @unique
+  username           String              @unique
+  avatarUrl          String?
+  twoFactorEnabled   Boolean             @default(false)
+  twoFactorSecret    String?
+  fullName           String?
+  role               Role                @default(admin)
+  createdEvents      Event[]             @relation("EventCreator")
+  eventSubscriptions EventSubscription[]
+  oauthAccount       OauthAccount[]
+  pages              Page[]
+  createdProjects	 Project[] 			 @relation("ProjectCreator")
 }
 
-model Page{
+
+
+enum PageTitle {
+  terms
+  privacy
+}
+
+
+model Page {
+  id        String   @id @default(cuid())
+  title     PageTitle   @unique
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Event {
   id          String   @id @default(cuid())
-  title 	String
-  text 		String
-  authorId 	String
-  author User @relation(fields:[authorId], references: [id])
+  title       String
+  type        String   @default("Student")
+  date        DateTime
+  timeFrom    DateTime
+  timeTo      DateTime
+  location    String
+  organizer   String
+  image       String?
+  description String?
+  maxSpots    Int      @default(0)
+  creatorId   String?
+  creator     User?    @relation("EventCreator", fields: [creatorId], references: [id])
+  subscriptions EventSubscription[]
+
+  publicCreatorId String?
+  publicCreator   PublicApiUser? @relation(fields: [publicCreatorId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model EventSubscription {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  createdAt DateTime @default(now())
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([eventId, userId])
+}
+
+model OauthAccount {
+  id             String   @id @default(cuid())
+  userId         String
+  provider       String
+  providerUserId String
+  accessToken    String?
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerUserId])
+}
+
+model PublicApiUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  key          String   @unique
+  publicUserId String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  requestCount Int      @default(0)
+  resetAt      DateTime @default(now())
+  events       Event[]
 }
 
 enum Role {
@@ -40,31 +109,16 @@ enum Role {
   moderator
 }
 
-model Event {
-  id          String   @id @default(cuid())
-  title       String
-  date        DateTime
-  timeFrom    DateTime
-  timeTo      DateTime
-  location    String
-  organizer   String
-  image       String?
-  description String?
-
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-
-model OauthAccount {
-  id             String   @id @default(cuid())
-  userId         String
-  provider       String   // 'github', 'google', etc.
-  providerUserId String   // github's user id
-  accessToken    String?
-  createdAt      DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@unique([provider, providerUserId]) // one record per provider per user
+model Project {
+  id              String  @id @default(cuid())
+  projectName     String
+  oneLiner        String
+  link            String?
+  techStack       String?
+  description     String?
+  createdAt       DateTime @default(now())
+  creatorId       String?
+  creator         User?   @relation("ProjectCreator", fields: [creatorId], references: [id])
+  image           String?
+  imagekitFileId  String?
 }
