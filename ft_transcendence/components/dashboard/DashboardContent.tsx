@@ -8,6 +8,7 @@ import PageForm from "./pages/PageForm";
 import WelcomeView from "./WelcomeView";
 import { ProjectsTable } from "./ProjectsTable";
 import { useActivityTracker } from "@/hooks/use-activity-tracker";
+import { PagesTable } from "./PagesTable";
 
 // the fetchPages is a component sent by props.
 export function DashboardContent({ userEmail, fetchPages }: { userEmail: string, fetchPages: React.ReactNode }) {
@@ -28,7 +29,7 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
         {activeView === "events" && <EventsTable />}
         {activeView === "projects" && <ProjectsTable />}
         {activeView === "add-page" && <PageForm initialData={null} />}
-        {activeView === "pages" && fetchPages}
+        {activeView === "pages" && <PagesTable />}
       </main>
     </div>
   );
