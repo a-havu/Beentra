@@ -20,7 +20,7 @@ so the user cannot send huge number of requests.
 */
 
 
-const PUBLIC_PATHS = ["/login", "/registration", "/apikey", "/privacy", "/terms"];
+const PUBLIC_PATHS = ["/login", "/registration", "/apikey", "/privacy", "/terms", "/reference"];
 
 //this for handling calls to dashboard, only the admin can access it.
 export async function handleProtectedRoutes(request: NextRequest, pathname:string) {

@@ -22,11 +22,12 @@ That's a problem when looking into the future - i don't want my personal email a
 1. create a project email account and access Uploadthing (or some other third-party service) from there
 2. communicate with Hive staff about storing images locally on their servers/through their API
 3. store imgs directly to DB as bytes - this could bloat the DB and be bad for performance
-4. MinIO? requires a server to host MinIO on?
+
+on March 10 it was decided to create a gmail account for Beentra and use a third-party service ImageKit
 
 TODO:
-make beentra@gmail.com account
-concerning forms: we want to indicate that a field is required
-projectform: creator->User, from the session?
-design menu
-add more information to cards on project grid - name, date, tech stack
+- concerning forms: we want to indicate that a field is required
+- projectform: creator->User, from the session?
+- add more information to cards on project grid - name, date, tech stack
+- "My projects" -> new API endpoints so users can see their own projects
+- API endpoint for deleting projects

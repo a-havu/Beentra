@@ -81,7 +81,7 @@ export function LoginForm() {
       <div className="flex flex-col justify-center gap-2">
           <h4 className="self-center">Or continue with</h4>
           <div className="flex flex-row gap-4 self-center ">
-                <Link href="/api/auth/github">
+                <Link href="/api/auth/github" prefetch={false}>
                 <Button>Github</Button>
               </Link>
               <button type="button">Intra42</button>

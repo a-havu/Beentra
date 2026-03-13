@@ -44,7 +44,7 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
 
           <Link href={`/profile/${userId}`}> <button className="cursor-pointer">My Profile</button> </Link>
           <Link href="/events"> <button className="cursor-pointer"> My Events</button> </Link>
-          <Link href="/projects"><button className="cursor-pointer"> My Projects</button> </Link>
+          <Link href={`/users/${userId}/projects`}><button className="cursor-pointer"> My Projects</button> </Link>
           <LogoutButton />
         </div>
       )}
