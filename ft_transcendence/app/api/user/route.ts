@@ -120,7 +120,7 @@ export async function GET() {
       return { ...user, isOnline };
     })
 
-    return NextResponse.json(users);
+    return NextResponse.json(activeUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(

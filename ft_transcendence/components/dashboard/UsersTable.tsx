@@ -168,7 +168,7 @@ export function UsersTable() {
                           id={user.id}
                           onDeleted={() => {
                             setUsers((prev) =>
-                              prev.filter((e) => e.id !== users.id),
+                              prev.filter((e) => e.id !== user.id),
                             );
                           }}
                         />
