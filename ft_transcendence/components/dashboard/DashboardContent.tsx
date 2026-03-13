@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
-import PageForm from "./pages/PageForm";
+import PageForm from "../pages/CreatePage";
 import WelcomeView from "./WelcomeView";
 import { ProjectsTable } from "./ProjectsTable";
 import { useActivityTracker } from "@/hooks/use-activity-tracker";
@@ -26,12 +26,10 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
         {activeView === "welcome" && <WelcomeView />}
         {activeView === "users" && <UsersTable />}
         {activeView === "events" && <EventsTable />}
-        {activeView === "projects" && <ProjectsTable />}
-        {activeView === "add-page" && <PageForm initialData={null} />}
+        {activeView === "projects" && <p>Projects section!</p>}
+        {/*{activeView === "add-page" && <PageForm initialData={null} />}*/}
         {activeView === "pages" && fetchPages}
       </main>
     </div>
   );
 }
-
-
