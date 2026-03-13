@@ -34,7 +34,7 @@ export default async function RootLayout({
 
 return (
   <>
-    <header className="h-16 flex items-center px-6 text-[#7A3D02]">
+    <header className="h-16 shrink-0 flex items-center px-6 text-[#7A3D02]">
       <Header />
     </header>
 
@@ -42,7 +42,7 @@ return (
       {children}
     </main>
 
-    <footer className="h-14 flex items-center justify-center text-[#7A3D02]">
+    <footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
       <Footer />
     </footer>
   </>

@@ -29,7 +29,8 @@ export default function ProjectCard({ project }: { project: Project;}) {
         <h2>{project.projectName}</h2>
         <p>{project.oneLiner}</p>
         {project.creator && (
-          <p>@{project.creator.username}</p>
+          <p>{project.creator.username}
+          </p>
         )}
       </div>
     </div>
