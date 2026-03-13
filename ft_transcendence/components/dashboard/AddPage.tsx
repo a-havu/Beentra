@@ -5,7 +5,7 @@ import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
-import CreatePage from "../pages/CreatePage";
+import PageForm from "../pages/PageForm";
 
 type Props = {
   onSuccess?: () => void;
@@ -29,7 +29,7 @@ export default function AddPage({ onSuccess }: Props) {
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <ModalBody>
-          <CreatePage onSuccess={handleSuccess} />
+          <PageForm onSuccess={handleSuccess} />
         </ModalBody>
         <ModalFooter>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
