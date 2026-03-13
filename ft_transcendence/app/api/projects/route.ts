@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
         description: body.description,
         image: uploadResponse.url,
         imagekitFileId: uploadResponse.fileId,
+        creatorId: body.userId,
       },
     });
     return NextResponse.json(project);
