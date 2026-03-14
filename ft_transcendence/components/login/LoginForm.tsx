@@ -106,7 +106,7 @@ export function LoginForm() {
         <h4 className="self-center">you can check our <Link href='/apikey'>public API</Link> </h4>
       </form>
       <div className="staticPages self-center m-4">
-        <h4 className="self-center">Read our <Link href='/terms'>terms</Link> and <Link href='/privacy'>privacy</Link></h4>
+        <h4 className="self-center">Read our <Link href='/terms'><span className="text-blue-600 underline hover:text-blue-800">terms</span></Link> and <Link href='/privacy'><span className="text-blue-600 underline hover:text-blue-800">privacy</span></Link></h4>
       </div>
     </div>
   );
