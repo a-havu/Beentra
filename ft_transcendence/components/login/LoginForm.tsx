@@ -75,27 +75,39 @@ export function LoginForm() {
         />
 
         <Button onClick={handleSubmit(loginHandler)}> Login</Button>
-        <hr />
+
+        <div className="flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-black" />
+          <span className="text-md text-black whitespace-nowrap">or continue with</span>
+          <div className="flex-1 h-px bg-black" />
+        </div>
 
         <div className="flex flex-col justify-center gap-2">
-          <h4 className="self-center">Or continue with</h4>
           <div className="flex flex-row gap-4 self-center ">
             <a href="/api/auth/github">
               <Button>Github</Button>
             </a>
             <button type="button">Intra42</button>
           </div>
-          <hr />
-          <h4 className="self-center">Don't have an account?</h4>
+          <div className="flex items-center gap-3 my-1">
+            <div className="flex-1 h-px bg-black" />
+            <span className="text-md text-black whitespace-nowrap">Don't have an account?</span>
+            <div className="flex-1 h-px bg-black" />
+          </div>
+
           <a className="self-center" href="/registration"><Button>Sign up</Button></a>
         </div>
-        <div className="staticPages self-center">
-          <h4 className="self-center">Read our <Link href='/terms'>terms</Link> and <Link href='/privacy'>privacy</Link></h4>
-          <h4 className="self-center">for developers you can check our <Link href='/apikey'>public API</Link> </h4>
+
+        <div className="flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-black" />
+          <span className="text-md text-black whitespace-nowrap">for developers</span>
+          <div className="flex-1 h-px bg-black" />
         </div>
-
+        <h4 className="self-center">you can check our <Link href='/apikey'>public API</Link> </h4>
       </form>
-
+      <div className="staticPages self-center m-4">
+        <h4 className="self-center">Read our <Link href='/terms'><span className="text-blue-600 underline hover:text-blue-800">terms</span></Link> and <Link href='/privacy'><span className="text-blue-600 underline hover:text-blue-800">privacy</span></Link></h4>
+      </div>
     </div>
   );
 }
