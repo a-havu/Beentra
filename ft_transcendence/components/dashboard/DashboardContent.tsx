@@ -7,14 +7,11 @@ import { EventsTable } from "./EventsTable";
 import PageForm from "../pages/PageForm";
 import WelcomeView from "./WelcomeView";
 import { ProjectsTable } from "./ProjectsTable";
-import { useActivityTracker } from "@/hooks/use-activity-tracker";
 import { PagesTable } from "./PagesTable";
 
 // the fetchPages is a component sent by props.
 export function DashboardContent({ userEmail, fetchPages }: { userEmail: string, fetchPages: React.ReactNode }) {
   const [activeView, setActiveView] = useState("welcome");
-
-  useActivityTracker();
 
   const handleButtonClick = (view: string) => {
     setActiveView(view);
