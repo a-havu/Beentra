@@ -20,20 +20,34 @@ export async function GET() {
 
   const qrCode = await QRCode.toDataURL(uri);
 
-
   await prisma.user.update({
     where: { id: session.userId },
-    data: { twoFactorSecret: secret, twoFactorEnabled: true },
+    data: { twoFactorSecret: secret },
   });
- 
-
-  console.log("2FA secret:", secret);
-
   return NextResponse.json({ qrCode });
 }
 
-export async function POST(request:NextRequest){
+export async function PUT(request: NextRequest) {
+  const data = await request.json();
+  if (!data)
+    return NextResponse.json(
+      { Error: "no data attached with the call" },
+      { status: 400 },
+    );
 
+  const session = await getSession();
+  const result = await prisma.user.update({
+    where: { id: session?.userId },
+    data: {
+      twoFactorEnabled: data.twoFactorEnabled,
+      twoFactorSecret: data.twoFactorSecret,
+    },
+  });
+  if (!result)
+    return NextResponse.json(
+      { Error: "cannot update the status" },
+      { status: 400 },
+    );
 
-
+  return NextResponse.json({ status: 200 });
 }

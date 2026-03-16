@@ -1,47 +1,65 @@
-import { SignJWT, jwtVerify } from 'jose';
-import { cookies } from 'next/headers';
+import { SignJWT, jwtVerify } from "jose";
+import { cookies } from "next/headers";
 import type { JWTPayload } from "jose";
+import { prisma } from "@/lib/prisma";
+import handleLogout from "@/components/login/LogoutButton";
 
-
-const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET
-);
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export type Session = {
-  email: string
-  role: string
-  userId?: string
-  avatar_url: string
-}
+  email: string;
+  role: string;
+  userId?: string;
+  avatar_url: string;
+};
 
 interface TokenPayload extends JWTPayload {
-  userId: string
-  email: string
-  role: string
-  avatar_url: string
+  userId: string;
+  email: string;
+  role: string;
+  avatar_url: string | null;
 }
 
 export async function createToken(payload: TokenPayload): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime("8h")
+    .sign(secret);
+}
+
+export async function createTempToken(payload: {
+  userId: string;
+}): Promise<string> {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("5m")
     .sign(secret);
 }
 
 export async function verifyToken(token: string): Promise<Session | null> {
   try {
-    const { payload } = await jwtVerify(token, secret);
+    const { payload } = await jwtVerify<TokenPayload>(token, secret);
+
+    const foundUser = await prisma.user.findUnique({
+      where: { id: payload.userId },
+    });
+    if (!foundUser) {
+      const cookieStore = await cookies();
+      cookieStore.delete("auth-token");
+      return null;
+    }
+
     return payload as Session;
   } catch (error) {
     return null;
   }
 }
 
-
 export async function getSession(): Promise<Session | null> {
   const cookieStore = await cookies();
-  const token = cookieStore.get('auth-token')?.value;
+  const token = cookieStore.get("auth-token")?.value;
 
   if (!token) return null;
 

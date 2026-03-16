@@ -1,89 +1,113 @@
-'use client';
-import { z, ZodType } from 'zod'
-import { useForm } from 'react-hook-form'
+"use client";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import Input from '../ui/Input';
-import Link from 'next/link';
-
-
-
-interface FormData {
-  userEmail: string,
-  password: string,
-}
+import Input from "../ui/Input";
+import Link from "next/link";
+import { loginZodSchema, loginFormTypes } from "@/types/zodScemas";
+import { Button } from "../ui/Button";
 
 export function LoginForm() {
-  const zodSchema: ZodType<FormData> = z.object({
-    userEmail: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
-  })
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginFormTypes>({
+    resolver: zodResolver(loginZodSchema),
+  });
 
-  const router = useRouter()
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(zodSchema)
-  })
-
-  const loginHandler = async (data: FormData) => {
+  const loginHandler = async (data: loginFormTypes) => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userEmail: data.userEmail,
           password: data.password,
         }),
-      })
+      });
+
       if (response.ok) {
-        router.refresh();
-        router.push('/');
+        const responseData = await response.json();
+        if (responseData.twoFactor) router.push("/logintfa");
+        else {
+          router.push("/");
+          router.refresh();
+        }
       } else {
-        console.log('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(loginHandler)} className="general-form">
-      <h1>Welcome back</h1>
-      <p>Login to your personal Hive life</p>
+    <div className="beentra-form-container">
+      <form className="beentra-form">
+        <h1>Welcome to Beentra</h1>
+        <p>Login to your personal Hive life</p>
 
-      {/* Use Input component for email too */}
-      <Input
-        label="Email"
-        name="userEmail"
-        id="userEmail"
-        type="email"
-        placeholder="user@example.ps"
-        register={register}
-        errors={errors}
-      />
+        {/* Use Input component for email too */}
+        <Input
+          label="Email"
+          name="userEmail"
+          id="userEmail"
+          type="email"
+          placeholder="user@example.ps"
+          register={register}
+          errors={errors}
+        />
 
-      {/* Corrected password input */}
-      <Input
-        label="Password"
-        name="password"
-        id="password"
-        type="password"
-        placeholder="********"
-        register={register}
-        errors={errors}
-      />
+        {/* Corrected password input */}
+        <Input
+          label="Password"
+          name="password"
+          id="password"
+          type="password"
+          placeholder="********"
+          register={register}
+          errors={errors}
+        />
 
-      <button type="submit">Login</button>
-      <hr />
-      <p>Or continue with</p>
-      <div className="flex flex-row gap-2">
-        <Link href="/api/auth/github"><button type="button">Github</button></Link>
-        <button type="button">Google</button>
-        <button type="button">Intra42</button>
+        <Button onClick={handleSubmit(loginHandler)}> Login</Button>
+
+        <div className="flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-black" />
+          <span className="text-md text-black whitespace-nowrap">or continue with</span>
+          <div className="flex-1 h-px bg-black" />
+        </div>
+
+        <div className="flex flex-col justify-center gap-2">
+          <div className="flex flex-row gap-4 self-center ">
+            <a href="/api/auth/github">
+              <Button>Github</Button>
+            </a>
+            <button type="button">Intra42</button>
+          </div>
+          <div className="flex items-center gap-3 my-1">
+            <div className="flex-1 h-px bg-black" />
+            <span className="text-md text-black whitespace-nowrap">Don't have an account?</span>
+            <div className="flex-1 h-px bg-black" />
+          </div>
+
+          <a className="self-center" href="/registration"><Button>Sign up</Button></a>
+        </div>
+
+        <div className="flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-black" />
+          <span className="text-md text-black whitespace-nowrap">for developers</span>
+          <div className="flex-1 h-px bg-black" />
+        </div>
+        <h4 className="self-center">you can check our <Link href='/apikey'>public API</Link> </h4>
+      </form>
+      <div className="staticPages self-center m-4">
+        <h4 className="self-center">Read our <Link href='/terms'><span className="text-blue-600 underline hover:text-blue-800">terms</span></Link> and <Link href='/privacy'><span className="text-blue-600 underline hover:text-blue-800">privacy</span></Link></h4>
       </div>
-
-      <p>Don't have an account? <a href="/registration">Sign up</a></p>
-    </form>
-  )
+    </div>
+  );
 }

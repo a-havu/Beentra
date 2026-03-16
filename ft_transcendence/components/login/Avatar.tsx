@@ -8,14 +8,14 @@ import { getSession } from '@/lib/auth';
 
 interface avatarProps {
   avatar_url: string
-  userId : string
+  userId: string
 }
 
 
 
 
 export function Avatar({ avatar_url, userId }: avatarProps) {
-  
+
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -29,9 +29,9 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
   }, [])
   return (
     <div className="relative z-150" ref={ref}>
-      <button onClick={() => setOpen(!open)}>
+      <button className='cursor-pointer' onClick={() => setOpen(!open)}>
         <Image
-          src={avatar_url}
+          src={avatar_url || '/default-profile-picture.jpg'}
           alt='Avatar picture'
           width={32}
           height={32}
@@ -40,11 +40,11 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
       </button>
 
       {open && (
-        <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-gray-800 rounded-lg z-50 p-2">
+        <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-[#FDF7D2] rounded-lg z-50 p-2">
 
           <Link href={`/profile/${userId}`}> <button className="cursor-pointer">My Profile</button> </Link>
           <Link href="/events"> <button className="cursor-pointer"> My Events</button> </Link>
-          <Link href="/projects"><button className="cursor-pointer"> My Projects</button> </Link>
+          <Link href={`/users/${userId}/projects`}><button className="cursor-pointer"> My Projects</button> </Link>
           <LogoutButton />
         </div>
       )}

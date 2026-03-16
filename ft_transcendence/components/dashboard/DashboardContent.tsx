@@ -4,11 +4,16 @@ import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
-import PageForm from "./pages/PageForm";
+import PageForm from "../pages/PageForm";
 import WelcomeView from "./WelcomeView";
+import { ProjectsTable } from "./ProjectsTable";
+import { useActivityTracker } from "@/hooks/use-activity-tracker";
 
-export function DashboardContent({ userEmail }: { userEmail: string }) {
+// the fetchPages is a component sent by props.
+export function DashboardContent({ userEmail, fetchPages }: { userEmail: string, fetchPages: React.ReactNode }) {
   const [activeView, setActiveView] = useState("welcome");
+
+  useActivityTracker();
 
   const handleButtonClick = (view: string) => {
     setActiveView(view);
@@ -22,10 +27,9 @@ export function DashboardContent({ userEmail }: { userEmail: string }) {
         {activeView === "users" && <UsersTable />}
         {activeView === "events" && <EventsTable />}
         {activeView === "projects" && <p>Projects section!</p>}
-        {activeView === "add-page" && <PageForm initialData={null} />}
+        {/*{activeView === "add-page" && <PageForm initialData={null} />}*/}
+        {activeView === "pages" && fetchPages}
       </main>
     </div>
   );
 }
-
-

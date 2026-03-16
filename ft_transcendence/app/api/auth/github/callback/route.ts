@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { createToken } from "@/lib/auth";
+import { createTempToken } from "@/lib/auth";
 /**
  * first the provider response with code.
  * then we send this by POST to the provider with the clientid and the secret.
@@ -119,9 +120,23 @@ export async function GET(request: NextRequest) {
     });
   }
 
+
+
+  if (user.twoFactorEnabled) {
+    const tempToken = await createTempToken({ userId: user.id });
+    const response = NextResponse.redirect(new URL('/logintfa', request.url));
+    response.cookies.set('tfa-temp-token', tempToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: 60 * 5,
+      path: '/',
+    });
+    return response;
+  }
+
   const token = await createToken({
     userId: user.id,
-    email: primaryEmail,
+    email: user.email,
     role: user.role,
     avatar_url: user.avatarUrl,
   });

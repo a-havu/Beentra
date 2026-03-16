@@ -1,16 +1,21 @@
 "use client";
-
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "@/lib/validation";
+import Input from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 type FormFields = z.infer<typeof registerSchema>;
 
 export function RegistrationForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
   const [serverError, setServerError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsError, setTermsError] = useState("");
 
   const {
     register,
@@ -23,119 +28,71 @@ export function RegistrationForm() {
   async function onSubmit(form: FormFields) {
     setServerError("");
 
+    if (!termsAccepted) {
+      setTermsError("You must accept the Terms of Service and Privacy Policy");
+      return;
+    }
+
+    setTermsError("");
+
     try {
       const response = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       const result = await response.json();
-      console.log("Response data:", result);
       if (!response.ok) {
         setServerError(result.error || "Registration failed");
         return;
       }
       setSubmitted(true);
-    } catch (error) {
+      router.push("/login");
+    } catch {
       setServerError("An unexpected error occurred. Please try again.");
     }
   }
 
-  if (submitted) {
-    return <p>Account created!</p>;
-  }
-
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
-        <div>
-          <label htmlFor="fullName">Full Name</label>
-          <input
-            id="fullName"
-            type="text"
-            {...register("fullName")}
-          />
-          {errors.fullName && (
-            <p className="text-sm text-red-500">{errors.fullName.message}</p>
-          )}
-        </div>
+    <div className="beentra-form-container">
+      <div className="beentra-form">
+        <Input label="Full Name" name="fullName" id="fullName" type="text" placeholder="Full name" register={register} />
+        {errors.fullName && <p className="text-sm text-red-500">{errors.fullName.message}</p>}
+        <Input label="Username" name="username" id="username" type="text" placeholder="Choose a username" register={register} />
+        {errors.username && <p className="text-sm text-red-500">{errors.username.message}</p>}
+        <Input label="Email" name="email" id="email" type="email" placeholder="name@example.com" register={register} />
+        {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+        <Input label="Phone Number" name="phone" id="phone" type="tel" placeholder="+358 40 123 4567" register={register} />
+        {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
+        <Input label="Password" name="password" id="password" type="password" placeholder="Enter password" register={register} />
+        {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+        <Input label="Confirm Password" name="confirm" id="confirm" type="password" placeholder="Confirm your password" register={register} />
+        {errors.confirm && <p className="text-sm text-red-500">{errors.confirm.message}</p>}
 
-        <div>
-          <label htmlFor="username">Username</label>
+        <div className="flex items-center gap-2 mt-2">
           <input
-            id="username"
-            type="text"
-            placeholder="Choose a username"
-            {...register("username")}
+            type="checkbox"
+            id="terms"
+            checked={termsAccepted}
+            onChange={(e) => {
+              setTermsAccepted(e.target.checked)
+              if (e.target.checked) setTermsError("")
+            }}
           />
-          {errors.username && (
-            <p className="text-sm text-red-500">{errors.username.message}</p>
-          )}
+          <label htmlFor="terms" className="text-sm">
+            I agree to the{" "}
+            <a href="/terms" target="_blank" className="underline hover:opacity-75">Terms of Service</a>
+            {" "}and{" "}
+            <a href="/privacy" target="_blank" className="underline hover:opacity-75">Privacy Policy</a>
+          </label>
         </div>
-
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="name@example.com"
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="phone">Phone Number</label>
-          <input
-            id="phone"
-            type="tel"
-            placeholder="+358 40 123 4567"
-            {...register("phone")}
-          />
-          {errors.phone && (
-            <p className="text-sm text-red-500">{errors.phone.message}</p>
-          )}
-        </div>
-
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Enter password"
-            {...register("password")}
-          />
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="confirm">Confirm Password</label>
-          <input
-            id="confirm"
-            type="password"
-            placeholder="Confirm your password"
-            {...register("confirm")}
-          />
-          {errors.confirm && (
-            <p className="text-sm text-red-500">{errors.confirm.message}</p>
-          )}
-        </div>
+        {termsError && <p className="text-sm text-red-500">{termsError}</p>}
 
         {serverError && <p className="text-sm text-red-500">{serverError}</p>}
-
-        <button type="submit">
+        <Button variant="adding" disabled={submitted || !termsAccepted} onClick={handleSubmit(onSubmit)}>
           Create Account
-        </button>
-      </form>
+        </Button>
+      </div>
     </div>
   );
 }

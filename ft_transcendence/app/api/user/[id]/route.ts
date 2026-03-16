@@ -1,23 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { idSchema, updateUserSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
 
-// Get data from single user based on their ID
+// Get data from single user based on ID
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const {id} = await params;
+    const { id } = await params;
+    const validation = idSchema.safeParse({ id });
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Invalid ID", details: validation.error.issues },
+        { status: 400 },
+      );
+    }
     const user = await prisma.user.findUnique({
-      where: { id: id},
+      where: { id: validation.data.id },
       select: {
         id: true,
+        fullName: true,
+        username: true,
         email: true,
+        phone: true,
         role: true,
+        twoFactorEnabled: true,
         createdAt: true,
         updatedAt: true,
-        username: true,
       },
     });
     if (!user) {
@@ -38,17 +49,29 @@ export async function GET(
 // Update a user
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const userId = parseInt(params.id);
+    const { id } = await params;
+    const idValidation = idSchema.safeParse({ id });
+    if (!idValidation.success) {
+      return NextResponse.json(
+        { error: "Invalid ID", details: idValidation.error.issues },
+        { status: 400 },
+      );
+    }
+
     const body = await request.json();
-    const { name, email, password, role } = body;
+    const bodyValidation = updateUserSchema.safeParse(body);
+    if (!bodyValidation.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: bodyValidation.error.issues },
+        { status: 400 },
+      );
+    }
 
-    const updateData: any = {};
-
-    if (email) updateData.email = email;
-    if (role) updateData.role = role;
+    const { confirm: _, password, ...fields } = bodyValidation.data;
+    const updateData: Record<string, unknown> = { ...fields };
 
     if (password) {
       const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
@@ -57,7 +80,7 @@ export async function PUT(
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: idValidation.data.id },
     });
 
     if (!existingUser) {
@@ -66,15 +89,17 @@ export async function PUT(
 
     // Update the user
     const updatedUser = await prisma.user.update({
-      where: { id: userId },
+      where: { id: idValidation.data.id },
       data: updateData,
       select: {
         id: true,
+        fullName: true,
+        username: true,
         email: true,
+        phone: true,
         role: true,
         createdAt: true,
         updatedAt: true,
-        passwordHash: false,
       },
     });
 
@@ -93,31 +118,38 @@ export async function PUT(
 // DELETE a user
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const userId = parseInt(params.id);
+    const { id } = await params;
+    const validation = idSchema.safeParse({ id });
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Invalid ID", details: validation.error.issues },
+        { status: 400 },
+      );
+    }
 
     // Check if user exists
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: validation.data.id },
     });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Prevent deleting admin users
-    if (user.role === "admin") {
-      return NextResponse.json(
-        { error: "Cannot delete admin users" },
-        { status: 403 },
-      );
-    }
+    // // Prevent deleting admin users
+    // if (user.role === "admin") {
+    //   return NextResponse.json(
+    //     { error: "Cannot delete admin users" },
+    //     { status: 403 },
+    //   );
+    // }
 
     // Delete the user
     await prisma.user.delete({
-      where: { id: userId },
+      where: { id: validation.data.id },
     });
 
     return NextResponse.json(

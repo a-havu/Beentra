@@ -1,6 +1,7 @@
 
 import { Button } from "../ui/Button";
 
+
 export function Sidebar({
   userEmail,
   onButtonClick,
@@ -19,41 +20,48 @@ export function Sidebar({
         </p>
       </div>
       <nav className="flex flex-col items-center gap-3 space-y-3">
-      <Button
-        variant="sidebar"
-        size="medium"
-        onClick={() => onButtonClick("users")}
+        <Button
+          variant="sidebar"
+          size="medium"
+          onClick={() => onButtonClick("users")}
         >
-              Users
-      </Button>
-      <Button
-        variant="sidebar"
-        size="medium"
-        onClick={() => onButtonClick("events")}
+          Users
+        </Button>
+        <Button
+          variant="sidebar"
+          size="medium"
+          onClick={() => onButtonClick("events")}
         >
           Events
-      </Button>
-      <Button
-        variant="sidebar"
-        size="medium"
-        onClick={() => onButtonClick("projects")}
+        </Button>
+        <Button
+          variant="sidebar"
+          size="medium"
+          onClick={() => onButtonClick("projects")}
         >
           Projects
-      </Button>
-      <Button
-        variant="sidebar"
-        size="medium"
-        onClick={() => onButtonClick("add-page")}
+        </Button>
+        <Button
+          variant="sidebar"
+          size="medium"
+          onClick={() => onButtonClick("pages")}
+        >
+          Pages
+        </Button>
+        <Button
+          variant="sidebar"
+          size="medium"
+          onClick={() => onButtonClick("add-page")}
         >
           Add Page
-      </Button>
-      <Button
-        variant="sidebar"
-        size="medium"
-        onClick={() => onButtonClick("welcome")}
+        </Button>
+        <Button
+          variant="sidebar"
+          size="medium"
+          onClick={() => onButtonClick("welcome")}
         >
           Back Home
-      </Button>
+        </Button>
       </nav>
     </aside>
   );

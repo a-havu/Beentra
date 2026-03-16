@@ -1,11 +1,18 @@
-export const metadata ={
-  title:'Projects'
-}
+import CreateProject from "@/components/projects/CreateProject";
+import DisplayProjects from "@/components/projects/DisplayProjects";
+import type { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Projects",
+};
+
+export default function ProjectsPage() {
   return (
     <div>
-      <h3> Projects Page</h3>
+		<br />
+      <h1 className="flex justify-center">Projects!</h1><br />
+      <CreateProject />
+	  <DisplayProjects />
     </div>
   );
 }
