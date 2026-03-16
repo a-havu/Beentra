@@ -10,6 +10,7 @@ export default async function UserEventsPage({ params }: { params: Promise<{ use
   const { userId } = await params;
   const session = await getSession();
   const currentUserId = session?.userId ?? null;
+  const currentUserRole = session?.role ?? null;
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) return <div>User not found</div>;
@@ -40,7 +41,7 @@ export default async function UserEventsPage({ params }: { params: Promise<{ use
   return (
     <div className="w-full p-5">
       <h1 className="mb-5">Events for {user.username}</h1>
-      <FullEventList events={events} currentUserId={currentUserId} />
+      <FullEventList events={events} currentUserId={currentUserId} currentUserRole={currentUserRole} />
     </div>
   );
 }
