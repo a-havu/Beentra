@@ -149,7 +149,15 @@ a {
 /* Project Display styles */
 
 .project-card {
-    @apply flex-1 cursor-pointer rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white;
+    @apply flex-1 cursor-pointer rounded-xl h-80 border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col;
+}
+
+.project-image {
+    @apply relative w-full h-40 object-cover rounded-t-xl bg-blue-100 flex items-center justify-center text-5xl overflow-hidden;
+}
+
+.project-info {
+    @apply bg-white rounded-b-xl p-4;
 }
 
 .featured-div {
