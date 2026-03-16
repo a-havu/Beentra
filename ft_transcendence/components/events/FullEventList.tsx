@@ -3,9 +3,10 @@ import EventCard, { EventData } from "./EventCard";
 type Props = {
   events: EventData[];
   currentUserId: string | null;
+  currentUserRole?: string | null;
 };
 
-const FullEventList = ({ events, currentUserId }: Props) => {
+const FullEventList = ({ events, currentUserId, currentUserRole }: Props) => {
   if (events.length === 0) return <p>No events found.</p>;
 
   return (
@@ -27,7 +28,7 @@ const FullEventList = ({ events, currentUserId }: Props) => {
                 })}
               </h1>
             )}
-            <EventCard event={event} currentUserId={currentUserId} />
+            <EventCard event={event} currentUserId={currentUserId} currentUserRole={currentUserRole} />
           </div>
         );
       })}

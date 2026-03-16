@@ -10,6 +10,7 @@ export const metadata = {
 export default async function EventsPage() {
   const session = await getSession();
   const userId = session?.userId ?? null;
+  const userRole = session?.role ?? null;
 
   const raw = await prisma.event.findMany({
     orderBy: { date: "asc" },
@@ -36,7 +37,7 @@ export default async function EventsPage() {
       </div>
       <div className="flex gap-8">
         <div className="flex-2">
-          <FullEventList events={events} currentUserId={userId} />
+          <FullEventList events={events} currentUserId={userId} currentUserRole={userRole} />
         </div>
       </div>
     </div>

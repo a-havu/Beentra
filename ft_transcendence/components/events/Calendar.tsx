@@ -50,7 +50,7 @@ type Props = {
 export default function Calendar({ intraEvents }: Props) {
   const [events, setEvents] = useState<EventInput[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<ShowEventData | null>(
-    null,
+    null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);

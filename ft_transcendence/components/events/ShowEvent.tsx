@@ -27,11 +27,22 @@ type ShowEventProps = {
   isOpen: boolean;
   onClose: () => void;
   currentUserId?: string | null;
+  currentUserRole?: string | null;
 };
 
-export default function ShowEvent({ event, isOpen, onClose, currentUserId }: ShowEventProps) {
-  const [subscriberCount, setSubscriberCount] = useState(event?.subscriberCount ?? 0);
-  const [isSubscribed, setIsSubscribed] = useState(event?.isSubscribed ?? false);
+export default function ShowEvent({
+  event,
+  isOpen,
+  onClose,
+  currentUserId,
+  currentUserRole,
+}: ShowEventProps) {
+  const [subscriberCount, setSubscriberCount] = useState(
+    event?.subscriberCount ?? 0
+  );
+  const [isSubscribed, setIsSubscribed] = useState(
+    event?.isSubscribed ?? false
+  );
   const [loading, setLoading] = useState(false);
 
   if (!event) return null;
@@ -49,6 +60,7 @@ export default function ShowEvent({ event, isOpen, onClose, currentUserId }: Sho
   };
 
   const isCreator = currentUserId && event.creatorId === currentUserId;
+  const isAdmin = currentUserRole === "admin";
   const showSubscribeButton = currentUserId && !isCreator;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
@@ -101,9 +113,11 @@ export default function ShowEvent({ event, isOpen, onClose, currentUserId }: Sho
       </ModalBody>
 
       <ModalFooter>
-        <Button variant="edit" onClick={onClose}>
-          Edit
-        </Button>
+        {(isCreator || isAdmin) && (
+          <Button variant="edit" onClick={onClose}>
+            Edit
+          </Button>
+        )}
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
