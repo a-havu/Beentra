@@ -2,35 +2,37 @@ import Calendar from "@/components/events/Calendar";
 import AddEvent from "@/components/dashboard/AddEvent";
 import EventList from "@/components/events/EventList";
 import FeaturedProjects from "@/components/projects/FeaturedProjects";
+import { fetchIntraEvents, IntraEventInput } from "@/lib/IntraEvents";
 
+export const metadata = {
+  title: "ft_transcendence",
+};
 
+export default async function HomePage() {
+  const result = await fetchIntraEvents();
+  const intraEvents: IntraEventInput[] = result.success ? result.data : [];
 
-export const metadata ={
-  title:'ft_transcendence'
-}
-export default function HomePage() {
   return (
-      <div className="flex flex-col main-page">
-        <div className="events-section">
-                  <div className="w-full p-5">
-              <div className="mb-5  ">
-                <AddEvent />
-              </div>
-              <div className="flex gap-8">
-                <div className="flex-1">
-                  <h1>Todays Events</h1>
-                  <EventList />
-                </div>
-                <div className="flex-2">
-                  <Calendar />
-                </div>
-              </div>
-              </div>
+    <div className="flex flex-col main-page">
+      <div className="events-section">
+        <div className="w-full p-5">
+          <div className="mb-5  ">
+            <AddEvent />
+          </div>
+          <div className="flex gap-8">
+            <div className="flex-1">
+              <h1>Todays Events</h1>
+              <EventList />
+            </div>
+            <div className="flex-2">
+              <Calendar intraEvents={intraEvents} />
+            </div>
+          </div>
         </div>
-        <div className="projects-section">
-                <FeaturedProjects />
-        </div>
-        
       </div>
+      <div className="projects-section">
+        <FeaturedProjects />
+      </div>
+    </div>
   );
 }
