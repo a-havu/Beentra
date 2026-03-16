@@ -14,9 +14,10 @@ validateEnv();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+
     <html lang="en" className={`h-full ${workSans.variable} ${afacadFlux.variable}`}>
-      <body className={`flex flex-col h-full items-center justify-center ${workSans.variable} ${afacadFlux.variable} antialiased`}>
-        <div className="flex flex-col h-full w-full max-w-7xl min-w-0 overflow-hidden">
+      <body className={`flex flex-col w-full min-h-full items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}>
+        <div className="flex flex-1 flex-col w-full max-w-7xl min-w-0">
           {children}
         </div>
       </body>

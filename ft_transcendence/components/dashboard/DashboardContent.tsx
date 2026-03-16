@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { UsersTable } from "./UsersTable";
 import { EventsTable } from "./EventsTable";
-import PageForm from "./pages/PageForm";
+import PageForm from "../pages/PageForm";
 import WelcomeView from "./WelcomeView";
 import { ProjectsTable } from "./ProjectsTable";
 import { useActivityTracker } from "@/hooks/use-activity-tracker";
@@ -34,5 +34,3 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
     </div>
   );
 }
-
-
