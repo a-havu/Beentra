@@ -18,13 +18,29 @@ export async function getAccessToken() {
     }),
   });
 
-  if (!tokenResponse)
+  if (!tokenResponse.ok)
     return { suceess: false, error: "cannot get token from intra" };
 
-  return tokenResponse;
+  const data = await tokenResponse.json();
+  return { success: true, access_token: data.access_token };
 }
 
 export async function fetchIntraEvents() {
   const tokenResponse = await getAccessToken();
-  console.log("tokenResponse: ", tokenResponse);
+  if (!tokenResponse) return tokenResponse;
+  const eventsRespone = await fetch(
+    "https://api.intra.42.fr/v2/campus/13/events",
+    {
+      headers: {
+        Authorization: `Bearer ${tokenResponse.access_token}`,
+      },
+    },
+  );
+  if (!eventsRespone.ok)
+    return { success: false, error: "cannot fetch events" };
+
+  const events = await eventsRespone.json();
+
+  console.log("events: ", events);
+  return { success: true, data: events };
 }
