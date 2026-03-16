@@ -1,31 +1,44 @@
-import Calendar from "@/components/events/Calendar";
 import AddEvent from "@/components/dashboard/AddEvent";
-import EventList from "@/components/events/EventList";
-// import DisplayEventList from "@/components/events/DisplayEventList";
+import FullEventList from "@/components/events/FullEventList";
+import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
 
 export const metadata = {
   title: "Events",
 };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const session = await getSession();
+  const userId = session?.userId ?? null;
+
+  const raw = await prisma.event.findMany({
+    orderBy: { date: "asc" },
+    include: {
+      _count: { select: { subscriptions: true } },
+      subscriptions: userId ? { where: { userId } } : false,
+    },
+  });
+
+  const events = raw.map(({ subscriptions, _count, ...rest }) => ({
+    ...rest,
+    date: rest.date.toISOString(),
+    timeFrom: rest.timeFrom.toISOString(),
+    timeTo: rest.timeTo.toISOString(),
+    subscriberCount: _count.subscriptions,
+    isSubscribed: userId ? (subscriptions as { userId: string }[]).length > 0 : false,
+  }));
+
   return (
     <div className="w-full p-5">
-      <div className="mb-5  ">
+      <div className="mb-5 flex gap-8">
         <AddEvent />
+        <h1>All Events</h1>
       </div>
       <div className="flex gap-8">
-        <div className="flex-1">
-          <h1>Todays Events</h1>
-          <EventList />
-        </div>
         <div className="flex-2">
-          <Calendar />
+          <FullEventList events={events} currentUserId={userId} />
         </div>
       </div>
-      {/* <EventList />
-      <div className="w-full max-w-4xl mx-auto h-full max-h-4xl">
-        <Calendar />
-      </div> */}
     </div>
   );
 }
