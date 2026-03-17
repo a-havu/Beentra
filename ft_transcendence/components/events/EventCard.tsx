@@ -20,6 +20,8 @@ export type EventData = {
   isSubscribed: boolean;
 };
 
+export type FullEventData = EventData & { createdAt: string; updatedAt: string };
+
 type Props = {
   event: EventData;
   currentUserId?: string | null;
