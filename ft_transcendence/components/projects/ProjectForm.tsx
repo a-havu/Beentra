@@ -108,5 +108,3 @@ export default function ProjectForm({
 		 )}
 	</form></div>)
 }
-
-// TODO: add image upload, and maybe multiple links?
