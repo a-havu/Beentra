@@ -11,31 +11,38 @@ type Project = {
   createdAt: string | Date;
 };
 
-export default function ProjectCard({ project }: { project: Project;}) {
+export default function ProjectCard({ project }: { project: Project }) {
   return (
-    <div
-      onClick={onClick}
-      className="beentra-card cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-    >
-      <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-4xl">
-        🐝
+    <Link className=" relative flex-1 min-w-0" href={`/projects/${project.id}`}>
+      <div className="project-card">
+        <div className="project-image relative h-40">
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={`${project.projectName} image`}
+              fill
+              className="object-cover rounded-t-lg"
+            />
+          ) : (
+            "🐝"
+          )}
+        </div>
+        <div className="project-info">
+          <h2>{project.projectName}</h2>
+          <p>{project.oneLiner}</p>
+          {project.techStack && <p>Tech stack: {project.techStack}</p>}
+          {project.createdAt && (
+            <p className="text-sm text-gray-500 absolute bottom-3 left-2">
+              {new Date(project.createdAt).toLocaleDateString()}
+            </p>
+          )}
+          {project.creator && (
+            <p className="text-sm text-gray-500 absolute bottom-8 left-2">
+              {project.creator.username}
+            </p>
+          )}
+        </div>
       </div>
-      <div className="project-info">
-        <h2>{project.projectName}</h2>
-        <p>{project.oneLiner}</p>
-        {project.techStack && (<p>Tech stack: {project.techStack}</p>)}
-         {project.createdAt && (
-          <p className="text-sm text-gray-500 absolute bottom-3 left-2">
-            {new Date(project.createdAt).toLocaleDateString()}
-          </p>
-        )}
-        {project.creator && (
-          <p className="text-sm text-gray-500 absolute bottom-8 left-2">
-            {project.creator.username}
-          </p>
-        )}
-      </div>
-    </div>
     </Link>
   );
 }

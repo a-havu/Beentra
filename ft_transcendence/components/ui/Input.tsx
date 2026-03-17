@@ -9,7 +9,7 @@ interface inputTypes {
   required?: boolean;
   register?: UseFormRegister<any>;
   errors?: FieldErrors;
-  defaultValue?: string
+  defaultValue?: string;
 }
 
 export default function Input({
@@ -27,7 +27,9 @@ export default function Input({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="p-2" htmlFor={id}>{label}</label>
+      <label className="p-2" htmlFor={id}>
+        {label}
+      </label>
       <input
         {...(register ? register(name) : {})}
         id={id}
