@@ -21,14 +21,6 @@ export default async function ProfilePage({
       twoFactorEnabled: true,
       avatarUrl: true,
       createdAt: true,
-      createdProjects: {
-        select: {
-          id: true,
-          projectName: true,
-          oneLiner: true,
-        },
-        orderBy: { createdAt: "desc" },
-      },
     },
   });
 
