@@ -27,7 +27,4 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 
 TODO:
 - concerning forms: we want to indicate that a field is required
-- projectform: creator->User, from the session?
 - add more information to cards on project grid - name, date, tech stack
-- "My projects" -> new API endpoints so users can see their own projects
-- API endpoint for deleting projects
