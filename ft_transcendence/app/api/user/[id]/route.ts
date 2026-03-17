@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { idSchema, updateUserSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
+import { createToken, getSession } from "@/lib/auth";
+import { cookies } from "next/headers";
 
 // Get data from single user based on ID
 export async function GET(
@@ -24,7 +26,6 @@ export async function GET(
         fullName: true,
         username: true,
         email: true,
-        phone: true,
         role: true,
         twoFactorEnabled: true,
         createdAt: true,
@@ -96,12 +97,29 @@ export async function PUT(
         fullName: true,
         username: true,
         email: true,
-        phone: true,
         role: true,
+        avatarUrl: true,
         createdAt: true,
         updatedAt: true,
       },
     });
+
+    // Refresh the JWT cookie so the header avatar updates immediately
+    const session = await getSession();
+    if (session && session.userId === idValidation.data.id) {
+      const newToken = await createToken({
+        userId: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        avatar_url: updatedUser.avatarUrl ?? null,
+      });
+      const cookieStore = await cookies();
+      cookieStore.set("auth-token", newToken, {
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+      });
+    }
 
     return NextResponse.json(updatedUser);
   } catch (error) {

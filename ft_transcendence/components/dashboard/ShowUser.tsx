@@ -53,13 +53,6 @@ function ShowUser({ user, isOpen, onClose }: UserProps) {
 						</div>
 
 						<div className="flex gap-2">
-							<strong className="text-gray-700 min-w-[120px]">Phone:</strong>
-							<span className="text-gray-900">
-								{user.phone ?? "Not provided"}
-							</span>
-						</div>
-
-						<div className="flex gap-2">
 							<strong className="text-gray-700 min-w-[120px]">Email:</strong>
 							<span className="text-gray-900">{user.email}</span>
 						</div>

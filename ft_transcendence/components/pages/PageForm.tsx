@@ -4,7 +4,7 @@ import { createPage, updatePage } from "@/app/(protected)/actions";
 import { useState } from "react";
 import MinimalEditor from "@/components/tiptap/MinimalEditor";
 import { PageZodType } from "@/types/zodScemas";
-
+import Input from "../ui/Input";
 type ActionResult = {
   success: boolean;
   error?: string;
@@ -47,17 +47,17 @@ export default function PageForm({
 
       <form action={handleSubmit}>
         <div>
-          <label htmlFor="pageTitle">Page Title</label>
-          <input
+          <Input
+            label="Page Title"
             id="pageTitle"
-            type="text"
-            placeholder="page title"
             name="pageTitle"
+            placeholder="title"
+            type="text"
             defaultValue={initialData?.title}
           />
         </div>
 
-        <div>
+        <div className="mt-4">
           <MinimalEditor content={content} onUpdate={setContent} />
         </div>
 
