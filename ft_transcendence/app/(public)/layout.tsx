@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Work_Sans, Afacad_Flux } from "next/font/google";
 import "../globals.css";
 import Header from "../../components/main/Header";
 import Footer from "../../components/main/Footer";
 import { validateEnv } from "@/lib/validation";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const afacadFlux = Afacad_Flux({
+  variable: "--font-afacad-flux",
   subsets: ["latin"],
 });
 
@@ -32,20 +32,22 @@ export default async function RootLayout({
 }>) {
 
 
+
   return (
-<div className="container w-7xl self-centered">
-        {/* Header */}
-        <header className="w-full h-16 flex items-center px-6 text-[#7A3D02]">
-          <Header />
-        </header>
+    <>
+      <header className="h-16 flex items-center px-6 text-[#7A3D02]">
+        <Header />
+      </header>
 
-        {/* Main fills remaining height */}
-        <main className="flex flex-col  flex-1 p-6 ">{children}</main>
 
-        {/* Footer */}
-        <footer className="w-full h-14 flex items-center justify-center text-[#7A3D02]">
-          <Footer />
-        </footer>
-</div>
+      <main className="flex flex-col h-dvh flex-1 p-6">
+        {children}
+      </main>
+
+
+      <footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
+        <Footer />
+      </footer>
+    </>
   );
 }

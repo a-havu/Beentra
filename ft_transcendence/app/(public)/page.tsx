@@ -1,37 +1,57 @@
-import Calendar from "@/components/events/Calendar";
-import AddEvent from "@/components/dashboard/AddEvent";
-import EventList from "@/components/events/EventList";
+import EventsSection from "@/components/events/EventsSection";
+import FeaturedProjects from "@/components/projects/FeaturedProjects";
+import { fetchIntraEvents, IntraEventInput } from "@/lib/IntraEvents";
+import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
 
+export const metadata = {
+  title: "ft_transcendence",
+};
 
+export default async function HomePage() {
+  const [result, session] = await Promise.all([
+    fetchIntraEvents(),
+    getSession(),
+  ]);
 
+  const intraEvents: IntraEventInput[] = result.success ? result.data : [];
+  const userId = session?.userId ?? null;
+  const userRole = session?.role ?? null;
 
-import Image from "next/image";
-export const metadata ={
-  title:'ft_transcendence'
-}
-export default function HomePage() {
+  const raw = await prisma.event.findMany({
+    orderBy: { date: "asc" },
+    include: {
+      _count: { select: { subscriptions: true } },
+      subscriptions: userId ? { where: { userId } } : false,
+    },
+  });
+
+  const events = raw.map(({ subscriptions, _count, ...rest }) => ({
+    ...rest,
+    date: rest.date.toISOString(),
+    timeFrom: rest.timeFrom.toISOString(),
+    timeTo: rest.timeTo.toISOString(),
+    createdAt: rest.createdAt.toISOString(),
+    updatedAt: rest.updatedAt.toISOString(),
+    subscriberCount: _count.subscriptions,
+    isSubscribed: userId ? (subscriptions as { userId: string }[]).length > 0 : false,
+  }));
+
   return (
-      <div className="flex flex-col main-page">
-        <div className="events-section">
-                  <div className="w-full p-5">
-              <div className="mb-5  ">
-                <AddEvent />
-              </div>
-              <div className="flex gap-8">
-                <div className="flex-1">
-                  <h1>Todays Events</h1>
-                  <EventList />
-                </div>
-                <div className="flex-2">
-                  <Calendar />
-                </div>
-              </div>
-              </div>
+    <div className="flex flex-col main-page">
+      <div className="events-section">
+        <div className="w-full p-5">
+          <EventsSection
+            initialEvents={events}
+            intraEvents={intraEvents}
+            currentUserId={userId}
+            currentUserRole={userRole}
+          />
         </div>
-        <div className="projects-section">
-              <h1>featured Projects </h1>
-        </div>
-        
       </div>
+      <div className="projects-section">
+        <FeaturedProjects />
+      </div>
+    </div>
   );
 }

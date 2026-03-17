@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
+import { NowIndicatorContainer } from "@fullcalendar/core/internal";
 
 // create a user
 export async function POST(request: Request) {
@@ -85,6 +86,7 @@ export async function GET() {
         role: true,
         createdAt: true,
         updatedAt: true,
+        lastActive: true,
         passwordHash: false,
         username: true,
         fullName: true,
@@ -93,7 +95,22 @@ export async function GET() {
         createdAt: "desc",
       },
     });
-    return NextResponse.json(users);
+
+    const currTime = new Date();
+    const stillOnlineTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+    const activeUsers = users.map(user => {
+      if (!user.lastActive) {
+        return { ...user, isOnline: false }
+      }
+
+      const timeSinceActive = currTime.getTime() - new Date(user.lastActive).getTime();
+      const isOnline = timeSinceActive < stillOnlineTime;
+
+      return { ...user, isOnline };
+    })
+
+    return NextResponse.json(activeUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(

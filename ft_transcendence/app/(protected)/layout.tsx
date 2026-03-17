@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Work_Sans, Afacad_Flux } from "next/font/google";
 import "../globals.css";
 
 import { validateEnv } from "@/lib/validation";
 import Header from "@/components/main/Header";
 import Footer from "@/components/main/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const afacadFlux = Afacad_Flux({
+  variable: "--font-afacad-flux",
   subsets: ["latin"],
 });
 
@@ -40,7 +40,7 @@ export default async function RootLayout({
         </header>
 
         {/* Main fills remaining height */}
-        <main className="flex-1 bg-gray-100 p-6">{children}</main>
+        <main className="flex-1 bg-gray-100 p-6 overflow-auto min-w-0">{children}</main>
 
         {/* Footer */}
         <footer className="w-full h-14 bg-gray-900 flex items-center justify-center text-white">

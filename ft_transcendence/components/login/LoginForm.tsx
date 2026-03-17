@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -48,55 +47,93 @@ export function LoginForm() {
   };
 
   return (
-  <div className="beentra-form-container">
-    <form  className="beentra-form">
-      <h1>Welcome to Beentra</h1>
-      <p>Login to your personal Hive life</p>
+    <div className="beentra-form-container">
+      <form className="beentra-form">
+        <h1>Welcome to Beentra</h1>
+        <p>Login to your personal Hive life</p>
 
-      {/* Use Input component for email too */}
-      <Input
-        label="Email"
-        name="userEmail"
-        id="userEmail"
-        type="email"
-        placeholder="user@example.ps"
-        register={register}
-        errors={errors}
-      />
+        {/* Use Input component for email too */}
+        <Input
+          label="Email"
+          name="userEmail"
+          id="userEmail"
+          type="email"
+          placeholder="user@example.ps"
+          register={register}
+          errors={errors}
+        />
 
-      {/* Corrected password input */}
-      <Input
-        label="Password"
-        name="password"
-        id="password"
-        type="password"
-        placeholder="********"
-        register={register}
-        errors={errors}
-      />
+        {/* Corrected password input */}
+        <Input
+          label="Password"
+          name="password"
+          id="password"
+          type="password"
+          placeholder="********"
+          register={register}
+          errors={errors}
+        />
 
-      <Button onClick={handleSubmit(loginHandler)}> Login</Button>
-      <hr />
-      
-      <div className="flex flex-col justify-center gap-2">
-          <h4 className="self-center">Or continue with</h4>
+        <Button onClick={handleSubmit(loginHandler)}> Login</Button>
+
+        <div className="flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-black" />
+          <span className="text-md text-black whitespace-nowrap">
+            or continue with
+          </span>
+          <div className="flex-1 h-px bg-black" />
+        </div>
+
+        <div className="flex flex-col justify-center gap-2">
           <div className="flex flex-row gap-4 self-center ">
-                <Link href="/api/auth/github">
-                <Button>Github</Button>
-              </Link>
-              <button type="button">Intra42</button>
-          </div>
-          <hr />
-          <h4 className="self-center">Don't have an account?</h4>
-      <a className="self-center" href="/registration"><Button>Sign up</Button></a>
-      </div>
-    <div className="staticPages self-center">
-    <h4 className="self-center">Read our <Link href='/terms'>terms</Link> and <Link href='/privacy'>privacy</Link></h4>
-    <h4 className="self-center">for developers you can check our <Link href='/apikey'>public API</Link> </h4>
-    </div>
-      
-    </form>
+            <a href="/api/auth/github">
+              <Button>Github</Button>
+            </a>
 
+            <a href="/api/auth/fortyTwo">
+              <Button>Intra42</Button>
+            </a>
+          </div>
+          <div className="flex items-center gap-3 my-1">
+            <div className="flex-1 h-px bg-black" />
+            <span className="text-md text-black whitespace-nowrap">
+              Don't have an account?
+            </span>
+            <div className="flex-1 h-px bg-black" />
+          </div>
+
+          <a className="self-center" href="/registration">
+            <Button>Sign up</Button>
+          </a>
+        </div>
+
+        <div className="flex items-center gap-3 my-1">
+          <div className="flex-1 h-px bg-black" />
+          <span className="text-md text-black whitespace-nowrap">
+            for developers
+          </span>
+          <div className="flex-1 h-px bg-black" />
+        </div>
+        <h4 className="self-center">
+          you can check our <Link href="/apikey">public API</Link>{" "}
+        </h4>
+      </form>
+      <div className="staticPages self-center m-4">
+        <h4 className="self-center">
+          Read our{" "}
+          <Link href="/terms">
+            <span className="text-blue-600 underline hover:text-blue-800">
+              terms
+            </span>
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy">
+            <span className="text-blue-600 underline hover:text-blue-800">
+              privacy
+            </span>
+          </Link>
+        </h4>
+      </div>
     </div>
   );
 }
