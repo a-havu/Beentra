@@ -2,25 +2,7 @@
 
 import { useState } from "react";
 import ShowEvent from "./ShowEvent";
-
-export type EventData = {
-  id: string;
-  title: string;
-  type: string;
-  date: string;
-  timeFrom: string;
-  timeTo: string;
-  location: string;
-  organizer: string;
-  image: string | null;
-  description: string | null;
-  creatorId: string | null;
-  maxSpots: number;
-  subscriberCount: number;
-  isSubscribed: boolean;
-};
-
-export type FullEventData = EventData & { createdAt: string; updatedAt: string };
+import { EventData } from "@/types/general";
 
 type Props = {
   event: EventData;

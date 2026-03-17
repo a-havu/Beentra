@@ -4,11 +4,11 @@ import { useState } from "react";
 import AddEvent from "../dashboard/AddEvent";
 import EventList from "./EventList";
 import Calendar from "./Calendar";
-import { FullEventData } from "./EventCard";
+import { EventData } from "@/types/general";
 import { IntraEventInput } from "@/lib/IntraEvents";
 
 type Props = {
-  initialEvents: FullEventData[];
+  initialEvents: EventData[];
   intraEvents: IntraEventInput[];
   currentUserId: string | null;
   currentUserRole: string | null;
@@ -27,7 +27,7 @@ export default function EventsSection({ initialEvents, intraEvents, currentUserI
     );
   });
 
-  function addEvent(event: FullEventData) {
+  function addEvent(event: EventData) {
     setEvents((prev) => [...prev, event]);
   }
 

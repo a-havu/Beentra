@@ -4,13 +4,13 @@ import EventForm from "./EventForm";
 import { eventSchema } from "@/lib/validation";
 import { SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { FullEventData } from "./EventCard";
+import { EventData } from "@/types/general";
 
 type FormValues = z.input<typeof eventSchema>;
 
 type Props = {
   onSuccess?: () => void;
-  onEventCreated?: (event: FullEventData) => void;
+  onEventCreated?: (event: EventData) => void;
 };
 
 export default function CreateEvent({ onSuccess, onEventCreated }: Props) {

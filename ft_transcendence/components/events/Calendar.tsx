@@ -7,25 +7,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { EventInput } from "@fullcalendar/core";
 import ShowEvent from "./ShowEvent";
 import { IntraEventInput } from "@/lib/IntraEvents";
+import { EventData } from "@/types/general";
 
-type EventAPI = {
-  id: string;
-  title: string;
-  type: string;
-  date: string;
-  timeFrom: string;
-  timeTo: string;
-  location: string;
-  organizer: string;
-  image: string | null;
-  description: string | null;
-  creatorId: string | null;
-  maxSpots: number;
-  subscriberCount: number;
-  isSubscribed: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
 
 type ShowEventData = {
   id: string;
@@ -45,7 +28,7 @@ type ShowEventData = {
 
 type Props = {
   intraEvents: IntraEventInput[];
-  dbEvents: EventAPI[];
+  dbEvents: EventData[];
   currentUserId?: string | null;
 };
 
