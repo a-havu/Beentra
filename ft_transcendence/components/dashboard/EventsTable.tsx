@@ -9,33 +9,14 @@ import ShowEvent from "../events/ShowEvent";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
-import { Event } from "@/lib/generated/prisma/client";
-
-// type Event = {
-//   id: string;
-//   title: string;
-//   type: string;
-//   date: Date;
-//   timeFrom: Date;
-//   timeTo: Date;
-//   location: string;
-//   organizer: string;
-//   image: string | null;
-//   description: string | null;
-//   creatorId: string | null;
-//   maxSpots: number;
-//   subscriberCount: number;
-//   isSubscribed: boolean;
-//   createdAt: Date;
-//   updatedAt: Date;
-// };
+import { EventData } from "@/types/general";
 
 export function EventsTable() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
 
   useEffect(() => {
     fetchEvents();
@@ -70,6 +51,10 @@ export function EventsTable() {
     fetchEvents();
   };
 
+  const addSuccess = (event: EventData) => {
+	setEvents((prev) => [... prev, event])
+  }
+
   const reRender = () => {
     fetchEvents();
   };
@@ -102,7 +87,7 @@ export function EventsTable() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
 
-          <AddEvent onSuccess={reRender} />
+          <AddEvent onEventCreated={addSuccess} />
         </div>
         <div>
           {/* Table header */}

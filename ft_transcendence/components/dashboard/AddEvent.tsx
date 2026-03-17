@@ -6,11 +6,11 @@ import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import CreateEvent from "../events/CreateEvent";
-import { FullEventData } from "../events/EventCard";
+import { EventData } from "@/types/general";
 
 type Props = {
   onSuccess?: () => void;
-  onEventCreated?: (event: FullEventData) => void;
+  onEventCreated?: (event: EventData) => void;
 };
 
 function AddEvent({ onSuccess, onEventCreated }: Props) {

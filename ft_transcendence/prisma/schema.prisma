@@ -12,7 +12,6 @@ model User {
   passwordHash       String?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
-  lastActive         DateTime            @default(now())
   email              String              @unique
   username           String              @unique
   avatarUrl          String?
@@ -20,6 +19,7 @@ model User {
   twoFactorSecret    String?
   fullName           String?
   role               Role                @default(admin)
+  lastActive         DateTime            @default(now())
   createdEvents      Event[]             @relation("EventCreator")
   eventSubscriptions EventSubscription[]
   oauthAccount       OauthAccount[]
@@ -28,37 +28,35 @@ model User {
 }
 
 model Page {
-  id        Int    @id @default(autoincrement())
-  title     String   @unique
-  slug      String   @unique
   text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   authorId  String
+  slug      String   @unique
+  title     String   @unique
+  id        Int      @id @default(autoincrement())
   author    User     @relation(fields: [authorId], references: [id])
 }
 
 model Event {
-  id            String              @id @default(cuid())
-  title         String
-  type          String              @default("Student")
-  date          DateTime
-  timeFrom      DateTime
-  timeTo        DateTime
-  location      String
-  organizer     String
-  image         String?
-  description   String?
-  maxSpots      Int                 @default(0)
-  creatorId     String?
-  creator       User?               @relation("EventCreator", fields: [creatorId], references: [id])
-  subscriptions EventSubscription[]
-
+  id              String              @id @default(cuid())
+  title           String
+  date            DateTime
+  timeFrom        DateTime
+  timeTo          DateTime
+  location        String
+  organizer       String
+  description     String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  creatorId       String?
+  maxSpots        Int                 @default(0)
   publicCreatorId String?
-  publicCreator   PublicApiUser? @relation(fields: [publicCreatorId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  type            String              @default("Student")
+  image           String?
+  creator         User?               @relation("EventCreator", fields: [creatorId], references: [id])
+  publicCreator   PublicApiUser?      @relation(fields: [publicCreatorId], references: [id])
+  subscriptions   EventSubscription[]
 }
 
 model EventSubscription {
@@ -96,12 +94,6 @@ model PublicApiUser {
   events       Event[]
 }
 
-enum Role {
-  user
-  admin
-  moderator
-}
-
 model Project {
   id             String   @id @default(cuid())
   projectName    String
@@ -111,7 +103,13 @@ model Project {
   description    String?
   createdAt      DateTime @default(now())
   creatorId      String?
-  creator        User?    @relation("ProjectCreator", fields: [creatorId], references: [id])
   image          String?
   imagekitFileId String?
+  creator        User?    @relation("ProjectCreator", fields: [creatorId], references: [id])
+}
+
+enum Role {
+  user
+  admin
+  moderator
 }
