@@ -78,7 +78,9 @@ export function LoginForm() {
 
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 h-px bg-black" />
-          <span className="text-md text-black whitespace-nowrap">or continue with</span>
+          <span className="text-md text-black whitespace-nowrap">
+            or continue with
+          </span>
           <div className="flex-1 h-px bg-black" />
         </div>
 
@@ -87,26 +89,50 @@ export function LoginForm() {
             <a href="/api/auth/github">
               <Button>Github</Button>
             </a>
-            <button type="button">Intra42</button>
+
+            <a href="/api/auth/fortyTwo">
+              <Button>Intra42</Button>
+            </a>
           </div>
           <div className="flex items-center gap-3 my-1">
             <div className="flex-1 h-px bg-black" />
-            <span className="text-md text-black whitespace-nowrap">Don't have an account?</span>
+            <span className="text-md text-black whitespace-nowrap">
+              Don't have an account?
+            </span>
             <div className="flex-1 h-px bg-black" />
           </div>
 
-          <a className="self-center" href="/registration"><Button>Sign up</Button></a>
+          <a className="self-center" href="/registration">
+            <Button>Sign up</Button>
+          </a>
         </div>
 
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 h-px bg-black" />
-          <span className="text-md text-black whitespace-nowrap">for developers</span>
+          <span className="text-md text-black whitespace-nowrap">
+            for developers
+          </span>
           <div className="flex-1 h-px bg-black" />
         </div>
-        <h4 className="self-center">you can check our <Link href='/apikey'>public API</Link> </h4>
+        <h4 className="self-center">
+          you can check our <Link href="/apikey">public API</Link>{" "}
+        </h4>
       </form>
       <div className="staticPages self-center m-4">
-        <h4 className="self-center">Read our <Link href='/terms'><span className="text-blue-600 underline hover:text-blue-800">terms</span></Link> and <Link href='/privacy'><span className="text-blue-600 underline hover:text-blue-800">privacy</span></Link></h4>
+        <h4 className="self-center">
+          Read our{" "}
+          <Link href="/terms">
+            <span className="text-blue-600 underline hover:text-blue-800">
+              terms
+            </span>
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy">
+            <span className="text-blue-600 underline hover:text-blue-800">
+              privacy
+            </span>
+          </Link>
+        </h4>
       </div>
     </div>
   );

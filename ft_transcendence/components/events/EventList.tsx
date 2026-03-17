@@ -8,6 +8,7 @@ const EventList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchAll() {
@@ -23,6 +24,7 @@ const EventList = () => {
         if (meRes.ok) {
           const me = await meRes.json();
           setCurrentUserId(me.userId ?? null);
+          setCurrentUserRole(me.role ?? null);
         }
 
         const today = new Date();
@@ -52,7 +54,7 @@ const EventList = () => {
   return (
     <div>
       {events.map((event) => (
-        <EventCard key={event.id} event={event} currentUserId={currentUserId} />
+        <EventCard key={event.id} event={event} currentUserId={currentUserId} currentUserRole={currentUserRole} />
       ))}
     </div>
   );
