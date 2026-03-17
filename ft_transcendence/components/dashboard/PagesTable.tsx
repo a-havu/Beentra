@@ -2,16 +2,31 @@
 
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Page } from "@/lib/generated/prisma/client";
+// import { Page } from "@/lib/generated/prisma/client";
 import { tr } from "zod/v4/locales";
 import { Button } from "../ui/Button";
 //import FetchPages from "./pages/FetchPages";
+
+type Page = {
+	text: 		string;
+	createdAt: 	Date;
+	updatedAt: 	Date;
+	authorId: 	string;
+	slug: 		string;
+	title:		string;
+	id:			number;
+	author: {
+		id: string;
+		username: string;
+		fullname: string;
+	} | null;
+}
 
 export function PagesTable() {
 	const [pages, setPages] = useState<Page[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const [editingId, setEditingId] = useState<string | null>(null);
+	const [editingId, setEditingId] = useState<number | null>(null);
 	const [selectedPage, setSelectedPage] = useState<Page | null>(null);
 
 	useEffect(() => {
@@ -37,7 +52,7 @@ export function PagesTable() {
 		} catch (err) {
 			console.error("Failed to fetch pages: ", err);
 			setError("Failed to fetch pages");
-		
+
 		} finally {
 			setIsLoading(false);
 		}
@@ -79,7 +94,7 @@ export function PagesTable() {
 	<div className="bg-white rounded-lg shadow p-6">
 		<div className="flex justify-between items-center mb-6">
 			<h2 className="text-2xl font-bold text-blue-900">Pages Management</h2>
-			
+
 		</div>
 		<div>
 			<table className="w-full">
