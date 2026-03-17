@@ -13,19 +13,12 @@ type Project = {
 
 export default function ProjectCard({ project }: { project: Project;}) {
   return (
-    <Link className=" relative flex-1 min-w-0" href={`/projects/${project.id}`}>
-      <div className="project-card">
-      <div className="project-image relative h-40">
-        {project.image ? (
-          <Image
-            src={project.image}
-            alt={`${project.projectName} image`}
-            fill
-            className="object-cover rounded-t-lg"
-          />
-        ) : (
-          "🐝"
-        )}
+    <div
+      onClick={onClick}
+      className="beentra-card cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+    >
+      <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-4xl">
+        🐝
       </div>
       <div className="project-info">
         <h2>{project.projectName}</h2>
