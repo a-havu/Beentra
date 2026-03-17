@@ -1,7 +1,6 @@
 @import "../styles/_variables.scss";
 @import "../styles/_keyframe-animations.scss";
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -157,7 +156,9 @@ a {
 /* Shared card style — used by ProfileCard and ProjectCard for visual consistency */
 .beentra-card {
     @apply rounded-2xl border border-gray-200 bg-white/70;
-/*end of /*Beentra General styles*/
+}
+
+/*end of Beentra General styles*/
 
 /* Project Display styles */
 
