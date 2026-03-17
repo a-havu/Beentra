@@ -30,7 +30,7 @@ export default function ProjectCard({ project }: { project: Project;}) {
       <div className="project-info">
         <h2>{project.projectName}</h2>
         <p>{project.oneLiner}</p>
-        {project.techStack && (<p>Tech stack: {project.techStack}</p>)}
+        {project.techStack && (<p>{project.techStack}</p>)}
          {project.createdAt && (
           <p className="text-sm text-gray-500 absolute bottom-3 left-2">
             {new Date(project.createdAt).toLocaleDateString()}

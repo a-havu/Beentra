@@ -44,6 +44,7 @@ export default function ProjectForm({
 		<div className="beentra-form-container modal-form-container">
 	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
+		<h3>New Project</h3>
 		<Input
 		label="Project Name"
 		name="projectName"
@@ -84,16 +85,14 @@ export default function ProjectForm({
 		register={register}
 		errors={errors}
 		 />
-		 <Input
-		label="Description"
-		name="description"
+		 <p className="text-black">Description</p>
+		 <textarea
 		id="description"
-		type="text"
 		placeholder="Description"
-		required={false}
-		register={register}
-		errors={errors}
-		 />
+		{...register("description")}
+		rows={10}
+		className="w-full bg-white border border-gray-300 rounded-xl p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+		/>
 		<div>
           <label>Image</label><br />
           <input

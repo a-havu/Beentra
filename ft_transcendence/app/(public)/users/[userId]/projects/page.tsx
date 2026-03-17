@@ -27,7 +27,7 @@ export default async function UserProjectsPage({ params }: { params: Promise<{ u
 
   return (
     <div>
-      <h1 className="flex justify-center">These are your projects, {user.username}!</h1>
+      <h1 className="flex justify-center">These are your projects, {user.username}!</h1><br></br>
       { projects.length > 0 ?
       <ProjectGrid projects={projects} />
       : <p>No projects found.</p> }

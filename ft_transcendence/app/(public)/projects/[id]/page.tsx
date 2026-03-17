@@ -19,17 +19,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   return (
     <div>
       {isCreator && (
-        <div className="flex gap-2 justify-center">
+        <div className="flex gap-2 justify-end">
           <EditProject project={project} />
           <DeleteProject projectId={project.id} />
         </div>
       )}
       <br /><br />
+      <div className="flex flex-col items-center gap-4">
       <h1>{project.projectName}</h1><br />
       {project.oneLiner && <p>{project.oneLiner}</p>}
-      {project.techStack && <p>Tech stack: {project.techStack}</p>}
-      {project.link && <p>Link: <a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
-      {project.description && <p>{project.description}</p>}
+      {project.techStack && <p>{project.techStack}</p>}
+      {project.link && <p className="underline"><a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
+      {project.description && <p className="whitespace-pre-line">{project.description}</p>}
       <br />
       <div className="relative max-w-lg">
         {project.image ? (
@@ -44,6 +45,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         ) : (
           <span className="text-4-xl">🐝</span>
         )}
+        </div>
         </div>
     </div>
   );
