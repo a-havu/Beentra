@@ -107,7 +107,7 @@ export default function MinimalEditor({ content, onUpdate }: Props) {
       {/* Editor area */}
       <EditorContent
         editor={editor}
-        className="w-full min-w-0 p-4 min-h-[200px] prose max-w-none focus:outline-none"
+        className="w-full min-w-0 p-4 min-h-[200px] [&_.ProseMirror]:min-h-[200px] [&_.ProseMirror]:outline-none prose max-w-none focus:outline-none"
       />
     </div>
   );
