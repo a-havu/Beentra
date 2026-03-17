@@ -1,6 +1,6 @@
 'use client'
 
-import { useForm, SubmitHandler } from "react-hook-form";         
+import { useForm, SubmitHandler, DefaultValues } from "react-hook-form";         
 import Input from "@/components/ui/Input";
 import { Button } from "../ui/Button";
 import { z } from "zod";
@@ -12,12 +12,14 @@ import { useState } from "react";
 type FormValues = z.input<typeof projectSchema>;
 
 type ProjectFormProps = {
+	defaultValues?: DefaultValues<FormValues>;
 	onSubmit: SubmitHandler<FormValues>;
 	mode: "create" | "edit";
 	onCloseAction?: () => void;
 };
 
 export default function ProjectForm({
+	defaultValues,
 	onSubmit,
 	mode = "create",
 	onCloseAction,
@@ -27,7 +29,9 @@ export default function ProjectForm({
 	const { register,
 		handleSubmit,
 		formState: { errors },
-	 } = useForm<FormValues>({resolver: zodResolver(projectSchema)});
+	 } = useForm<FormValues>({
+		defaultValues,
+		resolver: zodResolver(projectSchema)});
 
 	const submitHandler: SubmitHandler<FormValues> = async (data) => {
 		let imageUrl: string | null = null;
@@ -99,7 +103,9 @@ export default function ProjectForm({
           />
         </div>
 		 <Button type="submit"
-		 variant="adding">Create</Button>
+		 variant="adding">
+			{mode === "create" ? "Create" : "Update"}
+		 </Button>
 		 {onCloseAction && (
 			<Button type="button"
 			variant="secondary"
