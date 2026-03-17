@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import TfaCodeInput from "./TfaCodeInput";
+import { Button } from "@/components/ui/Button";
 
 interface TwoFaProps {
   status: boolean;
@@ -51,14 +52,22 @@ export default function Twofa({ status }: TwoFaProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-row gap-4">
-        <h3>2fa status:</h3>
-        <button className="cursor-pointer" onClick={handleStatus}>
+      <div className="flex flex-row items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500">Status:</span>
+          <span className={`text-sm font-semibold ${twofaStatus ? "text-green-600" : "text-gray-400"}`}>
+            {twofaStatus ? "Enabled" : "Disabled"}
+          </span>
+        </div>
+        <Button
+          variant={twofaStatus ? "delete" : "adding"}
+          onClick={handleStatus}
+        >
           {twofaStatus ? "Deactivate" : "Activate"}
-        </button>
+        </Button>
       </div>
       {qrCode && (
-        <div>
+        <div className="flex flex-col gap-3">
           <p>
             Scan this code with an Authenticator app like Google Authenticator
           </p>
@@ -71,6 +80,11 @@ export default function Twofa({ status }: TwoFaProps) {
               setQrCode(null);
             }}
           />
+          <div className="flex justify-end">
+            <Button variant="secondary" onClick={() => setQrCode(null)}>
+              Cancel
+            </Button>
+          </div>
         </div>
       )}
     </div>
