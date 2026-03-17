@@ -68,7 +68,9 @@ export default function MinimalEditor({ content, onUpdate }: Props) {
           <button
             key={level}
             type="button"
-            onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level }).run()
+            }
             className={`px-3 py-1 rounded text-sm font-semibold ${
               editor.isActive("heading", { level })
                 ? "bg-blue-800 text-white"
