@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/Button";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { getSession } from "@/lib/auth";

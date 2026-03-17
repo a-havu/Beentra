@@ -13,7 +13,7 @@ export default function DeleteProject({ projectId }: { projectId: string }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     await fetch(`/api/projects/${projectId}`, { method: "DELETE" });
-    router.back(); // redirect back to where the user came from (My Projects or Projects page)
+    router.back(); // redirect back to My Projects or Projects page
     router.refresh();
   };
 
