@@ -1,32 +1,28 @@
-import PageForm from "@/components/pages/PageForm"
-import { prisma } from "@/lib/prisma"
+import PageForm from "@/components/pages/PageForm";
+import { prisma } from "@/lib/prisma";
 
-
-export default async function UpdatePage({ params }: { params: { id: string } }) {
-  const { id } = await params
+export default async function UpdatePage({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const { id } = await params;
 
   const initialData = await prisma.page.findUnique({
-    where: { id: Number(id) }
-  })
+    where: { id: Number(id) },
+  });
 
-  if (!initialData)
-    throw new Error("no page found")
-
-
+  if (!initialData) throw new Error("no page found");
 
   return (
     <>
       <PageForm
         id={initialData.id}
-        initialData={
-          {
-            title: initialData.title,
-            text: initialData.text,
-          }
-        }
-
-
+        initialData={{
+          title: initialData.title,
+          text: initialData.text,
+        }}
       />
     </>
-  )
+  );
 }
