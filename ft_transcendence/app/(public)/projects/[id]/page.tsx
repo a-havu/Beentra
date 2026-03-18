@@ -26,11 +26,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
       )}
       <br /><br />
       <div className="flex flex-col items-center gap-4">
-      <h1>{project.projectName}</h1><br />
-      {project.oneLiner && <p>{project.oneLiner}</p>}
-      {project.techStack && <p>{project.techStack}</p>}
+      <h1 className="text-[#44469A]">{project.projectName}</h1><br />
+      {project.oneLiner && <h3>{project.oneLiner}</h3>}
+      <div className="flex row gap-4">{project.techStack && <p>Tech stack: {project.techStack}</p>}<p>|</p>
       {project.link && <p className="underline"><a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
-      {project.description && <p className="whitespace-pre-line">{project.description}</p>}
+      </div>
+      {project.description && <p className="whitespace-pre-line bg-[#DEDFFF] p-4 rounded-lg">{project.description}</p>}
       <br />
       <div className="relative max-w-lg">
         {project.image ? (

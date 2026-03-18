@@ -15,7 +15,7 @@ export default function ProjectCard({ project }: { project: Project }) {
   return (
     <Link className=" relative flex-1 min-w-0" href={`/projects/${project.id}`}>
       <div className="project-card">
-        <div className="project-image relative h-40">
+        <div className="project-image relative h-50">
           {project.image ? (
             <Image
               src={project.image}
@@ -27,37 +27,21 @@ export default function ProjectCard({ project }: { project: Project }) {
             "🐝"
           )}
         </div>
-        <div className="project-info">
+        <div className="project-info w-80">
           <h2>{project.projectName}</h2>
           <p>{project.oneLiner}</p>
-          {project.techStack && <p>Tech stack: {project.techStack}</p>}
+          {project.techStack && <p className="text-sm text-gray-500">{project.techStack}</p>}
           {project.createdAt && (
-            <p className="text-sm text-gray-500 absolute bottom-3 left-2">
+            <p className="text-sm text-gray-500 absolute bottom-3 right-2">
               {new Date(project.createdAt).toLocaleDateString()}
             </p>
           )}
           {project.creator && (
-            <p className="text-sm text-gray-500 absolute bottom-8 left-2">
+            <p className="text-sm text-gray-500 absolute bottom-8 right-2">
               {project.creator.username}
             </p>
           )}
         </div>
-      </div>
-      <div className="project-info">
-        <h2>{project.projectName}</h2>
-        <p>{project.oneLiner}</p>
-        {project.techStack && (<p>{project.techStack}</p>)}
-         {project.createdAt && (
-          <p className="text-sm text-gray-500 absolute bottom-3 left-2">
-            {new Date(project.createdAt).toLocaleDateString()}
-          </p>
-        )}
-        {project.creator && (
-          <p className="text-sm text-gray-500 absolute bottom-8 left-2">
-            {project.creator.username}
-          </p>
-        )}
-      </div>
     </div>
     </Link>
   );
