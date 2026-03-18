@@ -68,7 +68,9 @@ export default function MinimalEditor({ content, onUpdate }: Props) {
           <button
             key={level}
             type="button"
-            onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level }).run()
+            }
             className={`px-3 py-1 rounded text-sm font-semibold ${
               editor.isActive("heading", { level })
                 ? "bg-blue-800 text-white"
@@ -105,7 +107,7 @@ export default function MinimalEditor({ content, onUpdate }: Props) {
       {/* Editor area */}
       <EditorContent
         editor={editor}
-        className="w-full min-w-0 p-4 min-h-[200px] prose max-w-none focus:outline-none"
+        className="w-full min-w-0 p-4 min-h-[200px] [&_.ProseMirror]:min-h-[200px] [&_.ProseMirror]:outline-none prose max-w-none focus:outline-none"
       />
     </div>
   );
