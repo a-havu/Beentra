@@ -93,6 +93,7 @@ export default function ProjectForm({
 		rows={10}
 		className="w-full bg-white border border-gray-300 rounded-xl p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
 		/>
+		{errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
 		<div>
           <label>Image</label><br />
           <input

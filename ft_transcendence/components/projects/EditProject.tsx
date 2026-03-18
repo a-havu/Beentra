@@ -36,6 +36,15 @@ export default function EditProject({ project, onSuccess }: Props) {
             body: JSON.stringify(data),
         });
         if (res.ok) {
+            const updatedProject = await res.json();
+            setDefaultValues({
+                projectName: updatedProject.projectName,
+                oneLiner: updatedProject.oneLiner,
+                link: updatedProject.link ?? undefined,
+                techStack: updatedProject.techStack ?? undefined,
+                description: updatedProject.description ?? undefined,
+                image: updatedProject.image,
+            });
             setShowForm(false);
             router.refresh();
             onSuccess?.();
