@@ -131,20 +131,6 @@ export const eventSchema = eventSchemaBase
     path: ["timeTo"],
   });
 
-export const projectSchema = z.object({
-  projectName: z
-    .string()
-    .min(2, "Project name too short")
-    .max(50, "Project name too long"),
-  oneLiner: z
-    .string()
-    .min(2, "One-liner too short")
-    .max(100, "One-liner too long"),
-  link: z.string().optional(),
-  techStack: z.string().optional(),
-  description: z.string().optional(),
-  image: z.string().nullable().optional(),
-});
 // Backend schema — image is a URL string
 export const eventSchemaServer = eventSchemaBase
   .extend({
@@ -190,3 +176,27 @@ export const updateUserSchema = z
     message: "Passwords don't match",
     path: ["confirm"],
   });
+
+  export const projectSchema = z.object({
+  projectName: z
+    .string()
+    .min(2, "Project name too short")
+    .max(50, "Project name too long"),
+  oneLiner: z
+    .string()
+    .min(2, "One-liner too short")
+    .max(80, "One-liner too long"),
+  link: z
+    .string()
+    .max(100, "Link too long")
+    .optional(),
+  techStack: z
+    .string()
+    .max(50, "Tech stack description too long")
+    .optional(),
+  description: z
+    .string()
+    .max(2000, "Description too long")
+    .optional(),
+  image: z.string().nullable().optional(),
+});

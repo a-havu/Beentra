@@ -19,17 +19,19 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   return (
     <div>
       {isCreator && (
-        <div className="flex gap-2 justify-center">
+        <div className="flex gap-2 justify-end">
           <EditProject project={project} />
           <DeleteProject projectId={project.id} />
         </div>
       )}
       <br /><br />
-      <h1>{project.projectName}</h1><br />
-      {project.oneLiner && <p>{project.oneLiner}</p>}
-      {project.techStack && <p>Tech stack: {project.techStack}</p>}
-      {project.link && <p>Link: <a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
-      {project.description && <p>{project.description}</p>}
+      <div className="flex flex-col items-center gap-4">
+      <h1 className="text-[#44469A]">{project.projectName}</h1><br />
+      {project.oneLiner && <h3>{project.oneLiner}</h3>}
+      <div className="flex row gap-4">{project.techStack && <p>Tech stack: {project.techStack}</p>}<p>|</p>
+      {project.link && <p className="underline"><a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
+      </div>
+      {project.description && <p className="whitespace-pre-line bg-[#DEDFFF] p-4 rounded-lg">{project.description}</p>}
       <br />
       <div className="relative max-w-lg">
         {project.image ? (
@@ -44,6 +46,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         ) : (
           <span className="text-4-xl">🐝</span>
         )}
+        </div>
         </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client'
 
-import { useForm, SubmitHandler } from "react-hook-form";         
+import { useForm, SubmitHandler, DefaultValues } from "react-hook-form";         
 import Input from "@/components/ui/Input";
 import { Button } from "../ui/Button";
 import { z } from "zod";
@@ -12,12 +12,14 @@ import { useState } from "react";
 type FormValues = z.input<typeof projectSchema>;
 
 type ProjectFormProps = {
+	defaultValues?: DefaultValues<FormValues>;
 	onSubmit: SubmitHandler<FormValues>;
 	mode: "create" | "edit";
 	onCloseAction?: () => void;
 };
 
 export default function ProjectForm({
+	defaultValues,
 	onSubmit,
 	mode = "create",
 	onCloseAction,
@@ -27,7 +29,9 @@ export default function ProjectForm({
 	const { register,
 		handleSubmit,
 		formState: { errors },
-	 } = useForm<FormValues>({resolver: zodResolver(projectSchema)});
+	 } = useForm<FormValues>({
+		defaultValues,
+		resolver: zodResolver(projectSchema)});
 
 	const submitHandler: SubmitHandler<FormValues> = async (data) => {
 		let imageUrl: string | null = null;
@@ -40,6 +44,7 @@ export default function ProjectForm({
 		<div className="beentra-form-container modal-form-container">
 	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
+		<h3>New Project</h3>
 		<Input
 		label="Project Name"
 		name="projectName"
@@ -80,16 +85,14 @@ export default function ProjectForm({
 		register={register}
 		errors={errors}
 		 />
-		 <Input
-		label="Description"
-		name="description"
+		 <p className="text-black">Description</p>
+		 <textarea
 		id="description"
-		type="text"
 		placeholder="Description"
-		required={false}
-		register={register}
-		errors={errors}
-		 />
+		{...register("description")}
+		rows={10}
+		className="w-full bg-white border border-gray-300 rounded-xl p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+		/>
 		<div>
           <label>Image</label><br />
           <input
@@ -99,7 +102,9 @@ export default function ProjectForm({
           />
         </div>
 		 <Button type="submit"
-		 variant="adding">Create</Button>
+		 variant="adding">
+			{mode === "create" ? "Create" : "Update"}
+		 </Button>
 		 {onCloseAction && (
 			<Button type="button"
 			variant="secondary"

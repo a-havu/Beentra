@@ -23,7 +23,7 @@ export default function CreateProject() {
 
 if (res.ok) {
 	setShowForm(false);
-	router.refresh(); // this is for updating the project display grid instantly when the form is submitted
+	router.refresh();
 }
 };
 return (
