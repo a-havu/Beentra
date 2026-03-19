@@ -4,6 +4,9 @@ import { useEffect } from "react";
 import AddUser from "./AddUser";
 import ShowUser from "./ShowUser";
 import DeleteUser from "./DeleteUser";
+import Input from "../ui/Input";
+import Image from "next/image";
+import { Button } from "../ui/Button";
 
 type User = {
   id: string;
@@ -18,6 +21,7 @@ type User = {
 // The table component
 export function UsersTable() {
   // Usestates for users, loading screen and for errors.
+  const [modalOpen, setModalOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -160,9 +164,14 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
+                        {/* <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
                           Edit
-                        </button>
+                        </button> */}
+						<Button
+							variant="edit"
+							>
+								Edit
+						</Button>
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
