@@ -90,6 +90,7 @@ export async function GET() {
         passwordHash: false,
         username: true,
         fullName: true,
+        isOnline: true,
       },
       orderBy: {
         createdAt: "desc",

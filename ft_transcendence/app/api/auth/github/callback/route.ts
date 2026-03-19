@@ -132,6 +132,15 @@ export async function GET(request: NextRequest) {
     return response;
   }
 
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      isOnline: true,
+    },
+  });
+
   const token = await createToken({
     userId: user.id,
     email: user.email,
