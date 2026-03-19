@@ -1,5 +1,4 @@
 'use client';
-
 import ProjectCard from "./ProjectCard";
 
 type Project = {
@@ -16,16 +15,16 @@ type Project = {
 export default function FeaturedProjects({ projects }: { projects: Project[] }) {
 
     return (
-        <div className="flex flex-col w-full">
-            <h2>Featured Projects</h2>
-            <ul className="featured-div">
+		<>
+            <br></br><h1 className="flex justify-center">Featured Projects</h1>
+			<div className="project-grid">
                 {projects.map((project) => (
                     <ProjectCard
                         key={project.id}
                         project={project}
                     />
                 ))}
-            </ul>
         </div>
+		</>
     );
 }
