@@ -50,7 +50,7 @@ export function LoginForm() {
     <div className="beentra-form-container">
       <form className="beentra-form">
         <h1>Welcome to Beentra</h1>
-        <p>Login to your personal Hive life</p>
+        <p>New here? <Link href="/registration">Sign Up</Link></p>
 
         {/* Use Input component for email too */}
         <Input
@@ -79,7 +79,7 @@ export function LoginForm() {
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 h-px bg-black" />
           <span className="text-md text-black whitespace-nowrap">
-            or continue with
+            or login with
           </span>
           <div className="flex-1 h-px bg-black" />
         </div>
@@ -94,46 +94,16 @@ export function LoginForm() {
               <Button>Intra42</Button>
             </a>
           </div>
-          <div className="flex items-center gap-3 my-1">
-            <div className="flex-1 h-px bg-black" />
-            <span className="text-md text-black whitespace-nowrap">
-              Don't have an account?
-            </span>
-            <div className="flex-1 h-px bg-black" />
-          </div>
 
-          <a className="self-center" href="/registration">
-            <Button>Sign up</Button>
-          </a>
+
         </div>
 
-        <div className="flex items-center gap-3 my-1">
-          <div className="flex-1 h-px bg-black" />
-          <span className="text-md text-black whitespace-nowrap">
-            for developers
-          </span>
-          <div className="flex-1 h-px bg-black" />
-        </div>
+
         <h4 className="self-center">
-          you can check our <Link href="/apikey">public API</Link>{" "}
+          Developers: you can check our <Link href="/apikey">public API</Link>{" "}
         </h4>
       </form>
-      <div className="staticPages self-center m-4">
-        <h4 className="self-center">
-          Read our{" "}
-          <Link href="/terms">
-            <span className="text-blue-600 underline hover:text-blue-800">
-              terms
-            </span>
-          </Link>{" "}
-          and{" "}
-          <Link href="/privacy">
-            <span className="text-blue-600 underline hover:text-blue-800">
-              privacy
-            </span>
-          </Link>
-        </h4>
-      </div>
+
     </div>
   );
 }
