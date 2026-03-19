@@ -13,7 +13,7 @@ type FormValues = z.input<typeof projectSchema>;
 
 type Props = {
   project: Project;
-  onSuccess?: () => void;
+  onSuccess?: (project: Project) => void;
 };
 
 export default function EditProject({ project, onSuccess }: Props) {
@@ -47,7 +47,7 @@ export default function EditProject({ project, onSuccess }: Props) {
             });
             setShowForm(false);
             router.refresh();
-            onSuccess?.();
+            onSuccess?.(updatedProject);
         }
     };
     return (

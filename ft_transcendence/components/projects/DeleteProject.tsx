@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/Button";
 import { ConfirmationModal } from "../ui/ConfirmationModal";
 
-export default function DeleteProject({ projectId }: { projectId: string }) {
+type Props = {
+	projectId: string;
+	dashBoard?: boolean;
+	onDeleted?: () => void;
+}
+
+// export default function DeleteProject({ projectId, dashBoard }: { projectId: string, dashBoard: boolean }) {
+export default function DeleteProject({ projectId, dashBoard = false, onDeleted }: Props ) {
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
@@ -13,9 +20,13 @@ export default function DeleteProject({ projectId }: { projectId: string }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     await fetch(`/api/projects/${projectId}`, { method: "DELETE" });
-    router.back(); // redirect back to My Projects or Projects page
-    router.refresh();
+    if (dashBoard){
+		onDeleted?.();
+		router.refresh();
+	} else {
+		router.back(); // redirect back to My Projects or Projects page
   };
+}
 
   return (
     <>
