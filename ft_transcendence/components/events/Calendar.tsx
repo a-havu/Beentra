@@ -76,6 +76,11 @@ export default function Calendar({
   return (
     <>
       <FullCalendar
+        //start:mk added please test
+        scrollTime="10:00:00"      // but opens scrolled to 8am
+        scrollTimeReset={false}
+        //end:mk added please test
+        height="100%"
         plugins={[dayGridPlugin, timeGridPlugin]}
         headerToolbar={{
           left: "prev,next,today",
@@ -84,7 +89,7 @@ export default function Calendar({
         }}
         initialView="timeGridWeek"
         allDaySlot={false}
-        height="80vh"
+
         events={events}
         eventDidMount={(info) => {
           const bg = info.event.backgroundColor;

@@ -44,7 +44,7 @@ export default function ProjectForm({
 		<div className="beentra-form-container modal-form-container">
 	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
-		<h3>New Project</h3>
+		<h3>{mode === "create" ? "New Project" : "Update Project"}</h3>
 		<Input
 		label="Project Name"
 		name="projectName"
@@ -102,8 +102,9 @@ export default function ProjectForm({
             onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
           />
         </div>
+		<div className="flex gap-2 justify-end mt-4">
 		 <Button type="submit"
-		 variant="adding">
+		 variant="primary">
 			{mode === "create" ? "Create" : "Update"}
 		 </Button>
 		 {onCloseAction && (
@@ -112,5 +113,7 @@ export default function ProjectForm({
 			onClick={onCloseAction}
 			>Cancel</Button>
 		 )}
-	</form></div>)
+		 </div>
+	</form>
+	</div>)
 }

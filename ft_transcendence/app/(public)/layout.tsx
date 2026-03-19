@@ -4,7 +4,8 @@ import "../globals.css";
 import Header from "../../components/main/Header";
 import Footer from "../../components/main/Footer";
 import { validateEnv } from "@/lib/validation";
-
+import { Suspense } from "react";
+import Loading from './loading'
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -40,8 +41,10 @@ export default async function RootLayout({
       </header>
 
 
-      <main className="flex flex-col h-dvh flex-1 p-6">
-        {children}
+      <main className="flex flex-col flex-1 p-6">
+        <Suspense fallback={<Loading />}>
+          {children}
+        </Suspense>
       </main>
 
 
