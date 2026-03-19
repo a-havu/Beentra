@@ -20,6 +20,7 @@ model User {
   fullName           String?
   role               Role                @default(admin)
   lastActive         DateTime            @default(now())
+  isOnline			 Boolean			 @default(false)
   createdEvents      Event[]             @relation("EventCreator")
   eventSubscriptions EventSubscription[]
   oauthAccount       OauthAccount[]

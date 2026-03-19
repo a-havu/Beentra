@@ -96,21 +96,22 @@ export async function GET() {
       },
     });
 
-    const currTime = new Date();
-    const stillOnlineTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+    // const currTime = new Date();
+    // const stillOnlineTime = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-    const activeUsers = users.map(user => {
-      if (!user.lastActive) {
-        return { ...user, isOnline: false }
-      }
+    // const activeUsers = users.map((user) => {
+    //   if (!user.lastActive) {
+    //     return { ...user, isOnline: false };
+    //   }
 
-      const timeSinceActive = currTime.getTime() - new Date(user.lastActive).getTime();
-      const isOnline = timeSinceActive < stillOnlineTime;
+    //   const timeSinceActive =
+    //     currTime.getTime() - new Date(user.lastActive).getTime();
+    //   const isOnline = timeSinceActive < stillOnlineTime;
 
-      return { ...user, isOnline };
-    })
+    //   return { ...user, isOnline };
+    // });  REMOVE
 
-    return NextResponse.json(activeUsers);
+    return NextResponse.json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(
@@ -119,6 +120,5 @@ export async function GET() {
     );
   }
 }
-
 
 /* ----------------------------------------------------------------------------------- */

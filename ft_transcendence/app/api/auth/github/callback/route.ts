@@ -96,8 +96,8 @@ export async function GET(request: NextRequest) {
     user = userAccount.user;
   } else {
     user = await prisma.user.findUnique({
-      where: { email: primaryEmail }
-    })
+      where: { email: primaryEmail },
+    });
 
     if (!user) {
       user = await prisma.user.create({
@@ -120,16 +120,14 @@ export async function GET(request: NextRequest) {
     });
   }
 
-
-
   if (user.twoFactorEnabled) {
     const tempToken = await createTempToken({ userId: user.id });
-    const response = NextResponse.redirect(new URL('/logintfa', request.url));
-    response.cookies.set('tfa-temp-token', tempToken, {
+    const response = NextResponse.redirect(new URL("/logintfa", request.url));
+    response.cookies.set("tfa-temp-token", tempToken, {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: "lax",
       maxAge: 60 * 5,
-      path: '/',
+      path: "/",
     });
     return response;
   }

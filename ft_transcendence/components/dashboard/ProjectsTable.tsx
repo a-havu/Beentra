@@ -81,7 +81,7 @@ export function ProjectsTable() {
 
 	const handleEditSuccess = (updatedProject: Project) => {
 		setProjects((prev) =>
-			prev.map((p) => p.id === updatedProject.id ? updatedProject : p)
+			prev.map((project) => project.id === updatedProject.id ? updatedProject : project)
 		);
 	}
 
@@ -165,12 +165,6 @@ export function ProjectsTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {/* <Button
-                          variant="edit"
-                          onClick={() => setEditingId(project.id)}
-                        >
-                          Edit
-                        </Button> */}
 						<EditProject
 							project={project}
 							onSuccess={handleEditSuccess}
@@ -180,19 +174,6 @@ export function ProjectsTable() {
 							dashBoard={true}
 							onDeleted={() => handleDeleteSuccess(project.id)}
 						/>
-						{/* <Button
-							variant="delete"
-						>
-							Delete
-						</Button> */}
-                        {/* <DeleteEventButton
-                          id={project.id}
-                          onDeleted={() => {
-                            setProjects((prev) =>
-                              prev.filter((e) => e.id !== project.id),
-                            );
-                          }}
-                        /> */}
                       </div>
                     </td>
 				</tr>
