@@ -1,34 +1,42 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { eventSchemaServer } from "@/lib/validation";
 import { getSession } from "@/lib/auth";
 
+async function getPublicCreatorId(request: NextRequest): Promise<string | null> {
+  const apiKey = request.headers.get("x-api-key");
+  if (!apiKey) return null;
+  const publicUser = await prisma.publicApiUser.findUnique({ where: { key: apiKey } });
+  return publicUser?.id ?? null;
+}
+
+function canModify(
+  event: { creatorId: string | null; publicCreatorId: string | null },
+  session: { userId: string; role: string } | null,
+  publicCreatorId: string | null,
+): boolean {
+  if (session?.role === "admin") return true;
+  if (session?.userId && event.creatorId === session.userId) return true;
+  if (publicCreatorId && event.publicCreatorId === publicCreatorId) return true;
+  return false;
+}
+
 export async function PUT(
-  request: Request,
-  context: { params: Promise<{ id: string }> },
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
-    if (!session) {
+    const publicCreatorId = await getPublicCreatorId(request);
+
+    if (!session && !publicCreatorId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = await context.params;
-    const existing = await prisma.event.findUnique({ where: { id } });
-    if (!existing) {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
-    }
-
-    if (
-      existing.creatorId &&
-      existing.creatorId !== session.userId &&
-      session.role !== "admin"
-    ) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
-
-    const body = await request.json();
+    const { id } = await params;                    // ← from URL, not body
+    const body = await request.json();              // ← read body only once
     const result = eventSchemaServer.safeParse(body);
+
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid input", details: result.error.issues },
@@ -36,18 +44,20 @@ export async function PUT(
       );
     }
 
+    const existing = await prisma.event.findUnique({ where: { id } });
+    if (!existing) {
+      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+    }
+
+    if (!canModify(existing, session, publicCreatorId)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const {
-      title,
-      type,
-      date,
-      timeFrom,
-      timeTo,
-      location,
-      organizer,
-      image,
-      description,
-      maxSpots,
+      title, type, date, timeFrom, timeTo,
+      location, organizer, image, description, maxSpots,
     } = result.data;
+
     const datePart = date.toISOString().split("T")[0];
 
     const updatedEvent = await prisma.event.update({
@@ -69,22 +79,19 @@ export async function PUT(
     return NextResponse.json(updatedEvent);
   } catch (error) {
     console.error("Error updating event:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
 export async function GET(
-  request: Request,
-  context: { params: Promise<{ id: string }> },
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
     const userId = session?.userId;
+    const { id } = await params;
 
-    const { id } = await context.params;
     const event = await prisma.event.findUnique({
       where: { id },
       include: {
@@ -104,50 +111,37 @@ export async function GET(
       isSubscribed: userId ? subscriptions.length > 0 : false,
     });
   } catch (error) {
-    console.error("Error fetching events:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    console.error("Error fetching event:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
-    if (!session) {
+    const publicCreatorId = await getPublicCreatorId(request);
+
+    if (!session && !publicCreatorId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { id } = await params;
     const event = await prisma.event.findUnique({ where: { id } });
-
     if (!event) {
-      return NextResponse.json({ error: "event not found" }, { status: 404 });
+      return NextResponse.json({ error: "Event not found" }, { status: 404 });
     }
 
-    if (
-      event.creatorId &&
-      event.creatorId !== session.userId &&
-      session.role !== "admin"
-    ) {
+    if (!canModify(event, session, publicCreatorId)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     await prisma.event.delete({ where: { id } });
-
-    return NextResponse.json(
-      { message: "event deleted successfully" },
-      { status: 200 },
-    );
+    return NextResponse.json({ message: "Event deleted successfully" });
   } catch (error) {
     console.error("Error deleting event:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

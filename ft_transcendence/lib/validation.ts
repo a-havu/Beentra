@@ -136,6 +136,7 @@ export const eventSchemaServer = eventSchemaBase
   .extend({
     image: z.string().nullable().optional(),
     creatorId: z.string().optional(),
+    publicCreatorId: z.string().optional(),
   })
   .refine((data) => data.date >= new Date(new Date().setHours(0, 0, 0, 0)), {
     message: "Date cannot be in the past",
@@ -177,7 +178,7 @@ export const updateUserSchema = z
     path: ["confirm"],
   });
 
-  export const projectSchema = z.object({
+export const projectSchema = z.object({
   projectName: z
     .string()
     .min(2, "Project name too short")
