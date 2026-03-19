@@ -27,8 +27,8 @@ if (res.ok) {
 }
 };
 return (
-    <div className="flex flex-col items-center gap-4">
-      <Button onClick={() => setShowForm(true)} type="button">
+    <div className="px-10">
+      <Button variant="adding" onClick={() => setShowForm(true)} type="button">
         Create Project
       </Button>
       {showForm && <ProjectForm

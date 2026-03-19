@@ -19,7 +19,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   return (
     <div>
       {isCreator && (
-        <div className="flex gap-2 justify-end">
+        <div className="flex gap-2 justify-center">
           <EditProject project={project} />
           <DeleteProject projectId={project.id} />
         </div>
@@ -33,7 +33,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
       </div>
       {project.description && <p className="w-[80%] whitespace-pre-line bg-[#DEDFFF] p-4 rounded-lg">{project.description}</p>}
       <br />
-      <div className="relative max-w-lg">
+      <div className="flex justify-center items-center relative w-full">
         {project.image ? (
           <Image
             src={project.image}
@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             className="w-full h-auto max-h-96 rounded-lg object-contain"
           />
         ) : (
-          <span className="text-4-xl">🐝</span>
+          <span className="text-3xl">🐝</span>
         )}
         </div>
         </div>

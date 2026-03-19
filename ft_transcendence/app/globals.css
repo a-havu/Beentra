@@ -174,8 +174,8 @@ a {
     @apply bg-white rounded-b-xl p-2;
 }
 
-.featured-div {
-    @apply h-full w-full flex flex-row gap-4;
+.project-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6
 }
 
 /* End of Project Display styles */

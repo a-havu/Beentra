@@ -18,19 +18,19 @@ export function Button({
   disabled = false,
 }: ButtonProps) {
   const variantStyles = {
-    primary: "bg-blue-600 hover:bg-blue-700 text-white",
-    secondary: "bg-gray-600 hover:bg-gray-700 text-white",
+    primary: "border border-[#7CEEFF] bg-[#7CEEFF] text-black hover:bg-transparent",
+    secondary: "border border-[#A2B09E] bg-[#A2B09E] text-black hover:bg-transparent",
     sidebar:
       "w-full text-center bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition",
-    delete: "bg-red-600 hover:bg-red-700 text-white",
-    adding: "bg-green-600 hover:bg-green-700 text-white font-bold",
-    edit: "bg-yellow-500 hover:bg-yellow-600 text-white",
+    delete: "border border-[#FF97A2] bg-[#FF97A2] text-black hover:bg-transparent",
+    adding: "border border-[#A8EB84] bg-[#A8EB84] text-black hover:bg-transparent",
+    edit: "border border-[#F7AE69] bg-[#F7AE69] text-black hover:bg-transparent",
   };
 
   const sizeStyles = {
-    small: "px-3 py-1 text-sm",
-    medium: "px-4 py-2 text-base",
-    large: "px-6 py-3 text-lg",
+    small: "px-3 py-1 text-sm shadow-xs",
+    medium: "px-4 py-2 text-base shadow-xs",
+    large: "px-6 py-3 text-lg shadow-xs",
   };
 
   const buttonStyle = variantStyles[variant];
@@ -41,7 +41,7 @@ export function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-full transition cursor-pointer ${buttonStyle} ${buttonSize} disabled:opacity-50 disabled:cursor-not-allowed w-28 self-end`}
+      className={`rounded-full transition cursor-pointer ${buttonStyle} ${buttonSize} disabled:opacity-50 disabled:cursor-not-allowed min-w-28 self-end`}
     >
       {children}
     </button>
