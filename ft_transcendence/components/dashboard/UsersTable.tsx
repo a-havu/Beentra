@@ -7,6 +7,9 @@ import DeleteUser from "./DeleteUser";
 import Input from "../ui/Input";
 import Image from "next/image";
 import { Button } from "../ui/Button";
+import Modal from "../ui/Modal";
+import ModalBody from "../ui/ModalBody";
+import ModalFooter from "../ui/ModalFooter";
 
 type User = {
   id: string;
@@ -137,10 +140,11 @@ export function UsersTable() {
                     <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-center text-xs font-semibold
-											${user.isOnline
-                            ? "bg-green-100 text-white-900"
-                            : "bg-gray-100 text-white-900"
-                          }`}
+											${
+                        user.isOnline
+                          ? "bg-green-100 text-white-900"
+                          : "bg-gray-100 text-white-900"
+                      }`}
                       >
                         {user.isOnline ? "Online" : "Offline"}
                       </span>
@@ -151,10 +155,11 @@ export function UsersTable() {
                     <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-center text-xs font-semibold
-											${user.role === "admin"
-                            ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
-                          }`}
+											${
+                        user.role === "admin"
+                          ? "bg-purple-100 text-purple-800"
+                          : "bg-blue-100 text-blue-800"
+                      }`}
                       >
                         {user.role}
                       </span>
@@ -167,11 +172,12 @@ export function UsersTable() {
                         {/* <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
                           Edit
                         </button> */}
-						<Button
-							variant="edit"
-							>
-								Edit
-						</Button>
+                        <Button
+                          variant="edit"
+                          onClick={() => setModalOpen(true)}
+                        >
+                          Edit
+                        </Button>
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
@@ -195,6 +201,17 @@ export function UsersTable() {
           isOpen={!!selectedUser}
           onClose={() => setSelectedUser(null)}
         />
+      )}
+
+      {modalOpen && (
+        <Modal isOpen={modalOpen}>
+          <ModalBody>Testing</ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={() => setModalOpen(false)}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
       )}
     </>
   );
