@@ -40,7 +40,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col main-page">
       <div className="events-section">
-        <div className="w-full p-5">
+        <div className="w-full p-5 ">
           <EventsSection
             initialEvents={events}
             intraEvents={intraEvents}
