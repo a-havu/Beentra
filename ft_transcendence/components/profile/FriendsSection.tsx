@@ -1,36 +1,31 @@
-import MyFirends from './MyFriends'
-import PotintialFriends from './PotintialFriends'
+import MyFriends from './MyFriends'
+import PotentialFriends from '@/components/profile/PotintialFriends'
 import { User } from '@/lib/generated/prisma/client'
-import UserCard from '@/components/profile/UserCard'
+import { prisma } from "@/lib/prisma"
 
-
-function getFriends(users) {
-  const myFriends
-  return myFriends
+type FriendsSectionProps = {
+  id: string
+  myFriends: User[]
 }
 
+export default async function FriendsSection({ id, myFriends }: FriendsSectionProps) {
+  const users = await prisma.user.findMany({ where: { role: "user" } })
+  const potentialFriends = users.filter(user =>
+    user.id !== id && !myFriends.some(friend => friend.id === user.id)
+  )
 
-export default function FriendsSection({ users }: { users: User[] }) {
-  const myFriends = getFriends(users)
-
+  if (myFriends.length === 0) return <div>No friends yet</div>
 
   return (
-    <div className="firends-section">
+    <div className="friends-section">
       <div>
-        <ul>
-
-          {users.map((user: User) =>
-            <li key={user.id}>
-              <UserCard user={user} />
-            </li>
-          )}
-
-        </ul>
         <h3>My Friends</h3>
-        <MyFirends />
+        <MyFriends myFriends={myFriends} />
       </div>
-      <div>Users list:</div>
-      <PotintialFriends />
-    </div >
+      <div>
+        <h3>potintial list</h3>
+        <PotentialFriends potentialFriends={potentialFriends} />
+      </div>
+    </div>
   )
 }

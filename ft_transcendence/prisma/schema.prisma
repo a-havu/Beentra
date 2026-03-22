@@ -25,8 +25,8 @@ model User {
   oauthAccount       OauthAccount[]
   pages              Page[]
   createdProjects    Project[]           @relation("ProjectCreator")
-
-  friends Friend[]
+  friends            Friend[]            @relation("UserFriends")
+  friendOf           Friend[]            @relation("FriendOf")
 }
 
 model Page {
@@ -120,7 +120,8 @@ model Friend {
   id       Int    @id @default(autoincrement())
   userId   String
   friendId String
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation("UserFriends", fields: [userId], references: [id])
+  friend   User   @relation("FriendOf", fields: [friendId], references: [id])
 
   @@unique([userId, friendId])
 }

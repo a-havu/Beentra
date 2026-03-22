@@ -1,4 +1,12 @@
-export default function PotintialFriends() {
+import { User } from '@/lib/generated/prisma/client'
+import UserCard from './UserCard'
 
-  return (<p>add friends from this list</p>)
+export default function PotentialFriends({ potentialFriends }: { potentialFriends: User[] }) {
+  return (
+    <div className="potential-friends">
+      {potentialFriends.map(user => (
+        <UserCard key={user.id} user={user} />
+      ))}
+    </div>
+  )
 }
