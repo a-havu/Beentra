@@ -48,6 +48,9 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
             {" "}
             <button className="cursor-pointer"> My Projects</button>{" "}
           </Link>
+          <Link href={`/users/${userId}/friends`}>
+            <button className="cursor-pointer"> My Friends</button>{" "}
+          </Link>
           <LogoutButton />
         </div>
       )}

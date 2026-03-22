@@ -1,14 +1,9 @@
-import EventsSection from "@/components/events/EventsSection";
-import FeaturedProjects from "@/components/projects/FeaturedProjects";
+import EventsSection from "./EventsSection";
 import { fetchIntraEvents, IntraEventInput } from "@/lib/IntraEvents";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
-export const metadata = {
-  title: "ft_transcendence",
-};
-
-export default async function HomePage() {
+export default async function EventsSectionServer() {
   const [result, session] = await Promise.all([
     fetchIntraEvents(),
     getSession(),
@@ -34,24 +29,17 @@ export default async function HomePage() {
     createdAt: rest.createdAt.toISOString(),
     updatedAt: rest.updatedAt.toISOString(),
     subscriberCount: _count.subscriptions,
-    isSubscribed: userId ? (subscriptions as { userId: string }[]).length > 0 : false,
+    isSubscribed: userId
+      ? (subscriptions as { userId: string }[]).length > 0
+      : false,
   }));
 
   return (
-    <div className="flex flex-col main-page">
-      <div className="events-section">
-        <div className="w-full p-5 ">
-          <EventsSection
-            initialEvents={events}
-            intraEvents={intraEvents}
-            currentUserId={userId}
-            currentUserRole={userRole}
-          />
-        </div>
-      </div>
-      <div className="projects-section">
-        <FeaturedProjects />
-      </div>
-    </div>
+    <EventsSection
+      initialEvents={events}
+      intraEvents={intraEvents}
+      currentUserId={userId}
+      currentUserRole={userRole}
+    />
   );
 }

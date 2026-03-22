@@ -36,7 +36,7 @@ export default function EventsSection({ initialEvents, intraEvents, currentUserI
       <div className="mb-5">
         <AddEvent onEventCreated={addEvent} />
       </div>
-      <div className="flex gap-8">
+      <div className="flex gap-8 min-h-[60vh]">
         <div className="flex-1">
           <h1>Todays Events</h1>
           <EventList events={todaysEvents} currentUserId={currentUserId} currentUserRole={currentUserRole} />
@@ -44,7 +44,7 @@ export default function EventsSection({ initialEvents, intraEvents, currentUserI
         <div className="flex-2">
           <Calendar intraEvents={intraEvents} dbEvents={events} currentUserId={currentUserId} />
         </div>
-      </div>
+      </div >
     </>
   );
 }
