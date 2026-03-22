@@ -4,7 +4,15 @@ import { User } from '@/lib/generated/prisma/client'
 import UserCard from '@/components/profile/UserCard'
 
 
+function getFriends(users) {
+  const myFriends
+  return myFriends
+}
+
+
 export default function FriendsSection({ users }: { users: User[] }) {
+  const myFriends = getFriends(users)
+
 
   return (
     <div className="firends-section">

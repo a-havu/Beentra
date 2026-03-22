@@ -25,6 +25,8 @@ model User {
   oauthAccount       OauthAccount[]
   pages              Page[]
   createdProjects    Project[]           @relation("ProjectCreator")
+
+  friends Friend[]
 }
 
 model Page {
@@ -112,4 +114,13 @@ enum Role {
   user
   admin
   moderator
+}
+
+model Friend {
+  id       Int    @id @default(autoincrement())
+  userId   String
+  friendId String
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, friendId])
 }
