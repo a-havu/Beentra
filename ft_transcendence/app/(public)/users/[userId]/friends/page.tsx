@@ -14,6 +14,8 @@ export default async function FriendsPage({ params }: { params: Promise<{ userId
   })
   if (!user) return <div>User not found</div>
   const myFriends = user.friends.map(f => f.friend)
+
+
   return (
     <>
       <h2>Friends page</h2>

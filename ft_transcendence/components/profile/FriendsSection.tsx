@@ -13,17 +13,18 @@ export default async function FriendsSection({ id, myFriends }: FriendsSectionPr
   const potentialFriends = users.filter(user =>
     user.id !== id && !myFriends.some(friend => friend.id === user.id)
   )
-
+  console.log('myFriends:', myFriends)
+  console.log('potentialFriends:', potentialFriends)
 
   return (
     <div className="friends-section">
       <div>
         <h3>My Friends</h3>
-        <MyFriends myFriends={myFriends} />
+        <MyFriends myFriends={myFriends} currentUserId={id} />
       </div>
       <div>
         <h3>potintial list</h3>
-        <PotentialFriends potentialFriends={potentialFriends} />
+        <PotentialFriends potentialFriends={potentialFriends} currentUserId={id} />
       </div>
     </div>
   )
