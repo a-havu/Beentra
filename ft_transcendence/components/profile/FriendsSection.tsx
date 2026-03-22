@@ -14,7 +14,6 @@ export default async function FriendsSection({ id, myFriends }: FriendsSectionPr
     user.id !== id && !myFriends.some(friend => friend.id === user.id)
   )
 
-  if (myFriends.length === 0) return <div>No friends yet</div>
 
   return (
     <div className="friends-section">
