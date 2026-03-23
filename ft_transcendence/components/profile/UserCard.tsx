@@ -6,7 +6,7 @@ import {
   addFriend,
   removeFriend,
 } from "@/app/(public)/users/[userId]/friends/friends";
-
+import FriendStatus from './FriendStatus'
 export default function UserCard({
   user,
   currentUserId,
@@ -39,14 +39,16 @@ export default function UserCard({
   }
 
   return (
-    <article className="user-card flex flex-col">
+    <article className="user-card flex flex-col gap-2">
       <Image
         src={user.avatarUrl ?? "/default-profile-picture.png"}
         alt="user avatar"
         width={150}
         height={150}
+        priority
       />
       <span>{user.username}</span>
+      {isFriend?<FriendStatus />:<></>} 
       <button
         onClick={handleClick}
         disabled={loading}

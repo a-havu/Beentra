@@ -31,13 +31,13 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
           width={32}
           height={32}
           className="rounded-full"
+          priority
         />
       </button>
 
       {open && (
         <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-[#FDF7D2] rounded-lg z-50 p-2">
           <Link href={`/profile/${userId}`}>
-            {" "}
             <button className="cursor-pointer">My Profile</button>{" "}
           </Link>
           <Link href={`/users/${userId}/events`}>
