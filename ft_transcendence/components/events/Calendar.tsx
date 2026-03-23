@@ -19,6 +19,7 @@ type ShowEventData = {
   timeTo: Date;
   location: string;
   organizer: string;
+  image: string | null;
   description: string | null;
   creatorId: string | null;
   maxSpots: number;
@@ -54,7 +55,7 @@ export default function Calendar({
       date: new Date(event.date),
       timeFrom: new Date(event.timeFrom),
       timeTo: new Date(event.timeTo),
-    },
+    } satisfies ShowEventData,
   }));
 
   const intraFormatted: EventInput[] = intraEvents.map((event) => ({
@@ -62,13 +63,24 @@ export default function Calendar({
     title: event.name,
     start: event.begin_at,
     end: event.end_at,
-    backgroundColor: "#8b5cf6", // purple for intra events
+    backgroundColor: "#8b5cf6",
     borderColor: "#7c3aed",
     extendedProps: {
-      ...event,
+      id: String(event.id),
+      title: event.name,
+      type: event.kind ?? "Intra",
+      date: new Date(event.begin_at),
       timeFrom: new Date(event.begin_at),
       timeTo: new Date(event.end_at),
-    },
+      location: event.location ?? "",
+      organizer: "42 Intra",
+      description: event.description ?? null,
+      image: null,
+      creatorId: null,
+      maxSpots: event.max_people ?? 0,
+      subscriberCount: event.nbr_subscribers,
+      isSubscribed: false,
+    } satisfies ShowEventData,
   }));
 
   const events = [...formatted, ...intraFormatted];
