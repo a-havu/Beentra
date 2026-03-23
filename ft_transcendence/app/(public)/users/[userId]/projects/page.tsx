@@ -12,8 +12,6 @@ interface Props {
 export default async function UserProjectsPage({ params }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;
 
-  console.log("userId from params:", userId);
-
   const user = await prisma.user.findUnique({
     where: { id: userId },
     });

@@ -37,9 +37,6 @@ export async function GET(request: NextRequest) {
 
   const data = (await tokenResponse.json()) as { access_token?: string };
 
-  console.log("42 token response status:", tokenResponse.status);
-  console.log("42 token response data:", data);
-
   const access_token = data.access_token;
 
   if (!access_token) {

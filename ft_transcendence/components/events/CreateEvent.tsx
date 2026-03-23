@@ -15,9 +15,7 @@ type Props = {
 
 export default function CreateEvent({ onSuccess, onEventCreated }: Props) {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { image: _image, ...rest } = data;
-    const formData = { ...rest, maxSpots: rest.maxSpots ?? 0 };
+    const formData = { ...data, maxSpots: data.maxSpots ?? 0 };
 
     try {
       const res = await fetch("/api/events", {

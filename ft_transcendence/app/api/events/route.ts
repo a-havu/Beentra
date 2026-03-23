@@ -3,9 +3,32 @@ import { prisma } from "@/lib/prisma";
 import { eventSchemaServer } from "@/lib/validation";
 import { getSession } from "@/lib/auth";
 
+async function getPublicCreatorId(request: NextRequest): Promise<string | null> {
+  const apiKey = request.headers.get("x-api-key");
+  if (!apiKey) return null;
+
+  const publicUser = await prisma.publicApiUser.findUnique({
+    where: { key: apiKey },
+  });
+
+  return publicUser?.id ?? null;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
+
+    // Must have session or valid API key
+    let publicCreatorId: string | null = null;
+    if (!session?.userId) {
+      publicCreatorId = await getPublicCreatorId(request);
+      if (!publicCreatorId) {
+        return NextResponse.json(
+          { error: "Unauthorized: session or API key required" },
+          { status: 401 },
+        );
+      }
+    }
 
     const body = await request.json();
     const result = eventSchemaServer.safeParse(body);
@@ -17,17 +40,10 @@ export async function POST(request: NextRequest) {
     }
 
     const {
-      title,
-      type,
-      date,
-      timeFrom,
-      timeTo,
-      location,
-      organizer,
-      image,
-      description,
-      maxSpots,
+      title, type, date, timeFrom, timeTo,
+      location, organizer, image, description, maxSpots,
     } = result.data;
+
     const datePart = date.toISOString().split("T")[0];
 
     const event = await prisma.event.create({
@@ -43,8 +59,10 @@ export async function POST(request: NextRequest) {
         description: description ?? "",
         maxSpots: maxSpots ?? 0,
         creatorId: session?.userId ?? null,
+        publicCreatorId,
       },
     });
+
     return NextResponse.json(event);
   } catch (error) {
     console.error("Error:", error);
