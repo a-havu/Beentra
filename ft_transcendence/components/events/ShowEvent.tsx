@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
@@ -15,6 +16,7 @@ type ShowEventData = {
   timeTo: Date | string;
   location: string;
   organizer: string;
+  image?: string | null;
   description?: string | null;
   creatorId?: string | null;
   maxSpots: number;
@@ -81,6 +83,16 @@ export default function ShowEvent({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalBody>
+        {event.image && (
+          <Image
+            src={event.image}
+            alt={event.title}
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto max-h-64 rounded-md mb-4 object-cover"
+          />
+        )}
         <h2 className="text-xl font-bold mb-4">{event.title}</h2>
         <p>
           <strong>Date:</strong> {formatDate(event.date)}

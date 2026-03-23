@@ -84,7 +84,10 @@ const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 // Shared base fields — no image, no refinements (so .extend() works on both schemas)
 const eventSchemaBase = z.object({
   title: z.string().min(2, "Title too short").max(30, "Title too long"),
-  date: z.coerce.date(),
+  date: z.coerce.date()
+    .refine((d) => !isNaN(d.getTime()), "Invalid date")
+    .min(new Date(new Date().setHours(0, 0, 0, 0)), "Date must be today or in the future")
+    .max(new Date("2100-12-31"), "Date must be before 2101"),
   timeFrom: z.string().regex(timeRegex, "Invalid time format"),
   timeTo: z.string().regex(timeRegex, "Invalid time format"),
   location: z
@@ -104,23 +107,10 @@ const eventSchemaBase = z.object({
     .default(0),
 });
 
-// Frontend schema — image is a FileList (browser File object)
+// Frontend schema — image is handled outside zod (uploaded client-side before submit)
 export const eventSchema = eventSchemaBase
   .extend({
-    image: z
-      .custom<FileList>()
-      .optional()
-      .refine(
-        (file) => !file || file.length === 0 || file[0]?.size <= 1_000_000,
-        "Image file must be smaller than 1MB",
-      )
-      .refine(
-        (file) =>
-          !file ||
-          file.length === 0 ||
-          ["image/jpeg", "image/png", "image/webp"].includes(file[0]?.type),
-        "Only JPG, PNG, WEBP allowed",
-      ),
+    image: z.string().nullable().optional(),
   })
   .refine((data) => data.date >= new Date(new Date().setHours(0, 0, 0, 0)), {
     message: "Date cannot be in the past",
