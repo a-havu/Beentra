@@ -1,9 +1,10 @@
 "use client";
 
 type ButtonProps = {
-  children: React.ReactNode; // The text/content inside the button
-  onClick?: () => void; // Function call when clicked, optional because of the '?'
-  type?: "button" | "submit" | "reset"; // The type of the button
+  children: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  form?: string;
   variant?: "primary" | "secondary" | "sidebar" | "delete" | "adding" | "edit";
   size?: "small" | "medium" | "large";
   disabled?: true | false;
@@ -13,6 +14,7 @@ export function Button({
   children,
   onClick,
   type = "button",
+  form,
   variant = "primary",
   size = "medium",
   disabled = false,
@@ -39,6 +41,7 @@ export function Button({
   return (
     <button
       type={type}
+      form={form}
       onClick={onClick}
       disabled={disabled}
       className={`rounded-full transition cursor-pointer ${buttonStyle} ${buttonSize} disabled:opacity-50 disabled:cursor-not-allowed min-w-28 self-end`}

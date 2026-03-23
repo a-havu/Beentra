@@ -6,6 +6,7 @@ import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
+import EditEvent from "./EditEvent";
 
 type ShowEventData = {
   id: string;
@@ -46,6 +47,7 @@ export default function ShowEvent({
     event?.isSubscribed ?? false
   );
   const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   if (!event) return null;
 
@@ -79,6 +81,24 @@ export default function ShowEvent({
       setLoading(false);
     }
   };
+
+  if (isEditing) {
+    return (
+      <Modal isOpen={true} onClose={() => setIsEditing(false)}>
+        <ModalBody>
+          <EditEvent id={event.id} onSuccess={() => setIsEditing(false)} />
+        </ModalBody>
+        <ModalFooter>
+          <Button type="submit" form="edit-event-form" variant="primary">
+            Update
+          </Button>
+          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -125,8 +145,8 @@ export default function ShowEvent({
       </ModalBody>
 
       <ModalFooter>
-        {(isCreator || isAdmin) && (
-          <Button variant="edit" onClick={onClose}>
+        {(isCreator || isAdmin) && event.creatorId && (
+          <Button variant="edit" onClick={() => setIsEditing(true)}>
             Edit
           </Button>
         )}
