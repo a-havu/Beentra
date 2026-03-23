@@ -19,11 +19,11 @@ export default async function FriendsSection({
   );
   return (
     <div className="friends-section">
-      <div>
+      <div className="mt-4">
         <h3>My Friends</h3>
         <MyFriends myFriends={myFriends} currentUserId={id} />
       </div>
-      <div>
+      <div className="mt-4">
         <h3>potintial list</h3>
         <PotentialFriends
           potentialFriends={potentialFriends}
