@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@floating-ui/react": "^0.27.17",
     "@fullcalendar/core": "^6.1.20",
