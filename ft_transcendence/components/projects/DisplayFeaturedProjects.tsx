@@ -1,7 +1,5 @@
 'use client';
-
 import ProjectCard from "./ProjectCard";
-import { useState } from "react";
 
 type Project = {
   id: string;
@@ -15,20 +13,18 @@ type Project = {
 };
 
 export default function FeaturedProjects({ projects }: { projects: Project[] }) {
-    const [selected, setSelected] = useState<Project | null>(null);
 
     return (
-        <div className="flex flex-col w-full">
-            <h2>Featured Projects</h2>
-            <ul className="featured-div">
+		<>
+            <br></br><h1 className="flex justify-center">Featured Projects</h1>
+			<div className="project-grid">
                 {projects.map((project) => (
                     <ProjectCard
                         key={project.id}
                         project={project}
-                        onClick={() => setSelected(project)}
                     />
                 ))}
-            </ul>
         </div>
+		</>
     );
 }

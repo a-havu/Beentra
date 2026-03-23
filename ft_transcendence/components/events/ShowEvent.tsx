@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
@@ -15,6 +16,7 @@ type ShowEventData = {
   timeTo: Date | string;
   location: string;
   organizer: string;
+  image?: string | null;
   description?: string | null;
   creatorId?: string | null;
   maxSpots: number;
@@ -27,11 +29,22 @@ type ShowEventProps = {
   isOpen: boolean;
   onClose: () => void;
   currentUserId?: string | null;
+  currentUserRole?: string | null;
 };
 
-export default function ShowEvent({ event, isOpen, onClose, currentUserId }: ShowEventProps) {
-  const [subscriberCount, setSubscriberCount] = useState(event?.subscriberCount ?? 0);
-  const [isSubscribed, setIsSubscribed] = useState(event?.isSubscribed ?? false);
+export default function ShowEvent({
+  event,
+  isOpen,
+  onClose,
+  currentUserId,
+  currentUserRole,
+}: ShowEventProps) {
+  const [subscriberCount, setSubscriberCount] = useState(
+    event?.subscriberCount ?? 0
+  );
+  const [isSubscribed, setIsSubscribed] = useState(
+    event?.isSubscribed ?? false
+  );
   const [loading, setLoading] = useState(false);
 
   if (!event) return null;
@@ -49,6 +62,7 @@ export default function ShowEvent({ event, isOpen, onClose, currentUserId }: Sho
   };
 
   const isCreator = currentUserId && event.creatorId === currentUserId;
+  const isAdmin = currentUserRole === "admin";
   const showSubscribeButton = currentUserId && !isCreator;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
@@ -69,6 +83,16 @@ export default function ShowEvent({ event, isOpen, onClose, currentUserId }: Sho
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalBody>
+        {event.image && (
+          <Image
+            src={event.image}
+            alt={event.title}
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto max-h-64 rounded-md mb-4 object-cover"
+          />
+        )}
         <h2 className="text-xl font-bold mb-4">{event.title}</h2>
         <p>
           <strong>Date:</strong> {formatDate(event.date)}
@@ -101,9 +125,11 @@ export default function ShowEvent({ event, isOpen, onClose, currentUserId }: Sho
       </ModalBody>
 
       <ModalFooter>
-        <Button variant="edit" onClick={onClose}>
-          Edit
-        </Button>
+        {(isCreator || isAdmin) && (
+          <Button variant="edit" onClick={onClose}>
+            Edit
+          </Button>
+        )}
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>

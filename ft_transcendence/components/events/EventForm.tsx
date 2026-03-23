@@ -1,11 +1,13 @@
 "use client";
 
 import { useForm, SubmitHandler, DefaultValues } from "react-hook-form";
+import { useState } from "react";
 import CustomButton from "../ui/SubmitFormButton";
 import Input from "@/components/ui/Input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eventSchema } from "@/lib/validation";
+import { uploadImage } from "@/lib/uploadImage";
 
 type FormValues = z.input<typeof eventSchema>;
 
@@ -22,6 +24,8 @@ export default function EventForm({
   submitLabel = "Submit",
   mode = "create",
 }: EventFormProps) {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -31,9 +35,17 @@ export default function EventForm({
     defaultValues,
   });
 
+  const submitHandler: SubmitHandler<FormValues> = async (data) => {
+    let imageUrl: string | null = data.image ?? null;
+    if (imageFile) {
+      imageUrl = await uploadImage(imageFile);
+    }
+    onSubmit({ ...data, image: imageUrl });
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(submitHandler)}
       className="w-full max-w-4xl bg-whit p-6 rounded-lg shadow-md"
     >
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
@@ -114,16 +126,18 @@ export default function EventForm({
           <option value="External">External</option>
         </select>
       </div>
-      <Input
-        label="Image"
-        name="image"
-        id="image"
-        type="file"
-        placeholder="Upload Image"
-        required={false}
-        register={register}
-        errors={errors}
-      />
+      <div className="mb-4">
+        <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+          Image
+        </label>
+        <input
+          id="image"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+          className="mt-1 block w-full"
+        />
+      </div>
       <Input
         label="Description"
         name="description"

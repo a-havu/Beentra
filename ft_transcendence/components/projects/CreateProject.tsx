@@ -23,12 +23,12 @@ export default function CreateProject() {
 
 if (res.ok) {
 	setShowForm(false);
-	router.refresh(); // this is for updating the project display grid instantly when the form is submitted
+	router.refresh();
 }
 };
 return (
-    <div className="flex flex-col items-center gap-4">
-      <Button onClick={() => setShowForm(true)} type="button">
+    <div className="px-10">
+      <Button variant="adding" onClick={() => setShowForm(true)} type="button">
         Create Project
       </Button>
       {showForm && <ProjectForm

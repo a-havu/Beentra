@@ -1,25 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { projectSchema } from "@/lib/validation";
-import ImageKit from "imagekit";
+import { imagekit } from "@/lib/imagekit";
+import { getSession } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
+
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await request.json();
     const result = projectSchema.safeParse(body);
     if (!result.success) {
-      console.error("Validation errors:", result.error.issues);
       return NextResponse.json(
         { error: "Invalid input", details: result.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const uploadResponse = await imagekit.upload({
-      file: body.image,
-      fileName: body.imageName ?? "project-image",
-      folder: "projects",
-    });
+    let imageUrl: string | null = null;
+    let imagekitFileId: string | null = null;
+
+    if (body.image) {
+      const uploadResponse = await imagekit.upload({
+        file: body.image,
+        fileName: body.imageName ?? "project-image",
+        folder: "projects",
+      });
+      imageUrl = uploadResponse.url;
+      imagekitFileId = uploadResponse.fileId;
+    }
 
     const project = await prisma.project.create({
       data: {
@@ -28,10 +41,12 @@ export async function POST(request: NextRequest) {
         link: body.link,
         techStack: body.techStack,
         description: body.description,
-        image: uploadResponse.url,
-        imagekitFileId: uploadResponse.fileId,
+        image: imageUrl,
+        imagekitFileId: imagekitFileId,
+        creatorId: session.userId,
       },
     });
+
     return NextResponse.json(project);
   } catch (error) {
     console.error("Error:", error);
@@ -42,6 +57,15 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
+      include: {
+        creator: {
+          select: {
+            id: true,
+            username: true,
+            fullName: true,
+          },
+        },
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -51,13 +75,7 @@ export async function GET() {
     console.error("Error fetching projects:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
-
-const imagekit = new ImageKit({
-  publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-  urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
-});

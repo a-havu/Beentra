@@ -11,8 +11,8 @@ type User = {
   email: string;
   role: string;
   fullName?: string | null;
-  phone?: string | null;
   createdAt: string;
+  isOnline: boolean;
 };
 
 // The table component
@@ -101,6 +101,9 @@ export function UsersTable() {
                   Username
                 </th>
                 <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Email
                 </th>
                 <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
@@ -127,17 +130,27 @@ export function UsersTable() {
                     <td className="px-6 py-4 text-center text-sm text-gray-900">
                       {user.username}
                     </td>
+                    <td className="px-6 py-4 text-center">
+                      <span
+                        className={`px-3 py-1 rounded-full text-center text-xs font-semibold
+											${user.isOnline
+                            ? "bg-green-100 text-white-900"
+                            : "bg-gray-100 text-white-900"
+                          }`}
+                      >
+                        {user.isOnline ? "Online" : "Offline"}
+                      </span>
+                    </td>
                     <td className="px-6 py-4 text-center text-sm text-gray-600">
                       {user.email}
                     </td>
                     <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-center text-xs font-semibold
-											${
-                        user.role === "admin"
-                          ? "bg-purple-100 text-purple-800"
-                          : "bg-blue-100 text-blue-800"
-                      }`}
+											${user.role === "admin"
+                            ? "bg-purple-100 text-purple-800"
+                            : "bg-blue-100 text-blue-800"
+                          }`}
                       >
                         {user.role}
                       </span>
@@ -154,7 +167,7 @@ export function UsersTable() {
                           id={user.id}
                           onDeleted={() => {
                             setUsers((prev) =>
-                              prev.filter((e) => e.id !== users.id),
+                              prev.filter((e) => e.id !== user.id),
                             );
                           }}
                         />

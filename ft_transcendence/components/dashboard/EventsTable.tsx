@@ -9,32 +9,14 @@ import ShowEvent from "../events/ShowEvent";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
-
-type Event = {
-  id: string;
-  title: string;
-  type: string;
-  date: Date;
-  timeFrom: Date;
-  timeTo: Date;
-  location: string;
-  organizer: string;
-  image: string | null;
-  description: string | null;
-  creatorId: string | null;
-  maxSpots: number;
-  subscriberCount: number;
-  isSubscribed: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { EventData } from "@/types/general";
 
 export function EventsTable() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
 
   useEffect(() => {
     fetchEvents();
@@ -69,6 +51,10 @@ export function EventsTable() {
     fetchEvents();
   };
 
+  const addSuccess = (event: EventData) => {
+	setEvents((prev) => [... prev, event])
+  }
+
   const reRender = () => {
     fetchEvents();
   };
@@ -76,7 +62,7 @@ export function EventsTable() {
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow p-12 text-center">
-        <p className="text-gray-600">Loading users...</p>
+        <p className="text-gray-600">Loading events...</p>
       </div>
     );
   }
@@ -101,7 +87,7 @@ export function EventsTable() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
 
-          <AddEvent onSuccess={reRender} />
+          <AddEvent onEventCreated={addSuccess} />
         </div>
         <div>
           {/* Table header */}
@@ -194,18 +180,6 @@ export function EventsTable() {
             </Button>
           </ModalFooter>
         </Modal>
-        // <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-        //   <div className="bg-white p-6 rounded-lg w-full max-w-2xl relative">
-        //     <button
-        //       onClick={() => setEditingId(null)}
-        //       className="absolute top-2 right-2 text-gray-600"
-        //     >
-        //       ✕
-        //     </button>
-
-        //     <EditEvent id={editingId} />
-        //   </div>
-        // </div>
       )}
     </>
   );

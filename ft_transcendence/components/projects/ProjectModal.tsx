@@ -17,7 +17,7 @@ export default function ProjectModal({
   project: Project;
   onClose: () => void;
 }) {
-  console.log(project);
+  
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"

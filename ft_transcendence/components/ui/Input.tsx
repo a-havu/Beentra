@@ -9,6 +9,7 @@ interface inputTypes {
   required?: boolean;
   register?: UseFormRegister<any>;
   errors?: FieldErrors;
+  defaultValue?: string;
 }
 
 export default function Input({
@@ -20,12 +21,15 @@ export default function Input({
   required = false,
   register,
   errors,
+  defaultValue,
 }: inputTypes) {
   const errorMessage = errors?.[name]?.message;
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="p-2" htmlFor={id}>{label}</label>
+      <label className="p-2" htmlFor={id}>
+        {label}
+      </label>
       <input
         {...(register ? register(name) : {})}
         id={id}
@@ -33,6 +37,7 @@ export default function Input({
         placeholder={placeholder}
         required={required}
         className=" bg-white ml-2 p-2 rounded-lg"
+        defaultValue={defaultValue}
       />
       {typeof errorMessage === "string" && (
         <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>

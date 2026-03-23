@@ -6,19 +6,19 @@ import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import CreateEvent from "../events/CreateEvent";
+import { EventData } from "@/types/general";
 
 type Props = {
   onSuccess?: () => void;
+  onEventCreated?: (event: EventData) => void;
 };
 
-function AddEvent({ onSuccess }: Props) {
+function AddEvent({ onSuccess, onEventCreated }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   const handleSuccess = () => {
     setShowModal(false);
-    if (onSuccess) {
-      onSuccess();
-    }
+    onSuccess?.();
   };
 
   return (
@@ -29,7 +29,7 @@ function AddEvent({ onSuccess }: Props) {
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <ModalBody>
-          <CreateEvent onSuccess={handleSuccess} />
+          <CreateEvent onSuccess={handleSuccess} onEventCreated={onEventCreated} />
         </ModalBody>
         <ModalFooter>
           <Button variant="secondary" onClick={() => setShowModal(false)}>

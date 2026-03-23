@@ -9,10 +9,14 @@ import { updateUserSchema } from "@/lib/validation";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Twofa from "@/components/login/Twofa";
+import ProfileCard from "@/components/profile/ProfileCard";
 import type { Prisma } from "@/lib/generated/prisma";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 type FormFields = z.infer<typeof updateUserSchema>;
 
+// Shape of user data passed from the server component (page.tsx)
 type UserData = Omit<
   Prisma.UserGetPayload<{
     select: {
@@ -20,7 +24,6 @@ type UserData = Omit<
       fullName: true;
       username: true;
       email: true;
-      phone: true;
       role: true;
       twoFactorEnabled: true;
       avatarUrl: true;
@@ -28,16 +31,43 @@ type UserData = Omit<
     };
   }>,
   "createdAt"
-> & { createdAt: string };
+> & { createdAt: string }; // createdAt serialized as ISO string for client
 
 interface ProfileFormProps {
   user: UserData;
-  isOwner: boolean;
+  isOwner: boolean; // true when the logged-in user is viewing their own profile
 }
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+// Add more image paths here (/public) as needed, these are examples
+const PRESET_AVATARS = [
+  "/default-profile-picture.jpg",
+  "/avatar-2.jpg",
+  "/avatar-3.png",
+];
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
+  // Modal visibility
+  const [modalOpen, setModalOpen] = useState(false);
+  const [twoFaOpen, setTwoFaOpen] = useState(false);
+
+  // Form feedback
   const [serverError, setServerError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
+
+  // Saved avatar — shown in the profile header, only updates after a successful save
+  const [selectedAvatar, setSelectedAvatar] = useState(
+    user.avatarUrl || "/default-profile-picture.jpg"
+  );
+  // Pending avatar — tracks picker selection inside the modal before saving
+  const [pendingAvatar, setPendingAvatar] = useState(
+    user.avatarUrl || "/default-profile-picture.jpg"
+  );
+
+  // ── Form setup ──────────────────────────────────────────────────────────────
 
   const {
     register,
@@ -49,22 +79,22 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
       fullName: user.fullName ?? "",
       username: user.username,
       email: user.email,
-      phone: user.phone ?? "",
       password: "",
       confirm: "",
     },
   });
 
+  // ── Submit handler ──────────────────────────────────────────────────────────
+
   async function onSubmit(data: FormFields) {
     setServerError("");
-    setSuccess(false);
 
-    // Only send fields that have values
+    // Only include fields that have a value to avoid overwriting with empty strings
     const payload: Record<string, string> = {};
+    payload.avatarUrl = pendingAvatar;
     if (data.fullName) payload.fullName = data.fullName;
     if (data.username) payload.username = data.username;
     if (data.email) payload.email = data.email;
-    if (data.phone) payload.phone = data.phone;
     if (data.password) {
       payload.password = data.password;
       payload.confirm = data.confirm ?? "";
@@ -81,141 +111,270 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
         setServerError(result.error || "Update failed");
         return;
       }
-      setSuccess(true);
+      setSelectedAvatar(pendingAvatar); // commit the avatar only on successful save
+      setModalOpen(false);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
     }
   }
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
 
   const memberSince = new Date(user.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
   });
 
+  // ── Render ──────────────────────────────────────────────────────────────────
+
   return (
-    <div className="beentra-form-container gap-8 py-10">
-      {/* Info Card */}
-      <div className="beentra-form">
-        <div className="flex flex-row items-start justify-between gap-4">
-          <div className="flex flex-col gap-3 text-gray-800">
-          <div className="flex gap-2">
-            <span className="font-semibold">Full Name:</span>
-            <span>{user.fullName || "—"}</span>
+    <div className="w-full max-w-4xl mx-auto px-4 py-10 flex flex-col gap-6">
+
+      {/* ── Profile Header Card ─────────────────────────────────────────────── */}
+      <ProfileCard className="overflow-hidden">
+        {/* Decorative gradient banner */}
+        <div className="h-24 bg-gradient-to-r from-[#FFEAD8] via-[#CDCEFF] to-[#FBFFCD]" />
+
+        <div className="px-6 pb-6 pt-0">
+          {/* Avatar (overlaps banner via negative margin) + action buttons */}
+          <div className="flex items-end justify-between -mt-12 mb-3">
+            <div className="ring-4 ring-white rounded-full shrink-0">
+              <Image
+                src={selectedAvatar}
+                alt={`${user.username}'s avatar`}
+                width={96}
+                height={96}
+                className="rounded-full object-cover w-24 h-24"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 pb-1">
+              {/* Shown briefly after a successful save */}
+              {savedSuccess && (
+                <div className="flex items-center gap-1.5 rounded-lg bg-green-100 border border-green-300 text-green-700 text-xs px-3 py-1.5">
+                  <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Profile updated!
+                </div>
+              )}
+              {/* Only the profile owner can edit */}
+              {isOwner && (
+                <button
+                  onClick={() => { setServerError(""); setPendingAvatar(selectedAvatar); setModalOpen(true); }}
+                  className="border border-gray-300 rounded-lg px-4 py-1.5 text-sm font-medium text-gray-800 bg-white hover:bg-gray-50 transition cursor-pointer"
+                >
+                  Edit profile
+                </button>
+              )}
+            </div>
           </div>
-          <div className="flex gap-2">
-            <span className="font-semibold">Email:</span>
-            <span>{user.email}</span>
+
+          {/* Name, username, role badge, and contact metadata */}
+          <div className="flex flex-col gap-1">
+            {user.fullName && (
+              <h1 className="text-2xl font-bold text-gray-900 leading-tight">
+                {user.fullName}
+              </h1>
+            )}
+            <p className="text-gray-500 text-sm">@{user.username}</p>
+
+            <div className="flex flex-wrap items-center gap-3 mt-2">
+              {/* Role badge — purple for admin, gray for regular users */}
+              <span className={`px-3 py-0.5 rounded-full text-xs font-semibold capitalize ${
+                user.role === "admin"
+                  ? "bg-[#6229FF]/15 text-[#6229FF]"
+                  : "bg-gray-100 text-gray-600 border border-gray-200"
+              }`}>
+                {user.role}
+              </span>
+
+              <span className="flex items-center gap-1.5 text-sm text-gray-500">
+                <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {user.email}
+              </span>
+
+              <span className="flex items-center gap-1.5 text-sm text-gray-500">
+                <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Joined {memberSince}
+              </span>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <span className="font-semibold">Phone:</span>
-            <span>{user.phone || "—"}</span>
-          </div>
-          <div className="flex gap-2">
-            <span className="font-semibold">Role:</span>
-            <span className="capitalize">{user.role}</span>
-          </div>
-          <div className="flex gap-2">
-            <span className="font-semibold">Member since:</span>
-            <span>{memberSince}</span>
-          </div>
-          </div>
-          <Image
-            src={user.avatarUrl || "/default-profile-picture.jpg"}
-            alt={`${user.username}'s avatar`}
-            width={64}
-            height={64}
-            className="rounded-full object-cover shrink-0"
-          />
         </div>
-      </div>
+      </ProfileCard>
 
-      {/* Edit Form — owner only */}
+      {/* ── Bottom Cards ─────────────────────────────────────────────────────── */}
       {isOwner && (
-        <div className="beentra-form">
-          <h2>Edit Profile</h2>
-
-          <Input
-            label="Full Name"
-            name="fullName"
-            id="fullName"
-            type="text"
-            placeholder="Your full name"
-            register={register}
-            errors={errors}
-          />
-
-          <Input
-            label="Username"
-            name="username"
-            id="username"
-            type="text"
-            placeholder="Your username"
-            register={register}
-            errors={errors}
-          />
-
-          <Input
-            label="Email"
-            name="email"
-            id="email"
-            type="email"
-            placeholder="name@example.com"
-            register={register}
-            errors={errors}
-          />
-
-          <Input
-            label="Phone"
-            name="phone"
-            id="phone"
-            type="tel"
-            placeholder="+358 40 123 4567"
-            register={register}
-            errors={errors}
-          />
-
-          <Input
-            label="New Password"
-            name="password"
-            id="password"
-            type="password"
-            placeholder="Leave blank to keep current"
-            register={register}
-            errors={errors}
-          />
-
-          <Input
-            label="Confirm Password"
-            name="confirm"
-            id="confirm"
-            type="password"
-            placeholder="Repeat new password"
-            register={register}
-            errors={errors}
-          />
-
-          {serverError && (
-            <p className="text-sm text-red-500">{serverError}</p>
-          )}
-          {success && (
-            <p className="text-sm text-green-600">Profile updated!</p>
-          )}
-
-          <Button
-            variant="edit"
-            disabled={isSubmitting}
-            onClick={handleSubmit(onSubmit)}
-          >
-            Save
-          </Button>
+        <div className="w-full">
+        {/* 2FA Card — owner only; clicking opens the 2FA modal */}
+        {isOwner && (
+          <ProfileCard onClick={() => setTwoFaOpen(true)}>
+            <div className="flex items-start justify-between px-5 py-4">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#6229FF]/10 shrink-0">
+                  <svg className="w-3.5 h-3.5 text-[#6229FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm leading-tight">Two-Factor Authentication</p>
+                  <p className="text-xs text-gray-400 mt-0.5">Protect your account with an extra verification step.</p>
+                </div>
+              </div>
+              {/* Status badge */}
+              <span className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full border ${
+                user.twoFactorEnabled
+                  ? "bg-green-50 text-green-700 border-green-200"
+                  : "bg-white text-gray-400 border-gray-200"
+              }`}>
+                {user.twoFactorEnabled ? "Enabled" : "Disabled"}
+              </span>
+            </div>
+          </ProfileCard>
+        )}
         </div>
       )}
 
-      {/* 2FA Section — owner only */}
-      {isOwner && (
-        <div className="beentra-form">
-          <h2>Two-Factor Authentication</h2>
-          <Twofa status={user.twoFactorEnabled} />
+      {/* ── 2FA Modal ───────────────────────────────────────────────────────── */}
+      {isOwner && twoFaOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
+          onClick={() => setTwoFaOpen(false)} // close on backdrop click
+        >
+          <div
+            className="beentra-form w-full max-w-md flex flex-col gap-5"
+            onClick={(e) => e.stopPropagation()} // prevent backdrop click from bubbling
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-[#6229FF]/20 pb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#6229FF]/10 shrink-0">
+                  <svg className="w-3.5 h-3.5 text-[#6229FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <h2 className="text-lg font-semibold text-gray-900">Two-Factor Authentication</h2>
+              </div>
+              <button
+                onClick={() => setTwoFaOpen(false)}
+                className="text-gray-500 hover:text-gray-800 transition cursor-pointer text-xl leading-none"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <Twofa status={user.twoFactorEnabled} />
+          </div>
+        </div>
+      )}
+
+      {/* ── Edit Profile Modal ──────────────────────────────────────────────── */}
+      {isOwner && modalOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
+          onClick={() => setModalOpen(false)} // close on backdrop click
+        >
+          <div
+            className="beentra-form w-full max-w-md max-h-[90vh] flex flex-col gap-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-[#6229FF]/20 pb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Edit profile</h2>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="text-gray-500 hover:text-gray-800 transition cursor-pointer text-xl leading-none"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Scrollable form body */}
+            <div className="flex flex-col gap-4 overflow-y-auto pr-1">
+
+              {/* Avatar picker — selecting updates the sidebar preview immediately on save */}
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-[#6229FF]/70 whitespace-nowrap">
+                    Choose Avatar
+                  </span>
+                  <div className="flex-1 h-px bg-[#6229FF]/30" />
+                </div>
+                <div className="flex gap-3 flex-wrap">
+                  {PRESET_AVATARS.map((src) => (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => setPendingAvatar(src)}
+                      className={`rounded-full p-0.5 transition cursor-pointer ${
+                        pendingAvatar === src
+                          ? "ring-2 ring-[#6229FF] ring-offset-2"
+                          : "ring-2 ring-transparent hover:ring-gray-300 ring-offset-2"
+                      }`}
+                    >
+                      <Image
+                        src={src}
+                        alt="avatar option"
+                        width={52}
+                        height={52}
+                        className="rounded-full object-cover w-13 h-13"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Personal information fields */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-[#6229FF]/70 whitespace-nowrap">
+                    Personal Information
+                  </span>
+                  <div className="flex-1 h-px bg-[#6229FF]/30" />
+                </div>
+                <Input label="Full Name" name="fullName" id="fullName" type="text" placeholder="Your full name" register={register} errors={errors} />
+                <Input label="Username" name="username" id="username" type="text" placeholder="Your username" register={register} errors={errors} />
+                <Input label="Email" name="email" id="email" type="email" placeholder="name@example.com" register={register} errors={errors} />
+              </div>
+
+              {/* Password change — both fields must be filled or both left empty */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-[#6229FF]/70 whitespace-nowrap">
+                    Security
+                  </span>
+                  <div className="flex-1 h-px bg-[#6229FF]/30" />
+                </div>
+                <Input label="New Password" name="password" id="password" type="password" placeholder="Leave blank to keep current" register={register} errors={errors} />
+                <Input label="Confirm Password" name="confirm" id="confirm" type="password" placeholder="Repeat new password" register={register} errors={errors} />
+              </div>
+
+              {/* Server-side error (e.g. duplicate email/username) */}
+              {serverError && (
+                <div className="flex items-center gap-2 rounded-lg bg-red-100 border border-red-300 text-red-700 text-sm px-4 py-2">
+                  <span className="font-semibold">Error:</span>
+                  <span>{serverError}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Footer actions */}
+            <div className="flex items-center justify-end gap-3 border-t border-[#6229FF]/20 pt-4">
+              <Button variant="secondary" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="edit" disabled={isSubmitting} onClick={handleSubmit(onSubmit)}>
+                Save
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

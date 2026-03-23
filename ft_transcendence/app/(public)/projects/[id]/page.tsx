@@ -1,23 +1,39 @@
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import { getSession } from "@/lib/auth";
+import EditProject from "@/components/projects/EditProject";
+import DeleteProject from "@/components/projects/DeleteProject";
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   
-  const project = await prisma.project.findUnique({
-    where: { id },
-  });
+  const [project, session] = await Promise.all([
+    prisma.project.findUnique({ where: { id },  }),
+    getSession(),
+  ]);
+
   if (!project) return <div>Project not found</div>;
+
+  const isCreator = session?.userId === project.creatorId;
 
   return (
     <div>
-      <h1>{project.projectName}</h1><br />
-      {project.oneLiner && <p>{project.oneLiner}</p>}
-      {project.techStack && <p>Tech stack: {project.techStack}</p>}
-      {project.link && <p>Link: <a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
-      {project.description && <p>{project.description}</p>}
+      {isCreator && (
+        <div className="flex gap-2 justify-center">
+          <EditProject project={project} />
+          <DeleteProject projectId={project.id} />
+        </div>
+      )}
+      <br /><br />
+      <div className="flex flex-col items-center gap-4 w-[90%] mx-auto">
+      <h1 className="text-[#44469A]">{project.projectName}</h1><br />
+      {project.oneLiner && <h3>{project.oneLiner}</h3>}
+      <div className="flex row gap-4">{project.techStack && <p>Tech stack: {project.techStack}</p>}{project.techStack && project.link && <p>|</p>}
+      {project.link && <p className="underline"><a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a></p>}
+      </div>
+      {project.description && <p className="w-[80%] whitespace-pre-line bg-[#DEDFFF] p-4 rounded-lg">{project.description}</p>}
       <br />
-      <div className="relative max-w-lg">
+      <div className="flex justify-center items-center relative w-full">
         {project.image ? (
           <Image
             src={project.image}
@@ -28,8 +44,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             className="w-full h-auto max-h-96 rounded-lg object-contain"
           />
         ) : (
-          <span className="text-4-xl">🐝</span>
+          <span className="text-3xl">🐝</span>
         )}
+        </div>
         </div>
     </div>
   );

@@ -1,0 +1,30 @@
+meta {
+  name: edit post
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3000/api/events/cmmxjx3n400013qn4v6jrhzvk
+  body: json
+  auth: inherit
+}
+
+headers {
+  x-api-key: 5b9e4843f33ae6f06eaac06ff0cbe7f53ea9dcbed0bdc7cc13970dea342f262a
+}
+
+body:json {
+  {
+    "title": "edit test today and tomorrow",
+    "type": "Student",
+    "date": "2026-03-19T00:00:00.000Z",
+    "timeFrom": "11:26",
+    "timeTo": "13:26",
+    "location": "here",
+    "organizer": "you",
+    "image": null,
+    "description": "",
+    "maxSpots": 0
+  }
+}
