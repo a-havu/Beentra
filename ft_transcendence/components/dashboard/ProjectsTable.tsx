@@ -12,6 +12,8 @@ import { set } from "zod";
 import CreateProject from "../projects/CreateProject";
 import ProjectForm from "../projects/ProjectForm";
 import AddProject from "./AddProject";
+import EditProject from "../projects/EditProject";
+import DeleteProject from "../projects/DeleteProject";
 
 type Project = {
   id: string;
@@ -28,6 +30,8 @@ type Project = {
     fullName: string | null;
   } | null;
   image: string | null;
+  imageKitId: string | null;
+  imagekitFileId: string | null;
 }
 
 export function ProjectsTable() {
@@ -68,12 +72,24 @@ export function ProjectsTable() {
 
 	const handleSuccess = () => {
 		setEditingId(null);
-		fetchProjects();
+		// fetchProjects();
 	};
 
 	const reRender = () => {
 		fetchProjects();
 	};
+
+	const handleEditSuccess = (updatedProject: Project) => {
+		setProjects((prev) =>
+			prev.map((project) => project.id === updatedProject.id ? updatedProject : project)
+		);
+	}
+
+	const handleDeleteSuccess = (deleteId: string) => {
+		setProjects((prev) =>
+			prev.filter((project) => project.id !== deleteId)
+		);
+	}
 
 	if (isLoading) {
 		return (
@@ -149,25 +165,15 @@ export function ProjectsTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <Button
-                          variant="edit"
-                          onClick={() => setEditingId(project.id)}
-                        >
-                          Edit
-                        </Button>
-						<Button
-							variant="delete"
-						>
-							Delete
-						</Button>
-                        {/* <DeleteEventButton
-                          id={project.id}
-                          onDeleted={() => {
-                            setProjects((prev) =>
-                              prev.filter((e) => e.id !== project.id),
-                            );
-                          }}
-                        /> */}
+						<EditProject
+							project={project}
+							onSuccess={handleEditSuccess}
+						/>
+						<DeleteProject
+							projectId={project.id}
+							dashBoard={true}
+							onDeleted={() => handleDeleteSuccess(project.id)}
+						/>
                       </div>
                     </td>
 				</tr>

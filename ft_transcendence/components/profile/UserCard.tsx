@@ -48,7 +48,7 @@ export default function UserCard({
         priority
       />
       <span>{user.username}</span>
-      {isFriend?<FriendStatus />:<></>} 
+      {isFriend?<FriendStatus user={user} />:<></>}
       <button
         onClick={handleClick}
         disabled={loading}
