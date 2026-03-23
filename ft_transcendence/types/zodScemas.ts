@@ -13,8 +13,6 @@ export const UserEmailZodSchema = z.object({
 export type EmailInputType = z.infer<typeof UserEmailZodSchema>
 
 export const PageZodSchema = z.object({
-  title: z.string({ message: "must be text only" }).max(40, "please use shorter text").min(3, "larger text needed"),
-  slug: z.string({ message: "must be text only" }).max(40, "please use shorter text").min(3, "larger text needed"),
-  text: z.string({ message: "must be text only" }).max(10000, "please use shorter text only 10000 allowed").min(3, "larger text needed"),
-})
+  title: z.string().max(40, "please use shorter text").min(3, "title too short"),
+});
 export type PageZodType = z.infer<typeof PageZodSchema>

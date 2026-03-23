@@ -89,7 +89,10 @@ export default async function FetchPages() {
                     {new Date(page.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4">
-                    <FunctionalButtons id={page.id} />
+                    <FunctionalButtons 
+  id={page.id} 
+  initialData={{ title: page.title, text: page.text }} 
+/>
                   </td>
                 </tr>
               ))
