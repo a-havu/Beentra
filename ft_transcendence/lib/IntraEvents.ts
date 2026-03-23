@@ -16,7 +16,13 @@ export type IntraEventInput = {
   waitlist: string | null;
 };
 
+let cachedToken: { token: string; expiresAt: number } | null = null;
+
 export async function getAccessToken() {
+  if (cachedToken && Date.now() < cachedToken.expiresAt) {
+    return { success: true, access_token: cachedToken.token };
+  }
+
   const client_id = process.env.FORTY_TWO_CLIENT_ID;
   const client_secret = process.env.FORTY_TWO_CLIENT_SECRET;
 
@@ -33,9 +39,10 @@ export async function getAccessToken() {
   });
 
   if (!tokenResponse.ok)
-    return { success: false, error: "cannot get token from intra" }; // fixed typo
+    return { success: false, error: "cannot get token from intra" };
 
   const data = await tokenResponse.json();
+  cachedToken = { token: data.access_token, expiresAt: Date.now() + (data.expires_in - 60) * 1000 };
   return { success: true, access_token: data.access_token };
 }
 
@@ -51,6 +58,7 @@ export async function fetchIntraEvents() {
       headers: {
         Authorization: `Bearer ${tokenResponse.access_token}`,
       },
+      next: { revalidate: 300 },
     },
   );
 
