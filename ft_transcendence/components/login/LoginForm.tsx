@@ -11,7 +11,7 @@ export function LoginForm() {
   const router = useRouter();
   const {
     register,
-    handleSubmit,
+    handleSubmit,setError,
     formState: { errors },
   } = useForm<loginFormTypes>({
     resolver: zodResolver(loginZodSchema),
@@ -39,10 +39,11 @@ export function LoginForm() {
         }
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        setError("root", { message: errorData.message || "Login failed" });
       }
     } catch (error) {
-      console.error("Error:", error);
+          setError("root", { message: "Something went wrong. Please try again." });
+
     }
   };
 
@@ -73,7 +74,9 @@ export function LoginForm() {
           register={register}
           errors={errors}
         />
-
+        {errors.root && (
+  <p className="text-red-500 text-sm">{errors.root.message}</p>
+)}
         <Button onClick={handleSubmit(loginHandler)}> Login</Button>
 
         <div className="flex items-center gap-3 my-1">
@@ -94,7 +97,7 @@ export function LoginForm() {
               <Button>Intra42</Button>
             </a>
           </div>
-
+        
 
         </div>
 
