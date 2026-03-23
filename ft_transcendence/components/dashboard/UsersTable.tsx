@@ -169,9 +169,6 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {/* <button className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
-                          Edit
-                        </button> */}
                         <Button
                           variant="edit"
                           onClick={() => setModalOpen(true)}
