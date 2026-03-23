@@ -1,6 +1,6 @@
 "use client";
-
-import EventCard, { EventData } from "./EventCard";
+import EventCard from "./EventCard";
+import { EventData } from "@/types/general";
 
 type Props = {
   events: EventData[];
@@ -12,7 +12,12 @@ const EventList = ({ events, currentUserId, currentUserRole }: Props) => {
   return (
     <div>
       {events.map((event) => (
-        <EventCard key={event.id} event={event} currentUserId={currentUserId} currentUserRole={currentUserRole} />
+        <EventCard
+          key={event.id}
+          event={event}
+          currentUserId={currentUserId}
+          currentUserRole={currentUserRole}
+        />
       ))}
     </div>
   );

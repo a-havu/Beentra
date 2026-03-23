@@ -1,3 +1,5 @@
+import { EventData } from "@/types/general";
+
 export type IntraEventInput = {
   id: number;
   name: string;
@@ -17,6 +19,25 @@ export type IntraEventInput = {
 };
 
 let cachedToken: { token: string; expiresAt: number } | null = null;
+
+export function formatIntraEvent(event: IntraEventInput): EventData {
+  return {
+    id: String(event.id),
+    title: event.name,
+    type: event.kind ?? "Intra",
+    date: event.begin_at,
+    timeFrom: event.begin_at,
+    timeTo: event.end_at,
+    location: event.location ?? "",
+    organizer: "42 Intra",
+    description: event.description ?? null,
+    image: null,
+    creatorId: null,
+    maxSpots: event.max_people ?? 0,
+    subscriberCount: event.nbr_subscribers,
+    isSubscribed: false,
+  };
+}
 
 export async function getAccessToken() {
   if (cachedToken && Date.now() < cachedToken.expiresAt) {
