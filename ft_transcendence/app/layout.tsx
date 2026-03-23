@@ -18,8 +18,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
     <html lang="en" className={`h-full ${workSans.variable} ${afacadFlux.variable}`}>
       <body className={`flex flex-col w-full min-h-full items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}>
-        <div className="flex flex-1 h-dvh flex-col w-full max-w-7xl min-w-0">
-          <TrackActivity />
+        <div className="flex flex-1 flex-col w-full max-w-7xl min-w-0">
+          {/* <TrackActivity /> REMOVE */}
           {children}
         </div>
       </body>
