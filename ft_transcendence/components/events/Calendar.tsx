@@ -37,10 +37,10 @@ export default function Calendar({
 
   const events = [
     ...dbEvents.map((e) =>
-      toCalendarEvent(e, { bg: "#3b82f6", border: "#2563eb" })
+      toCalendarEvent(e, { bg: "#e9fcff", border: "#7CEEFF" })
     ),
     ...intraEvents.map((e) =>
-      toCalendarEvent(e, { bg: "#8b5cf6", border: "#7c3aed" })
+      toCalendarEvent(e, { bg: "#faf5ff", border: "#dab2ff" })
     ),
   ];
 
@@ -66,7 +66,7 @@ export default function Calendar({
           const bg = info.event.backgroundColor;
           if (bg) {
             info.el.style.backgroundColor = bg;
-            info.el.style.borderColor = "white";
+            info.el.style.borderColor = info.event.borderColor || "white";
           }
         }}
         eventClick={(info) => {

@@ -40,9 +40,6 @@ export default function EventsSection({
 
   return (
     <>
-      <div className="mb-5">
-        <AddEvent onEventCreated={addEvent} />
-      </div>
       <div className="flex gap-8 min-h-[60vh]">
         <div className="flex-1">
           <h1 className="pb-2">Todays Events</h1>
@@ -51,6 +48,9 @@ export default function EventsSection({
             currentUserId={currentUserId}
             currentUserRole={currentUserRole}
           />
+          <div className="mt-10 flex justify-center">
+            <AddEvent onEventCreated={addEvent} />
+          </div>
         </div>
         <div className="flex-2">
           <Calendar

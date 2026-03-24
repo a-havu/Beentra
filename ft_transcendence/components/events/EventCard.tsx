@@ -51,7 +51,9 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
     <>
       <div
         className={`p-4 mt-4 rounded-lg shadow-md cursor-pointer ${
-          event.creatorId === null ? "bg-purple-100" : "bg-white"
+          event.creatorId === null
+            ? "border border-purple-300 bg-white text-black hover:bg-purple-50"
+            : "border border-[#7CEEFF] bg-white text-black hover:bg-[#e9fcff]"
         }`}
         onClick={() => setShowModal(true)}
       >

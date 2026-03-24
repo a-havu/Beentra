@@ -133,18 +133,18 @@ export default function ShowEvent({
             <strong>Spots:</strong> {subscriberCount}/{event.maxSpots} taken
           </p>
         )}
-        {showSubscribeButton && (
-          <button
-            onClick={handleSubscribe}
-            disabled={loading || (!isSubscribed && isFull)}
-            className="mt-3"
-          >
-            {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
-          </button>
-        )}
       </ModalBody>
 
       <ModalFooter>
+        {showSubscribeButton && (
+          <Button
+            variant={isSubscribed ? "secondary" : "primary"}
+            onClick={handleSubscribe}
+            disabled={loading || (!isSubscribed && isFull)}
+          >
+            {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
+          </Button>
+        )}
         {(isCreator || isAdmin) && event.creatorId && (
           <Button variant="edit" onClick={() => setIsEditing(true)}>
             Edit
