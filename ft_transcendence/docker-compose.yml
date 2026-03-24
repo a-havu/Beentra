@@ -1,11 +1,21 @@
-version: "3.9"
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     env_file:
       - .env
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
     restart: unless-stopped
