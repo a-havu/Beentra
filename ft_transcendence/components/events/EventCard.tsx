@@ -50,26 +50,27 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
   return (
     <>
       <div
-        className={`p-4 mt-4 rounded-lg shadow-md cursor-pointer ${
+        className={`relative p-4 mt-4 rounded-lg shadow-md cursor-pointer ${
           event.creatorId === null
-            ? "border border-purple-300 bg-white text-black hover:bg-purple-50"
-            : "border border-[#7CEEFF] bg-white text-black hover:bg-[#e9fcff]"
+            ? "border border-[#c12ac3] bg-[#f9c8e0] text-black hover:bg-white"
+            : "border border-[#3ab8cc] bg-[#e9fcff] text-black hover:bg-white"
         }`}
         onClick={() => setShowModal(true)}
       >
+		{event.creatorId === null
+		? <p className="text-[#720274] text-sm">Intra</p>
+		: <p className="text-[#195B61] text-sm">Student</p>}
         <h2>{event.title}</h2>
-        <p>Organizer: {event.organizer}</p>
-        <p>Date: {date}</p>
-        <p>
-          Time: {from} – {to}
-        </p>
-        <p>Location: {event.location}</p>
+        <p>{from} – {to}</p>
+        <p>Where: {event.location}</p>
         {/* {event.description && <p>{event.description}</p>} */}
         {event.maxSpots > 0 && (
           <p>
             {subscriberCount}/{event.maxSpots} spots taken
           </p>
         )}
+		<div className="flex flex-col right-2 absolute bottom-3">
+		<p className="text-gray-500 text-sm">Organizer: {event.organizer}</p>
         {showSubscribeButton && (
           <button
             onClick={(e) => {
@@ -81,6 +82,7 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
             {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
           </button>
         )}
+		</div>
       </div>
       <ShowEvent
         event={event}

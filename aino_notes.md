@@ -27,3 +27,8 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 
 TODO:
 - concerning forms: we want to indicate that a field is required
+- add checks in project form for 1) links, 2) images
+- also in project form: add a possibility to cancel image upload
+- correct spacing in project card
+- remove the project display classes from globals.css
+- style the event Subscribe button
