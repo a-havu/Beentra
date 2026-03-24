@@ -76,7 +76,7 @@ a {
   --fc-today-bg-color: #cdceff;
   --fc-event-text-color: #1a1a1a;
   --fc-button-bg-color: transparent;
-  --fc-button-border-color: #e5e7eb;
+  --fc-button-border-color: #cdceff;
   --fc-button-text-color: #000000;
   --fc-button-hover-bg-color: #cdceff55;
   --fc-button-hover-border-color: #cdceff;
@@ -109,9 +109,17 @@ a {
   padding: 0.3rem 0.8rem;
 }
 
-.fc .fc-button:focus {
-  box-shadow: none;
+.fc .fc-button:focus,
+.fc .fc-button:active,
+.fc .fc-button-active {
+  box-shadow: none !important;
   outline: none;
+}
+
+/* Remove dark overlay FullCalendar adds on selected/clicked events */
+.fc .fc-event-selected::after,
+.fc .fc-event:focus::after {
+  display: none !important;
 }
 
 /* Column headers (Mon, Tue…) */
