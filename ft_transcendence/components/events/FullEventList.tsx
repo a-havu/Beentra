@@ -1,4 +1,5 @@
-import EventCard, { EventData } from "./EventCard";
+import EventCard from "./EventCard";
+import { EventData } from "@/types/general";
 
 type Props = {
   events: EventData[];
@@ -28,7 +29,11 @@ const FullEventList = ({ events, currentUserId, currentUserRole }: Props) => {
                 })}
               </h1>
             )}
-            <EventCard event={event} currentUserId={currentUserId} currentUserRole={currentUserRole} />
+            <EventCard
+              event={event}
+              currentUserId={currentUserId}
+              currentUserRole={currentUserRole}
+            />
           </div>
         );
       })}

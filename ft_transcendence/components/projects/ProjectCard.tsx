@@ -1,17 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { LocalProject } from "@/types/general";
 
-type Project = {
-  id: string;
-  projectName: string;
-  oneLiner: string;
-  techStack: string;
-  creator?: { username: string } | null;
-  image?: string | null;
-  createdAt: string | Date;
-};
-
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({ project }: { project: LocalProject }) {
   return (
     <Link className=" relative flex-1 min-w-0" href={`/projects/${project.id}`}>
       <div className="project-card">
@@ -30,7 +21,9 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="project-info w-80">
           <h2>{project.projectName}</h2>
           <p>{project.oneLiner}</p>
-          {project.techStack && <p className="text-sm text-gray-500">{project.techStack}</p>}
+          {project.techStack && (
+            <p className="text-sm text-gray-500">{project.techStack}</p>
+          )}
           {project.createdAt && (
             <p className="text-sm text-gray-500 absolute bottom-3 right-2">
               {new Date(project.createdAt).toLocaleDateString()}
@@ -42,7 +35,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             </p>
           )}
         </div>
-    </div>
+      </div>
     </Link>
   );
 }

@@ -20,7 +20,6 @@ export default async function UpdatePage({
         id={initialData.id}
         initialData={{
           title: initialData.title,
-          text: initialData.text,
         }}
       />
     </>
