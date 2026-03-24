@@ -51,6 +51,9 @@ export default function EventsSection({
             currentUserId={currentUserId}
             currentUserRole={currentUserRole}
           />
+          <div className="mt-10 flex justify-center">
+            <AddEvent onEventCreated={addEvent} />
+          </div>
         </div>
         <div className="flex-2">
           <Calendar
