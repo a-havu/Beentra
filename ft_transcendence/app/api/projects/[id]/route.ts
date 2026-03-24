@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { imagekit } from "@/lib/imagekit";
+import { getImageKit } from "@/lib/imagekit";
+
 import { projectSchema } from "@/lib/validation";
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-    const project = await prisma.project.findUnique({
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  const project = await prisma.project.findUnique({
     where: { id },
   });
-  
-  if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  if (!project)
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   if (project.imagekitFileId) {
+    const imagekit = getImageKit(); // ← add this
     await imagekit.deleteFile(project.imagekitFileId);
   }
 
@@ -20,7 +26,10 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   return NextResponse.json({ success: true });
 }
 
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const body = await req.json();
   const { id } = await params;
 
@@ -43,7 +52,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   return Response.json(updated);
 }
 
-export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const { id } = await params;
 
   const project = await prisma.project.findUnique({

@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`flex flex-col w-full min-h-full items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}
       >
-        <div className="flex flex-1 flex-col w-full max-w-7xl min-w-0">
+        <div className="flex flex-1 flex-col w-full min-w-0">
           {/* <TrackActivity /> REMOVE */}
           {children}
         </div>
