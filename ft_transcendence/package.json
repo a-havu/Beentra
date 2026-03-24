@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@floating-ui/react": "^0.27.17",
     "@fullcalendar/core": "^6.1.20",
@@ -47,6 +50,7 @@
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.2",
     "react-hotkeys-hook": "^5.2.4",
+    "sharp": "^0.34.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {
