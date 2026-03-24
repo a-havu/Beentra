@@ -55,7 +55,7 @@ export default async function HomePage() {
     <div className="flex flex-col main-page">
       <FriendsBar friends={friends} />
       <div className="events-section">
-        <div className="w-full p-5 ">
+        <div className="w-full p-5 flex flex-col">
           <EventsSection
             initialEvents={events}
             intraEvents={intraEvents}
