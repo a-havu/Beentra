@@ -15,15 +15,23 @@ type ActionResult = {
 
 type PageFormProps = {
   id?: number | null;
-  initialData?: Partial<PageZodType> | null;
+  initialData?: { title?: string; text?: string } | null;
   onSuccess?: () => void;
 };
 
-export default function PageForm({ id = null, initialData = null, onSuccess }: PageFormProps) {
+export default function PageForm({
+  id = null,
+  initialData = null,
+  onSuccess,
+}: PageFormProps) {
   const [content, setContent] = useState(initialData?.text || "");
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<PageZodType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PageZodType>({
     resolver: zodResolver(PageZodSchema),
     defaultValues: {
       title: initialData?.title || "",
@@ -32,7 +40,7 @@ export default function PageForm({ id = null, initialData = null, onSuccess }: P
 
   async function onSubmit(data: PageZodType) {
     setServerError(null);
-      console.log("onSubmit fired", data); // add this
+    console.log("onSubmit fired", data); // add this
 
     const formData = new FormData();
     formData.set("pageTitle", data.title);

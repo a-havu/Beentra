@@ -28,7 +28,7 @@ export type EventData = {
   isSubscribed: boolean;
 };
 
-type LocalProject = {
+export type LocalProject = {
   id: string;
   projectName: string;
   oneLiner: string;
@@ -38,7 +38,18 @@ type LocalProject = {
   createdAt: Date;
   creatorId: string | null;
   image: string | null;
-  imageKitId: string | null;
   imagekitFileId: string | null;
   creator: { id: string; username: string; fullName: string | null } | null;
+};
+
+export type Project = {
+  id: string;
+  projectName: string;
+  oneLiner: string;
+  techStack?: string | null;
+  link?: string | null;
+  description?: string | null;
+  creator?: { username: string } | null;
+  image?: string | null;
+  createdAt: string | Date;
 };
