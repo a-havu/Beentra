@@ -50,7 +50,11 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
   return (
     <>
       <div
-        className="p-4 mt-4 bg-white rounded-lg shadow-md cursor-pointer"
+        className={`p-4 mt-4 rounded-lg shadow-md cursor-pointer ${
+          event.creatorId === null
+            ? "border border-purple-300 bg-white text-black hover:bg-purple-50"
+            : "border border-[#7CEEFF] bg-white text-black hover:bg-[#e9fcff]"
+        }`}
         onClick={() => setShowModal(true)}
       >
         <h2>{event.title}</h2>
@@ -60,7 +64,7 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
           Time: {from} – {to}
         </p>
         <p>Location: {event.location}</p>
-        {event.description && <p>{event.description}</p>}
+        {/* {event.description && <p>{event.description}</p>} */}
         {event.maxSpots > 0 && (
           <p>
             {subscriberCount}/{event.maxSpots} spots taken

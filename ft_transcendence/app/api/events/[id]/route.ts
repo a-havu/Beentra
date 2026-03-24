@@ -3,16 +3,20 @@ import { prisma } from "@/lib/prisma";
 import { eventSchemaServer } from "@/lib/validation";
 import { getSession } from "@/lib/auth";
 
-async function getPublicCreatorId(request: NextRequest): Promise<string | null> {
+async function getPublicCreatorId(
+  request: NextRequest,
+): Promise<string | null> {
   const apiKey = request.headers.get("x-api-key");
   if (!apiKey) return null;
-  const publicUser = await prisma.publicApiUser.findUnique({ where: { key: apiKey } });
+  const publicUser = await prisma.publicApiUser.findUnique({
+    where: { key: apiKey },
+  });
   return publicUser?.id ?? null;
 }
 
 function canModify(
   event: { creatorId: string | null; publicCreatorId: string | null },
-  session: { userId: string; role: string } | null,
+  session: { userId?: string; role?: string } | null,
   publicCreatorId: string | null,
 ): boolean {
   if (session?.role === "admin") return true;
@@ -33,8 +37,8 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = await params;                    // ← from URL, not body
-    const body = await request.json();              // ← read body only once
+    const { id } = await params; // ← from URL, not body
+    const body = await request.json(); // ← read body only once
     const result = eventSchemaServer.safeParse(body);
 
     if (!result.success) {
@@ -54,8 +58,16 @@ export async function PUT(
     }
 
     const {
-      title, type, date, timeFrom, timeTo,
-      location, organizer, image, description, maxSpots,
+      title,
+      type,
+      date,
+      timeFrom,
+      timeTo,
+      location,
+      organizer,
+      image,
+      description,
+      maxSpots,
     } = result.data;
 
     const datePart = date.toISOString().split("T")[0];
@@ -79,7 +91,10 @@ export async function PUT(
     return NextResponse.json(updatedEvent);
   } catch (error) {
     console.error("Error updating event:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -112,7 +127,10 @@ export async function GET(
     });
   } catch (error) {
     console.error("Error fetching event:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -142,6 +160,9 @@ export async function DELETE(
     return NextResponse.json({ message: "Event deleted successfully" });
   } catch (error) {
     console.error("Error deleting event:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }

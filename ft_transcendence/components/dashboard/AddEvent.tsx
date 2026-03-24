@@ -29,9 +29,15 @@ function AddEvent({ onSuccess, onEventCreated }: Props) {
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <ModalBody>
-          <CreateEvent onSuccess={handleSuccess} onEventCreated={onEventCreated} />
+          <CreateEvent
+            onSuccess={handleSuccess}
+            onEventCreated={onEventCreated}
+          />
         </ModalBody>
         <ModalFooter>
+          <Button type="submit" form="create-event-form" variant="primary">
+            Create
+          </Button>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>

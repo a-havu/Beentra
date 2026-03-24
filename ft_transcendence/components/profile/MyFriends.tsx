@@ -6,7 +6,7 @@ export default function MyFriends({ myFriends, currentUserId }: { myFriends: Use
   if (!myFriends || myFriends.length === 0)
     return <>No friends</>
   return (
-    <div className="myfriends flex">
+    <div className="myfriends flex gap-5 ">
       {myFriends.map(user => (
         <UserCard key={user.id} user={user} isFriend currentUserId={currentUserId} />
       ))}

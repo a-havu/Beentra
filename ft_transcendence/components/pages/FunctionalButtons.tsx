@@ -1,43 +1,51 @@
 'use client'
-import {deletePage, updatePage} from '@/app/(protected)/actions'
-import { useRouter } from 'next/navigation';
+import { deletePage } from '@/app/(protected)/actions'
+import { useState } from 'react';
 import { Button } from '../ui/Button';
+import Modal from '../ui/Modal';
+import ModalBody from '../ui/ModalBody';
+import ModalFooter from '../ui/ModalFooter';
+import PageForm from '../pages/PageForm';
 
+type Props = {
+  id: number;
+  initialData: { title: string; text: string };
+}
 
-export default function FunctionalButtons({id}:{id:number}){
-    const router = useRouter();
+export default function FunctionalButtons({ id, initialData }: Props) {
+  const [showEditModal, setShowEditModal] = useState(false);
 
-    // const HandleDelete=async (e: React.MouseEvent<HTMLButtonElement>)=>{
-    //     e.preventDefault();
-    //     const deleted = await deletePage(id);
-    //     if(deleted.success){
-    //         alert(`page ${deleted.data?.title} is deleted`)
-    //     }
-    // }
-	    const HandleDelete=async ()=>{
-        const deleted = await deletePage(id);
-        if(deleted.success){
-            alert(`page ${deleted.data?.title} is deleted`)
-        }
+  const handleDelete = async () => {
+    const deleted = await deletePage(id);
+    if (deleted.success) {
+      alert(`Page "${deleted.data?.title}" deleted`);
     }
+  }
 
-     const HandleEdit=(e: React.MouseEvent<HTMLButtonElement>)=>{
+  return (
+    <div>
+      <Button variant="delete" onClick={handleDelete}>
+        Delete
+      </Button>
 
-        e.preventDefault()
-        router.push(`infoPages/${id}/update`);
+      <Button variant="secondary" onClick={() => setShowEditModal(true)}>
+        Edit
+      </Button>
 
-    }
-
-    return(
-        <div>
-			<Button
-				variant='delete'
-				onClick={HandleDelete}
-			>
-				Delete
-			</Button>
-            <button onClick={HandleDelete}>Delete</button>
-            <button onClick={HandleEdit}>Edit</button>
-        </div>
-    )
+      <Modal isOpen={showEditModal} onClose={() => setShowEditModal(false)}>
+        <ModalBody>
+          <PageForm
+            id={id}
+            initialData={initialData}
+            onSuccess={() => setShowEditModal(false)}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  )
 }

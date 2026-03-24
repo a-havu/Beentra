@@ -6,6 +6,7 @@ import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
+import EditEvent from "./EditEvent";
 
 type ShowEventData = {
   id: string;
@@ -46,6 +47,7 @@ export default function ShowEvent({
     event?.isSubscribed ?? false
   );
   const [loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   if (!event) return null;
 
@@ -80,6 +82,24 @@ export default function ShowEvent({
     }
   };
 
+  if (isEditing) {
+    return (
+      <Modal isOpen={true} onClose={() => setIsEditing(false)}>
+        <ModalBody>
+          <EditEvent id={event.id} onSuccess={() => setIsEditing(false)} />
+        </ModalBody>
+        <ModalFooter>
+          <Button type="submit" form="edit-event-form" variant="primary">
+            Update
+          </Button>
+          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalBody>
@@ -113,20 +133,20 @@ export default function ShowEvent({
             <strong>Spots:</strong> {subscriberCount}/{event.maxSpots} taken
           </p>
         )}
-        {showSubscribeButton && (
-          <button
-            onClick={handleSubscribe}
-            disabled={loading || (!isSubscribed && isFull)}
-            className="mt-3"
-          >
-            {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
-          </button>
-        )}
       </ModalBody>
 
       <ModalFooter>
-        {(isCreator || isAdmin) && (
-          <Button variant="edit" onClick={onClose}>
+        {showSubscribeButton && (
+          <Button
+            variant={isSubscribed ? "secondary" : "primary"}
+            onClick={handleSubscribe}
+            disabled={loading || (!isSubscribed && isFull)}
+          >
+            {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
+          </Button>
+        )}
+        {(isCreator || isAdmin) && event.creatorId && (
+          <Button variant="edit" onClick={() => setIsEditing(true)}>
             Edit
           </Button>
         )}

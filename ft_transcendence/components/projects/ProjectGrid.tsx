@@ -1,26 +1,17 @@
-'use client';
+"use client";
 import ProjectCard from "./ProjectCard";
+import { LocalProject } from "@/types/general";
 
-type Project = {
-  id: string;
-  projectName: string;
-  oneLiner: string;
-  link?: string | null;
-  techStack?: string | null;
-  description?: string | null;
-  creator?: { username: string } | null;
-  image?: string | null;
-};
-
-export default function ProjectGrid({ projects }: { projects: Project[] }) {
+export default function ProjectGrid({
+  projects,
+}: {
+  projects: LocalProject[];
+}) {
   return (
     <>
       <div className="project-grid">
         {projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-          />
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </>
