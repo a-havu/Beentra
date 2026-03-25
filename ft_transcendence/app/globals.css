@@ -73,7 +73,7 @@ a {
 /* CSS variables — aligned with Beentra palette */
 .fc {
   --fc-border-color: #e5e7eb;
-  --fc-today-bg-color: #cdceff;
+  --fc-today-bg-color: #d4d4f4;
   --fc-event-text-color: #1a1a1a;
   --fc-button-bg-color: transparent;
   --fc-button-border-color: #cdceff;
