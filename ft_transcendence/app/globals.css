@@ -206,16 +206,3 @@ a {
 }
 
 /*end of Beentra General styles*/
-
-/* Project Display styles */
-
-.project-image {
-  @apply relative w-full h-40 object-cover rounded-t-xl bg-[#DEDFFF] flex items-center justify-center text-5xl overflow-hidden;
-}
-
-.project-grid {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6;
-}
-
-/* End of Project Display styles */
-/*end of /*Beentra General styles*/

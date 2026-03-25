@@ -11,7 +11,7 @@ export default function FeaturedProjects({
     <>
       <br></br>
       <h1 className="flex justify-center">Featured Projects</h1>
-      <div className="project-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
