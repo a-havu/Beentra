@@ -37,7 +37,7 @@ export default function Input({
         type={type}
         placeholder={placeholder}
         required={required}
-        className=" bg-white ml-2 p-2 rounded-lg"
+        className="bg-white ml-2 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
         value={value}
       />
       {typeof errorMessage === "string" && (

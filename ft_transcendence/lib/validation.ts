@@ -182,8 +182,19 @@ export const projectSchema = z.object({
     .string()
     .min(2, "One-liner too short")
     .max(80, "One-liner too long"),
-  link: z.string().max(100, "Link too long").optional(),
-  techStack: z.string().max(50, "Tech stack description too long").optional(),
-  description: z.string().max(2000, "Description too long").optional(),
+  link: z
+    .string()
+    .max(100, "Link too long")
+    .url("Must be a valid URL")
+    .optional()
+    .or(z.literal("")),
+  techStack: z
+    .string()
+    .max(50, "Tech stack description too long")
+    .optional(),
+  description: z
+    .string()
+    .max(2000, "Description too long")
+    .optional(),
   image: z.string().nullable().optional(),
 });
