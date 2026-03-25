@@ -180,7 +180,9 @@ export const projectSchema = z.object({
   link: z
     .string()
     .max(100, "Link too long")
-    .optional(),
+    .url("Must be a valid URL")
+    .optional()
+    .or(z.literal("")),
   techStack: z
     .string()
     .max(50, "Tech stack description too long")
