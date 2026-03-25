@@ -29,10 +29,9 @@ export default function RootLayout({
       className={`h-full ${workSans.variable} ${afacadFlux.variable}`}
     >
       <body
-        className={`flex flex-col w-full min-h-full items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}
+        className={`flex flex-col w-full min-h-screen items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}
       >
-        <div className="container flex flex-1 flex-col w-full min-w-0">
-          {/* <TrackActivity /> REMOVE */}
+        <div className="flex flex-1 flex-col w-full min-w-0">
           {children}
         </div>
       </body>
