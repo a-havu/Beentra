@@ -11,7 +11,7 @@ export default function FriendsBar({ friends }: { friends: FriendBarItem[] }) {
   if (friends.length === 0) return null;
 
   return (
-    <div className="flex gap-4 overflow-x-auto px-2 py-2 scrollbar-thin scrollbar-color bg-white rounded-full">
+    <div className="flex w-full gap-4  p-2 scrollbar-thin scrollbar-color bg-white rounded-full">
       {friends.map((friend) => (
         <a
           key={friend.id}
@@ -33,9 +33,8 @@ export default function FriendsBar({ friends }: { friends: FriendBarItem[] }) {
               </div>
             )}
             <span
-              className={`absolute bottom-0 right-0 w-3 h-3 rounded-full  ${
-                friend.isOnline === true ? "bg-green-400" : "bg-gray-300"
-              }`}
+              className={`absolute bottom-0 right-0 w-3 h-3 rounded-full  ${friend.isOnline === true ? "bg-green-400" : "bg-gray-300"
+                }`}
             />
           </div>
           <span className="text-xs text-gray-600 truncate max-w-24">

@@ -30,8 +30,6 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
   const showSubscribeButton = currentUserId && !isCreator;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
-  console.log(event.creatorId);
-  console.log(currentUserId);
 
   const handleSubscribe = async () => {
     setLoading(true);
@@ -50,16 +48,15 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
   return (
     <>
       <div
-        className={`relative p-4 mt-4 rounded-lg shadow-md cursor-pointer ${
-          event.creatorId === null
+        className={`relative p-4 mt-4 rounded-lg shadow-md cursor-pointer ${event.creatorId === null
             ? "border border-[#7e59e4] bg-[#EAE1FF] text-black hover:bg-[#f1ecfb]"
             : "border border-[#3ebdd1] bg-[#d3f7fc] text-black hover:bg-[#f3fbfc]"
-        }`}
+          }`}
         onClick={() => setShowModal(true)}
       >
-		{event.creatorId === null
-		? <p className="text-[#4821B5] text-sm">Intra</p>
-		: <p className="text-[#19525a] text-sm">Student</p>}
+        {event.creatorId === null
+          ? <p className="text-[#4821B5] text-sm">Intra</p>
+          : <p className="text-[#19525a] text-sm">Student</p>}
         <h2>{event.title}</h2>
         <p>{from} – {to}</p>
         <p>Where: {event.location}</p>
@@ -69,20 +66,20 @@ const EventCard = ({ event, currentUserId, currentUserRole }: Props) => {
             {subscriberCount}/{event.maxSpots} spots taken
           </p>
         )}
-		<div className="flex flex-col right-2 absolute bottom-3">
-		<p className="text-gray-500 text-sm">Organizer: {event.organizer}</p>
-        {showSubscribeButton && (
-          <button className="cursor-cell text-red-400"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleSubscribe();
-            }}
-            disabled={loading || (!isSubscribed && isFull)}
-          >
-            {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
-          </button>
-        )}
-		</div>
+        <div className="flex flex-col right-2 absolute bottom-3">
+          <p className="text-gray-500 text-sm">Organizer: {event.organizer}</p>
+          {showSubscribeButton && (
+            <button className="cursor-cell text-red-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSubscribe();
+              }}
+              disabled={loading || (!isSubscribed && isFull)}
+            >
+              {isSubscribed ? "Unsubscribe" : isFull ? "Full" : "Subscribe"}
+            </button>
+          )}
+        </div>
       </div>
       <ShowEvent
         event={event}
