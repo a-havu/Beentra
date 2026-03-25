@@ -9,61 +9,61 @@
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  min-height: vh;
-  color: #000;
-  /* background: #fff; */
-  background: linear-gradient(180deg, #ffead8 0%, #fbffcd 100%);
-  font-family: var(--font-afacad-flux);
+    max-width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: #000;
+    /* background: #fff; */
+    background: linear-gradient(180deg, #ffead8 0%, #fbffcd 100%);
+    font-family: var(--font-afacad-flux);
 }
 
 .dark body {
-  color: #fff;
-  background: #000;
+    color: #fff;
+    background: #000;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 @layer base {
-  h1 {
-    @apply text-3xl font-semibold;
-    font-family: var(--font-work-sans);
-  }
+    h1 {
+        @apply text-2xl md:text-3xl lg:text-4xl font-semibold;
+        font-family: var(--font-work-sans);
+    }
 
-  h2 {
-    @apply text-2xl font-semibold;
-    font-family: var(--font-work-sans);
-  }
+    h2 {
+        @apply text-xl md:text-2xl lg:text-3xl font-semibold;
+        font-family: var(--font-work-sans);
+    }
 
-  h3 {
-    @apply text-xl font-semibold;
-    font-family: var(--font-work-sans);
-  }
+    h3 {
+        @apply text-lg md:text-xl lg:text-2xl font-semibold;
+        font-family: var(--font-work-sans);
+    }
 
-  p {
-    @apply text-base text-gray-700;
-    font-family: var(--font-afacad-flux);
-  }
+    p {
+        @apply text-sm md:text-base text-gray-700;
+        font-family: var(--font-afacad-flux);
+    }
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+    html {
+        color-scheme: dark;
+    }
 }
 
 .general-form {
-  @apply flex flex-col gap-4;
+    @apply flex flex-col gap-4;
 }
 
 .dropdown-menu-logHeader {
-  width: 10rem;
-  height: 6rem;
-  @apply bg-gray-800 rounded-lg p-3 shadow-md;
+    width: 10rem;
+    height: 6rem;
+    @apply bg-gray-800 rounded-lg p-3 shadow-md;
 }
 
 /* =============================== */
@@ -72,17 +72,17 @@ a {
 
 /* CSS variables — aligned with Beentra palette */
 .fc {
-  --fc-border-color: #e5e7eb;
-  --fc-today-bg-color: #fcffc8;
-  --fc-event-text-color: #1a1a1a;
-  --fc-button-bg-color: transparent;
-  --fc-button-border-color: #cdceff;
-  --fc-button-text-color: #000000;
-  --fc-button-hover-bg-color: #cdceff55;
-  --fc-button-hover-border-color: #cdceff;
-  --fc-button-active-bg-color: #cdceff;
-  --fc-button-active-border-color: #cdceff;
-  font-family: inherit;
+    --fc-border-color: #e5e7eb;
+    --fc-today-bg-color: #fcffc8;
+    --fc-event-text-color: #1a1a1a;
+    --fc-button-bg-color: transparent;
+    --fc-button-border-color: #cdceff;
+    --fc-button-text-color: #000000;
+    --fc-button-hover-bg-color: #cdceff55;
+    --fc-button-hover-border-color: #cdceff;
+    --fc-button-active-bg-color: #cdceff;
+    --fc-button-active-border-color: #cdceff;
+    font-family: inherit;
 }
 
 /* Cell backgrounds — target only content cells, not border/spacer elements */
@@ -91,68 +91,68 @@ a {
 .fc .fc-timegrid-axis,
 .fc .fc-daygrid-day,
 .fc .fc-col-header-cell {
-	background-color: #feffee;
+    background-color: #feffee;
 }
 
 /* Outer grid: rounded card feel */
 .fc .fc-scrollgrid {
-  @apply rounded-2xl overflow-hidden border border-gray-200 shadow-md;
+    @apply rounded-2xl overflow-hidden border border-gray-200 shadow-md;
 }
 
 /* Toolbar */
 .fc .fc-toolbar-title {
-  @apply text-lg font-semibold text-gray-800;
+    @apply text-lg font-semibold text-gray-800;
 }
 
 .fc .fc-button {
-  @apply rounded-xl text-sm font-medium shadow-none transition-all;
-  padding: 0.3rem 0.8rem;
+    @apply rounded-xl text-sm font-medium shadow-none transition-all;
+    padding: 0.3rem 0.8rem;
 }
 
 .fc .fc-button:focus,
 .fc .fc-button:active,
 .fc .fc-button-active {
-  box-shadow: none !important;
-  outline: none;
+    box-shadow: none !important;
+    outline: none;
 }
 
 /* Remove dark overlay FullCalendar adds on selected/clicked events */
 .fc .fc-event-selected::after,
 .fc .fc-event:focus::after {
-  display: none !important;
+    display: none !important;
 }
 
 /* Column headers (Mon, Tue…) */
 .fc .fc-col-header-cell {
-  @apply py-2 text-sm font-medium text-gray-500;
-  background-color: #f5f6e5;
+    @apply py-2 text-sm font-medium text-gray-500;
+    background-color: #f5f6e5;
 }
 
 /* setting the today cell's styling */
 .fc .fc-col-header-cell.fc-day-today {
-  background-color: #e8eab3;
-  @apply text-black font-semibold;
+    background-color: #e8eab3;
+    @apply text-black font-semibold;
 }
 
 /* Time labels */
 .fc .fc-timegrid-slot-label {
-  @apply text-xs text-gray-400;
+    @apply text-xs text-gray-400;
 }
 
 /* Slot height — each row is one slot (30min with current slotDuration) */
 .fc .fc-timegrid-slot {
-  height: 2rem;
+    height: 2rem;
 }
 
 /* Vertical lines between days */
 .fc .fc-timegrid-col {
-  border-left: 1px solid #e5e7eb !important;
+    border-left: 1px solid #e5e7eb !important;
 }
 
 /* Events */
 .fc .fc-event {
-  @apply rounded-lg text-xs font-medium shadow-sm border border-white transition-all;
-  padding: 2px 6px;
+    @apply rounded-lg text-xs font-medium shadow-sm border border-white transition-all;
+    padding: 2px 6px;
 }
 
 /* .fc .fc-event:hover {
@@ -160,49 +160,49 @@ a {
 } */
 
 .fc .fc-event:hover {
-	@apply cursor-pointer bg-white!;
+    @apply cursor-pointer !bg-white;
 }
 
 /* Thin scrollbar */
 .fc .fc-scroller {
-  scrollbar-width: thin;
-  scrollbar-color: #d1d5db transparent;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
 }
 
 .fc .fc-scroller::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 .fc .fc-scroller::-webkit-scrollbar-thumb {
-  background-color: #d1d5db;
-  border-radius: 9999px;
+    background-color: #d1d5db;
+    border-radius: 9999px;
 }
 
 .fc .fc-scroller::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 /*Beentra General styles*/
 
 .modal-form-container {
-  @apply fixed inset-0 bg-black/50 z-50 justify-center;
+    @apply fixed inset-0 bg-black/50 z-50 justify-center;
 }
 
 .modal-form {
-  @apply overflow-y-auto max-h-[80vh];
+    @apply overflow-y-auto max-h-[80vh];
 }
 
 .beentra-form-container {
-  @apply flex flex-col items-center content-center w-full rounded-2xl;
+    @apply flex flex-col items-center content-center w-full rounded-2xl;
 }
 
 .beentra-form {
-  @apply flex flex-col bg-[#CDCEFF] w-xl rounded-2xl self-center p-10 gap-4 shadow-md;
+    @apply flex flex-col bg-[#CDCEFF] w-xl rounded-2xl self-center p-10 gap-4 shadow-md;
 }
 
 /* Shared card style — used by ProfileCard and ProjectCard for visual consistency */
 .beentra-card {
-  @apply rounded-2xl border border-gray-200 bg-white/70;
+    @apply rounded-2xl border border-gray-200 bg-white/70;
 }
 
 /*end of Beentra General styles*/
