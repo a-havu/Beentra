@@ -37,10 +37,10 @@ export default function Calendar({
 
   const events = [
     ...dbEvents.map((e) =>
-      toCalendarEvent(e, { bg: "#e9fcff", border: "#7CEEFF" })
+      toCalendarEvent(e, { bg: "#d3f7fc", border: "#3ebdd1" })
     ),
     ...intraEvents.map((e) =>
-      toCalendarEvent(e, { bg: "#faf5ff", border: "#dab2ff" })
+      toCalendarEvent(e, { bg: "#EAE1FF", border: "#7e59e4" })
     ),
   ];
 
