@@ -73,7 +73,7 @@ a {
 /* CSS variables — aligned with Beentra palette */
 .fc {
   --fc-border-color: #e5e7eb;
-  --fc-today-bg-color: #cdceff;
+  --fc-today-bg-color: #fcffc8;
   --fc-event-text-color: #1a1a1a;
   --fc-button-bg-color: transparent;
   --fc-button-border-color: #cdceff;
@@ -91,7 +91,7 @@ a {
 .fc .fc-timegrid-axis,
 .fc .fc-daygrid-day,
 .fc .fc-col-header-cell {
-  background-color: white;
+	background-color: #feffee;
 }
 
 /* Outer grid: rounded card feel */
@@ -125,7 +125,13 @@ a {
 /* Column headers (Mon, Tue…) */
 .fc .fc-col-header-cell {
   @apply py-2 text-sm font-medium text-gray-500;
-  background-color: #f9fafb;
+  background-color: #f5f6e5;
+}
+
+/* setting the today cell's styling */
+.fc .fc-col-header-cell.fc-day-today {
+  background-color: #e8eab3;
+  @apply text-black font-semibold;
 }
 
 /* Time labels */
@@ -149,8 +155,12 @@ a {
   padding: 2px 6px;
 }
 
-.fc .fc-event:hover {
+/* .fc .fc-event:hover {
   @apply scale-[1.02] shadow-md opacity-95;
+} */
+
+.fc .fc-event:hover {
+	@apply cursor-pointer bg-white!;
 }
 
 /* Thin scrollbar */
