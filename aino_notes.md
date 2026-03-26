@@ -30,5 +30,14 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 - i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
 
 TODO:
-- style the event Subscribe button
-- design single project page
+- fix project form Description field and extract the buttons in the modal
+- make a bee logo
+
+STYLING
+- event Subscribe button
+- single project page
+- profile page
+- admin dashboard
+- dropdown menu
+- remember mobile!!
+- friends page
