@@ -32,39 +32,67 @@ export function UsersTable() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [editingUser, setEditingUser] = useState<User | null>(null)
 
-  useEffect(() => {
-    // Function to fetch users from API
-    async function fetchUsers() {
-      try {
-        setIsLoading(true); // Show loading state
+//   useEffect(() => {
+//     // Function to fetch users from API
+//     async function fetchUsers() {
+//       try {
+//         setIsLoading(true); // Show loading state
 
-        // Call your API
-        const response = await fetch("/api/user", {
-          method: "GET",
-        });
+//         // Call your API
+//         const response = await fetch("/api/user", {
+//           method: "GET",
+//         });
 
-        // Check if request was successful
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
+//         // Check if request was successful
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch users");
+//         }
 
-        // Convert response to JSON
-        const data = await response.json();
+//         // Convert response to JSON
+//         const data = await response.json();
 
-        // Update state with the data
-        setUsers(data);
-        setError(null); // Clear any previous errors
-      } catch (err) {
-        console.error("Error fetching users:", err);
-        setError("Failed to load users. Please try again.");
-      } finally {
-        setIsLoading(false); // Hide loading state
-      }
-    }
+//         // Update state with the data
+//         setUsers(data);
+//         setError(null); // Clear any previous errors
+//       } catch (err) {
+//         console.error("Error fetching users:", err);
+//         setError("Failed to load users. Please try again.");
+//       } finally {
+//         setIsLoading(false); // Hide loading state
+//       }
+//     }
 
-    // Call the function
-    fetchUsers();
-  }, []); // Empty array means: only run once when component loads
+//     // Call the function
+//     fetchUsers();
+//   }, []); // Empty array means: only run once when component loads
+
+	useEffect(() => {
+		fetchUsers();
+	}, []);
+
+	const fetchUsers = async () => {
+		try {
+		setIsLoading(true);
+
+		const response = await fetch("/api/user", {
+			method: "GET",
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch Users");
+		}
+
+		const data = await response.json();
+
+		setUsers(data);
+		setError(null);
+		} catch (err) {
+		console.error("Error fetching events: ", err);
+		setError("Failed to load events. Please try again");
+		} finally {
+		setIsLoading(false);
+		}
+	};
 
   const handleEditUser = (updatedUser: User) => {
 	setUsers((prev) =>
@@ -73,6 +101,14 @@ export function UsersTable() {
 		),
 	);
 	setEditingUser(null);;
+  }
+
+  const handleAddUser = (user: User) => {
+	setUsers((prev) => [... prev, user])
+  }
+
+  const onSuccess = () => {
+	fetchUsers();
   }
 
   // Show loading state
@@ -105,7 +141,7 @@ export function UsersTable() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
 
-          <AddUser />
+          <AddUser onSuccess={onSuccess}/>
         </div>
         <div>
           {/* Table header */}
