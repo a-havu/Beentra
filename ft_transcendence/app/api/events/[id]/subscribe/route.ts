@@ -3,6 +3,18 @@ import { prisma } from "@/lib/prisma";
 import { subscribeSchema } from "@/lib/validation";
 import { getSession } from "@/lib/auth";
 
+export async function GET(
+  _request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id: eventId } = await context.params;
+  const subscriptions = await prisma.eventSubscription.findMany({
+    where: { eventId },
+    include: { user: { select: { username: true, fullName: true } } },
+  });
+  return NextResponse.json(subscriptions.map((s) => s.user));
+}
+
 export async function POST(
   request: Request,
   context: { params: Promise<{ id: string }> }

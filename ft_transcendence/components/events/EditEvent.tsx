@@ -10,9 +10,10 @@ type FormValues = z.input<typeof eventSchema>;
 type Props = {
   id: string;
   onSuccess?: () => void;
+  onEventUpdated?: (updated: Record<string, unknown>) => void;
 };
 
-const EditEvent = ({ id, onSuccess }: Props) => {
+const EditEvent = ({ id, onSuccess, onEventUpdated }: Props) => {
   const [defaultValues, setDefaultValues] = useState<Partial<FormValues>>();
   const [loading, setLoading] = useState(true);
 
@@ -30,15 +31,19 @@ const EditEvent = ({ id, onSuccess }: Props) => {
 
         const formatTime = (isoString: string) => {
           const date = new Date(isoString);
-          const hours = date.getUTCHours();
-          const minutes = date.getUTCMinutes();
+          const hours = date.getHours();
+          const minutes = date.getMinutes();
           return `${hours.toString().padStart(2, "0")}:${minutes
             .toString()
             .padStart(2, "0")}`;
         };
 
         const formatDate = (isoString: string) => {
-          return new Date(isoString).toISOString().split("T")[0];
+          const date = new Date(isoString);
+          const year = date.getFullYear();
+          const month = (date.getMonth() + 1).toString().padStart(2, "0");
+          const day = date.getDate().toString().padStart(2, "0");
+          return `${year}-${month}-${day}`;
         };
 
         setDefaultValues({
@@ -77,11 +82,9 @@ const EditEvent = ({ id, onSuccess }: Props) => {
         throw new Error("Failed to update event");
       }
 
-      console.log("Event updated successfully!");
-
-      if (onSuccess) {
-        onSuccess();
-      }
+      const updated = await response.json();
+      onEventUpdated?.(updated);
+      onSuccess?.();
     } catch (error) {
       console.error("Error updating event:", error);
     }

@@ -5,7 +5,7 @@ import Header from "../../components/main/Header";
 import Footer from "../../components/main/Footer";
 import { validateEnv } from "@/lib/validation";
 import { Suspense } from "react";
-import Loading from './loading'
+import Loading from "./loading";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -31,22 +31,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-
   return (
     <>
       <header className="h-16 flex items-center px-6 text-[#7A3D02]">
         <Header />
       </header>
 
-
-      <main className="flex flex-col flex-1 p-6">
-        <Suspense fallback={<Loading />}>
-          {children}
-        </Suspense>
+      <main className="flex flex-col flex-1 p-2 sm:p-6">
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </main>
-
 
       <footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
         <Footer />
