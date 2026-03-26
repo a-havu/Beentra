@@ -17,13 +17,13 @@ export default async function HomePage() {
 
   const friendsRaw = userId
     ? await prisma.friend.findMany({
-        where: { userId },
-        select: {
-          friend: {
-            select: { id: true, username: true, avatarUrl: true, isOnline: true },
-          },
+      where: { userId },
+      select: {
+        friend: {
+          select: { id: true, username: true, avatarUrl: true, isOnline: true },
         },
-      })
+      },
+    })
     : [];
 
   const friends = friendsRaw.map(({ friend }) => friend);
@@ -48,10 +48,11 @@ export default async function HomePage() {
   }));
 
   return (
-    <div className="flex flex-col main-page">
+    <div className="flex flex-col main-page gap-4 p-5">
       <FriendsBar friends={friends} />
+
       <div className="events-section">
-        <div className="w-full p-5 flex flex-col">
+        <div className="w-full flex flex-col">
           <EventsSection
             initialEvents={events}
             intraEvents={intraEvents}
