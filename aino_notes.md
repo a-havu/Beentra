@@ -25,8 +25,10 @@ That's a problem when looking into the future - i don't want my personal email a
 
 on March 10 it was decided to create a gmail account for Beentra and use a third-party service ImageKit
 
+*learning about accessibility in web design*
+- don't indicate something with colour only!
+- i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
+
 TODO:
-- correct spacing in project card
-- remove the project display classes from globals.css
 - style the event Subscribe button
 - design single project page
