@@ -26,4 +26,5 @@ That's a problem when looking into the future - i don't want my personal email a
 on March 10 it was decided to create a gmail account for Beentra and use a third-party service ImageKit
 
 TODO:
-- concerning forms: we want to indicate that a field is required
+- style the event Subscribe button
+- design single project page
