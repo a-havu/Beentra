@@ -66,13 +66,13 @@ export function UsersTable() {
     fetchUsers();
   }, []); // Empty array means: only run once when component loads
 
-//   const handleEditUser = ({ user } : {user : User}) => {
-// 	setModalOpen(true);
-// 	setSelectedUser(user)
-//   }
-
-  const handleEditUser = () => {
-	setEditingUser(null);
+  const handleEditUser = (updatedUser: User) => {
+	setUsers((prev) =>
+		prev.map((user) =>
+			user.id === updatedUser.id ? updatedUser : user,
+		),
+	);
+	setEditingUser(null);;
   }
 
   // Show loading state

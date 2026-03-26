@@ -67,7 +67,7 @@ type User = {
 
 type Props = {
   user: User;
-  onSuccess?: () => void;
+  onSuccess?: (updatedUser: User) => void;
   onCancel?: () => void;
 };
 
@@ -132,7 +132,7 @@ export default function EditUser({ user, onSuccess, onCancel }: Props) {
         return;
       }
 
-      onSuccess?.();
+      onSuccess?.(result);
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
     }
