@@ -2,6 +2,7 @@
 # Production-ready .dockerignore for a Next.js (Vercel-style) app
 # Keeps Docker builds fast, lean, and free of development files.
 ############################################################
+!prisma.config.ts
 
 # Dependencies (installed inside Docker, never copied)
 node_modules/

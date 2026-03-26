@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { projectSchema } from "@/lib/validation";
-import { imagekit } from "@/lib/imagekit";
+import { getImageKit } from "@/lib/imagekit";
 import { getSession } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
-
     const session = await getSession();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -23,8 +22,8 @@ export async function POST(request: NextRequest) {
 
     let imageUrl: string | null = null;
     let imagekitFileId: string | null = null;
-
     if (body.image) {
+      const imagekit = getImageKit(); // ← add this
       const uploadResponse = await imagekit.upload({
         file: body.image,
         fileName: body.imageName ?? "project-image",

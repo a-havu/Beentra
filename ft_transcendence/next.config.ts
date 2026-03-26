@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["pg", "@prisma/adapter-pg"], // added to allow prisma to work in server components
+  output: "standalone",
+  serverExternalPackages: ["pg", "@prisma/adapter-pg"],
   images: {
     remotePatterns: [
       {

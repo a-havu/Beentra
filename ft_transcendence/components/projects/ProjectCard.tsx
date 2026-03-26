@@ -4,25 +4,26 @@ import { LocalProject } from "@/types/general";
 
 export default function ProjectCard({ project }: { project: LocalProject }) {
   return (
-    <Link className=" relative flex-1 min-w-0" href={`/projects/${project.id}`}>
-      <div className="project-card">
-        <div className="project-image relative h-50">
+    <Link className="relative flex-1 min-w-0" href={`/projects/${project.id}`}>
+      <div className="flex-1 cursor-pointer rounded-xl h-80 border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col gap-3">
+        <div className="relative w-full h-40 object-cover rounded-t-xl bg-[#DEDFFF] flex items-center justify-center text-5xl overflow-hidden">
           {project.image ? (
             <Image
               src={project.image}
               alt={`${project.projectName} image`}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover rounded-t-lg"
             />
           ) : (
             "🐝"
           )}
         </div>
-        <div className="project-info w-80">
-          <h2>{project.projectName}</h2>
-          <p>{project.oneLiner}</p>
+        <div className="bg-white rounded-b-xl p-1 w-90">
+          <h2 className="leading-none p-1">{project.projectName}</h2>
+          <p className="p-1 leading-4.5 text-md/7">{project.oneLiner}</p>
           {project.techStack && (
-            <p className="text-sm text-gray-500">{project.techStack}</p>
+            <p className="text-sm p-1 text-gray-500">{project.techStack}</p>
           )}
           {project.createdAt && (
             <p className="text-sm text-gray-500 absolute bottom-3 right-2">

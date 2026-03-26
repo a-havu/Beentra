@@ -8,14 +8,21 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(() => process.exit(0)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   nginx:
     build:
       context: ./nginx
-      dockerfile: Dockerfile.nginx
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
     depends_on:
-      - web
+      web:
+        condition: service_healthy
     restart: unless-stopped
