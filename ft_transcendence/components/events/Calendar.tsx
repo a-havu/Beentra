@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from "@fullcalendar/list";
 import { EventInput } from "@fullcalendar/core";
 import ShowEvent from "./ShowEvent";
 import { EventData } from "@/types/general";
@@ -21,6 +22,14 @@ export default function Calendar({
 }: Props) {
   const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const toCalendarEvent = (
     event: EventData,
@@ -47,15 +56,17 @@ export default function Calendar({
   return (
     <>
       <FullCalendar
-        contentHeight={700}
-        plugins={[dayGridPlugin, timeGridPlugin]}
+        contentHeight={isMobile ? "auto" : 700}
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         headerToolbar={{
           left: "prev,next,today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek",
+          right: isMobile ? "listWeek,dayGridMonth" : "dayGridMonth,timeGridWeek",
         }}
-        initialView="timeGridWeek"
+        initialView={isMobile ? "listWeek" : "timeGridWeek"}
         firstDay={1}
+        eventTimeFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
+        slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
         allDaySlot={false}
         scrollTime="08:00:00"
         scrollTimeReset={false}

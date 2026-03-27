@@ -66,6 +66,10 @@ a {
     @apply bg-gray-800 rounded-lg p-3 shadow-md;
 }
 
+.animate-marquee {
+  animation: marquee 100s linear infinite;
+}
+
 /* =============================== */
 /*       FULLCALENDAR STYLE        */
 /* =============================== */

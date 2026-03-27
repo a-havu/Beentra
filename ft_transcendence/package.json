@@ -15,6 +15,7 @@
     "@floating-ui/react": "^0.27.17",
     "@fullcalendar/core": "^6.1.20",
     "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/list": "^6.1.20",
     "@fullcalendar/react": "^6.1.20",
     "@fullcalendar/timegrid": "^6.1.20",
     "@hookform/resolvers": "^5.2.2",

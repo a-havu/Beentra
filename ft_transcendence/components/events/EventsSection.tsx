@@ -40,7 +40,7 @@ export default function EventsSection({
 
   return (
     <>
-      <div className="flex gap-8 min-h-[60vh]">
+      <div className=" gap-8 min-h-[60vh] flex flex-col md:flex-row">
         <div className="flex-1">
           <h1 className="pb-2">Todays Events</h1>
           <EventList
