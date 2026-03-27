@@ -178,7 +178,7 @@ export const projectSchema = z.object({
   projectName: z
     .string()
     .min(2, "Project name too short")
-    .max(50, "Project name too long"),
+    .max(35, "Project name too long"),
   oneLiner: z
     .string()
     .min(2, "One-liner too short")

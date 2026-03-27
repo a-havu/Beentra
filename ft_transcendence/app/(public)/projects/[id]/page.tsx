@@ -24,38 +24,55 @@ export default async function ProjectPage({
 
   const isCreator = session?.userId === project.creatorId;
 
-  return (
-    <div>
+	return (
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      {/* Actions */}
       {isCreator && (
-        <div className="flex gap-2 justify-center">
+        <div className="flex gap-2 justify-center mb-6">
           <EditProject project={project} />
           <DeleteProject projectId={project.id} />
         </div>
       )}
-      <br />
-      <br />
-      <div className="flex flex-col items-center gap-4 w-[90%] mx-auto">
-        <h1 className="text-[#44469A]">{project.projectName}</h1>
-        <br />
-        {project.oneLiner && <h3>{project.oneLiner}</h3>}
-        <div className="flex row gap-4">
-          {project.techStack && <p>Tech stack: {project.techStack}</p>}
-          {project.techStack && project.link && <p>|</p>}
-          {project.link && (
-            <p className="underline">
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                {project.link}
-              </a>
-            </p>
-          )}
-        </div>
-        {project.description && (
-          <p className="w-[80%] whitespace-pre-line bg-[#DEDFFF] p-4 rounded-lg">
-            {project.description}
-          </p>
+
+      {/* Header Section */}
+      <div className="flex flex-col items-center text-center mb-8">
+        <h1 className="text-3xl font-bold text-[#44469A] mb-2">
+          {project.projectName}
+        </h1>
+        {project.oneLiner && (
+          <h4 className="text-xl mb-4">{project.oneLiner}</h4>
         )}
-        <br />
-        <div className="flex justify-center items-center relative w-full">
+        
+        {/* Tech Stack */}
+        {project.techStack && (
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {project.techStack.split(',').filter(t => t.trim()).map((tech, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 bg-[#e8e1fd] text-gray-700 rounded-full text-sm font-medium"
+              >
+                {tech.trim()}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Link */}
+        {project.link && (
+          <a
+		  	className="text-[#724015] underline font-semibold hover:text-[#5a3210] transition-all duration-200 ease-in-out"
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {project.link}
+          </a>
+        )}
+      </div>
+	{/* Main Content: Image + Description */}
+      <div className="flex flex-col md:flex-row gap-8 items-start">
+        {/* Image Column */}
+        <div className="w-full md:w-1/3 flex justify-center">
           {project.image ? (
             <Image
               src={project.image}
@@ -66,7 +83,18 @@ export default async function ProjectPage({
               className="w-full h-auto max-h-96 rounded-lg object-contain"
             />
           ) : (
-            <span className="text-3xl">🐝</span>
+             <span className="w-full px-10 py-4 aspect-square bg-[#e8e1fd] rounded-lg flex items-center justify-center text-6xl">
+              🐝
+            </span>
+          )}
+        </div>
+
+        {/* Description Column */}
+        <div className="w-full md:w-2/3">
+          {project.description && (
+            <p className="whitespace-pre-line bg-white p-6 rounded-lg text-lg leading-relaxed shadow-sm border border-gray-100">
+              {project.description}
+            </p>
           )}
         </div>
       </div>
