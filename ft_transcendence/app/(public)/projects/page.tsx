@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div>
-      <br />
       <h1 className="flex justify-center">Projects!</h1>
-      <br />
       <CreateProject />
       <DisplayProjects />
     </div>

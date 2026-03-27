@@ -37,7 +37,6 @@ export default async function UserProjectsPage({
       <h1 className="flex justify-center">
         These are your projects, {user.username}!
       </h1>
-      <br></br>
       {projects.length > 0 ? (
         <ProjectGrid projects={projects} />
       ) : (
