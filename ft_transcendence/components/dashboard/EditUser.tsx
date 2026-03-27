@@ -62,6 +62,7 @@ type User = {
   role: string;
   fullName?: string | null;
   avatarUrl?: string | null;
+  createdAt: string;
   isOnline: boolean;
 };
 
@@ -162,11 +163,10 @@ export default function EditUser({ user, onSuccess, onCancel }: Props) {
                 key={src}
                 type="button"
                 onClick={() => setPendingAvatar(src)}
-                className={`rounded-full p-0.5 transition cursor-pointer ${
-                  pendingAvatar === src
+                className={`rounded-full p-0.5 transition cursor-pointer ${pendingAvatar === src
                     ? "ring-2 ring-[#6229FF] ring-offset-2"
                     : "ring-2 ring-transparent hover:ring-gray-300 ring-offset-2"
-                }`}
+                  }`}
               >
                 <Image
                   src={src}
