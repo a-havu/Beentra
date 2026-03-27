@@ -42,7 +42,7 @@ export default function EventsSection({
     <>
       <div className=" gap-8 min-h-[60vh] flex flex-col md:flex-row">
         <div className="flex-1">
-          <h1 className="pb-2">Todays Events</h1>
+          <h2 className="pb-2">Today's Events</h2>
           <EventList
             events={todaysEvents}
             currentUserId={currentUserId}
