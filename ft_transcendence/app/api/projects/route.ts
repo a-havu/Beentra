@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
         fileName: body.imageName ?? "project-image",
         folder: "projects",
       });
-      imageUrl = uploadResponse.url;
-      imagekitFileId = uploadResponse.fileId;
+      imageUrl = uploadResponse.url ?? null;
+      imagekitFileId = uploadResponse.fileId ?? null;
     }
 
     const project = await prisma.project.create({
