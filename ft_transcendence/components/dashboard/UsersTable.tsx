@@ -10,6 +10,7 @@ import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
+import EditUser from "./EditUser";
 
 type User = {
   id: string;
@@ -29,6 +30,7 @@ export function UsersTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null)
 
   useEffect(() => {
     // Function to fetch users from API
@@ -63,6 +65,15 @@ export function UsersTable() {
     // Call the function
     fetchUsers();
   }, []); // Empty array means: only run once when component loads
+
+  const handleEditUser = (updatedUser: User) => {
+	setUsers((prev) =>
+		prev.map((user) =>
+			user.id === updatedUser.id ? updatedUser : user,
+		),
+	);
+	setEditingUser(null);;
+  }
 
   // Show loading state
   if (isLoading) {
@@ -169,12 +180,12 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <Button
-                          variant="edit"
-                          onClick={() => setModalOpen(true)}
-                        >
-                          Edit
-                        </Button>
+						<Button
+							variant="edit"
+							onClick={() => setEditingUser(user)}
+						>
+							Edit
+						</Button>
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
@@ -200,14 +211,20 @@ export function UsersTable() {
         />
       )}
 
-      {modalOpen && (
-        <Modal isOpen={modalOpen}>
-          <ModalBody>Testing</ModalBody>
-          <ModalFooter>
-            <Button variant="secondary" onClick={() => setModalOpen(false)}>
+      {editingUser && (
+        <Modal isOpen={!!editingUser}>
+          <ModalBody>
+			<EditUser
+				user={editingUser}
+				onSuccess={handleEditUser}
+				onCancel={() => setEditingUser(null)}
+			/>
+		  </ModalBody>
+          {/* <ModalFooter>
+            <Button variant="secondary" onClick={() => setEditingUser(null)}>
               Cancel
             </Button>
-          </ModalFooter>
+          </ModalFooter> */}
         </Modal>
       )}
     </>

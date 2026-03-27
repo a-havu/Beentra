@@ -75,6 +75,7 @@ export async function POST(request: Request) {
       );
       response.cookies.set("tfa-temp-token", tempToken, {
         httpOnly: true,
+        secure: true,
         sameSite: "lax",
         maxAge: 60 * 5,
         path: "/",

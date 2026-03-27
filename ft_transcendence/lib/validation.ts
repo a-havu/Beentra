@@ -167,6 +167,7 @@ export const updateUserSchema = z
       .union([z.string().min(8, "Min. 8 characters"), z.literal("")])
       .optional(),
     confirm: z.string().optional(),
+    role: z.enum(["admin", "user", "moderator"]).optional(),
   })
   .refine((data) => !data.password || data.password === data.confirm, {
     message: "Passwords don't match",

@@ -153,16 +153,19 @@ export default function EventForm({
           />
         </div>
 
-        <Input
-          label="Description"
-          name="description"
-          id="description"
-          type="text"
-          placeholder="Optional description"
-          required={false}
-          register={register}
-          errors={errors}
-        />
+        <div className="flex flex-col gap-2">
+          <label htmlFor="description" className="p-2">Description</label>
+          <textarea
+            id="description"
+            {...register("description")}
+            placeholder="Optional description"
+            rows={5}
+            className="bg-white ml-2 p-2 rounded-lg resize-y text-sm"
+          />
+          {errors.description && (
+            <p className="text-red-500 text-sm ml-2">{errors.description.message}</p>
+          )}
+        </div>
       </form>
     </div>
   );

@@ -27,7 +27,7 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
         {activeView === "projects" && <ProjectsTable />}
         {activeView === "add-page" && <PageForm initialData={null} />}
         {/* {activeView === "pages" && <PagesTable />} */}
-		{activeView === "pages" && fetchPages}
+        {activeView === "pages" && fetchPages}
       </main>
     </div>
   );
