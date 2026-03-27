@@ -30,86 +30,46 @@ export function UsersTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [editingUser, setEditingUser] = useState<User | null>(null);
 
-//   useEffect(() => {
-//     // Function to fetch users from API
-//     async function fetchUsers() {
-//       try {
-//         setIsLoading(true); // Show loading state
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-//         // Call your API
-//         const response = await fetch("/api/user", {
-//           method: "GET",
-//         });
+  const fetchUsers = async () => {
+    try {
+      setIsLoading(true);
 
-//         // Check if request was successful
-//         if (!response.ok) {
-//           throw new Error("Failed to fetch users");
-//         }
+      const response = await fetch("/api/user", {
+        method: "GET",
+      });
 
-//         // Convert response to JSON
-//         const data = await response.json();
+      if (!response.ok) {
+        throw new Error("Failed to fetch Users");
+      }
 
-//         // Update state with the data
-//         setUsers(data);
-//         setError(null); // Clear any previous errors
-//       } catch (err) {
-//         console.error("Error fetching users:", err);
-//         setError("Failed to load users. Please try again.");
-//       } finally {
-//         setIsLoading(false); // Hide loading state
-//       }
-//     }
+      const data = await response.json();
 
-//     // Call the function
-//     fetchUsers();
-//   }, []); // Empty array means: only run once when component loads
-
-	useEffect(() => {
-		fetchUsers();
-	}, []);
-
-	const fetchUsers = async () => {
-		try {
-		setIsLoading(true);
-
-		const response = await fetch("/api/user", {
-			method: "GET",
-		});
-
-		if (!response.ok) {
-			throw new Error("Failed to fetch Users");
-		}
-
-		const data = await response.json();
-
-		setUsers(data);
-		setError(null);
-		} catch (err) {
-		console.error("Error fetching events: ", err);
-		setError("Failed to load events. Please try again");
-		} finally {
-		setIsLoading(false);
-		}
-	};
+      setUsers(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching events: ", err);
+      setError("Failed to load events. Please try again");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleEditUser = (updatedUser: User) => {
-	setUsers((prev) =>
-		prev.map((user) =>
-			user.id === updatedUser.id ? updatedUser : user,
-		),
-	);
-	setEditingUser(null);;
-  }
-
-  const handleAddUser = (user: User) => {
-	setUsers((prev) => [... prev, user])
-  }
+    setUsers((prev) =>
+      prev.map((user) => (user.id === updatedUser.id ? updatedUser : user)),
+    );
+    setEditingUser(null);
+  };
 
   const onSuccess = () => {
-	fetchUsers();
-  }
+    fetchUsers();
+  };
 
   // Show loading state
   if (isLoading) {
@@ -141,7 +101,7 @@ export function UsersTable() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-blue-900">Users Management</h2>
 
-          <AddUser onSuccess={onSuccess}/>
+          <AddUser onSuccess={onSuccess} />
         </div>
         <div>
           {/* Table header */}
@@ -216,12 +176,12 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-						<Button
-							variant="edit"
-							onClick={() => setEditingUser(user)}
-						>
-							Edit
-						</Button>
+                        <Button
+                          variant="edit"
+                          onClick={() => setEditingUser(user)}
+                        >
+                          Edit
+                        </Button>
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
@@ -250,12 +210,12 @@ export function UsersTable() {
       {editingUser && (
         <Modal isOpen={!!editingUser}>
           <ModalBody>
-			<EditUser
-				user={editingUser}
-				onSuccess={handleEditUser}
-				onCancel={() => setEditingUser(null)}
-			/>
-		  </ModalBody>
+            <EditUser
+              user={editingUser}
+              onSuccess={handleEditUser}
+              onCancel={() => setEditingUser(null)}
+            />
+          </ModalBody>
           {/* <ModalFooter>
             <Button variant="secondary" onClick={() => setEditingUser(null)}>
               Cancel
