@@ -134,12 +134,12 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
       {/* ── Profile Header Card ─────────────────────────────────────────────── */}
       <ProfileCard className="overflow-hidden">
         {/* Decorative gradient banner */}
-        <div className="h-24 bg-gradient-to-r from-[#FFEAD8] via-[#CDCEFF] to-[#FBFFCD]" />
+        <div className="h-24 bg-linear-to-r from-[#FFEAD8] via-[#91d3e2] to-[#FBFFCD]" />
 
-        <div className="px-6 pb-6 pt-0">
+        <div className="px-6 pb-6 pt-3">
           {/* Avatar (overlaps banner via negative margin) + action buttons */}
-          <div className="flex items-end justify-between -mt-12 mb-3">
-            <div className="ring-4 ring-white rounded-full shrink-0">
+          <div className="flex items-start justify-between mt-2 mb-3">
+            <div className="ring-4 ring-white rounded-full shrink-0 -mt-12">
               <Image
                 src={selectedAvatar}
                 alt={`${user.username}'s avatar`}
@@ -149,7 +149,7 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
               />
             </div>
 
-            <div className="flex items-center gap-2 pb-1">
+            <div className="flex items-center gap-6 pb-1">
               {/* Shown briefly after a successful save */}
               {savedSuccess && (
                 <div className="flex items-center gap-1.5 rounded-lg bg-green-100 border border-green-300 text-green-700 text-xs px-3 py-1.5">
@@ -169,16 +169,17 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
               )}
               {/* Only the profile owner can edit */}
               {isOwner && (
-                <button
-                  onClick={() => {
+                <Button
+					variant="edit"
+					size="small"
+                 	onClick={() => {
                     setServerError("");
                     setPendingAvatar(selectedAvatar);
                     setModalOpen(true);
                   }}
-                  className="border border-gray-300 rounded-lg px-4 py-1.5 text-sm font-medium text-gray-800 bg-white hover:bg-gray-50 transition cursor-pointer"
                 >
                   Edit profile
-                </button>
+                </Button>
               )}
             </div>
           </div>
@@ -197,7 +198,7 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
               <span
                 className={`px-3 py-0.5 rounded-full text-xs font-semibold capitalize ${
                   user.role === "admin"
-                    ? "bg-[#6229FF]/15 text-[#6229FF]"
+                    ? "bg-[#cdceff] text-[#6229FF]"
                     : "bg-gray-100 text-gray-600 border border-gray-200"
                 }`}
               >
@@ -469,15 +470,15 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
 
             {/* Footer actions */}
             <div className="flex items-center justify-end gap-3 border-t border-[#6229FF]/20 pt-4">
-              <Button variant="secondary" onClick={() => setModalOpen(false)}>
-                Cancel
-              </Button>
               <Button
                 variant="edit"
                 disabled={isSubmitting}
                 onClick={handleSubmit(onSubmit)}
               >
                 Save
+              </Button>
+			<Button variant="secondary" onClick={() => setModalOpen(false)}>
+                Cancel
               </Button>
             </div>
           </div>

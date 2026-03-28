@@ -20,8 +20,8 @@ export function Button({
   disabled = false,
 }: ButtonProps) {
   const variantStyles = {
-    primary: "border border-[#7CEEFF] bg-[#7CEEFF] text-black hover:bg-transparent",
-    secondary: "border border-[#A2B09E] bg-[#A2B09E] text-black hover:bg-transparent",
+    primary: "border border-[#724015] bg-[#724015] text-white hover:bg-transparent hover:text-black",
+    secondary: "border border-[#A2B09E] bg-[#A2B09E] text-black hover:bg-transparent hover:text-black",
     sidebar:
       "w-full text-center bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition",
     delete: "border border-[#FF97A2] bg-[#FF97A2] text-black hover:bg-transparent",

@@ -51,7 +51,7 @@ export function LoginForm() {
     <div className="beentra-form-container">
       <form className="beentra-form">
         <h1>Welcome to Beentra</h1>
-        <p>New here? <Link href="/registration">Sign Up</Link></p>
+        <p>New here? <Link href="/registration" className="underline font-semibold text-[#724015]">Sign Up</Link></p>
 
         {/* Use Input component for email too */}
         <Input

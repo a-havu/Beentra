@@ -35,9 +35,13 @@ TODO:
 
 STYLING
 - event Subscribe button
-- single project page
-- profile page
 - admin dashboard
 - dropdown menu
 - remember mobile!!
 - friends page
+- BUTTON COLOURS need to be fixed
+
+NOTICING:
+- even though the Audio hackathon is going on, it's not visible in today's events
+- the dropdown menu stays on even after navigating to the appointed page
+- does anyone else have the weird icon bobbing around on profile form?
