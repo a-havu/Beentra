@@ -30,7 +30,7 @@ export default async function MyEvents({ userId }: { userId: string }) {
 
   return (
     <>
-      <h1 className="mb-5">Events for {user.username}</h1>
+      <h1 className="mb-5 mt-5">Events for {user.username}</h1>
       <FullEventList events={events} currentUserId={currentUserId} currentUserRole={currentUserRole} />
     </>
   )
