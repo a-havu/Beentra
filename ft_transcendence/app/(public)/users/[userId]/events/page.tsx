@@ -1,5 +1,5 @@
 import MyEvents from "@/components/events/MyEvents";
-import MySubscripedEvents from "@/components/events/MySubscripedEvents";
+import MySubscribedEvents from "@/components/events/MySubscribedEvents";
 
 export const metadata = {
   title: "My Events",
@@ -13,7 +13,7 @@ export default async function UserEventsPage({ params }: { params: Promise<{ use
   return (
     <div className="w-full p-5 gap-5">
       <MyEvents userId={userId} />
-      <MySubscripedEvents userId={userId} />
+      <MySubscribedEvents userId={userId} />
     </div>
   );
 }

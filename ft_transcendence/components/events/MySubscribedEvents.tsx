@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 
 
-export default async function MySubscripedEvents({ userId }: { userId: string }) {
+export default async function MySubscribedEvents({ userId }: { userId: string }) {
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) return <div>User not found</div>;
@@ -21,7 +21,7 @@ export default async function MySubscripedEvents({ userId }: { userId: string })
     },
   });
 
-  const subscripedEvents = raw.map(({ subscriptions, _count, ...rest }) => ({
+  const subscribedEvents = raw.map(({ subscriptions, _count, ...rest }) => ({
     ...rest,
     date: rest.date.toISOString(),
     timeFrom: rest.timeFrom.toISOString(),
@@ -34,8 +34,8 @@ export default async function MySubscripedEvents({ userId }: { userId: string })
 
   return (
     <>
-      <h1 className="mb-5">My Subscriped Events</h1>
-      <FullEventList events={subscripedEvents} currentUserId={currentUserId} currentUserRole={currentUserRole} />
+      <h1 className="mb-5">My subscribed Events</h1>
+      <FullEventList events={subscribedEvents} currentUserId={currentUserId} currentUserRole={currentUserRole} />
     </>
   )
 }

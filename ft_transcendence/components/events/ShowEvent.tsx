@@ -7,6 +7,7 @@ import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import EditEvent from "./EditEvent";
+import { useRouter } from "next/navigation";
 
 type ShowEventData = {
   id: string;
@@ -31,6 +32,7 @@ type ShowEventProps = {
   onClose: () => void;
   currentUserId?: string | null;
   currentUserRole?: string | null;
+  onUnsubscribe?: (id: string) => void;
 };
 
 export default function ShowEvent({
@@ -39,6 +41,7 @@ export default function ShowEvent({
   onClose,
   currentUserId,
   currentUserRole,
+  onUnsubscribe,
 }: ShowEventProps) {
   const [localEvent, setLocalEvent] = useState(event);
   const [subscriberCount, setSubscriberCount] = useState(
@@ -58,6 +61,7 @@ export default function ShowEvent({
   const [isEditing, setIsEditing] = useState(false);
   const [subscribers, setSubscribers] = useState<{ username: string; fullName: string | null }[] | null>(null);
   const [showSubscribers, setShowSubscribers] = useState(false);
+  const router = useRouter();
 
   const handleSpotsHover = async () => {
     if (subscribers !== null) { setShowSubscribers(true); return; }
@@ -86,6 +90,11 @@ export default function ShowEvent({
   const showSubscribeButton = currentUserId && !isCreator && localEvent.creatorId !== null && !isPast;
   const isFull = localEvent.maxSpots > 0 && subscriberCount >= localEvent.maxSpots;
 
+
+
+  // inside the component:
+
+
   const handleSubscribe = async () => {
     setLoading(true);
     try {
@@ -94,6 +103,11 @@ export default function ShowEvent({
       if (res.ok) {
         setIsSubscribed(!isSubscribed);
         setSubscriberCount((c) => c + (isSubscribed ? -1 : 1));
+        if (isSubscribed) {
+          onUnsubscribe?.(localEvent.id);
+          onClose();
+        }
+        router.refresh();
       }
     } finally {
       setLoading(false);
