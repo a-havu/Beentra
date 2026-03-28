@@ -1,4 +1,4 @@
-import ImageKit from "@imagekit/nodejs";
+import ImageKit from "imagekit";
 
 export function getImageKit() {
   return new ImageKit({
