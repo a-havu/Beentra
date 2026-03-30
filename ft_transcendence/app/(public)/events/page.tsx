@@ -33,19 +33,17 @@ export default async function EventsPage() {
   }));
 
   return (
-    <div className="w-full p-5">
-      <div className="mb-5 flex gap-8">
-        <AddEvent />
+    <div className="flex flex-col items-center p-5">
+      <div className="flex flex-col items-center gap-6">
         <h1>All Events</h1>
+		<div className="flex justify-center"><AddEvent /></div>
       </div>
-      <div className="flex gap-8">
-        <div className="flex-2">
+      <div className="flex gap-5">
           <FullEventList
             events={events}
             currentUserId={userId}
             currentUserRole={userRole}
           />
-        </div>
       </div>
     </div>
   );

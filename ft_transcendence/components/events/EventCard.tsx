@@ -51,7 +51,7 @@ const EventCard = ({ event, currentUserId, currentUserRole, onUnsubscribe }: Pro
   return (
     <>
       <div
-        className={`relative pt-11 p-4 mt-4 rounded-xl shadow-md cursor-pointer ${event.creatorId === null
+        className={`relative pt-11 p-4 mt-4 rounded-xl shadow-sm cursor-pointer ${event.creatorId === null
           ? "border border-[#7e59e4] bg-[#feffee] text-black hover:bg-[#f1ecfb]"
           : "border border-[#3ebdd1] bg-[#feffee] text-black hover:bg-[#f3fbfc]"
           }`}
