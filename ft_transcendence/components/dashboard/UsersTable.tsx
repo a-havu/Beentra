@@ -133,8 +133,8 @@ export function UsersTable() {
             {/* Table Body */}
             <tbody className="divide-y divide-gray-200">
               {users.map((user, index) => {
-
-				const hasOAuthAccount = user.oauthAccount && user.oauthAccount.length > 0;
+                const hasOAuthAccount =
+                  user.oauthAccount && user.oauthAccount.length > 0;
 
                 return (
                   <tr
@@ -180,7 +180,7 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-						{!hasOAuthAccount ? (
+                        {!hasOAuthAccount ? (
                           <Button
                             variant="edit"
                             onClick={() => setEditingUser(user)}
@@ -188,10 +188,7 @@ export function UsersTable() {
                             Edit
                           </Button>
                         ) : (
-                          <Button
-                            variant="edit"
-                            disabled={true}
-                          >
+                          <Button variant="edit" disabled={true}>
                             Edit
                           </Button>
                         )}
