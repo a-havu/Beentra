@@ -18,7 +18,7 @@ model User {
   twoFactorEnabled   Boolean             @default(false)
   twoFactorSecret    String?
   fullName           String?
-  role               Role                @default(admin)
+  role               Role                @default(user)
   lastActive         DateTime            @default(now())
   isOnline			 Boolean			 @default(false)
   createdEvents      Event[]             @relation("EventCreator")
