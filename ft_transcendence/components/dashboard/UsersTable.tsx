@@ -11,16 +11,17 @@ import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import EditUser from "./EditUser";
+import { User } from "@/lib/generated/prisma/client";
 
-type User = {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  fullName?: string | null;
-  createdAt: string;
-  isOnline: boolean;
-};
+// type User = {
+//   id: string;
+//   username: string;
+//   email: string;
+//   role: string;
+//   fullName?: string | null;
+//   createdAt: string;
+//   isOnline: boolean;
+// };
 
 // The table component
 export function UsersTable() {
@@ -132,6 +133,9 @@ export function UsersTable() {
             {/* Table Body */}
             <tbody className="divide-y divide-gray-200">
               {users.map((user, index) => {
+
+				const hasOAuthAccount = user.oauthAccount && user.oauthAccount.length > 0;
+
                 return (
                   <tr
                     key={user.id}
@@ -176,12 +180,27 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <Button
+						{!hasOAuthAccount ? (
+                          <Button
+                            variant="edit"
+                            onClick={() => setEditingUser(user)}
+                          >
+                            Edit
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="edit"
+                            disabled={true}
+                          >
+                            Edit
+                          </Button>
+                        )}
+                        {/* <Button
                           variant="edit"
                           onClick={() => setEditingUser(user)}
                         >
                           Edit
-                        </Button>
+                        </Button> */}
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
