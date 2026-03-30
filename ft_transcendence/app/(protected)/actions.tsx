@@ -18,7 +18,6 @@ export async function createPage(formData: FormData) {
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "");
 
-    // 👇 Only allow privacy and terms
     if (!ALLOWED_PAGES.includes(slug)) {
       return {
         success: false,
