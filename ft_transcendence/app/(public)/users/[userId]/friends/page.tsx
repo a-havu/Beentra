@@ -17,10 +17,7 @@ export default async function FriendsPage({ params }: { params: Promise<{ userId
 
 
   return (
-    <>
-      <h2>Friends page</h2>
       <FriendsSection myFriends={myFriends} id={user.id} />
-    </>
   )
 
 }

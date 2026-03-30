@@ -34,7 +34,6 @@ TODO:
 - make a bee logo
 
 STYLING
-- event Subscribe button
 - admin dashboard
 - dropdown menu
 - remember mobile!!
