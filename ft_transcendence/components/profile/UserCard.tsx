@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/Button"
 import React, { useState } from "react";
 import Image from "next/image";
 import { User } from "@/lib/generated/prisma/client";
@@ -39,20 +40,22 @@ export default function UserCard({
   }
 
   return (
-    <article className="user-card flex flex-col gap-2">
+    <article className="flex flex-col gap-2 items-center w-full">
       <Image
         src={user.avatarUrl ?? "/default-profile-picture.png"}
         alt="user avatar"
         width={150}
         height={150}
         priority
+		className="rounded-xl"
       />
-      <span>{user.username}</span>
+      <span className="leading-none">{user.username}</span>
       {isFriend?<FriendStatus user={user} />:<></>}
-      <button
+      <div className="flex justify-center"><Button
         onClick={handleClick}
         disabled={loading}
-        className="mt-2 px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
+		variant={isFriend ? "edit" : "primary"}
+		size="small"
       >
         {loading
           ? isFriend
@@ -61,7 +64,7 @@ export default function UserCard({
           : isFriend
             ? "Remove Friend"
             : "Add Friend"}
-      </button>
+      </Button></div>
       {error && <div className="text-red-500 mt-2">{error}</div>}
     </article>
   );
