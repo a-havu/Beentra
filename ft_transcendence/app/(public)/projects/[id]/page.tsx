@@ -83,9 +83,16 @@ export default async function ProjectPage({
               className="w-full h-auto max-h-96 rounded-lg object-contain"
             />
           ) : (
-             <span className="w-full px-10 py-4 aspect-square bg-[#e8e1fd] rounded-lg flex items-center justify-center text-6xl">
-              🐝
-            </span>
+            //  <span className="w-full px-10 py-4 aspect-square bg-[#e8e1fd] rounded-lg flex items-center justify-center text-6xl">
+            //   🐝
+            // </span>
+			<Image
+				src="/logo.png"
+				alt="logo"
+				width={32}
+				height={32}
+				className="w-30 px-10 py-4 bg-[#e8e1fd] rounded-lg flex items-center justify-center text 6-xl"
+					/>
           )}
         </div>
 
