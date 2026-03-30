@@ -7,10 +7,17 @@ import { useForm } from "react-hook-form";
 import { registerSchema } from "@/lib/validation";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { User } from "@/lib/generated/prisma/client";
 
 type FormFields = z.infer<typeof registerSchema>;
 
-export function RegistrationForm() {
+type Props = {
+	admin: boolean;
+	onSuccess?: () => void;
+	onAddSuccess?: (user: User) => void;
+}
+
+export function RegistrationForm({ admin, onSuccess, onAddSuccess }: Props) {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -47,7 +54,13 @@ export function RegistrationForm() {
         return;
       }
       setSubmitted(true);
-      router.push("/login");
+	  if (!admin) {
+		router.push("/login");
+	  }
+	//   onAddSuccess?.({
+	// 	...result
+	//   });
+	  onSuccess?.();
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
     }
