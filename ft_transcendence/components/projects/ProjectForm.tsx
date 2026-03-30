@@ -104,7 +104,7 @@ export default function ProjectForm({
 		name="techStack"
 		id="techStack"
 		type="text"
-		placeholder="Tech stack"
+		placeholder="Separate with commas"
 		required={false}
 		register={register}
 		errors={errors}

@@ -23,11 +23,6 @@ body {
     background: #000;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
 @layer base {
     h1 {
         @apply text-2xl md:text-3xl lg:text-4xl font-semibold;
@@ -202,11 +197,6 @@ a {
 
 .beentra-form {
     @apply flex flex-col bg-[#CDCEFF] w-xl rounded-2xl self-center p-10 gap-4 shadow-md;
-}
-
-/* Shared card style — used by ProfileCard and ProjectCard for visual consistency */
-.beentra-card {
-    @apply rounded-2xl border border-gray-200 bg-white/70;
 }
 
 /*end of Beentra General styles*/

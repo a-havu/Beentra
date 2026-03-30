@@ -25,6 +25,23 @@ That's a problem when looking into the future - i don't want my personal email a
 
 on March 10 it was decided to create a gmail account for Beentra and use a third-party service ImageKit
 
+*learning about accessibility in web design*
+- don't indicate something with colour only!
+- i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
+
 TODO:
-- style the event Subscribe button
-- design single project page
+- fix project form Description field and extract the buttons in the modal
+- make a bee logo
+
+STYLING
+- event Subscribe button
+- admin dashboard
+- dropdown menu
+- remember mobile!!
+- friends page
+- BUTTON COLOURS need to be fixed
+
+NOTICING:
+- even though the Audio hackathon is going on, it's not visible in today's events
+- the dropdown menu stays on even after navigating to the appointed page
+- does anyone else have the weird icon bobbing around on profile form?
