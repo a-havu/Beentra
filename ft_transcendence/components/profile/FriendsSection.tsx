@@ -18,18 +18,18 @@ export default async function FriendsSection({
       user.id !== id && !myFriends.some((friend) => friend.id === user.id),
   );
   return (
-    <div className="friends-section">
-      <div className="mt-4">
-        <h3>My Friends</h3>
+    <div className="flex flex-col md:flex-row items-start gap-3">
+		<div className="md:w-1/2 min-w-0 p-5 bg-[#dff5fa] shadow-sm rounded-xl overflow-hidden">
+		<h3 className="flex justify-center text-[#007d99]">My Friends</h3><br />
         <MyFriends myFriends={myFriends} currentUserId={id} />
-      </div>
-      <div className="mt-4">
-        <h3>potintial list</h3>
+		</div>
+		<div className="md:w-1/2 min-w-0 p-5 bg-[#e7e1fb] shadow-sm rounded-xl">
+        <h3 className="flex justify-center text-[#4323ae]">Friend suggestions</h3><br />
         <PotentialFriends
           potentialFriends={potentialFriends}
           currentUserId={id}
         />
-      </div>
+		</div>
     </div>
   );
 }

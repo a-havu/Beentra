@@ -25,7 +25,7 @@ export default async function ProjectPage({
   const isCreator = session?.userId === project.creatorId;
 
 	return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto">
       {/* Actions */}
       {isCreator && (
         <div className="flex gap-2 justify-center mb-6">
