@@ -91,6 +91,7 @@ export async function GET() {
         username: true,
         fullName: true,
         isOnline: true,
+        oauthAccount: true,
       },
       orderBy: {
         createdAt: "desc",

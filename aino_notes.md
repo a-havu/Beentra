@@ -37,7 +37,6 @@ STYLING
 - admin dashboard
 - dropdown menu
 - remember mobile!!
-- friends page
 - BUTTON COLOURS need to be fixed
 
 NOTICING:

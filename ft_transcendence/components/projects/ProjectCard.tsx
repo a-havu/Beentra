@@ -5,7 +5,7 @@ import { LocalProject } from "@/types/general";
 export default function ProjectCard({ project }: { project: LocalProject }) {
   return (
     <Link className="relative flex-1 min-w-0" href={`/projects/${project.id}`}>
-      <div className="flex-1 cursor-pointer rounded-xl h-80 border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col gap-3">
+      <div className="flex-1 cursor-pointer rounded-xl md:h-80 border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col gap-3">
         <div className="relative w-full h-40 object-cover rounded-t-xl bg-[#DEDFFF] flex items-center justify-center text-5xl overflow-hidden">
           {project.image ? (
             <Image
@@ -26,12 +26,12 @@ export default function ProjectCard({ project }: { project: LocalProject }) {
             <p className="text-sm p-1 text-gray-500">{project.techStack}</p>
           )}
           {project.createdAt && (
-            <p className="text-sm text-gray-500 absolute bottom-3 right-2">
+            <p className="text-sm text-gray-500 p-1 leading-none md:absolute md:bottom-3 md:right-2">
               {new Date(project.createdAt).toLocaleDateString()}
             </p>
           )}
           {project.creator && (
-            <p className="text-sm text-gray-500 absolute bottom-8 right-2">
+            <p className="text-sm text-gray-500 ml-1 mb-2 leading-none md:absolute md:bottom-8 md:right-2">
               {project.creator.username}
             </p>
           )}

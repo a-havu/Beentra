@@ -57,8 +57,8 @@ model Event {
   publicCreatorId String?
   type            String              @default("Student")
   image           String?
-  creator         User?               @relation("EventCreator", fields: [creatorId], references: [id])
-  publicCreator   PublicApiUser?      @relation(fields: [publicCreatorId], references: [id])
+  creator         User?               @relation("EventCreator", fields: [creatorId], references: [id],onDelete: SetNull)
+  publicCreator   PublicApiUser?      @relation(fields: [publicCreatorId], references: [id], onDelete: SetNull)
   subscriptions   EventSubscription[]
 }
 
@@ -68,7 +68,7 @@ model EventSubscription {
   userId    String
   createdAt DateTime @default(now())
   event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([eventId, userId])
 }
@@ -80,7 +80,7 @@ model OauthAccount {
   providerUserId String
   accessToken    String?
   createdAt      DateTime @default(now())
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerUserId])
 }
@@ -108,7 +108,7 @@ model Project {
   creatorId      String?
   image          String?
   imagekitFileId String?
-  creator        User?    @relation("ProjectCreator", fields: [creatorId], references: [id])
+  creator        User?    @relation("ProjectCreator", fields: [creatorId], references: [id], onDelete: SetNull)
 }
 
 enum Role {
@@ -121,8 +121,8 @@ model Friend {
   id       Int    @id @default(autoincrement())
   userId   String
   friendId String
-  user     User   @relation("UserFriends", fields: [userId], references: [id])
-  friend   User   @relation("FriendOf", fields: [friendId], references: [id])
+  user     User   @relation("UserFriends", fields: [userId], references: [id] ,onDelete: Cascade)
+  friend   User   @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
 
   @@unique([userId, friendId])
 }
