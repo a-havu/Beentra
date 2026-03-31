@@ -27,7 +27,7 @@ export function Statistics() {
 
   return (
     // Main container
-    <div className="bg-gray-100 rounded-lg p-6 flex gap-4">
+    <div className="bg-[#daebd5] rounded-lg p-6 flex gap-4">
       {/* Single information box inside the main container */}
       <div className=" flex-1 bg-white rounded-lg p-6">
         <p className="text-lg text-gray-600">Total Users</p>

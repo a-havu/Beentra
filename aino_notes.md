@@ -28,13 +28,12 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 *learning about accessibility in web design*
 - don't indicate something with colour only!
 - i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
+- feedback should be easily readable/identifiable
 
 TODO:
 - fix project form Description field and extract the buttons in the modal
-- make a bee logo
 
 STYLING
-- admin dashboard
 - dropdown menu
 - remember mobile!!
 - BUTTON COLOURS need to be fixed
@@ -43,3 +42,4 @@ NOTICING:
 - even though the Audio hackathon is going on, it's not visible in today's events
 - the dropdown menu stays on even after navigating to the appointed page
 - does anyone else have the weird icon bobbing around on profile form?
+- the error messages in forms should be instant
