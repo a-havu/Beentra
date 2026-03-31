@@ -52,7 +52,8 @@ export default function EditProject({ project, onSuccess }: Props) {
   };
   return (
     <div className="flex flex-col items-center gap-4">
-      <Button onClick={() => setShowForm(true)} type="button">
+      <Button onClick={() => setShowForm(true)}
+	  type="button" variant="edit">
         Edit
       </Button>
       {showForm && (

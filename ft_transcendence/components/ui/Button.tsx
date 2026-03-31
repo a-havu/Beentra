@@ -23,7 +23,7 @@ export function Button({
     primary: "border border-[#724015] bg-[#724015] text-white hover:bg-transparent hover:text-black",
     secondary: "border border-[#A2B09E] bg-[#A2B09E] text-black hover:bg-transparent hover:text-black",
     sidebar:
-      "w-full text-center bg-white border-2 border-gray-300 rounded-lg text-lg font-bold text-gray-900 hover:bg-gray-900 hover:border-white hover:text-white transition",
+      "w-full text-center bg-white border-2 border-[#A2B09E] rounded-lg text-lg font-bold text-gray-900 hover:bg-[#A2B09E] hover:border-white hover:text-white transition",
     delete: "border border-[#FF97A2] bg-[#FF97A2] text-black hover:bg-transparent",
     adding: "border border-[#724015] bg-[#724015] text-white hover:bg-transparent hover:text-black",
     edit: "border border-[#F7AE69] bg-[#F7AE69] text-black hover:bg-transparent",

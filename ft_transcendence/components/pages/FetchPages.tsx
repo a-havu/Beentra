@@ -44,7 +44,7 @@ export default async function FetchPages() {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-blue-900">Pages Management</h2>
+        <h2 className="text-2xl font-bold text-[#255a8b]">Pages Management</h2>
       </div>
 
       <div>
