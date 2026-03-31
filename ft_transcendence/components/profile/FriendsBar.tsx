@@ -44,7 +44,7 @@ export default function FriendsBar({ friends }: { friends: FriendBarItem[] }) {
   if (friends.length === 0) return null;
 
   return (
-    <div className="mx-5 relative overflow-hidden h-10 bg-[#e2f7fe6f] rounded-full inset-shadow-sm inset-shadow-gray-200">
+    <div className="relative overflow-hidden h-10 bg-[#e2f7fe6f] rounded-full inset-shadow-sm inset-shadow-gray-200">
       <div className="absolute left-full flex items-center gap-4 h-full animate-marquee">
         {friends.map((friend) => (
           <FriendItem key={`a-${friend.id}`} friend={friend} />

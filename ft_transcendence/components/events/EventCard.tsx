@@ -11,7 +11,12 @@ type Props = {
   onUnsubscribe?: (id: string) => void;
 };
 
-const EventCard = ({ event, currentUserId, currentUserRole, onUnsubscribe }: Props) => {
+const EventCard = ({
+  event,
+  currentUserId,
+  currentUserRole,
+  onUnsubscribe,
+}: Props) => {
   const [subscriberCount, setSubscriberCount] = useState(event.subscriberCount);
   const [isSubscribed, setIsSubscribed] = useState(event.isSubscribed);
   const [loading, setLoading] = useState(false);
@@ -27,8 +32,9 @@ const EventCard = ({ event, currentUserId, currentUserRole, onUnsubscribe }: Pro
     minute: "2-digit",
   });
 
+  const isIntra = event.creatorId === null && event.publicCreatorId === null;
   const isCreator = currentUserId && event.creatorId === currentUserId;
-  const showSubscribeButton = currentUserId && !isCreator;
+  const showSubscribeButton = currentUserId && !isCreator && !isIntra;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
   const handleSubscribe = async () => {
@@ -51,20 +57,35 @@ const EventCard = ({ event, currentUserId, currentUserRole, onUnsubscribe }: Pro
   return (
     <>
       <div
-        className={`relative pt-11 p-4 mt-4 rounded-xl shadow-sm cursor-pointer ${event.creatorId === null
-          ? "border border-[#7e59e4] bg-[#feffee] text-black hover:bg-[#f1ecfb]"
-          : "border border-[#3ebdd1] bg-[#feffee] text-black hover:bg-[#f3fbfc]"
-          }`}
+        className={`relative pt-11 p-4 mt-4 rounded-xl shadow-sm cursor-pointer ${
+          isIntra
+            ? "border border-[#7e59e4] bg-[#feffee] text-black hover:bg-[#f1ecfb]"
+            : "border border-[#3ebdd1] bg-[#feffee] text-black hover:bg-[#f3fbfc]"
+        }`}
         onClick={() => setShowModal(true)}
       >
-        {event.creatorId === null
-          ? <div className="absolute top-0 left-0 bg-[#e8e1fd] w-20 rounded-tl-xl rounded-br-xl"><p className="p-2 flex justify-center text-sm text-[#4821B5]">Intra</p></div>
-          : <div className="absolute top-0 left-0 bg-[#daf6fb] w-20 rounded-tl-xl rounded-br-xl"><p className="p-2 flex justify-center text-sm text-[#2a5159]">Student</p></div>}
+        {isIntra ? (
+          <div className="absolute top-0 left-0 bg-[#e8e1fd] w-20 rounded-tl-xl rounded-br-xl">
+            <p className="p-2 flex justify-center text-sm text-[#4821B5]">
+              Intra
+            </p>
+          </div>
+        ) : (
+          <div className="absolute top-0 left-0 bg-[#daf6fb] w-20 rounded-tl-xl rounded-br-xl">
+            <p className="p-2 flex justify-center text-sm text-[#2a5159]">
+              Beentra
+            </p>
+          </div>
+        )}
         <div>
-          {event.creatorId === null
-            ? <h3 className="text-[#4821B5]">{event.title}</h3>
-            : <h3 className="text-[#015b8f]">{event.title}</h3>}
-          <p>{from} – {to}</p>
+          {isIntra ? (
+            <h3 className="text-[#4821B5]">{event.title}</h3>
+          ) : (
+            <h3 className="text-[#015b8f]">{event.title}</h3>
+          )}
+          <p>
+            {from} – {to}
+          </p>
           <p>🧭 {event.location}</p>
           {/* {event.description && <p>{event.description}</p>} */}
           {event.maxSpots > 0 && (
@@ -76,16 +97,24 @@ const EventCard = ({ event, currentUserId, currentUserRole, onUnsubscribe }: Pro
             <p className="text-gray-500 text-sm">🤹 {event.organizer}</p>
             {showSubscribeButton && (
               <button
-                className={`absolute bottom-0 right-0 cursor-pointer px-5 py-3 rounded-tl-xl rounded-br-xl text-lg ${event.creatorId === null
-                  ? "text-[#4821B5] bg-[#e8e1fd]"
-                  : "text-[#015b8f] bg-[#daf6fb]"}`}
+                className={`absolute bottom-0 right-0 cursor-pointer px-5 py-3 rounded-tl-xl rounded-br-xl text-lg ${
+                  isIntra
+                    ? "text-[#4821B5] bg-[#e8e1fd]"
+                    : "text-[#015b8f] bg-[#daf6fb] hover:bg-[#b3eff9]"
+                }`}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleSubscribe();
                 }}
                 disabled={loading || (!isSubscribed && isFull)}
               >
-                {isSubscribed ? <span className="text-red-800">Unsubscribe</span> : isFull ? "Full" : "Subscribe"}
+                {isSubscribed ? (
+                  <span className="text-red-800">Unsubscribe</span>
+                ) : isFull ? (
+                  "Full"
+                ) : (
+                  "Subscribe"
+                )}
               </button>
             )}
           </div>
