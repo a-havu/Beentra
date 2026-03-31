@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MinimalEditor from "@/components/tiptap/MinimalEditor";
 import { PageZodSchema, PageZodType } from "@/types/zodScemas";
 import Input from "../ui/Input";
+import { Button } from "../ui/Button";
 
 type ActionResult = {
   success: boolean;
@@ -63,8 +64,8 @@ export default function PageForm({
   }
 
   return (
-    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden">
-      <h1>{id ? "Update page" : "Add new page"}</h1>
+    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden p-6 rounded-xl">
+      <h2 className="text-2xl font-bold text-[#255a8b]">{id ? "Update page" : "Add new page"}</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -87,7 +88,7 @@ export default function PageForm({
           <p className="text-red-500 text-sm mt-2">{serverError}</p>
         )}
 
-        <button type="submit">{id ? "Update" : "Submit"}</button>
+        <div className="mt-3"><Button type="submit" variant="secondary">{id ? "Update" : "Submit"}</Button></div>
       </form>
     </div>
   );
