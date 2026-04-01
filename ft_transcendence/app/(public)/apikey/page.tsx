@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/Button";
 import FormTitle from "@/components/ui/FormTitle";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ApiKeyPage() {
   const [success, setSuccess] = useState(false);
@@ -73,8 +74,9 @@ export default function ApiKeyPage() {
         />
         <p>
           You must have an API key, so please add your email to receive a mail
-          with the API key :)
+          with the API key
         </p>
+        <p>if you already have the key just click <Link href="/reference">API Reference</Link></p>
         <Input
           label="your email"
           name="userEmail"
