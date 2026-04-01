@@ -18,7 +18,7 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-[#dff5fa] rounded-xl">
       <Sidebar userEmail={userEmail} onButtonClick={handleButtonClick} />
       <main className="flex-1 p-8">
         {activeView === "welcome" && <WelcomeView />}

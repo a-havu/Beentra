@@ -28,7 +28,7 @@ if (res.ok) {
 };
 return (
     <div className="px-10">
-      <Button variant="adding" onClick={() => setShowForm(true)} type="button">
+      <Button variant="adding" size="large" onClick={() => setShowForm(true)} type="button">
         Create Project
       </Button>
       {showForm && <ProjectForm

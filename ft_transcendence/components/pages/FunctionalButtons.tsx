@@ -23,13 +23,14 @@ export default function FunctionalButtons({ id, initialData }: Props) {
   }
 
   return (
-    <div>
+    <div className="flex gap-2">
+
+	<Button variant="secondary" onClick={() => setShowEditModal(true)}>
+        Edit
+    </Button>
+
       <Button variant="delete" onClick={handleDelete}>
         Delete
-      </Button>
-
-      <Button variant="secondary" onClick={() => setShowEditModal(true)}>
-        Edit
       </Button>
 
       <Modal isOpen={showEditModal} onClose={() => setShowEditModal(false)}>

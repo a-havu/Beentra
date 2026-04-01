@@ -11,8 +11,10 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div>
-      <h1 className="flex justify-center">Projects!</h1>
-      <CreateProject />
+		<div className="flex flex-col justify-center gap-5">
+      <h1 className="flex justify-center">All Projects</h1>
+      <div className="flex justify-center"><CreateProject /></div>
+	  </div>
       <DisplayProjects />
     </div>
   );

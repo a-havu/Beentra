@@ -33,6 +33,7 @@ export function formatIntraEvent(event: IntraEventInput): EventData {
     description: event.description ?? null,
     image: null,
     creatorId: null,
+    publicCreatorId: null,
     maxSpots: event.max_people ?? 0,
     subscriberCount: event.nbr_subscribers,
     isSubscribed: false,

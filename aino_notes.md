@@ -34,11 +34,9 @@ TODO:
 - make a bee logo
 
 STYLING
-- event Subscribe button
 - admin dashboard
 - dropdown menu
 - remember mobile!!
-- friends page
 - BUTTON COLOURS need to be fixed
 
 NOTICING:

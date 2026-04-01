@@ -10,9 +10,9 @@ export function Sidebar({
   onButtonClick: any;
 }) {
   return (
-    <aside className="flex flex-col gap-5 w-64 rounded-xl bg-white shadow-lg p-6 border-r border-gray-300">
+    <aside className="flex flex-col gap-5 w-64 rounded-tl-xl rounded-bl-xl bg-white shadow-sm p-6">
       <div className="flex flex-col mb-8">
-        <h1 className="text-2xl text-center font-bold text-gray-900">
+        <h1 className="text-2xl text-center font-bold text-[#255a8b]">
           Admin Dashboard
         </h1>
         <p className="text-sm text-center text-gray-600">
