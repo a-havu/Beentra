@@ -1,5 +1,5 @@
 import AddEvent from "@/components/dashboard/AddEvent";
-import FullEventList from "@/components/events/FullEventList";
+import EventGrid from "@/components/events/EventGrid";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 export const dynamic = "force-dynamic";
@@ -35,15 +35,17 @@ export default async function EventsPage() {
   return (
     <div className="flex flex-col items-center p-5">
       <div className="flex flex-col items-center gap-6">
-        <h1>All Events</h1>
-		<div className="flex justify-center"><AddEvent /></div>
+        <h1>All Beentra Events</h1>
+        <div className="flex justify-center">
+          <AddEvent />
+        </div>
       </div>
-      <div className="flex gap-5">
-          <FullEventList
-            events={events}
-            currentUserId={userId}
-            currentUserRole={userRole}
-          />
+      <div className="flex gap-5 ">
+        <EventGrid
+          events={events}
+          currentUserId={userId}
+          currentUserRole={userRole}
+        />
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ export type EventData = {
   image: string | null;
   description: string | null;
   creatorId: string | null;
+  publicCreatorId: string | null;
   maxSpots: number;
   subscriberCount: number;
   isSubscribed: boolean;

@@ -85,7 +85,7 @@ export function EventsTable() {
     <>
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
+          <h2 className="text-2xl font-bold text-[#255a8b]">Event Management</h2>
 
           <AddEvent onEventCreated={addSuccess} />
         </div>
@@ -139,7 +139,7 @@ export function EventsTable() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button
-                          variant="edit"
+                          variant="secondary"
                           onClick={() => setEditingId(event.id)}
                         >
                           Edit

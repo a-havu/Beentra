@@ -115,8 +115,8 @@ export default function EventForm({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex flex-col gap-2">
+        {/* <div className="grid grid-cols-2 gap-3"> */}
+        {/* <div className="flex flex-col gap-2">
             <label className="p-2" htmlFor="type">
               Type
             </label>
@@ -127,21 +127,24 @@ export default function EventForm({
               <option value="Student">Student</option>
               <option value="External">External</option>
             </select>
-          </div>
-          <Input
-            label="Max Spots (0 = unlimited)"
-            name="maxSpots"
-            id="maxSpots"
-            type="number"
-            placeholder="0"
-            required={false}
-            register={register}
-            errors={errors}
-          />
-        </div>
+          </div> */}
+        <Input
+          label="Max Spots (0 = unlimited)"
+          name="maxSpots"
+          id="maxSpots"
+          type="number"
+          placeholder="0"
+          required={false}
+          register={register}
+          errors={errors}
+        />
+        {/* </div> */}
 
         <div>
-          <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="image"
+            className="block text-sm font-medium text-gray-700"
+          >
             Image
           </label>
           <input
@@ -154,7 +157,9 @@ export default function EventForm({
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="description" className="p-2">Description</label>
+          <label htmlFor="description" className="p-2">
+            Description
+          </label>
           <textarea
             id="description"
             {...register("description")}
@@ -163,7 +168,9 @@ export default function EventForm({
             className="bg-white ml-2 p-2 rounded-lg resize-y text-sm"
           />
           {errors.description && (
-            <p className="text-red-500 text-sm ml-2">{errors.description.message}</p>
+            <p className="text-red-500 text-sm ml-2">
+              {errors.description.message}
+            </p>
           )}
         </div>
       </form>

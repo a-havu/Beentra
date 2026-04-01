@@ -5,7 +5,7 @@ export const openApiSpec = {
     title: 'Beentra Public API',
     version: '1.0.0',
   },
-  servers: [{ url: 'http://localhost:3000/api' }], // ✅ fixed, was /api/events
+  servers: [{ url: 'http://localhost:3000/api' }],
   paths: {
     '/events': {
       get: {
@@ -175,8 +175,7 @@ export const openApiSpec = {
         required: ['title', 'type', 'date', 'timeFrom', 'timeTo', 'location', 'organizer'],
         properties: {
           title: { type: 'string', example: 'Tech Meetup Helsinki' },
-          type: { type: 'string', example: 'meetup' },
-          date: { type: 'string', format: 'date-time', example: '2025-06-01T00:00:00.000Z' },
+          date: { type: 'string', format: 'date-time', example: '2026-06-01T00:00:00.000Z' },
           timeFrom: { type: 'string', example: '18:00', description: 'HH:MM format' },
           timeTo: { type: 'string', example: '20:00', description: 'HH:MM format' },
           location: { type: 'string', example: 'Helsinki, Finland' },
@@ -184,6 +183,7 @@ export const openApiSpec = {
           image: { type: 'string', format: 'uri', nullable: true },
           description: { type: 'string', nullable: true },
           maxSpots: { type: 'integer', example: 50, nullable: true },
+          type:{type:'string' ,example: 'External'}
         },
       },
       EventResponse: {
