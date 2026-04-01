@@ -1,4 +1,3 @@
-
 import { Button } from "../ui/Button";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
@@ -49,13 +48,13 @@ export function Sidebar({
         >
           Pages
         </Button>
-        <Button
+        {/* <Button
           variant="sidebar"
           size={isMobile ? "xsmall" : "medium"}
           onClick={() => onButtonClick("add-page")}
         >
           Add Page
-        </Button>
+        </Button> */}
         <Button
           variant="sidebar"
           size={isMobile ? "xsmall" : "medium"}

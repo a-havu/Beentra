@@ -10,7 +10,13 @@ import { ProjectsTable } from "./ProjectsTable";
 import { PagesTable } from "./PagesTable";
 
 // the fetchPages is a component sent by props.
-export function DashboardContent({ userEmail, fetchPages }: { userEmail: string, fetchPages: React.ReactNode }) {
+export function DashboardContent({
+  userEmail,
+  fetchPages,
+}: {
+  userEmail: string;
+  fetchPages: React.ReactNode;
+}) {
   const [activeView, setActiveView] = useState("welcome");
 
   const handleButtonClick = (view: string) => {

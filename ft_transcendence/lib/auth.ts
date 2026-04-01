@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT, jwtVerify, errors } from "jose";
 import { cookies } from "next/headers";
 import type { JWTPayload } from "jose";
 import { prisma } from "@/lib/prisma";
@@ -38,6 +38,25 @@ export async function createTempToken(payload: {
     .sign(secret);
 }
 
+// export async function verifyToken(token: string): Promise<Session | null> {
+//   try {
+//     const { payload } = await jwtVerify<TokenPayload>(token, secret);
+
+//     const foundUser = await prisma.user.findUnique({
+//       where: { id: payload.userId },
+//     });
+//     if (!foundUser) {
+//       const cookieStore = await cookies();
+//       cookieStore.delete("auth-token");
+//       return null;
+//     }
+
+//     return payload as Session;
+//   } catch (error) {
+//     return null;
+//   }
+// }
+
 export async function verifyToken(token: string): Promise<Session | null> {
   try {
     const { payload } = await jwtVerify<TokenPayload>(token, secret);
@@ -53,6 +72,18 @@ export async function verifyToken(token: string): Promise<Session | null> {
 
     return payload as Session;
   } catch (error) {
+    if (error instanceof errors.JWTExpired) {
+      const userId =
+        error.payload.sub ?? (error.payload as TokenPayload).userId;
+      if (userId) {
+        await prisma.user.update({
+          where: { id: userId },
+          data: { isOnline: false },
+        });
+        const cookieStore = await cookies();
+        cookieStore.delete("auth-token");
+      }
+    }
     return null;
   }
 }
