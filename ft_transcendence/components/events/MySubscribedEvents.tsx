@@ -34,7 +34,7 @@ export default async function MySubscribedEvents({ userId }: { userId: string })
 
   return (
     <>
-      <h1 className="mb-5 mt-5">My subscribed Events</h1>
+      <h1 className="mb-5 mt-5 text-[#44469A]">My subscribed Events</h1>
       <FullEventList events={subscribedEvents} currentUserId={currentUserId} currentUserRole={currentUserRole} />
     </>
   )

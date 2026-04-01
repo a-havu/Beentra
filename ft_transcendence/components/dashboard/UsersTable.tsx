@@ -100,7 +100,7 @@ export function UsersTable() {
     <>
       <div className="bg-white rounded-lg shadow p-5">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[#255a8b]">Users Management</h2>
+          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">Users Management</h2>
 
           <AddUser onSuccess={onSuccess} />
         </div>
@@ -109,19 +109,19 @@ export function UsersTable() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b-2 border-gray-200">
               <tr>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   ID
                 </th>
                 <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Username
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Status
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Email
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Role
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
@@ -142,13 +142,13 @@ export function UsersTable() {
                     className="hover:bg-gray-50 transition cursor-pointer"
                     onClick={() => setSelectedUser(user)}
                   >
-                    <td className="px-6 py-4 text-center text-sm text-gray-900">
+                    <td className="hidden md:table-cell px-6 py-4 text-center text-sm text-gray-900">
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 text-center text-sm text-gray-900">
                       {user.username}
                     </td>
-                    <td className="px-6 py-4 text-center">
+                    <td className="hidden md:table-cell px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-center text-xs font-semibold
 											${
@@ -160,10 +160,10 @@ export function UsersTable() {
                         {user.isOnline ? "Online" : "Offline"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-center text-sm text-gray-600">
+                    <td className="hidden md:table-cell px-6 py-4 text-center text-sm text-gray-600">
                       {user.email}
                     </td>
-                    <td className="px-6 py-4 text-center">
+                    <td className="hidden md:table-cell px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-center text-xs font-semibold
 											${
@@ -180,22 +180,16 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-						<Button
-							variant="secondary"
-							onClick={() => setEditingUser(user)}
-						>
-							Edit
-						</Button>
 						{!hasOAuthAccount ? (
                           <Button
-                            variant="edit"
+                            variant="secondary"
                             onClick={() => setEditingUser(user)}
                           >
                             Edit
                           </Button>
                         ) : (
                           <Button
-                            variant="edit"
+                            variant="secondary"
                             disabled={true}
                           >
                             Edit

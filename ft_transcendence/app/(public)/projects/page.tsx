@@ -12,7 +12,7 @@ export default function ProjectsPage() {
   return (
     <div>
 		<div className="flex flex-col justify-center gap-5">
-      <h1 className="flex justify-center">All Projects</h1>
+      <h1 className="flex justify-center">All Beentra Projects</h1>
       <div className="flex justify-center"><CreateProject /></div>
 	  </div>
       <DisplayProjects />

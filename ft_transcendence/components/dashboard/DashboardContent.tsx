@@ -20,16 +20,10 @@ export function DashboardContent({ userEmail, fetchPages }: { userEmail: string,
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex bg-[#dff5fa] rounded-xl">
-		{/* Hamburger button */}
-		<button
-		className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow"
-		onClick={() => setSidebarOpen(!sidebarOpen)}
-		></button>
-		
+    <div className="flex flex-col md:flex-row bg-[#dff5fa] rounded-xl">
       <Sidebar userEmail={userEmail} onButtonClick={handleButtonClick} />
-      <main className="flex-1 p-8">
-        <div className="hidden md:block">{activeView === "welcome" && <WelcomeView />}</div>
+      <main className="flex-1 p-1 md:p-8">
+        <div className="">{activeView === "welcome" && <WelcomeView />}</div>
         {activeView === "users" && <UsersTable />}
         {activeView === "events" && <EventsTable />}
         {activeView === "projects" && <ProjectsTable />}

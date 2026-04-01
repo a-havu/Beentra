@@ -8,7 +8,7 @@ export default async function Header() {
   return (
     <header className="header flex flex-row items-center justify-between md:p-6 h-16 w-full overflow-visible">
 		<div className="flex flex-row gap-3"><Link href="/"><Image
-		src="/favicon.ico"
+		src="/logo.svg"
 		alt="logo"
 		width={32}
 		height={32}
