@@ -19,7 +19,7 @@ function Modal({ children, isOpen, onClose }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl shadow-2xl p-8 w-auto max-w-5xl mx-4"
+        className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-3xl mx-4"
         onClick={(e) => e.stopPropagation()}
       >
         {children}

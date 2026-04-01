@@ -1,30 +1,6 @@
-
-
-// import { prisma } from "@/lib/prisma"
-// import FunctionalButtons from "./FunctionalButtons";
-
-// export default async function FetchPages(){
-//   const pages = await prisma.page.findMany()
-
-//  return(
-
-// <div className="page-list m-7">
-//             <ul>
-//           {pages?pages.map(page => (
-//             <li key={page.id}><div className="flex flex-row gap-5"><div>{page.title} </div><div><FunctionalButtons id={page.id} /></div></div></li>
-//           )
-
-//           ):'NULL'}
-//           </ul>
-//         </div>
-
-//  )
-
-// }
-
-
 import { prisma } from "@/lib/prisma";
 import FunctionalButtons from "./FunctionalButtons";
+import AddPage from "../dashboard/AddPage";
 
 export default async function FetchPages() {
   const pages = await prisma.page.findMany({
@@ -32,19 +8,20 @@ export default async function FetchPages() {
       author: {
         select: {
           username: true,
-          fullName: true
-        }
-      }
+          fullName: true,
+        },
+      },
     },
     orderBy: {
-      createdAt: 'desc'
-    }
+      createdAt: "desc",
+    },
   });
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-[#255a8b]">Pages Management</h2>
+        <AddPage />
       </div>
 
       <div>
@@ -72,10 +49,7 @@ export default async function FetchPages() {
           <tbody className="divide-y divide-gray-200">
             {pages.length > 0 ? (
               pages.map((page, index) => (
-                <tr
-                  key={page.id}
-                  className="hover:bg-gray-50 transition"
-                >
+                <tr key={page.id} className="hover:bg-gray-50 transition">
                   <td className="px-6 py-4 text-center text-sm text-gray-900">
                     {index + 1}
                   </td>
@@ -83,16 +57,16 @@ export default async function FetchPages() {
                     {page.title}
                   </td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">
-                    {page.author?.username || 'Unknown'}
+                    {page.author?.username || "Unknown"}
                   </td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">
                     {new Date(page.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4">
-                    <FunctionalButtons 
-  id={page.id} 
-  initialData={{ title: page.title, text: page.text }} 
-/>
+                    <FunctionalButtons
+                      id={page.id}
+                      initialData={{ title: page.title, text: page.text }}
+                    />
                   </td>
                 </tr>
               ))

@@ -86,10 +86,7 @@ export function UsersTable() {
     return (
       <div className="bg-white rounded-lg shadow p-12 text-center">
         <p className="text-red-600">{error}</p>
-        <Button
-          onClick={() => window.location.reload()}
-          variant="edit"
-        >
+        <Button onClick={() => window.location.reload()} variant="edit">
           Retry
         </Button>
       </div>
@@ -100,7 +97,9 @@ export function UsersTable() {
     <>
       <div className="bg-white rounded-lg shadow p-5">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[#255a8b]">Users Management</h2>
+          <h2 className="text-2xl font-bold text-[#255a8b]">
+            Users Management
+          </h2>
 
           <AddUser onSuccess={onSuccess} />
         </div>
@@ -133,9 +132,6 @@ export function UsersTable() {
             {/* Table Body */}
             <tbody className="divide-y divide-gray-200">
               {users.map((user, index) => {
-
-				const hasOAuthAccount = user.oauthAccount && user.oauthAccount.length > 0;
-
                 return (
                   <tr
                     key={user.id}
@@ -180,13 +176,7 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-						<Button
-							variant="secondary"
-							onClick={() => setEditingUser(user)}
-						>
-							Edit
-						</Button>
-						{!hasOAuthAccount ? (
+                        {/* {!hasOAuthAccount ? (
                           <Button
                             variant="edit"
                             onClick={() => setEditingUser(user)}
@@ -194,19 +184,16 @@ export function UsersTable() {
                             Edit
                           </Button>
                         ) : (
-                          <Button
-                            variant="edit"
-                            disabled={true}
-                          >
+                          <Button variant="edit" disabled={true}>
                             Edit
                           </Button>
-                        )}
-                        {/* <Button
+                        )} */}
+                        <Button
                           variant="edit"
                           onClick={() => setEditingUser(user)}
                         >
                           Edit
-                        </Button> */}
+                        </Button>
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
@@ -237,6 +224,10 @@ export function UsersTable() {
           <ModalBody>
             <EditUser
               user={editingUser}
+              isOAuth={
+                !!editingUser.oauthAccount &&
+                editingUser.oauthAccount.length > 0
+              }
               onSuccess={handleEditUser}
               onCancel={() => setEditingUser(null)}
             />
