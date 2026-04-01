@@ -2,7 +2,8 @@ import Link from "next/link";
 
 export default function SecondMenu() {
   return (
-  <ul className="flex w-full md:w-auto flex-col md:flex-row justify-center items-center">
+    <ul className="flex w-full md:w-auto flex-col md:flex-row gap-4 justify-center items-center">
+      <li>
         <Link href="/terms">Terms</Link>
         <Link href="/privacy">Privacy</Link>
     </ul>
