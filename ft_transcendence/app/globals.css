@@ -84,6 +84,12 @@ body {
     font-family: inherit;
 }
 
+/* the weekday numbers */
+.fc-toolbar-title {
+    font-family: var(--font-afacad-flux);
+  font-size: 0.65rem !important;
+}
+
 /* Cell backgrounds — target only content cells, not border/spacer elements */
 .fc .fc-timegrid-col,
 .fc .fc-timegrid-slot-label,
@@ -154,10 +160,6 @@ body {
     padding: 2px 6px;
 }
 
-/* .fc .fc-event:hover {
-  @apply scale-[1.02] shadow-md opacity-95;
-} */
-
 .fc .fc-event:hover {
     @apply cursor-pointer !bg-white;
 }
@@ -184,19 +186,19 @@ body {
 /*Beentra General styles*/
 
 .modal-form-container {
-    @apply fixed inset-0 bg-black/50 z-50 justify-center;
+    @apply fixed inset-0 bg-black/50 z-50 justify-center bg-[#CDCEFF] items-center flex;
 }
 
 .modal-form {
-    @apply overflow-y-auto max-h-[80vh];
+    @apply overflow-y-auto max-h-[90vh] bg-[#CDCEFF] w-full px-4;
 }
 
 .beentra-form-container {
-    @apply flex flex-col items-center content-center w-full rounded-2xl;
+    @apply flex flex-col items-center content-center md:w-full rounded-2xl bg-[#CDCEFF];
 }
 
 .beentra-form {
-    @apply flex flex-col bg-[#CDCEFF] w-xl rounded-2xl self-center p-10 gap-4 shadow-md;
+    @apply flex flex-col bg-[#CDCEFF] w-full max-w-xl rounded-2xl self-center p-3 md:p-10 gap-4 shadow-md;
 }
 
 /*end of Beentra General styles*/

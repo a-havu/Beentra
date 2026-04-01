@@ -6,7 +6,7 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset";
   form?: string;
   variant?: "primary" | "secondary" | "sidebar" | "delete" | "adding" | "edit";
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "xsmall";
   disabled?: true | false;
 };
 
@@ -33,6 +33,7 @@ export function Button({
     small: "px-3 py-1 text-sm shadow-xs",
     medium: "px-4 py-2 text-base shadow-xs",
     large: "px-6 py-3 text-lg shadow-xs",
+    xsmall: "py-1 text-xs shadow-xs",
   };
 
   const buttonStyle = variantStyles[variant];
@@ -44,7 +45,7 @@ export function Button({
       form={form}
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-full transition cursor-pointer ${buttonStyle} ${buttonSize} disabled:opacity-50 disabled:cursor-not-allowed min-w-28 self-end`}
+      className={`rounded-full transition cursor-pointer ${buttonStyle} ${buttonSize} disabled:opacity-50 disabled:cursor-not-allowed md:min-w-28 self-end`}
     >
       {children}
     </button>

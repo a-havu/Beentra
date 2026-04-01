@@ -23,11 +23,13 @@ export function DashboardContent({
     setActiveView(view);
   };
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen bg-[#dff5fa] rounded-xl">
+    <div className="flex flex-col md:flex-row bg-[#dff5fa] rounded-xl">
       <Sidebar userEmail={userEmail} onButtonClick={handleButtonClick} />
-      <main className="flex-1 p-8">
-        {activeView === "welcome" && <WelcomeView />}
+      <main className="flex-1 p-1 md:p-8">
+        <div className="">{activeView === "welcome" && <WelcomeView />}</div>
         {activeView === "users" && <UsersTable />}
         {activeView === "events" && <EventsTable />}
         {activeView === "projects" && <ProjectsTable />}

@@ -16,7 +16,13 @@ export default function ProjectCard({ project }: { project: LocalProject }) {
               className="object-cover rounded-t-lg"
             />
           ) : (
-            "🐝"
+              <Image
+              src="/logo.svg"
+              alt="logo"
+              width={32}
+              height={32}
+              className="w-27 px-10 py-4 rounded-lg flex items-center justify-center"
+              />
           )}
         </div>
         <div className="bg-white rounded-b-xl p-1">

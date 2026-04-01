@@ -6,7 +6,7 @@ export default function PotentialFriends({ potentialFriends, currentUserId }: { 
   if (!potentialFriends || potentialFriends.length === 0)
     return <p className="flex justify-center text-gray-500">Everyone's your friend! No friends left to suggest</p>
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {potentialFriends.map(user => (
         <UserCard key={user.id} currentUserId={currentUserId} user={user} />
       ))}
