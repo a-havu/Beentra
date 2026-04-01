@@ -36,20 +36,20 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
       </button>
 
       {open && (
-        <div className="flex flex-col gap-2 absolute right-0 top-16 w-40 bg-[#FDF7D2] rounded-lg z-50 p-2">
-          <Link href={`/profile/${userId}`}>
-            <button className="cursor-pointer">My Profile</button>{" "}
+        <div className="flex flex-col gap-2 absolute right-0 top-8 w-30 bg-[#daf6fb] rounded-lg z-50 p-2 text-[#2a5159]">
+          <Link href={`/profile/${userId}`} onClick={() => setOpen(false)}>
+            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1">My Profile</button>{" "}
           </Link>
-          <Link href={`/users/${userId}/events`}>
+          <Link href={`/users/${userId}/events`} onClick={() => setOpen(false)}>
             {" "}
-            <button className="cursor-pointer"> My Events</button>{" "}
+            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1"> My Events</button>{" "}
           </Link>
-          <Link href={`/users/${userId}/projects`}>
+          <Link href={`/users/${userId}/projects`} onClick={() => setOpen(false)}>
             {" "}
-            <button className="cursor-pointer"> My Projects</button>{" "}
+            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1"> My Projects</button>{" "}
           </Link>
-          <Link href={`/users/${userId}/friends`}>
-            <button className="cursor-pointer"> My Friends</button>{" "}
+          <Link href={`/users/${userId}/friends`} onClick={() => setOpen(false)}>
+            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1"> My Friends</button>{" "}
           </Link>
           <LogoutButton />
         </div>
