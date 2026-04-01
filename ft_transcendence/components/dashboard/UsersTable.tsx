@@ -132,9 +132,6 @@ export function UsersTable() {
             {/* Table Body */}
             <tbody className="divide-y divide-gray-200">
               {users.map((user, index) => {
-                const hasOAuthAccount =
-                  user.oauthAccount && user.oauthAccount.length > 0;
-
                 return (
                   <tr
                     key={user.id}
@@ -179,7 +176,7 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {!hasOAuthAccount ? (
+                        {/* {!hasOAuthAccount ? (
                           <Button
                             variant="edit"
                             onClick={() => setEditingUser(user)}
@@ -190,13 +187,13 @@ export function UsersTable() {
                           <Button variant="edit" disabled={true}>
                             Edit
                           </Button>
-                        )}
-                        {/* <Button
+                        )} */}
+                        <Button
                           variant="edit"
                           onClick={() => setEditingUser(user)}
                         >
                           Edit
-                        </Button> */}
+                        </Button>
                         <DeleteUser
                           id={user.id}
                           onDeleted={() => {
@@ -227,6 +224,10 @@ export function UsersTable() {
           <ModalBody>
             <EditUser
               user={editingUser}
+              isOAuth={
+                !!editingUser.oauthAccount &&
+                editingUser.oauthAccount.length > 0
+              }
               onSuccess={handleEditUser}
               onCancel={() => setEditingUser(null)}
             />

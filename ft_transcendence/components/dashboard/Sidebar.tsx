@@ -1,6 +1,4 @@
-
 import { Button } from "../ui/Button";
-
 
 export function Sidebar({
   userEmail,
@@ -48,13 +46,13 @@ export function Sidebar({
         >
           Pages
         </Button>
-        <Button
+        {/* <Button
           variant="sidebar"
           size="medium"
           onClick={() => onButtonClick("add-page")}
         >
           Add Page
-        </Button>
+        </Button> */}
         <Button
           variant="sidebar"
           size="medium"
