@@ -1,73 +1,72 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { useEffect } from "react";
 // import { Page } from "@/lib/generated/prisma/client";
 import { tr } from "zod/v4/locales";
 import { Button } from "../ui/Button";
+import AddPage from "./AddPage";
 //import FetchPages from "./pages/FetchPages";
 
 type Page = {
-	text: 		string;
-	createdAt: 	Date;
-	updatedAt: 	Date;
-	authorId: 	string;
-	slug: 		string;
-	title:		string;
-	id:			number;
-	author: {
-		id: string;
-		username: string;
-		fullname: string;
-	} | null;
-}
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  authorId: string;
+  slug: string;
+  title: string;
+  id: number;
+  author: {
+    id: string;
+    username: string;
+    fullname: string;
+  } | null;
+};
 
 export function PagesTable() {
-	const [pages, setPages] = useState<Page[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [editingId, setEditingId] = useState<number | null>(null);
-	const [selectedPage, setSelectedPage] = useState<Page | null>(null);
+  const [pages, setPages] = useState<Page[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [selectedPage, setSelectedPage] = useState<Page | null>(null);
 
-	useEffect(() => {
-		fetchPages();
-	}, []);
+  useEffect(() => {
+    fetchPages();
+  }, []);
 
-	const fetchPages = async () => {
-		try {
-			setIsLoading(true);
+  const fetchPages = async () => {
+    try {
+      setIsLoading(true);
 
-			const response = await fetch("/api/pages", {
-				method: "GET",
-		});
+      const response = await fetch("/api/pages", {
+        method: "GET",
+      });
 
-		if (!response.ok) {
-			throw new Error("Failed to fetch pages");
-		}
-		const data = await response.json();
+      if (!response.ok) {
+        throw new Error("Failed to fetch pages");
+      }
+      const data = await response.json();
 
-		setPages(data);
-		setError(null);
+      setPages(data);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to fetch pages: ", err);
+      setError("Failed to fetch pages");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-		} catch (err) {
-			console.error("Failed to fetch pages: ", err);
-			setError("Failed to fetch pages");
+  const handleSuccess = () => {
+    setEditingId(null);
+    fetchPages();
+  };
 
-		} finally {
-			setIsLoading(false);
-		}
-	};
+  const reRender = () => {
+    fetchPages();
+  };
 
-	const handleSuccess = () => {
-		setEditingId(null);
-		fetchPages();
-	};
-
-	const reRender = () => {
-		fetchPages();
-	};
-
-	if (isLoading) {
+  if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow p-12 text-center">
         <p className="text-gray-600">Loading pages...</p>
@@ -90,15 +89,16 @@ export function PagesTable() {
   }
 
   return (
-	<>
-	<div className="bg-white rounded-lg shadow p-6">
-		<div className="flex justify-between items-center mb-6">
-			<h2 className="text-2xl font-bold text-blue-900">Pages Management</h2>
-
-		</div>
-		<div>
-			<table className="w-full">
-				<thead className="bg-gray-50 border-b-2 border-gray-200">
+    <>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-[#255a8b]">
+            Pages Management
+          </h2>
+        </div>
+        <div>
+          <table className="w-full">
+            <thead className="bg-gray-50 border-b-2 border-gray-200">
               <tr>
                 <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   ID
@@ -114,15 +114,15 @@ export function PagesTable() {
                 </th>
               </tr>
             </thead>
-			<tbody className="divide-y divide-gray-300">
-				{pages.map((page, index) => {
-					return (
-						<tr
-							key={page.id}
-							className="hover:bg-gray-50 transition cursor-pointer"
-							onClick={() => setSelectedPage(page)}
-						>
-							<td className="px6 py-4 text-center text-sm text-gray-900">
+            <tbody className="divide-y divide-gray-300">
+              {pages.map((page, index) => {
+                return (
+                  <tr
+                    key={page.id}
+                    className="hover:bg-gray-50 transition cursor-pointer"
+                    onClick={() => setSelectedPage(page)}
+                  >
+                    <td className="px6 py-4 text-center text-sm text-gray-900">
                       {index + 1}
                     </td>
                     <td className="px6 py-4 text-center text-sm text-gray-600">
@@ -137,20 +137,20 @@ export function PagesTable() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button
-                          variant="edit"
+                          variant="secondary"
                           onClick={() => setEditingId(page.id)}
                         >
                           Edit
                         </Button>
                       </div>
                     </td>
-						</tr>
-					)
-				})}
-			</tbody>
-			</table>
-		</div>
-	</div>
-	</>
-  )
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  );
 }

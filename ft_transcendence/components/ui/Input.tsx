@@ -9,7 +9,7 @@ interface inputTypes {
   required?: boolean;
   register?: UseFormRegister<any>;
   errors?: FieldErrors;
-  defaultValue?: string;
+  value?: string;
 }
 
 export default function Input({
@@ -21,7 +21,7 @@ export default function Input({
   required = false,
   register,
   errors,
-  defaultValue,
+  value,
 }: inputTypes) {
   const errorMessage = errors?.[name]?.message;
 
@@ -33,11 +33,12 @@ export default function Input({
       <input
         {...(register ? register(name) : {})}
         id={id}
+        name = {name}
         type={type}
         placeholder={placeholder}
         required={required}
-        className=" bg-white ml-2 p-2 rounded-lg"
-        defaultValue={defaultValue}
+        className="bg-white ml-2 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
+        value={value}
       />
       {typeof errorMessage === "string" && (
         <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>

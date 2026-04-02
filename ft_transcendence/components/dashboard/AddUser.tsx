@@ -8,9 +8,20 @@ import ModalHeader from "../ui/ModalHeader";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import { RegistrationForm } from "../registration/RegistrationForm";
+import { User } from "@/lib/generated/prisma/client";
 
-function AddUser() {
+type Props = {
+	onSuccess?: () => void;
+	onAddSuccess?: (user: User) => void;
+}
+
+function AddUser({ onSuccess, onAddSuccess }: Props) {
 	const [showModal, setShowModal] = useState(false);
+
+	const handleSuccess = () => {
+		setShowModal(false);
+		onSuccess?.();
+	}
 
 	return (
 		<>
@@ -29,7 +40,11 @@ function AddUser() {
 				<ModalHeader>
 					<h2>Add New User</h2>
 					<ModalBody>
-						<RegistrationForm />
+						<RegistrationForm
+							admin={true}
+							onSuccess={handleSuccess}
+							// onAddSuccess={onAddSuccess}
+						/>
 					</ModalBody>
 					<ModalFooter>
 						<Button

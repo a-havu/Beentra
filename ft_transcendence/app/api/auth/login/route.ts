@@ -75,12 +75,22 @@ export async function POST(request: Request) {
       );
       response.cookies.set("tfa-temp-token", tempToken, {
         httpOnly: true,
+        secure: true,
         sameSite: "lax",
         maxAge: 60 * 5,
         path: "/",
       });
       return response;
     }
+
+    await prisma.user.update({
+      where: {
+        id: result.id,
+      },
+      data: {
+        isOnline: true,
+      },
+    });
 
     const token = await createToken({
       userId: result.id,

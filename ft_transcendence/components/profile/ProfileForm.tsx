@@ -10,7 +10,7 @@ import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Twofa from "@/components/login/Twofa";
 import ProfileCard from "@/components/profile/ProfileCard";
-import type { Prisma } from "@/lib/generated/prisma";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -60,11 +60,11 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
 
   // Saved avatar — shown in the profile header, only updates after a successful save
   const [selectedAvatar, setSelectedAvatar] = useState(
-    user.avatarUrl || "/default-profile-picture.jpg"
+    user.avatarUrl || "/default-profile-picture.jpg",
   );
   // Pending avatar — tracks picker selection inside the modal before saving
   const [pendingAvatar, setPendingAvatar] = useState(
-    user.avatarUrl || "/default-profile-picture.jpg"
+    user.avatarUrl || "/default-profile-picture.jpg",
   );
 
   // ── Form setup ──────────────────────────────────────────────────────────────
@@ -131,16 +131,15 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-10 flex flex-col gap-6">
-
       {/* ── Profile Header Card ─────────────────────────────────────────────── */}
       <ProfileCard className="overflow-hidden">
         {/* Decorative gradient banner */}
-        <div className="h-24 bg-gradient-to-r from-[#FFEAD8] via-[#CDCEFF] to-[#FBFFCD]" />
+        <div className="h-24 bg-linear-to-r from-[#FFEAD8] via-[#91d3e2] to-[#FBFFCD]" />
 
-        <div className="px-6 pb-6 pt-0">
+        <div className="px-6 pb-6 pt-3">
           {/* Avatar (overlaps banner via negative margin) + action buttons */}
-          <div className="flex items-end justify-between -mt-12 mb-3">
-            <div className="ring-4 ring-white rounded-full shrink-0">
+          <div className="flex items-start justify-between mt-2 mb-3">
+            <div className="ring-4 ring-white rounded-full shrink-0 -mt-12">
               <Image
                 src={selectedAvatar}
                 alt={`${user.username}'s avatar`}
@@ -150,24 +149,37 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
               />
             </div>
 
-            <div className="flex items-center gap-2 pb-1">
+            <div className="flex items-center gap-6 pb-1">
               {/* Shown briefly after a successful save */}
               {savedSuccess && (
                 <div className="flex items-center gap-1.5 rounded-lg bg-green-100 border border-green-300 text-green-700 text-xs px-3 py-1.5">
-                  <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  <svg
+                    className="w-3.5 h-3.5 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   Profile updated!
                 </div>
               )}
               {/* Only the profile owner can edit */}
               {isOwner && (
-                <button
-                  onClick={() => { setServerError(""); setPendingAvatar(selectedAvatar); setModalOpen(true); }}
-                  className="border border-gray-300 rounded-lg px-4 py-1.5 text-sm font-medium text-gray-800 bg-white hover:bg-gray-50 transition cursor-pointer"
+                <Button
+					variant="edit"
+					size="small"
+                 	onClick={() => {
+                    setServerError("");
+                    setPendingAvatar(selectedAvatar);
+                    setModalOpen(true);
+                  }}
                 >
                   Edit profile
-                </button>
+                </Button>
               )}
             </div>
           </div>
@@ -183,24 +195,46 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
 
             <div className="flex flex-wrap items-center gap-3 mt-2">
               {/* Role badge — purple for admin, gray for regular users */}
-              <span className={`px-3 py-0.5 rounded-full text-xs font-semibold capitalize ${
-                user.role === "admin"
-                  ? "bg-[#6229FF]/15 text-[#6229FF]"
-                  : "bg-gray-100 text-gray-600 border border-gray-200"
-              }`}>
+              <span
+                className={`px-3 py-0.5 rounded-full text-xs font-semibold capitalize ${
+                  user.role === "admin"
+                    ? "bg-[#cdceff] text-[#6229FF]"
+                    : "bg-gray-100 text-gray-600 border border-gray-200"
+                }`}
+              >
                 {user.role}
               </span>
 
               <span className="flex items-center gap-1.5 text-sm text-gray-500">
-                <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  className="w-3.5 h-3.5 text-gray-400 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
                 {user.email}
               </span>
 
               <span className="flex items-center gap-1.5 text-sm text-gray-500">
-                <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <svg
+                  className="w-3.5 h-3.5 text-gray-400 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
                 </svg>
                 Joined {memberSince}
               </span>
@@ -212,32 +246,48 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
       {/* ── Bottom Cards ─────────────────────────────────────────────────────── */}
       {isOwner && (
         <div className="w-full">
-        {/* 2FA Card — owner only; clicking opens the 2FA modal */}
-        {isOwner && (
-          <ProfileCard onClick={() => setTwoFaOpen(true)}>
-            <div className="flex items-start justify-between px-5 py-4">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#6229FF]/10 shrink-0">
-                  <svg className="w-3.5 h-3.5 text-[#6229FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
+          {/* 2FA Card — owner only; clicking opens the 2FA modal */}
+          {isOwner && (
+            <ProfileCard onClick={() => setTwoFaOpen(true)}>
+              <div className="flex items-start justify-between px-5 py-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#6229FF]/10 shrink-0">
+                    <svg
+                      className="w-3.5 h-3.5 text-[#6229FF]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm leading-tight">
+                      Two-Factor Authentication
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      Protect your account with an extra verification step.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm leading-tight">Two-Factor Authentication</p>
-                  <p className="text-xs text-gray-400 mt-0.5">Protect your account with an extra verification step.</p>
-                </div>
+                {/* Status badge */}
+                <span
+                  className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full border ${
+                    user.twoFactorEnabled
+                      ? "bg-green-50 text-green-700 border-green-200"
+                      : "bg-white text-gray-400 border-gray-200"
+                  }`}
+                >
+                  {user.twoFactorEnabled ? "Enabled" : "Disabled"}
+                </span>
               </div>
-              {/* Status badge */}
-              <span className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full border ${
-                user.twoFactorEnabled
-                  ? "bg-green-50 text-green-700 border-green-200"
-                  : "bg-white text-gray-400 border-gray-200"
-              }`}>
-                {user.twoFactorEnabled ? "Enabled" : "Disabled"}
-              </span>
-            </div>
-          </ProfileCard>
-        )}
+            </ProfileCard>
+          )}
         </div>
       )}
 
@@ -255,11 +305,23 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
             <div className="flex items-center justify-between border-b border-[#6229FF]/20 pb-4">
               <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#6229FF]/10 shrink-0">
-                  <svg className="w-3.5 h-3.5 text-[#6229FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <svg
+                    className="w-3.5 h-3.5 text-[#6229FF]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
                   </svg>
                 </div>
-                <h2 className="text-lg font-semibold text-gray-900">Two-Factor Authentication</h2>
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Two-Factor Authentication
+                </h2>
               </div>
               <button
                 onClick={() => setTwoFaOpen(false)}
@@ -286,7 +348,9 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[#6229FF]/20 pb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Edit profile</h2>
+              <h2 className="text-lg font-semibold text-gray-900">
+                Edit profile
+              </h2>
               <button
                 onClick={() => setModalOpen(false)}
                 className="text-gray-500 hover:text-gray-800 transition cursor-pointer text-xl leading-none"
@@ -298,7 +362,6 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
 
             {/* Scrollable form body */}
             <div className="flex flex-col gap-4 overflow-y-auto pr-1">
-
               {/* Avatar picker — selecting updates the sidebar preview immediately on save */}
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">
@@ -339,9 +402,33 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
                   </span>
                   <div className="flex-1 h-px bg-[#6229FF]/30" />
                 </div>
-                <Input label="Full Name" name="fullName" id="fullName" type="text" placeholder="Your full name" register={register} errors={errors} />
-                <Input label="Username" name="username" id="username" type="text" placeholder="Your username" register={register} errors={errors} />
-                <Input label="Email" name="email" id="email" type="email" placeholder="name@example.com" register={register} errors={errors} />
+                <Input
+                  label="Full Name"
+                  name="fullName"
+                  id="fullName"
+                  type="text"
+                  placeholder="Your full name"
+                  register={register}
+                  errors={errors}
+                />
+                <Input
+                  label="Username"
+                  name="username"
+                  id="username"
+                  type="text"
+                  placeholder="Your username"
+                  register={register}
+                  errors={errors}
+                />
+                <Input
+                  label="Email"
+                  name="email"
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  register={register}
+                  errors={errors}
+                />
               </div>
 
               {/* Password change — both fields must be filled or both left empty */}
@@ -352,8 +439,24 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
                   </span>
                   <div className="flex-1 h-px bg-[#6229FF]/30" />
                 </div>
-                <Input label="New Password" name="password" id="password" type="password" placeholder="Leave blank to keep current" register={register} errors={errors} />
-                <Input label="Confirm Password" name="confirm" id="confirm" type="password" placeholder="Repeat new password" register={register} errors={errors} />
+                <Input
+                  label="New Password"
+                  name="password"
+                  id="password"
+                  type="password"
+                  placeholder="Leave blank to keep current"
+                  register={register}
+                  errors={errors}
+                />
+                <Input
+                  label="Confirm Password"
+                  name="confirm"
+                  id="confirm"
+                  type="password"
+                  placeholder="Repeat new password"
+                  register={register}
+                  errors={errors}
+                />
               </div>
 
               {/* Server-side error (e.g. duplicate email/username) */}
@@ -367,11 +470,15 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
 
             {/* Footer actions */}
             <div className="flex items-center justify-end gap-3 border-t border-[#6229FF]/20 pt-4">
-              <Button variant="secondary" onClick={() => setModalOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="edit" disabled={isSubmitting} onClick={handleSubmit(onSubmit)}>
+              <Button
+                variant="edit"
+                disabled={isSubmitting}
+                onClick={handleSubmit(onSubmit)}
+              >
                 Save
+              </Button>
+			<Button variant="secondary" onClick={() => setModalOpen(false)}>
+                Cancel
               </Button>
             </div>
           </div>

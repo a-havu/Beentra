@@ -5,6 +5,8 @@ import "../globals.css";
 import { validateEnv } from "@/lib/validation";
 import Header from "@/components/main/Header";
 import Footer from "@/components/main/Footer";
+import { Suspense } from "react";
+import Loading from "../(public)/loading";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -33,19 +35,18 @@ export default async function RootLayout({
 
 
   return (
-    <>
-        {/* Header */}
-        <header className="w-full h-16 bg-blue-800 flex items-center px-6 text-white">
-          <Header />
-        </header>
-
-        {/* Main fills remaining height */}
-        <main className="flex-1 bg-gray-100 p-6 overflow-auto min-w-0">{children}</main>
-
-        {/* Footer */}
-        <footer className="w-full h-14 bg-gray-900 flex items-center justify-center text-white">
-          <Footer />
-        </footer>
-</>
-  );
+	  <div className="min-h-screen" style={{ background: "linear-gradient(180deg, #fbffcd 0%, #ffead8 100%)" }}>
+		<header className="h-16 flex items-center px-6 text-[#7A3D02]">
+		  <Header />
+		</header>
+  
+		<main className="flex flex-col flex-1 p-2 sm:p-6">
+		  <Suspense fallback={<Loading />}>{children}</Suspense>
+		</main>
+  
+		<footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
+		  <Footer />
+		</footer>
+	  </div>
+	);
 }

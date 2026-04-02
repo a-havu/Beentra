@@ -2,9 +2,13 @@
 
 import { createPage, updatePage } from "@/app/(protected)/actions";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import MinimalEditor from "@/components/tiptap/MinimalEditor";
-import { PageZodType } from "@/types/zodScemas";
+import { PageZodSchema, PageZodType } from "@/types/zodScemas";
 import Input from "../ui/Input";
+import { Button } from "../ui/Button";
+
 type ActionResult = {
   success: boolean;
   error?: string;
@@ -12,48 +16,67 @@ type ActionResult = {
 
 type PageFormProps = {
   id?: number | null;
-  initialData: Partial<PageZodType> | null;
+  initialData?: { title?: string; text?: string } | null;
+  onSuccess?: () => void;
 };
 
 export default function PageForm({
   id = null,
   initialData = null,
+  onSuccess,
 }: PageFormProps) {
   const [content, setContent] = useState(initialData?.text || "");
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  async function handleSubmit(formData: FormData) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PageZodType>({
+    resolver: zodResolver(PageZodSchema),
+    defaultValues: {
+      title: initialData?.title || "",
+    },
+  });
+
+  async function onSubmit(data: PageZodType) {
+    setServerError(null);
+    console.log("onSubmit fired", data); // add this
+
+    const formData = new FormData();
+    formData.set("pageTitle", data.title);
     formData.set("pageText", content);
 
     let result: ActionResult;
 
     if (id) {
-      const updatePageWithId = updatePage.bind(null, id);
-      result = await updatePageWithId(formData);
+      result = await updatePage.bind(null, id)(formData);
     } else {
       result = await createPage(formData);
     }
 
     if (!result.success) {
-      alert("Error: " + result.error);
+      setServerError(result.error ?? "Something went wrong");
       return;
     }
 
-    alert(id ? "Page updated!" : "Page created!");
+    onSuccess?.();
   }
 
   return (
-    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden">
-      <h1>Adding new page</h1>
+    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden p-6 rounded-xl">
+      <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">{id ? "Update page" : "Add new page"}</h2>
 
-      <form action={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Input
             label="Page Title"
             id="pageTitle"
-            name="pageTitle"
+            name="title"
             placeholder="title"
             type="text"
-            defaultValue={initialData?.title}
+            register={register}
+            errors={errors}
           />
         </div>
 
@@ -61,7 +84,11 @@ export default function PageForm({
           <MinimalEditor content={content} onUpdate={setContent} />
         </div>
 
-        <button type="submit">{id ? "Update" : "Submit"}</button>
+        {serverError && (
+          <p className="text-red-500 text-sm mt-2">{serverError}</p>
+        )}
+
+        <div className="mt-3"><Button type="submit" variant="secondary">{id ? "Update" : "Submit"}</Button></div>
       </form>
     </div>
   );

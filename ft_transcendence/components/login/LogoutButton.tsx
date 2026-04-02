@@ -9,5 +9,5 @@ export const handleLogout = async () => {
 
 export default function LogoutButton() {
   
-  return <button onClick={handleLogout} className="flex items-center justify-start cursor-pointer">Logout</button>;
+  return <button onClick={handleLogout} className="flex justify-end w-full cursor-pointer text-[#9e1523] hover:text-[#cf404f]">Logout</button>;
 }

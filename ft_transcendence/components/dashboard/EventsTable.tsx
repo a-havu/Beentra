@@ -84,26 +84,27 @@ export function EventsTable() {
   return (
     <>
       <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-blue-900">Event Management</h2>
+        <div className="flex justify-between items-center md:mb-6">
+          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">Event Management</h2>
 
           <AddEvent onEventCreated={addSuccess} />
         </div>
         <div>
           {/* Table header */}
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50 border-b-2 border-gray-200">
               <tr>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   ID
                 </th>
                 <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Title
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className=" hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Location
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
                   Organizer
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
@@ -121,16 +122,16 @@ export function EventsTable() {
                     className="hover:bg-gray-50 transition cursor-pointer"
                     onClick={() => setSelectedEvent(event)}
                   >
-                    <td className="px6 py-4 text-center text-sm text-gray-900">
+                    <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-900">
                       {index + 1}
                     </td>
                     <td className="px6 py-4 text-center text-sm text-gray-600">
                       {event.title}
                     </td>
-                    <td className="px6 py-4 text-center text-sm text-gray-600">
+                    <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-600">
                       {event.location}
                     </td>
-                    <td className="px6 py-4 text-center text-sm text-gray-600">
+                    <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-600">
                       {event.organizer}
                     </td>
                     <td className="px-6 py-4">
@@ -139,7 +140,7 @@ export function EventsTable() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button
-                          variant="edit"
+                          variant="secondary"
                           onClick={() => setEditingId(event.id)}
                         >
                           Edit
@@ -159,6 +160,7 @@ export function EventsTable() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
       {selectedEvent && (

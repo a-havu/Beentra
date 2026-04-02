@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export function validateEnv() {
   //variables must be defined in env file
+  if (process.env.NEXT_PHASE === "phase-production-build") return;
   const requiredEnvVars = [
     "JWT_SECRET",
     "SALT_ROUNDS",
@@ -68,7 +69,7 @@ export const registerSchema = z
           const now = new Date();
           return date < now;
         },
-        { message: "invalid date" },
+        { message: "invalid date" }
       ),
     email: z.string().email("Invalid email"),
     password: z.string().min(8, "Min. 8 characters"),
@@ -84,9 +85,13 @@ const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 // Shared base fields — no image, no refinements (so .extend() works on both schemas)
 const eventSchemaBase = z.object({
   title: z.string().min(2, "Title too short").max(30, "Title too long"),
-  date: z.coerce.date()
+  date: z.coerce
+    .date()
     .refine((d) => !isNaN(d.getTime()), "Invalid date")
-    .min(new Date(new Date().setHours(0, 0, 0, 0)), "Date must be today or in the future")
+    .min(
+      new Date(new Date().setHours(0, 0, 0, 0)),
+      "Date must be today or in the future"
+    )
     .max(new Date("2100-12-31"), "Date must be before 2101"),
   timeFrom: z.string().regex(timeRegex, "Invalid time format"),
   timeTo: z.string().regex(timeRegex, "Invalid time format"),
@@ -98,7 +103,7 @@ const eventSchemaBase = z.object({
     .string()
     .min(2, "Organizer too short")
     .max(30, "Organizer too long"),
-  type: z.enum(["Student", "External"]),
+  type: z.enum(["Student", "External"]).optional(),
   description: z.string().optional(),
   maxSpots: z.coerce
     .number()
@@ -162,6 +167,7 @@ export const updateUserSchema = z
       .union([z.string().min(8, "Min. 8 characters"), z.literal("")])
       .optional(),
     confirm: z.string().optional(),
+    role: z.enum(["admin", "user", "moderator"]).optional(),
   })
   .refine((data) => !data.password || data.password === data.confirm, {
     message: "Passwords don't match",
@@ -172,7 +178,7 @@ export const projectSchema = z.object({
   projectName: z
     .string()
     .min(2, "Project name too short")
-    .max(50, "Project name too long"),
+    .max(35, "Project name too long"),
   oneLiner: z
     .string()
     .min(2, "One-liner too short")
@@ -180,14 +186,10 @@ export const projectSchema = z.object({
   link: z
     .string()
     .max(100, "Link too long")
-    .optional(),
-  techStack: z
-    .string()
-    .max(50, "Tech stack description too long")
-    .optional(),
-  description: z
-    .string()
-    .max(2000, "Description too long")
-    .optional(),
+    .url("Must be a valid URL")
+    .optional()
+    .or(z.literal("")),
+  techStack: z.string().max(50, "Tech stack description too long").optional(),
+  description: z.string().max(2000, "Description too long").optional(),
   image: z.string().nullable().optional(),
 });

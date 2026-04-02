@@ -1,7 +1,8 @@
 import AddEvent from "@/components/dashboard/AddEvent";
-import FullEventList from "@/components/events/FullEventList";
+import EventGrid from "@/components/events/EventGrid";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Events",
@@ -26,19 +27,25 @@ export default async function EventsPage() {
     timeFrom: rest.timeFrom.toISOString(),
     timeTo: rest.timeTo.toISOString(),
     subscriberCount: _count.subscriptions,
-    isSubscribed: userId ? (subscriptions as { userId: string }[]).length > 0 : false,
+    isSubscribed: userId
+      ? (subscriptions as { userId: string }[]).length > 0
+      : false,
   }));
 
   return (
-    <div className="w-full p-5">
-      <div className="mb-5 flex gap-8">
-        <AddEvent />
-        <h1>All Events</h1>
-      </div>
-      <div className="flex gap-8">
-        <div className="flex-2">
-          <FullEventList events={events} currentUserId={userId} currentUserRole={userRole} />
+    <div className="flex flex-col items-center p-5">
+      <div className="flex flex-col items-center gap-6">
+        <h1>All Beentra Events</h1>
+        <div className="flex justify-center">
+          <AddEvent />
         </div>
+      </div>
+      <div className="flex gap-5 ">
+        <EventGrid
+          events={events}
+          currentUserId={userId}
+          currentUserRole={userRole}
+        />
       </div>
     </div>
   );

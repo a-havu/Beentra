@@ -40,13 +40,37 @@ export default function ProjectForm({
 		}
 		onSubmit({...data, image: imageUrl});
 	};
+
+	const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+	const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+	const [imageError, setImageError] = useState<string | null>(null);
+
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  	const file = e.target.files?.[0] ?? null;
+	setImageError(null);
+
+	if (file) {
+		if (!ALLOWED_TYPES.includes(file.type)) {
+		setImageError("Only JPEG, PNG, and WebP images are allowed");
+		setImageFile(null);
+		return;
+		}
+		if (file.size > MAX_IMAGE_SIZE) {
+		setImageError("Image must be under 5MB");
+		setImageFile(null);
+		return;
+		}
+	}
+	setImageFile(file);
+};
+
 	return (
 		<div className="beentra-form-container modal-form-container">
 	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
 		<h3>{mode === "create" ? "New Project" : "Update Project"}</h3>
 		<Input
-		label="Project Name"
+		label="Project Name *"
 		name="projectName"
 		id="projectName"
 		type="text"
@@ -56,7 +80,7 @@ export default function ProjectForm({
 		errors={errors}
 		 />
 		<Input
-		label="One Liner"
+		label="One Liner *"
 		name="oneLiner"
 		id="oneLiner"
 		type="text"
@@ -80,28 +104,56 @@ export default function ProjectForm({
 		name="techStack"
 		id="techStack"
 		type="text"
-		placeholder="Tech stack"
+		placeholder="Separate with commas"
 		required={false}
 		register={register}
 		errors={errors}
 		 />
-		 <p className="text-black">Description</p>
+
+		 <p className="ml-2 text-black">Description</p> 
 		 <textarea
 		id="description"
 		placeholder="Description"
 		{...register("description")}
 		rows={10}
-		className="w-full bg-white border border-gray-300 rounded-xl p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+		className="bg-white border border-gray-300 rounded-xl ml-2 p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
 		/>
 		{errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
-		<div>
-          <label>Image</label><br />
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
-          />
-        </div>
+
+		<div className="flex flex-col gap-2">
+		<label className="p-2">Image</label>
+		<div className="ml-2 flex items-center gap-3">
+		<label
+			htmlFor="image-upload"
+			className="cursor-pointer px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm text-gray-600 hover:ring-1 hover:ring-yellow-400 hover:border-yellow-400 transition-colors"
+			>
+			{imageFile ? imageFile.name : "Upload image"}
+		</label>
+		<input
+			id="image-upload"
+			type="file"
+			accept="image/jpeg,image/png,image/webp"
+			onChange={handleImageChange}
+			className="hidden"
+			/>
+			{imageFile && (
+		<button
+			type="button"
+			onClick={() => {
+			setImageFile(null);
+			setImageError(null);
+			// reset the file input so the same file can be re-selected
+			const input = document.getElementById("image-upload") as HTMLInputElement;
+			if (input) input.value = "";
+			}}
+			className="cursor-pointer text-sm text-red-500 hover:text-red-700 transition-colors">
+			❌ Remove
+		</button>
+		)}
+	</div>
+	{imageError && <p className="ml-2 text-red-500 text-sm">{imageError}</p>}
+	</div>
+
 		<div className="flex gap-2 justify-end mt-4">
 		 <Button type="submit"
 		 variant="primary">

@@ -1,34 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from "@fullcalendar/list";
 import { EventInput } from "@fullcalendar/core";
 import ShowEvent from "./ShowEvent";
-import { IntraEventInput } from "@/lib/IntraEvents";
 import { EventData } from "@/types/general";
-
-
-type ShowEventData = {
-  id: string;
-  title: string;
-  type: string;
-  date: Date;
-  timeFrom: Date;
-  timeTo: Date;
-  location: string;
-  organizer: string;
-  image: string | null;
-  description: string | null;
-  creatorId: string | null;
-  maxSpots: number;
-  subscriberCount: number;
-  isSubscribed: boolean;
-};
+import enGBLocale from "@fullcalendar/core/locales/en-gb";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type Props = {
-  intraEvents: IntraEventInput[];
+  intraEvents: EventData[];
   dbEvents: EventData[];
   currentUserId?: string | null;
 };
@@ -38,82 +22,67 @@ export default function Calendar({
   dbEvents,
   currentUserId,
 }: Props) {
-  const [selectedEvent, setSelectedEvent] = useState<ShowEventData | null>(
-    null
-  );
+  const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isMobile = useIsMobile();
 
-  const formatted: EventInput[] = dbEvents.map((event) => ({
+  const toCalendarEvent = (
+    event: EventData,
+    color: { bg: string; border: string }
+  ): EventInput => ({
     id: event.id,
     title: event.title,
     start: event.timeFrom,
     end: event.timeTo,
-    backgroundColor: "#3b82f6",
-    borderColor: "#2563eb",
-    extendedProps: {
-      ...event,
-      date: new Date(event.date),
-      timeFrom: new Date(event.timeFrom),
-      timeTo: new Date(event.timeTo),
-    } satisfies ShowEventData,
-  }));
+    backgroundColor: color.bg,
+    borderColor: color.border,
+    extendedProps: event,
+  });
 
-  const intraFormatted: EventInput[] = intraEvents.map((event) => ({
-    id: String(event.id),
-    title: event.name,
-    start: event.begin_at,
-    end: event.end_at,
-    backgroundColor: "#8b5cf6",
-    borderColor: "#7c3aed",
-    extendedProps: {
-      id: String(event.id),
-      title: event.name,
-      type: event.kind ?? "Intra",
-      date: new Date(event.begin_at),
-      timeFrom: new Date(event.begin_at),
-      timeTo: new Date(event.end_at),
-      location: event.location ?? "",
-      organizer: "42 Intra",
-      description: event.description ?? null,
-      image: null,
-      creatorId: null,
-      maxSpots: event.max_people ?? 0,
-      subscriberCount: event.nbr_subscribers,
-      isSubscribed: false,
-    } satisfies ShowEventData,
-  }));
-
-  const events = [...formatted, ...intraFormatted];
+  const events = [
+    ...dbEvents.map((e) =>
+      toCalendarEvent(e, { bg: "#d3f7fc", border: "#3ebdd1" })
+    ),
+    ...intraEvents.map((e) =>
+      toCalendarEvent(e, { bg: "#EAE1FF", border: "#7e59e4" })
+    ),
+  ];
 
   return (
     <>
       <FullCalendar
-        //start:mk added please test
-        scrollTime="10:00:00"      // but opens scrolled to 8am
-        scrollTimeReset={false}
-        //end:mk added please test
-        height="100%"
-        plugins={[dayGridPlugin, timeGridPlugin]}
+      key={isMobile ? "mobile" : "desktop"}
+      locale={enGBLocale}
+      listDayFormat={{ weekday: "short" }}
+      listDaySideFormat={{ month: "short", day: "numeric"   }}
+      titleFormat={{ day: "numeric", month: "short" }}
+        contentHeight={isMobile ? "auto" : 700}
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         headerToolbar={{
           left: "prev,next,today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek",
+          center: isMobile ? "title" :"title",
+          right: isMobile ? "listWeek,dayGridMonth" : "dayGridMonth,timeGridWeek",
         }}
-        initialView="timeGridWeek"
+        initialView={isMobile ? "listWeek" : "timeGridWeek"}
+        firstDay={1}
+        eventTimeFormat={isMobile ? { hour: "2-digit", hour12: false } 
+        : { hour: "2-digit", minute: "2-digit", hour12: false }}
+        slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
         allDaySlot={false}
-
+        scrollTime="08:00:00"
+        scrollTimeReset={false}
+        slotDuration="00:30:00"
+        slotLabelInterval="01:00:00"
         events={events}
         eventDidMount={(info) => {
           const bg = info.event.backgroundColor;
-          const border = info.event.borderColor;
           if (bg) {
             info.el.style.backgroundColor = bg;
-            info.el.style.borderColor = border;
+            info.el.style.borderColor = info.event.borderColor || "white";
           }
         }}
         eventClick={(info) => {
-          const eventData = info.event.extendedProps as ShowEventData;
-          setSelectedEvent(eventData);
+          setSelectedEvent(info.event.extendedProps as EventData);
           setIsModalOpen(true);
         }}
       />

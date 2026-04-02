@@ -2,6 +2,8 @@ import CreateProject from "@/components/projects/CreateProject";
 import DisplayProjects from "@/components/projects/DisplayProjects";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Projects",
 };
@@ -9,10 +11,11 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div>
-		<br />
-      <h1 className="flex justify-center">Projects!</h1><br />
-      <CreateProject />
-	  <DisplayProjects />
+		<div className="flex flex-col justify-center gap-5">
+      <h1 className="flex justify-center">All Beentra Projects</h1>
+      <div className="flex justify-center"><CreateProject /></div>
+	  </div>
+      <DisplayProjects />
     </div>
   );
 }
