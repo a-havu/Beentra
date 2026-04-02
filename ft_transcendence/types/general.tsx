@@ -14,7 +14,7 @@ export type PageData = {
 export type EventData = {
   id: string;
   title: string;
-  type: string;
+  type?: string | null;
   date: string;
   timeFrom: string;
   timeTo: string;
