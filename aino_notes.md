@@ -30,26 +30,17 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 - i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
 - feedback should be easily readable/identifiable
 
-TODO:
-- fix project form Description field and extract the buttons in the modal
-
-STYLING
-- dropdown menu
-- remember mobile!!
-- BUTTON COLOURS need to be fixed
-- public API key page
-- terms etc page
-
 QA list of small things:
-- in the weekend, even though the Audio hackathon is going on, it's not visible in "today's events" section
-- the dropdown menu stays visible even after navigating to the appointed page
-- there's a weird icon bobbing around on profile form that i can't fix??
 - the error messages in forms should be instant - if youre trying to write too long description, you will only know when you try to submit
-- past events probably shouldn't be seen on the front page in the events list (mobile view)
 - in mobile view the profile picture in the top right corner stays visible when opening a form
-- event form still has US time formatting?
-- on front page the event cards are displayed in a weird order - would make more sense if the first event of the day would be at the top?
 
 QUESTIONS:
 - calendar grid in mobile view
 - Button sizes across the project
+
+- make a new bee for a default avatar
+- mobile event list jumps when week is changed
+- dropdown menu should be bigger and make text left-aligned
+- front page calendar title too small in md:
+- fix project form Description field and extract the buttons in the modal
+- mobile view: project cards padding dont align
