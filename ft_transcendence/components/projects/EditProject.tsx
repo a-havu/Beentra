@@ -14,9 +14,10 @@ type FormValues = z.input<typeof projectSchema>;
 type Props = {
   project: LocalProject;
   onSuccess?: (project: LocalProject) => void;
+  dashboard?: true | false;
 };
 
-export default function EditProject({ project, onSuccess }: Props) {
+export default function EditProject({ project, onSuccess, dashboard = false }: Props) {
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
   const [defaultValues, setDefaultValues] = useState<FormValues>({
@@ -53,7 +54,7 @@ export default function EditProject({ project, onSuccess }: Props) {
   return (
     <div className="flex flex-col items-center gap-4">
       <Button onClick={() => setShowForm(true)}
-	  type="button" variant="edit">
+	  type="button" variant="edit" dashboard={dashboard}>
         Edit
       </Button>
       {showForm && (
