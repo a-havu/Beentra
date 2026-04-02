@@ -8,6 +8,7 @@ type ButtonProps = {
   variant?: "primary" | "secondary" | "sidebar" | "delete" | "adding" | "edit";
   size?: "small" | "medium" | "large" | "xsmall";
   disabled?: true | false;
+  dashboard?: true | false;
 };
 
 export function Button({
@@ -18,6 +19,7 @@ export function Button({
   variant = "primary",
   size = "medium",
   disabled = false,
+  dashboard = false,
 }: ButtonProps) {
   const variantStyles = {
     primary: "border border-[#724015] bg-[#724015] text-white hover:bg-transparent hover:text-black",
@@ -36,6 +38,9 @@ export function Button({
     xsmall: "py-1 text-xs shadow-xs",
   };
 
+  if (dashboard) {
+	size = "small"
+  }
   const buttonStyle = variantStyles[variant];
   const buttonSize = sizeStyles[size];
 
