@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 type ShowEventData = {
   id: string;
   title: string;
-  type: string;
+  type?: string | null;
   date: Date | string;
   timeFrom: Date | string;
   timeTo: Date | string;
@@ -59,12 +59,17 @@ export default function ShowEvent({
   }, [event]);
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [subscribers, setSubscribers] = useState<{ username: string; fullName: string | null }[] | null>(null);
+  const [subscribers, setSubscribers] = useState<
+    { username: string; fullName: string | null }[] | null
+  >(null);
   const [showSubscribers, setShowSubscribers] = useState(false);
   const router = useRouter();
 
   const handleSpotsHover = async () => {
-    if (subscribers !== null) { setShowSubscribers(true); return; }
+    if (subscribers !== null) {
+      setShowSubscribers(true);
+      return;
+    }
     const res = await fetch(`/api/events/${localEvent?.id}/subscribe`);
     if (res.ok) setSubscribers(await res.json());
     setShowSubscribers(true);
@@ -87,19 +92,20 @@ export default function ShowEvent({
   const isCreator = currentUserId && localEvent.creatorId === currentUserId;
   const isAdmin = currentUserRole === "admin";
   const isPast = new Date(localEvent.timeTo) < new Date();
-  const showSubscribeButton = currentUserId && !isCreator && localEvent.creatorId !== null && !isPast;
-  const isFull = localEvent.maxSpots > 0 && subscriberCount >= localEvent.maxSpots;
-
-
+  const showSubscribeButton =
+    currentUserId && !isCreator && localEvent.creatorId !== null && !isPast;
+  const isFull =
+    localEvent.maxSpots > 0 && subscriberCount >= localEvent.maxSpots;
 
   // inside the component:
-
 
   const handleSubscribe = async () => {
     setLoading(true);
     try {
       const method = isSubscribed ? "DELETE" : "POST";
-      const res = await fetch(`/api/events/${localEvent.id}/subscribe`, { method });
+      const res = await fetch(`/api/events/${localEvent.id}/subscribe`, {
+        method,
+      });
       if (res.ok) {
         setIsSubscribed(!isSubscribed);
         setSubscriberCount((c) => c + (isSubscribed ? -1 : 1));
@@ -122,7 +128,9 @@ export default function ShowEvent({
             id={localEvent.id}
             onSuccess={() => setIsEditing(false)}
             onEventUpdated={(updated) =>
-              setLocalEvent((prev) => prev ? { ...prev, ...updated } as ShowEventData : prev)
+              setLocalEvent((prev) =>
+                prev ? ({ ...prev, ...updated } as ShowEventData) : prev
+              )
             }
           />
         </ModalBody>
@@ -172,7 +180,8 @@ export default function ShowEvent({
             onMouseEnter={handleSpotsHover}
             onMouseLeave={() => setShowSubscribers(false)}
           >
-            <strong>Spots:</strong> {subscriberCount}/{localEvent.maxSpots} taken
+            <strong>Spots:</strong> {subscriberCount}/{localEvent.maxSpots}{" "}
+            taken
             {showSubscribers && (
               <span className="absolute left-0 bottom-full mb-1 z-10 bg-white border border-gray-200 rounded-lg shadow-lg p-2 text-sm min-w-32 whitespace-nowrap">
                 {subscribers === null ? (
