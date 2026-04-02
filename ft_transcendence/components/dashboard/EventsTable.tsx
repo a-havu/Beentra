@@ -141,6 +141,7 @@ export function EventsTable() {
                       >
                         <Button
                           variant="secondary"
+						  dashboard={true}
                           onClick={() => setEditingId(event.id)}
                         >
                           Edit

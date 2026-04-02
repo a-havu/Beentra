@@ -40,6 +40,9 @@ export function Button({
 
   if (dashboard) {
 	size = "small"
+	if (variant === "edit") {
+		variant = "secondary";
+	}
   }
   const buttonStyle = variantStyles[variant];
   const buttonSize = sizeStyles[size];
