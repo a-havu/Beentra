@@ -87,11 +87,11 @@ export default async function ProjectPage({
             //   🐝
             // </span>
 			<Image
-				src="/logo.png"
+				src="/logo.svg"
 				alt="logo"
 				width={32}
 				height={32}
-				className="w-30 px-10 py-4 bg-[#e8e1fd] rounded-lg flex items-center justify-center text 6-xl"
+				className="w-27 px-10 py-4 bg-[#e8e1fd] rounded-lg flex items-center justify-center"
 					/>
           )}
         </div>

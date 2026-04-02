@@ -8,6 +8,8 @@ import {
   removeFriend,
 } from "@/app/(public)/users/[userId]/friends/friends";
 import FriendStatus from './FriendStatus'
+import { useIsMobile } from "@/hooks/useIsMobile";
+
 export default function UserCard({
   user,
   currentUserId,
@@ -39,13 +41,15 @@ export default function UserCard({
     }
   }
 
+  const isMobile = useIsMobile();
+
   return (
     <article className="flex flex-col gap-2 items-center w-full">
       <Image
         src={user.avatarUrl ?? "/default-profile-picture.png"}
         alt="user avatar"
-        width={150}
-        height={150}
+        width={isMobile ? 100 : 150}
+        height={isMobile ? 100 : 150}
         priority
 		className="rounded-xl"
       />
