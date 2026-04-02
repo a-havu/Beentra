@@ -34,7 +34,8 @@ const EventCard = ({
 
   const isIntra = event.creatorId === null && event.publicCreatorId === null;
   const isCreator = currentUserId && event.creatorId === currentUserId;
-  const showSubscribeButton = currentUserId && !isCreator && !isIntra;
+  const isPast = new Date(event.timeTo) < new Date();
+  const showSubscribeButton = currentUserId && !isCreator && !isIntra && !isPast;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
   const handleSubscribe = async () => {
