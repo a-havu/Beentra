@@ -174,24 +174,9 @@ export function UsersTable() {
                         className="flex gap-2"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {/* {!hasOAuthAccount ? (
-                          <Button
-                            variant="secondary"
-                            onClick={() => setEditingUser(user)}
-                          >
-                            Edit
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="secondary"
-                            disabled={true}
-                          >
-                          <Button variant="edit" disabled={true}>
-                            Edit
-                          </Button>
-                        )} */}
                         <Button
-                          variant="edit"
+                          dashboard={true}
+						  variant="edit"
                           onClick={() => setEditingUser(user)}
                         >
                           Edit
