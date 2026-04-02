@@ -95,6 +95,7 @@ export function PagesTable() {
           <h2 className="text-2xl font-bold text-[#255a8b]">
             Pages Management
           </h2>
+		  <AddPage />
         </div>
         <div>
           <table className="w-full">

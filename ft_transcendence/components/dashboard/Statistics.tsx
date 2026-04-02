@@ -48,7 +48,7 @@ export function Statistics() {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     aspectRatio: 2,
     plugins: {
       legend: {
@@ -62,7 +62,7 @@ export function Statistics() {
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg p-6 flex flex-col gap-4">
+    <div className="bg-gray-100 rounded-lg p-6 flex gap-4">
       <div className=" flex-1 bg-white rounded-lg p-6">
         <p className="text-lg text-gray-600">Total Users</p>
         <p className="text-3xl font-bold text-gray-900">

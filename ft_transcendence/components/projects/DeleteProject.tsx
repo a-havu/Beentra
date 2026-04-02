@@ -30,7 +30,7 @@ export default function DeleteProject({ projectId, dashBoard = false, onDeleted 
 
   return (
     <>
-      <Button variant="delete" onClick={() => setShowModal(true)} size="medium">
+      <Button variant="delete" dashboard={dashBoard} onClick={() => setShowModal(true)} size="medium">
         Delete
       </Button>
       <ConfirmationModal

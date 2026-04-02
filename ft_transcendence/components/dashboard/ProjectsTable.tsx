@@ -151,6 +151,7 @@ export function ProjectsTable() {
                       >
                         <EditProject
                           project={project}
+						  dashboard={true}
                           onSuccess={handleEditSuccess}
                         />
                         <DeleteProject
