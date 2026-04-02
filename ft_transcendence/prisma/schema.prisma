@@ -55,7 +55,7 @@ model Event {
   creatorId       String?
   maxSpots        Int                 @default(0)
   publicCreatorId String?
-  type            String              @default("Student")
+  type            String?            @default("Student")
   image           String?
   creator         User?               @relation("EventCreator", fields: [creatorId], references: [id],onDelete: SetNull)
   publicCreator   PublicApiUser?      @relation(fields: [publicCreatorId], references: [id], onDelete: SetNull)

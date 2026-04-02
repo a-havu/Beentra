@@ -69,7 +69,7 @@ export const registerSchema = z
           const now = new Date();
           return date < now;
         },
-        { message: "invalid date" },
+        { message: "invalid date" }
       ),
     email: z.string().email("Invalid email"),
     password: z.string().min(8, "Min. 8 characters"),
@@ -90,7 +90,7 @@ const eventSchemaBase = z.object({
     .refine((d) => !isNaN(d.getTime()), "Invalid date")
     .min(
       new Date(new Date().setHours(0, 0, 0, 0)),
-      "Date must be today or in the future",
+      "Date must be today or in the future"
     )
     .max(new Date("2100-12-31"), "Date must be before 2101"),
   timeFrom: z.string().regex(timeRegex, "Invalid time format"),
@@ -103,7 +103,7 @@ const eventSchemaBase = z.object({
     .string()
     .min(2, "Organizer too short")
     .max(30, "Organizer too long"),
-  type: z.enum(["Student", "External"]),
+  type: z.enum(["Student", "External"]).optional(),
   description: z.string().optional(),
   maxSpots: z.coerce
     .number()
@@ -189,13 +189,7 @@ export const projectSchema = z.object({
     .url("Must be a valid URL")
     .optional()
     .or(z.literal("")),
-  techStack: z
-    .string()
-    .max(50, "Tech stack description too long")
-    .optional(),
-  description: z
-    .string()
-    .max(2000, "Description too long")
-    .optional(),
+  techStack: z.string().max(50, "Tech stack description too long").optional(),
+  description: z.string().max(2000, "Description too long").optional(),
   image: z.string().nullable().optional(),
 });
