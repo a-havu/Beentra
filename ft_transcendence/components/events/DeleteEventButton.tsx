@@ -35,7 +35,7 @@ const DeleteEventButton = ({ id, onDeleted }: Props) => {
 	<Button
 		variant="delete"
 		onClick={() => setShowModal(true)}
-		size="medium"
+		dashboard={true}
 		>
 		Delete
 	</Button>

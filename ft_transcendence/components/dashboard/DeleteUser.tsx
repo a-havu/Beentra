@@ -36,6 +36,7 @@ function DeleteUser({ id, onDeleted } : Props) {
 		<>
 		<Button
 			variant="delete"
+			dashboard={true}
 			onClick={() => setShowModal(true)}
 			>
 				Delete
