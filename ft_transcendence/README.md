@@ -6,16 +6,16 @@
 
 ## Description
 
-**Beentra** is a community platform built for students at Hive Helsinki (42 school). It gives students a central place to discover and manage campus events, share personal projects, connect with each other, and stay updated on what's happening in the community.
+**Beentra** is a community platform built for students at Hive Helsinki (42 school). It gives students a central place to discover, manage campus events, share personal projects, and stay updated on what's happening in the community.
 
 ### Key Features
 
-- **Events Calendar** - Browse, create, and subscribe to student, Hive, and external events. Includes a monthly calendar view and a weekly upcoming-events list.
+- **Events Calendar** - Browse, create, and subscribe to student. Includes a monthly calendar view and a weekly upcoming-events list.
 - **Projects Gallery** - Share your work with the community. Add a project with a description, tech stack, image, and link.
 - **User Profiles** - Customizable profiles with avatars, full name, and activity status.
 - **Friends & Online Status** - Add other users as friends and see who is currently online.
 - **Authentication** - Secure login with email/password, OAuth 2.0 (42 / GitHub), and Two-Factor Authentication (2FA).
-- **Role-Based Access** - Admin, moderator, and user roles with different permissions.
+- **Role-Based Access** - Admin and user roles with different permissions.
 - **Public API** - A rate-limited, API-key-protected REST API for external integrations.
 - **Static Pages** - Privacy Policy, Terms of Service, and other informational pages managed via a rich-text editor.
 
@@ -192,7 +192,6 @@ The team communicated primarily via **Discord** for day-to-day coordination and 
 | FullCalendar | 6.x | Event calendar UI |
 | React Hook Form | 7.x | Form state management |
 | Zod | 4.x | Schema-based form and API validation |
-| Chart.js / react-chartjs-2 | 4.x | Data visualization |
 
 ### Backend
 
