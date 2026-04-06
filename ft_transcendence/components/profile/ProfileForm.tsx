@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import Twofa from "@/components/login/Twofa";
 import ProfileCard from "@/components/profile/ProfileCard";
 import type { Prisma } from "@/lib/generated/prisma/client";
+import { uploadImage } from "@/lib/uploadImage";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -38,15 +39,6 @@ interface ProfileFormProps {
   isOwner: boolean; // true when the logged-in user is viewing their own profile
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-// Add more image paths here (/public) as needed, these are examples
-const PRESET_AVATARS = [
-  "/default-profile-picture.jpg",
-  "/avatar-2.jpg",
-  "/avatar-3.png",
-];
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
@@ -57,6 +49,10 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
   // Form feedback
   const [serverError, setServerError] = useState("");
   const [savedSuccess, setSavedSuccess] = useState(false);
+
+  // Avatar upload
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [uploadError, setUploadError] = useState("");
 
   // Saved avatar — shown in the profile header, only updates after a successful save
   const [selectedAvatar, setSelectedAvatar] = useState(
@@ -83,6 +79,24 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
       confirm: "",
     },
   });
+
+  // ── Avatar upload ───────────────────────────────────────────────────────────
+
+  async function handleAvatarFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadError("");
+    setUploadingAvatar(true);
+    try {
+      const url = await uploadImage(file);
+      setPendingAvatar(url);
+    } catch {
+      setUploadError("Upload failed. Please try again.");
+    } finally {
+      setUploadingAvatar(false);
+      e.target.value = "";
+    }
+  }
 
   // ── Submit handler ──────────────────────────────────────────────────────────
 
@@ -370,28 +384,32 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
                   </span>
                   <div className="flex-1 h-px bg-[#6229FF]/30" />
                 </div>
-                <div className="flex gap-3 flex-wrap">
-                  {PRESET_AVATARS.map((src) => (
-                    <button
-                      key={src}
-                      type="button"
-                      onClick={() => setPendingAvatar(src)}
-                      className={`rounded-full p-0.5 transition cursor-pointer ${
-                        pendingAvatar === src
-                          ? "ring-2 ring-[#6229FF] ring-offset-2"
-                          : "ring-2 ring-transparent hover:ring-gray-300 ring-offset-2"
-                      }`}
-                    >
-                      <Image
-                        src={src}
-                        alt="avatar option"
-                        width={52}
-                        height={52}
-                        className="rounded-full object-cover w-13 h-13"
-                      />
-                    </button>
-                  ))}
+                <div className="flex items-center gap-4">
+                  <Image src={pendingAvatar} alt="current avatar" width={64} height={64} className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30" />
+                  <label
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed text-sm font-medium cursor-pointer transition
+                      ${uploadingAvatar ? "border-gray-300 text-gray-400 opacity-60" : "border-[#6229FF]/40 text-[#6229FF]/70 hover:border-[#6229FF] hover:bg-[#6229FF]/5"}`}
+                  >
+                    {uploadingAvatar ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        </svg>
+                        Uploading…
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Upload image
+                      </>
+                    )}
+                    <input type="file" accept="image/*" className="hidden" disabled={uploadingAvatar} onChange={handleAvatarFile} />
+                  </label>
                 </div>
+                {uploadError && <p className="text-xs text-red-500">{uploadError}</p>}
               </div>
 
               {/* Personal information fields */}
