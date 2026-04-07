@@ -28,11 +28,10 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 *learning about accessibility in web design*
 - don't indicate something with colour only!
 - i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
-- feedback should be easily readable/identifiable
+- feedback should be easily readable/identifiable -> show instantly if there's an error in eg. form input
 
 TODO:
 - fix project form Description field and extract the buttons in the modal
-- pagination for the project grid
 - search / filter for project grid
 
 QA list
