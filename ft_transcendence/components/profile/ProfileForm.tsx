@@ -12,6 +12,8 @@ import Twofa from "@/components/login/Twofa";
 import ProfileCard from "@/components/profile/ProfileCard";
 import type { Prisma } from "@/lib/generated/prisma/client";
 import { uploadImage } from "@/lib/uploadImage";
+import ProjectCard from "@/components/projects/ProjectCard";
+import { LocalProject } from "@/types/general";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -36,12 +38,13 @@ type UserData = Omit<
 
 interface ProfileFormProps {
   user: UserData;
-  isOwner: boolean; // true when the logged-in user is viewing their own profile
+  isOwner: boolean;
+  projects: LocalProject[];
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
+export default function ProfileForm({ user, isOwner, projects }: ProfileFormProps) {
   // Modal visibility
   const [modalOpen, setModalOpen] = useState(false);
   const [twoFaOpen, setTwoFaOpen] = useState(false);
@@ -303,6 +306,25 @@ export default function ProfileForm({ user, isOwner }: ProfileFormProps) {
             </ProfileCard>
           )}
         </div>
+      )}
+
+      {/* ── Projects ────────────────────────────────────────────────────────── */}
+      {!isOwner && projects.length > 0 && (
+        <ProfileCard>
+          <div className="px-5 py-4 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#6229FF]/70 whitespace-nowrap">
+                Projects
+              </span>
+              <div className="flex-1 h-px bg-[#6229FF]/30" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          </div>
+        </ProfileCard>
       )}
 
       {/* ── 2FA Modal ───────────────────────────────────────────────────────── */}
