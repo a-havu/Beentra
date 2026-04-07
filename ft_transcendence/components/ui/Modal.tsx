@@ -6,9 +6,10 @@ type ModalProps = {
   children: React.ReactNode;
   isOpen: boolean;
   onClose?: () => void;
+  bgColor?: string;
 };
 
-function Modal({ children, isOpen, onClose }: ModalProps) {
+function Modal({ children, isOpen, onClose, bgColor }: ModalProps) {
   if (!isOpen) {
     return null;
   }
@@ -19,7 +20,8 @@ function Modal({ children, isOpen, onClose }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-3xl mx-4"
+        className="rounded-xl shadow-2xl p-8 w-full max-w-3xl mx-4"
+        style={bgColor ? { backgroundColor: bgColor } : { backgroundColor: "white" }}
         onClick={(e) => e.stopPropagation()}
       >
         {children}
