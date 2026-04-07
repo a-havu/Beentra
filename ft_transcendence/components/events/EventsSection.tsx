@@ -29,9 +29,15 @@ export default function EventsSection({
     d.getMonth() === today.getMonth() &&
     d.getDate() === today.getDate();
 
+  const isActiveToday = (start: string, end: string) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    return isSameDay(endDate) || (startDate <= today && endDate >= today);
+  };
+
   const todaysEvents = [
-    ...events.filter((e) => isSameDay(new Date(e.date))),
-    ...formattedIntraEvents.filter((e) => isSameDay(new Date(e.date))),
+    ...events.filter((e) => isActiveToday(e.date, e.timeTo)),
+    ...formattedIntraEvents.filter((e) => isActiveToday(e.date, e.timeTo)),
   ];
 
   function addEvent(event: EventData) {
@@ -49,7 +55,7 @@ export default function EventsSection({
             currentUserRole={currentUserRole}
           />
           <div className="mt-10 flex justify-center">
-            <AddEvent onEventCreated={addEvent} />
+            <AddEvent modalBg="#CDCEFF" onEventCreated={addEvent} />
           </div>
         </div>
         <div className="flex-2">
