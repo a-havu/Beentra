@@ -11,9 +11,10 @@ import { EventData } from "@/types/general";
 type Props = {
   onSuccess?: () => void;
   onEventCreated?: (event: EventData) => void;
+  modalBg?: string;
 };
 
-function AddEvent({ onSuccess, onEventCreated }: Props) {
+function AddEvent({ onSuccess, onEventCreated, modalBg }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   const handleSuccess = () => {
@@ -27,7 +28,7 @@ function AddEvent({ onSuccess, onEventCreated }: Props) {
         Add Event
       </Button>
 
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} bgColor={modalBg}>
         <ModalBody>
           <CreateEvent
             onSuccess={handleSuccess}
