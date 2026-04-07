@@ -422,7 +422,7 @@ Screen reader support, keyboard navigation, and compatibility with assistive tec
 
 ### Roni - Product Owner / Developer
 
-*(to be filled in by Roni)*
+Came up with the name "Beentra" and told some jokes
 
 ### Aino - UI/UX Designer / Developer / QA
 
