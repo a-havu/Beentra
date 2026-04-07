@@ -48,10 +48,10 @@ export function LoginForm() {
   };
 
   return (
-    <div className="beentra-form-container">
+    <div className="beentra-form-container md:!w-200">
       <form className="beentra-form">
-        <h1>Welcome to Beentra</h1>
-        <p>New here? <Link href="/registration" className="underline font-semibold text-[#724015]">Sign Up</Link></p>
+        <h1 className="p-1 flex justify-center">Welcome to Beentra</h1>
+        <p className="p-1 flex justify-center">New here?<Link href="/registration" className="underline ml-1 font-semibold text-[#724015]">Sign Up</Link></p>
 
         {/* Use Input component for email too */}
         <Input
@@ -103,7 +103,7 @@ export function LoginForm() {
 
 
         <h4 className="self-center">
-          Developers: you can check our <Link href="/apikey">public API</Link>{" "}
+          Developers: you can check out our <Link href="/apikey" className="underline font-semibold text-[#724015]">public API</Link>{" "}
         </h4>
       </form>
 

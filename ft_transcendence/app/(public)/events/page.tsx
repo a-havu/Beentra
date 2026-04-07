@@ -33,14 +33,14 @@ export default async function EventsPage() {
   }));
 
   return (
-    <div className="flex flex-col items-center p-5">
+    <div className="flex flex-col items-center p-6">
       <div className="flex flex-col items-center gap-6">
         <h1>All Beentra Events</h1>
         <div className="flex justify-center">
           <AddEvent />
         </div>
       </div>
-      <div className="flex gap-5 ">
+      <div className="flex gap-5 mt-6">
         <EventGrid
           events={events}
           currentUserId={userId}
