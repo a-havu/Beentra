@@ -2,7 +2,7 @@
 
 ---
 
-# Beentra
+# Beentra ![Beentra logo](/public/logo.svg)
 
 ## Description
 
