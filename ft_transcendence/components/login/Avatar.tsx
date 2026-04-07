@@ -36,20 +36,20 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
       </button>
 
       {open && (
-        <div className="flex flex-col gap-2 absolute right-0 top-8 w-30 bg-[#daf6fb] rounded-lg z-50 p-2 text-[#2a5159]">
+        <div className="flex flex-col absolute right-0 top-11 w-40 bg-[#daf6fb] rounded-lg z-50 p-2 text-[#2a5159]">
           <Link href={`/profile/${userId}`} onClick={() => setOpen(false)}>
-            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1">My Profile</button>{" "}
+            <button className="flex h-8 items-center w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-2">My Profile</button>{" "}
           </Link>
           <Link href={`/users/${userId}/events`} onClick={() => setOpen(false)}>
             {" "}
-            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1"> My Events</button>{" "}
+            <button className="flex h-8 items-center w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-2"> My Events</button>{" "}
           </Link>
           <Link href={`/users/${userId}/projects`} onClick={() => setOpen(false)}>
             {" "}
-            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1"> My Projects</button>{" "}
+            <button className="flex h-8 items-center w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-2"> My Projects</button>{" "}
           </Link>
           <Link href={`/users/${userId}/friends`} onClick={() => setOpen(false)}>
-            <button className="flex h-8 justify-end w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-1"> My Friends</button>{" "}
+            <button className="flex h-8 items-center w-full cursor-pointer hover:bg-[#c8e6f4] rounded-md p-2"> My Friends</button>{" "}
           </Link>
           <LogoutButton />
         </div>

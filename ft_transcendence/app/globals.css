@@ -186,7 +186,7 @@ body {
 /*Beentra General styles*/
 
 .modal-form-container {
-    @apply fixed inset-0 bg-black/50 z-50 justify-center bg-[#CDCEFF] items-center flex;
+    @apply fixed inset-0 bg-black/50 z-50 justify-center items-center flex;
 }
 
 .modal-form {
@@ -194,7 +194,7 @@ body {
 }
 
 .beentra-form-container {
-    @apply flex flex-col items-center content-center md:w-full rounded-2xl bg-[#CDCEFF];
+    @apply flex flex-col items-center content-center w-full max-w-xl rounded-2xl bg-[#CDCEFF];
 }
 
 .beentra-form {
