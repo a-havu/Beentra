@@ -60,7 +60,7 @@ export default function Calendar({
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         headerToolbar={{
           left: "prev,next,today",
-          center: isMobile ? "title" :"title",
+          center: "title",
           right: isMobile ? "listWeek,dayGridMonth" : "dayGridMonth,timeGridWeek",
         }}
         initialView={isMobile ? "listWeek" : "timeGridWeek"}

@@ -84,11 +84,16 @@ body {
     font-family: inherit;
 }
 
-/* the weekday numbers */
+/* the weekday numbers in mobile view */
+@media (max-width: 640px) {
 .fc-toolbar-title {
     font-family: var(--font-afacad-flux);
-  font-size: 0.65rem !important;
+  font-size: 0.85rem !important;
 }
+}
+
+
+
 
 /* Cell backgrounds — target only content cells, not border/spacer elements */
 .fc .fc-timegrid-col,
@@ -194,7 +199,7 @@ body {
 }
 
 .beentra-form-container {
-    @apply flex flex-col items-center content-center w-full max-w-xl rounded-2xl bg-[#CDCEFF];
+    @apply flex flex-col items-center content-center max-w-xl rounded-2xl bg-[#CDCEFF];
 }
 
 .beentra-form {
