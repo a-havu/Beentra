@@ -95,6 +95,7 @@ const EventCard = ({
                 alt="Organizer"
                 width={12}
                 height={12}
+                className="w-3 md:w-4 h-auto"
               />
             ) : (
               <Image
@@ -102,6 +103,7 @@ const EventCard = ({
                 alt="Organizer"
                 width={12}
                 height={12}
+                className="w-3 md:w-4 h-auto"
               />
             )}
           <p className="ml-1 align-middle">{event.location}</p></div>
@@ -118,6 +120,7 @@ const EventCard = ({
                 alt="Organizer"
                 width={12}
                 height={12}
+                className="w-3 md:w-4 h-auto"
               />
             ) : (
               <Image
@@ -125,6 +128,7 @@ const EventCard = ({
                 alt="Organizer"
                 width={12}
                 height={12}
+                className="w-3 md:w-4 h-auto"
               />
             )}
 

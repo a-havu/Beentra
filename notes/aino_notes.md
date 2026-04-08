@@ -30,9 +30,7 @@ on March 10 it was decided to create a gmail account for Beentra and use a third
 - i tried to get the design colours to be as distinct as possible - checked with different colourblindness checkers as well
 - feedback should be easily readable/identifiable -> show instantly if there's an error in eg. form input
 
-TODO:
-- fix project form Description field and extract the buttons in the modal
-- search / filter for project grid
 
 QA list
 - make Enter log in in the login form
+- the avatar is visible all the time 

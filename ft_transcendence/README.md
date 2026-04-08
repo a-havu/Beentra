@@ -328,7 +328,7 @@ Page (static content pages)
 | Create / Edit Event | Form to create or update events (authenticated users) | Laurens |
 | Event Subscription | Subscribe and unsubscribe from events, view attendee count | Laurens |
 | Project Upload | Upload a project to the database | Aino |
-| Projects Gallery | Paginated grid of student projects with search and filtering | Aino |
+| Projects Gallery | Paginated grid of student projects | Aino |
 | Create / Edit Project | Form to add or update a project with image upload | Aino |
 | My Projects | Fetch and display the projects the logged-in user has uploaded | Aino |
 | Single project page | Display all information of a selected project on a page | Aino |
