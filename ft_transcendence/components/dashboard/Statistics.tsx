@@ -31,6 +31,7 @@ export function Statistics() {
     fetchStats();
   }, []);
 
+  {/*
   const labels = ["Online", "Offline"];
   const dataValues = [activeUserCount, userCount];
 
@@ -59,7 +60,7 @@ export function Statistics() {
         text: "Users",
       },
     },
-  };
+  }; */}
 
   return (
     // Main container
@@ -70,7 +71,7 @@ export function Statistics() {
         <p className="text-3xl font-bold text-gray-900">
           {activeUserCount} / {userCount}
         </p>
-        <Doughnut data={data} options={options} />
+        {/*<Doughnut data={data} options={options} />*/}
       </div>
       <div className="flex-1 bg-white rounded-lg p-6">
         <p className="text-lg text-gray-600">Total Events</p>
