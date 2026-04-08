@@ -91,19 +91,17 @@ const EventCard = ({
 		  <div className="flex items-end mt-2">
 		  {isIntra ? (
               <Image
-                src="/intra-pin.svg"
+                src="/intra-pin.png"
                 alt="Organizer"
                 width={12}
                 height={12}
-				className="opacity-80"
               />
             ) : (
               <Image
-                src="/beentra-pin.svg"
+                src="/beentra-pin.png"
                 alt="Organizer"
                 width={12}
                 height={12}
-				className="opacity-80"
               />
             )}
           <p className="ml-1 align-middle">{event.location}</p></div>
@@ -116,19 +114,17 @@ const EventCard = ({
           <div className="flex items-end mt-2">
             {isIntra ? (
               <Image
-                src="/intra-user.svg"
+                src="/intra-user.png"
                 alt="Organizer"
                 width={12}
                 height={12}
-				className="opacity-80"
               />
             ) : (
               <Image
-                src="/beentra-user.svg"
+                src="/beentra-user.png"
                 alt="Organizer"
                 width={12}
                 height={12}
-				className="opacity-80"
               />
             )}
 
