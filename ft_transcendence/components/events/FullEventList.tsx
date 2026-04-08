@@ -20,7 +20,7 @@ const FullEventList = ({ events: initialEvents, currentUserId, currentUserRole }
   if (events.length === 0) return <p>No events found.</p>;
 
   return (
-    <div>
+    <div className="max-w-200! mx-auto">
       {events.map((event, index) => {
         const currentDay = event.date.slice(0, 10);
         const prevDay = index > 0 ? events[index - 1].date.slice(0, 10) : null;

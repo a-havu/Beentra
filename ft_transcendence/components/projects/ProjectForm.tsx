@@ -65,9 +65,11 @@ export default function ProjectForm({
 };
 
 	return (
-		<div className="beentra-form-container modal-form-container">
+		<div className="modal-form-container">
+			<div className="beentra-form-container md:!w-200">
 	<form className="beentra-form modal-form"
 	onSubmit={handleSubmit(submitHandler)}>
+		<div className="flex flex-col gap-4 overflow-y-auto pr-1">
 		<h3>{mode === "create" ? "New Project" : "Update Project"}</h3>
 		<Input
 		label="Project Name *"
@@ -153,7 +155,7 @@ export default function ProjectForm({
 	</div>
 	{imageError && <p className="ml-2 text-red-500 text-sm">{imageError}</p>}
 	</div>
-
+	</div>	
 		<div className="flex gap-2 justify-end mt-4">
 		 <Button type="submit"
 		 variant="primary">
@@ -167,5 +169,6 @@ export default function ProjectForm({
 		 )}
 		 </div>
 	</form>
+	</div>
 	</div>)
 }

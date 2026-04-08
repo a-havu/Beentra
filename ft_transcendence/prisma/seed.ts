@@ -82,8 +82,6 @@ const terms: string = `
 `;
 
 const privacy: string = `
-<p><strong>Privacy Policy</strong></p>
-<br/>
 <p><strong>Effective Date: March 14, 2025</strong></p>
 <br/>
 <p>This Privacy Policy explains how Beentra collects, uses, and protects your personal data. We are committed to complying with the EU General Data Protection Regulation (GDPR) and applicable Finnish data protection law.</p>

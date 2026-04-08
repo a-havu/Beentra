@@ -2,15 +2,15 @@
 
 ---
 
-# Beentra
+# Beentra <img src="public/logo.svg" alt="beentralogo" width=50/>
 
 ## Description
 
-**Beentra** is a community platform built for students at Hive Helsinki (42 school). It gives students a central place to discover, manage campus events, share personal projects, and stay updated on what's happening in the community.
+**Beentra** is a community platform built for students at Hive Helsinki (42 school). It gives students a central place to discover and manage campus events, share personal projects, and stay updated on what's happening in the community.
 
 ### Key Features
 
-- **Events Calendar** - Browse, create, and subscribe to student. Includes a monthly calendar view and a weekly upcoming-events list.
+- **Events Calendar** - Browse, create, and subscribe to student events. Includes a monthly calendar view and a weekly upcoming events list.
 - **Projects Gallery** - Share your work with the community. Add a project with a description, tech stack, image, and link.
 - **User Profiles** - Customizable profiles with avatars, full name, and activity status.
 - **Friends & Online Status** - Add other users as friends and see who is currently online.
@@ -148,7 +148,7 @@ All AI-generated content was reviewed, tested, and validated by team members bef
 | Mohammad | `mkhlouf` | Technical Lead / Developer | Defined technical architecture and made technology stack decisions. Contributed full-stack (frontend + backend) to his assigned features, reviewed critical code changes |
 | Hager | `hahamdan` | Project Manager / Developer | Facilitated team coordination, tracked progress, and ensured decisions were reviewed and aligned across the team. Contributed full-stack (frontend + backend) to her assigned features |
 | Roni | `reerikai` | Product Owner / Developer | Defined product vision and priorities, validated completed work. Contributed full-stack (frontend + backend) to his assigned features including the admin dashboard and user management |
-| Aino | `ahavu` | UI/UX Designer / Developer / QA | Designed the visual identity and component system, conducted quality assurance and accessibility review. Contributed full-stack (frontend + backend) to her assigned features |
+| Aino | `ahavu` | UI/UX Designer / Developer / QA | Designed the visual identity and component system. Conducted quality assurance and accessibility review. Contributed full-stack (frontend + backend) to her assigned features including users' uploaded projects, displaying the projects and image hosting. |
 | Laurens | `lhaas` | Product Owner / Developer | Co-managed product backlog and led accessibility implementation. Contributed full-stack (frontend + backend) to his assigned features |
 
 ---
@@ -327,8 +327,11 @@ Page (static content pages)
 | Events List | Weekly upcoming events on the homepage with filtering by type | Laurens |
 | Create / Edit Event | Form to create or update events (authenticated users) | Laurens |
 | Event Subscription | Subscribe and unsubscribe from events, view attendee count | Laurens |
+| Project Upload | Upload a project to the database | Aino |
 | Projects Gallery | Paginated grid of student projects with search and filtering | Aino |
 | Create / Edit Project | Form to add or update a project with image upload | Aino |
+| My Projects | Fetch and display the projects the logged-in user has uploaded | Aino |
+| Single project page | Display all information of a selected project on a page | Aino |
 | Public API | Secured REST API for events with API key authentication and rate limiting | Mohammad |
 | API Key Management | Users can generate and manage their own public API keys | Mohammad |
 | Static Pages (CMS) | Rich-text editable informational pages (Privacy Policy, Terms, etc.) | Mohammad |
@@ -419,11 +422,21 @@ Screen reader support, keyboard navigation, and compatibility with assistive tec
 
 ### Roni - Product Owner / Developer
 
-*(to be filled in by Roni)*
+Came up with the name "Beentra" and told some jokes
 
 ### Aino - UI/UX Designer / Developer / QA
 
-*(to be filled in by Aino)*
+Designed the visual identity, component system, and mobile support.
+Conducted quality assurance and accessibility review, carefully picking out a colour palette that takes into account the visually impaired and colourblind.
+Contributed full-stack (frontend + backend) to her assigned features:
+
+- How users upload their projects onto the platform via React hook form
+- Displaying the projects in a paginated grid
+- Image hosting - researched and compared possibilities (setting up a dedicated server/using Hive's servers/using a third-party image hosting service).
+- Fetching data from the logged-in user to display all of their projects in a dedicated "My Projects" page
+- Display data of a selected project on a separate page
+
+Also designed the Beentra happy bee logo.
 
 ### Laurens - Product Owner / Developer
 

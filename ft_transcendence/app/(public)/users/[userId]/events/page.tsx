@@ -11,7 +11,7 @@ export default async function UserEventsPage({ params }: { params: Promise<{ use
 
 
   return (
-    <div className="w-full p-5 gap-5">
+    <div className="md:p-5 md:gap-5 flex items-center flex-col">
       <MyEvents userId={userId} />
       <MySubscribedEvents userId={userId} />
     </div>
