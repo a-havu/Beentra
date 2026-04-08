@@ -23,7 +23,7 @@ export default function AddPage({ onSuccess }: Props) {
 
   return (
     <>
-      <Button variant="adding" onClick={() => setShowModal(true)} size="large">
+      <Button variant="adding" size="medium" onClick={() => setShowModal(true)}>
         Add Page
       </Button>
 

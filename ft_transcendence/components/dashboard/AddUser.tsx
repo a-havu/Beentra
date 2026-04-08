@@ -28,7 +28,7 @@ function AddUser({ onSuccess, onAddSuccess }: Props) {
 			<Button
 				variant="adding"
 				onClick={() => setShowModal(true)}
-				size="large"
+				size="medium"
 			>
 				Add User
 			</Button>

@@ -69,7 +69,7 @@ export default async function ProjectPage({
           </a>
         )}
       </div>
-	{/* Main Content: Image + Description */}
+	{/* Image + Description */}
       <div className="flex flex-col md:flex-row gap-8 items-start">
         {/* Image Column */}
         <div className="w-full md:w-1/3 flex justify-center">
@@ -83,15 +83,12 @@ export default async function ProjectPage({
               className="w-full h-auto max-h-96 rounded-lg object-contain"
             />
           ) : (
-            //  <span className="w-full px-10 py-4 aspect-square bg-[#e8e1fd] rounded-lg flex items-center justify-center text-6xl">
-            //   🐝
-            // </span>
 			<Image
 				src="/logo.svg"
 				alt="logo"
-				width={32}
-				height={32}
-				className="w-27 px-10 py-4 bg-[#e8e1fd] rounded-lg flex items-center justify-center"
+				width={50}
+				height={50}
+				className=" bg-[#e8e1fd] rounded-lg flex items-center justify-center"
 					/>
           )}
         </div>
