@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/Button"
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { User } from "@/lib/generated/prisma/client";
 import {
   addFriend,
@@ -45,15 +46,19 @@ export default function UserCard({
 
   return (
     <article className="flex flex-col gap-2 items-center w-full">
-      <Image
-        src={user.avatarUrl ?? "/default-profile-picture.png"}
-        alt="user avatar"
-        width={isMobile ? 100 : 150}
-        height={isMobile ? 100 : 150}
-        priority
-		className="rounded-xl"
-      />
-      <span className="leading-none">{user.username}</span>
+      <Link href={`/profile/${user.id}`}>
+        <Image
+          src={user.avatarUrl ?? "/default-profile-picture.png"}
+          alt="user avatar"
+          width={isMobile ? 100 : 150}
+          height={isMobile ? 100 : 150}
+          priority
+          className="rounded-xl hover:opacity-80 transition-opacity"
+        />
+      </Link>
+      <Link href={`/profile/${user.id}`} className="leading-none hover:underline">
+        {user.username}
+      </Link>
       {isFriend?<FriendStatus user={user} />:<></>}
       <div className="flex justify-center"><Button
         onClick={handleClick}
