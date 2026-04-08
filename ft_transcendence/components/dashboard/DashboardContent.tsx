@@ -7,7 +7,6 @@ import { EventsTable } from "./EventsTable";
 import PageForm from "../pages/PageForm";
 import WelcomeView from "./WelcomeView";
 import { ProjectsTable } from "./ProjectsTable";
-import { PagesTable } from "./PagesTable";
 
 // the fetchPages is a component sent by props.
 export function DashboardContent({
@@ -34,7 +33,6 @@ export function DashboardContent({
         {activeView === "events" && <EventsTable />}
         {activeView === "projects" && <ProjectsTable />}
         {activeView === "add-page" && <PageForm initialData={null} />}
-        {/* {activeView === "pages" && <PagesTable />} */}
         {activeView === "pages" && fetchPages}
       </main>
     </div>

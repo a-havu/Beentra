@@ -1,27 +1,16 @@
 "use client";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Button } from "../ui/Button";
-import Modal from "../ui/Modal";
-import ModalBody from "../ui/ModalBody";
-import ModalFooter from "../ui/ModalFooter";
-import { User } from "@/lib/generated/prisma/client";
-// import { Project } from "@/lib/generated/prisma/client";
 import ShowProject from "./ShowProject";
-import { set } from "zod";
-import CreateProject from "../projects/CreateProject";
-import ProjectForm from "../projects/ProjectForm";
 import AddProject from "./AddProject";
 import EditProject from "../projects/EditProject";
 import DeleteProject from "../projects/DeleteProject";
 import { LocalProject } from "@/types/general";
 
 export function ProjectsTable() {
-  const [showModal, setShowModal] = useState(false);
   const [projects, setProjects] = useState<LocalProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<LocalProject | null>(
     null,
   );
@@ -52,11 +41,6 @@ export function ProjectsTable() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleSuccess = () => {
-    setEditingId(null);
-    // fetchProjects();
   };
 
   const reRender = () => {
@@ -151,7 +135,7 @@ export function ProjectsTable() {
                       >
                         <EditProject
                           project={project}
-						  dashboard={true}
+                          dashboard={true}
                           onSuccess={handleEditSuccess}
                         />
                         <DeleteProject

@@ -1,14 +1,13 @@
 
 "use client";
 
-import { useState } from "react";
+
 import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalHeader from "../ui/ModalHeader";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
 import { Project } from "@/lib/generated/prisma/client";
-import { iso } from "zod";
 
 type ProjectProps = {
 	project: Project | null;
@@ -73,9 +72,6 @@ function ShowProject({ project, isOpen, onClose }: ProjectProps) {
 				</div>
 			</ModalBody>
 			<ModalFooter>
-				{/* <Button variant="edit" onClick={onClose}>
-					Edit
-				</Button> */}
 				<Button variant="secondary" onClick={onClose}>
 					Close
 				</Button>
