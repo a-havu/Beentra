@@ -15,6 +15,7 @@ export async function POST(request: Request) {
         },
         data: {
           isOnline: false,
+          lastActive: new Date(),
         },
       });
     }

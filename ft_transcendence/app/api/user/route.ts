@@ -79,6 +79,9 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
+
+    const fiveMinutes = new Date(Date.now() - 5 * 60 * 1000);
+
     const users = await prisma.user.findMany({
       select: {
         id: true,
@@ -98,22 +101,12 @@ export async function GET() {
       },
     });
 
-    // const currTime = new Date();
-    // const stillOnlineTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const updatedUsers = users.map((user) => ({
+      ...user,
+      isOnline: user.lastActive ? user.lastActive >= fiveMinutes : false,
+    }));
 
-    // const activeUsers = users.map((user) => {
-    //   if (!user.lastActive) {
-    //     return { ...user, isOnline: false };
-    //   }
-
-    //   const timeSinceActive =
-    //     currTime.getTime() - new Date(user.lastActive).getTime();
-    //   const isOnline = timeSinceActive < stillOnlineTime;
-
-    //   return { ...user, isOnline };
-    // });  REMOVE
-
-    return NextResponse.json(users);
+    return NextResponse.json(updatedUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(

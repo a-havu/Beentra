@@ -1,24 +1,3 @@
-// 'use client'
-
-// import { User } from '@/lib/generated/prisma/client';
-
-// type Props = {
-// 	id?: string,
-// 	user: User,
-// 	onSuccess?: () => void;
-// 	onCancel?: () => void;
-// }
-
-// const EditUser = ({ id, user, onSuccess, onCancel }: Props) => {
-//   return (
-// 	<>
-// 	<div>EditUser</div>
-// 	<div>Name {user.email}</div>
-// 	</>
-//   )
-// }
-
-// export default EditUser
 
 "use client";
 
@@ -200,11 +179,10 @@ export default function EditUser({
                     key={src}
                     type="button"
                     onClick={() => setPendingAvatar(src)}
-                    className={`rounded-full p-0.5 transition cursor-pointer ${
-                      pendingAvatar === src
+                    className={`rounded-full p-0.5 transition cursor-pointer ${pendingAvatar === src
                         ? "ring-2 ring-[#6229FF] ring-offset-2"
                         : "ring-2 ring-transparent hover:ring-gray-300 ring-offset-2"
-                    }`}
+                      }`}
                   >
                     <Image
                       src={src}
