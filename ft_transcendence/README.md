@@ -6,11 +6,11 @@
 
 ## Description
 
-**Beentra** is a community platform built for students at Hive Helsinki (42 school). It gives students a central place to discover and manage campus events, share personal projects, and stay updated on what's happening in the community.
+**Beentra** is a community platform built for students at Hive Helsinki (42 school). It provides students a central place to discover and manage campus events, share personal projects, and stay updated on what's happening in the community.
 
 ### Key Features
 
-- **Events Calendar** - Browse, create, and subscribe to student events. Includes a monthly calendar view and a weekly upcoming events list.
+- **Events Calendar** - Browse, create, and subscribe to student events as well as 42 intra events. Includes a monthly calendar view and a weekly upcoming events list.
 - **Projects Gallery** - Share your work with the community. Add a project with a description, tech stack, image, and link.
 - **User Profiles** - Customizable profiles with avatars, full name, and activity status.
 - **Friends & Online Status** - Add other users as friends and see who is currently online.
@@ -149,7 +149,7 @@ All AI-generated content was reviewed, tested, and validated by team members bef
 | Hager | `hahamdan` | Project Manager / Developer | Facilitated team coordination, tracked progress, and ensured decisions were reviewed and aligned across the team. Contributed full-stack (frontend + backend) to her assigned features |
 | Roni | `reerikai` | Product Owner / Developer | Defined product vision and priorities, validated completed work. Contributed full-stack (frontend + backend) to his assigned features including the admin dashboard and user management |
 | Aino | `ahavu` | UI/UX Designer / Developer / QA | Designed the visual identity and component system. Conducted quality assurance and accessibility review. Contributed full-stack (frontend + backend) to her assigned features including users' uploaded projects, displaying the projects and image hosting. |
-| Laurens | `lhaas` | Product Owner / Developer | Co-managed product backlog and led accessibility implementation. Contributed full-stack (frontend + backend) to his assigned features |
+| Laurens | `lhaas` | Product Owner / Developer | Co-managed product backlog and led event management system as well as accessibility implementation. Contributed full-stack (frontend + backend) to his assigned features |
 
 ---
 
