@@ -47,14 +47,25 @@ export default function UserCard({
   return (
     <article className="flex flex-col gap-2 items-center w-full">
       <Link href={`/profile/${user.id}`}>
-        <Image
-          src={user.avatarUrl ?? "/default-profile-picture.png"}
-          alt="user avatar"
-          width={isMobile ? 100 : 150}
-          height={isMobile ? 100 : 150}
-          priority
-          className="rounded-xl hover:opacity-80 transition-opacity md:h-30 md:w-30 h-20 w-20 object-cover"
-        />
+        {user.avatarUrl ? (
+          <Image
+            src={user.avatarUrl}
+            alt="user avatar"
+            width={isMobile ? 100 : 150}
+            height={isMobile ? 100 : 150}
+            priority
+            className="rounded-xl hover:opacity-80 transition-opacity"
+          />
+        ) : (
+          <Image
+            src="/default-avatar-icon-of-social-media-user-vector.jpg"
+            alt="default user avatar"
+            width={isMobile ? 100 : 150}
+            height={isMobile ? 100 : 150}
+            priority
+            className="rounded-xl hover:opacity-80 transition-opacity"
+          />
+        )}
       </Link>
 	  <div className="flex gap-2 align-middle">
       <Link href={`/profile/${user.id}`} className="leading-none hover:underline">

@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import Image from "next/image";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 
@@ -64,11 +63,7 @@ type Props = {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const PRESET_AVATARS = [
-  "/default-profile-picture.jpg",
-  "/avatar-2.jpg",
-  "/avatar-3.png",
-];
+// Avatar preset images have been removed.
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -79,8 +74,8 @@ export default function EditUser({
   onCancel,
 }: Props) {
   const [serverError, setServerError] = useState("");
-  const [pendingAvatar, setPendingAvatar] = useState(
-    user.avatarUrl || "/default-profile-picture.jpg",
+  const [pendingAvatar, setPendingAvatar] = useState<string | undefined>(
+    user.avatarUrl ?? undefined,
   );
 
   const {
@@ -104,7 +99,7 @@ export default function EditUser({
 
     // Build payload with only filled fields
     const payload: Record<string, any> = {};
-    payload.avatarUrl = pendingAvatar;
+    if (pendingAvatar !== undefined) payload.avatarUrl = pendingAvatar;
     if (data.fullName) payload.fullName = data.fullName;
     if (data.username) payload.username = data.username;
     if (data.email) payload.email = data.email;
@@ -165,37 +160,6 @@ export default function EditUser({
           </div>
         ) : (
           <>
-            {/* Avatar picker */}
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-semibold uppercase tracking-widest text-[#6229FF]/70 whitespace-nowrap">
-                  Choose Avatar
-                </span>
-                <div className="flex-1 h-px bg-[#6229FF]/30" />
-              </div>
-              <div className="flex gap-3 flex-wrap">
-                {PRESET_AVATARS.map((src) => (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={() => setPendingAvatar(src)}
-                    className={`rounded-full p-0.5 transition cursor-pointer ${pendingAvatar === src
-                        ? "ring-2 ring-[#6229FF] ring-offset-2"
-                        : "ring-2 ring-transparent hover:ring-gray-300 ring-offset-2"
-                      }`}
-                  >
-                    <Image
-                      src={src}
-                      alt="avatar option"
-                      width={52}
-                      height={52}
-                      className="rounded-full object-cover w-13 h-13"
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Personal information */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
