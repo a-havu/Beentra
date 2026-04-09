@@ -53,6 +53,7 @@ export default function TfaCodeInput({
   };
 
   return (
+	<div className="w-full md:w-200 bg-[#CDCEFF] rounded-xl m-10 p-4">
     <form onSubmit={handleSubmit(checkCode)}>
       <Input
         label="Enter 2FA code"
@@ -68,5 +69,6 @@ export default function TfaCodeInput({
       <Button type="submit">Submit</Button>
 			</div>
     </form>
+	</div>
   );
 }
