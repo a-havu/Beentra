@@ -64,7 +64,7 @@ export default function PageForm({
   }
 
   return (
-    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden p-6 rounded-xl">
+    <div className="bg-white flex flex-col w-full min-w-0 overflow-hidden md:p-6 rounded-xl">
       <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">{id ? "Update page" : "Add new page"}</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Work_Sans, Afacad_Flux } from "next/font/google";
 import "./globals.css";
 import { validateEnv } from "@/lib/validation";
+import { HeartbeatWrapper } from "@/components/dashboard/HeartbeatWrapper";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -23,6 +24,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html
       lang="en"
@@ -31,6 +33,7 @@ export default function RootLayout({
       <body
         className={`flex flex-col w-full min-h-screen items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}
       >
+        <HeartbeatWrapper />
         <div className="flex flex-1 flex-col w-full min-w-0">
           {children}
         </div>

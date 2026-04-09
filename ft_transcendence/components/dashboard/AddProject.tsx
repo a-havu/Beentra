@@ -6,8 +6,6 @@ import { Button } from "../ui/Button"
 import Modal from "../ui/Modal"
 import ModalHeader from "../ui/ModalHeader";
 import ModalBody from "../ui/ModalBody";
-import ModalFooter from "../ui/ModalFooter";
-import CreateProject from "../projects/CreateProject";
 import ProjectForm from "../projects/ProjectForm";
 import { SubmitHandler } from 'react-hook-form'
 import { projectSchema } from '@/lib/validation';

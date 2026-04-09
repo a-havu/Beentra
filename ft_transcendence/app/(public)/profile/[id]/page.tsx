@@ -10,19 +10,28 @@ export default async function ProfilePage({
   const { id } = await params;
   const session = await getSession();
 
-  const user = await prisma.user.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      fullName: true,
-      username: true,
-      email: true,
-      role: true,
-      twoFactorEnabled: true,
-      avatarUrl: true,
-      createdAt: true,
-    },
-  });
+  const [user, projects] = await Promise.all([
+    prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        fullName: true,
+        username: true,
+        email: true,
+        role: true,
+        twoFactorEnabled: true,
+        avatarUrl: true,
+        createdAt: true,
+      },
+    }),
+    prisma.project.findMany({
+      where: { creatorId: id },
+      orderBy: { createdAt: "desc" },
+      include: {
+        creator: { select: { id: true, username: true, fullName: true } },
+      },
+    }),
+  ]);
 
   if (!user) {
     return (
@@ -39,5 +48,5 @@ export default async function ProfilePage({
 
   const isOwner = session?.userId === id;
 
-  return <ProfileForm user={userData} isOwner={isOwner} />;
+  return <ProfileForm user={userData} isOwner={isOwner} projects={projects} />;
 }
