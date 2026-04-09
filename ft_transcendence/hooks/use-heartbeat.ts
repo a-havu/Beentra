@@ -1,16 +1,40 @@
+
 import { useEffect } from "react";
 
-const INTERVAL_MS = 180 * 1000; // ping every 5 minutes
+const INTERVAL_MS = 3 * 60 * 1000; // 3 minutes
 
 export function useHeartbeat() {
-	useEffect(() => {
-		const ping = () => fetch("/api/heartbeat",
-			{ method: "POST" }
-		);
+  useEffect(() => {
+    let isMounted = true;
 
-		ping(); // immediate ping on mount
-		const id = setInterval(ping, INTERVAL_MS);
+    const ping = async () => {
+      try {
+        const response = await fetch("/api/heartbeat", {
+          method: "POST",
+        });
 
-		return () => clearInterval(id);
-	}, []);
+        // 401 is expected if user has logged out
+        if (response.status === 401) {
+          return;
+        }
+
+        if (!response.ok) {
+          console.error("Heartbeat failed:", response.status);
+        }
+      } catch (error) {
+        // ignore errors after unmount
+        if (isMounted) {
+          console.error("Heartbeat request failed:", error);
+        }
+      }
+    };
+
+    ping(); // immediate ping on mount
+    const id = setInterval(ping, INTERVAL_MS);
+
+    return () => {
+      isMounted = false;
+      clearInterval(id);
+    };
+  }, []);
 }
