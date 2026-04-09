@@ -80,11 +80,6 @@ export default function Twofa({ status }: TwoFaProps) {
               setQrCode(null);
             }}
           />
-          <div className="flex justify-end">
-            <Button variant="secondary" onClick={() => setQrCode(null)}>
-              Cancel
-            </Button>
-          </div>
         </div>
       )}
     </div>

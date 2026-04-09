@@ -16,8 +16,8 @@ const afacadFlux = Afacad_Flux({
 
 export const metadata: Metadata = {
   title: {
-    default: "Beentra", // this will show on the tab when no title is defined
-    template: "Beentra | %s", // here the %s becomes the page's title
+    default: "Beentra",
+    template: "Beentra | %s",
   },
 };
 
@@ -31,6 +31,6 @@ export default async function RootLayout({
 
 
   return (
-        <main className="flex flex-col  flex-1 p-6 ">{children}</main>
+        <main className="flex flex-col flex-1 p-6 ">{children}</main>
   );
 }

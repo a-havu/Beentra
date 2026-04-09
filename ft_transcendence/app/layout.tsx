@@ -31,7 +31,7 @@ export default function RootLayout({
       className={`h-full ${workSans.variable} ${afacadFlux.variable}`}
     >
       <body
-        className={`flex flex-col w-full min-h-screen items-center ${workSans.variable} ${afacadFlux.variable} antialiased`}
+        className={`flex flex-col w-full min-h-screen items-center antialiased`}
       >
         <HeartbeatWrapper />
         <div className="flex flex-1 flex-col w-full min-w-0">
