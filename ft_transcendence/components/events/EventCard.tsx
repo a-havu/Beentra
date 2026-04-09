@@ -59,7 +59,7 @@ const EventCard = ({
   return (
     <>
       <div
-        className={`relative pt-11 p-4 mt-4 min-w-80 rounded-xl shadow-sm cursor-pointer ${
+        className={`relative pt-11 p-4 mt-4 md:min-w-80 rounded-xl shadow-sm cursor-pointer ${
           isIntra
             ? "border border-[#7e59e4] bg-[#feffee] text-black hover:bg-[#f1ecfb]"
             : "border border-[#3ebdd1] bg-[#feffee] text-black hover:bg-[#f3fbfc]"
@@ -88,7 +88,8 @@ const EventCard = ({
           <p>
             {from} – {to}
           </p>
-		  <div className="flex items-end mt-2">
+		  <div className="flex flex-row gap-4">
+		  <div className="flex items-end align-middle">
 		  {isIntra ? (
               <Image
                 src="/intra-pin.png"
@@ -106,13 +107,8 @@ const EventCard = ({
                 className="w-3 md:w-4 h-auto"
               />
             )}
-          <p className="ml-1 align-middle">{event.location}</p></div>
-          {/* {event.description && <p>{event.description}</p>} */}
-          {event.maxSpots > 0 && (
-            <p>
-              {subscriberCount}/{event.maxSpots} spots taken
-            </p>
-          )}
+          <p className="ml-1">{event.location}</p>
+		  </div>
           <div className="flex items-end mt-2">
             {isIntra ? (
               <Image
@@ -131,8 +127,11 @@ const EventCard = ({
                 className="w-3 md:w-4 h-auto"
               />
             )}
+			<p className="ml-1">{event.organizer}</p>
+			</div>
 
-			<p className="text-gray-500 text-sm ml-1">{event.organizer}</p>
+			<div>
+		  </div>
             {showSubscribeButton && (
               <button
                 className={`absolute bottom-0 right-0 cursor-pointer px-5 py-3 rounded-tl-xl rounded-br-xl text-lg ${
@@ -156,6 +155,11 @@ const EventCard = ({
               </button>
             )}
           </div>
+		    {event.maxSpots > 0 && (
+            <p className="flex align-middle mt-2">
+              {subscriberCount}/{event.maxSpots} spots taken
+            </p>
+          )}
         </div>
       </div>
       <ShowEvent

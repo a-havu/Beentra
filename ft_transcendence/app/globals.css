@@ -94,11 +94,15 @@ input:-webkit-autofill:focus {
   font-family: inherit;
 }
 
-/* the weekday numbers in mobile view */
+/* the toolbar in mobile view */
 @media (max-width: 640px) {
 .fc-toolbar-title {
     font-family: var(--font-afacad-flux);
-  font-size: 0.85rem !important;
+  font-size: 0.65rem !important;
+}
+.fc .fc-button {
+  padding: 0.2rem 0.2rem;
+  font-size: 0.65rem !important;
 }
 }
 
