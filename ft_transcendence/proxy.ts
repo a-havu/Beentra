@@ -131,7 +131,7 @@ export async function handleApiRoutes(request: NextRequest) {
   return NextResponse.next();
 }
 
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   try{
   const pathname = request.nextUrl.pathname;
 
