@@ -78,7 +78,7 @@ export function LoginForm() {
         {errors.root && (
   <p className="text-red-500 text-sm">{errors.root.message}</p>
 )}
-        <Button onClick={handleSubmit(loginHandler)}> Login</Button>
+        <Button onClick={handleSubmit(loginHandler)} type="submit"> Login</Button>
 
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 h-px bg-black" />
