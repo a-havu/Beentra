@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalHeader from "../ui/ModalHeader";
 import ModalBody from "../ui/ModalBody";
 import ModalFooter from "../ui/ModalFooter";
-import { User } from "@/lib/generated/prisma/client";
-import { iso } from "zod";
 
 type UserPreview = {
   id: string;
@@ -65,11 +62,10 @@ function ShowUser({ user, isOpen, onClose }: UserProps) {
             <div className="flex gap-2">
               <strong className="text-gray-700 min-w-[120px]">Role:</strong>
               <span
-                className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  user.role === "admin"
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${user.role === "admin"
                     ? "bg-purple-100 text-purple-800"
                     : "bg-blue-100 text-blue-800"
-                }`}
+                  }`}
               >
                 {user.role}
               </span>
@@ -85,9 +81,6 @@ function ShowUser({ user, isOpen, onClose }: UserProps) {
         </div>
       </ModalBody>
       <ModalFooter>
-        {/* <Button variant="edit" onClick={onClose}>
-					Edit
-				</Button> */}
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>

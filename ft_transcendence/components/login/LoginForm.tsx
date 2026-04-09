@@ -48,8 +48,9 @@ export function LoginForm() {
   };
 
   return (
-    <div className="beentra-form-container md:!w-200">
-      <form className="beentra-form">
+	<div className="flex justify-center">
+    <div className="beentra-form-container flex mx-auto">
+      <form className="beentra-form md:w-150!">
         <h1 className="p-1 flex justify-center">Welcome to Beentra</h1>
         <p className="p-1 flex justify-center">New here?<Link href="/registration" className="underline ml-1 font-semibold text-[#724015]">Sign Up</Link></p>
 
@@ -108,5 +109,6 @@ export function LoginForm() {
       </form>
 
     </div>
+	</div>
   );
 }

@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by mkhlouf, reerikai, lhaas, ahavu, hahamdan.*
+_This project has been created as part of the 42 curriculum by mkhlouf, reerikai, lhaas, ahavu, hahamdan._
 
 ---
 
@@ -77,6 +77,7 @@ docker compose up --build
 ```
 
 This will start:
+
 - The **Next.js** application on port 3000 (internal)
 - The **Nginx** reverse proxy on ports `8080` (HTTP) and `8443` (HTTPS)
 
@@ -143,13 +144,13 @@ All AI-generated content was reviewed, tested, and validated by team members bef
 
 ## Team Information
 
-| Name | 42 Login | Role(s) | Responsibilities |
-|------|----------|---------|-----------------|
-| Mohammad | `mkhlouf` | Technical Lead / Developer | Defined technical architecture and made technology stack decisions. Contributed full-stack (frontend + backend) to his assigned features, reviewed critical code changes |
-| Hager | `hahamdan` | Project Manager / Developer | Facilitated team coordination, tracked progress, and ensured decisions were reviewed and aligned across the team. Contributed full-stack (frontend + backend) to her assigned features |
-| Roni | `reerikai` | Product Owner / Developer | Defined product vision and priorities, validated completed work. Contributed full-stack (frontend + backend) to his assigned features including the admin dashboard and user management |
-| Aino | `ahavu` | UI/UX Designer / Developer / QA | Designed the visual identity and component system. Conducted quality assurance and accessibility review. Contributed full-stack (frontend + backend) to her assigned features including users' uploaded projects, displaying the projects and image hosting. |
-| Laurens | `lhaas` | Product Owner / Developer | Co-managed product backlog and led event management system as well as accessibility implementation. Contributed full-stack (frontend + backend) to his assigned features |
+| Name     | 42 Login   | Role(s)                     | Responsibilities                                                                                                                                                                               |
+| -------- | ---------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mohammad | `mkhlouf`  | Technical Lead / Developer  | Defined technical architecture and made technology stack decisions. Contributed full-stack (frontend + backend) to his assigned features, reviewed critical code changes                       |
+| Hager    | `hahamdan` | Project Manager / Developer | Facilitated team coordination, tracked progress, and ensured decisions were reviewed and aligned across the team. Contributed full-stack (frontend + backend) to her assigned features         |
+| Roni     | `reerikai` | Product Owner / Developer   | Together with Laurens, defined the features needed for the project. Contributed full-stack (frontend + backend) to his assigned features                                                       |
+| Aino     | `ahavu`    | UI/UX Designer / Developer  | Designed the web app's visual identity, UI/UX, and color palette with help from Laurens. Contributed full-stack (frontend + backend) to her assigned features                                  |
+| Laurens  | `lhaas`    | Product Owner / Developer   | Together with Roni, defined the features needed for the project. Helped shape the UI/UX and visual design alongside Aino. Contributed full-stack (frontend + backend) to his assigned features |
 
 ---
 
@@ -166,12 +167,12 @@ The team followed a **Kanban** workflow using GitHub Projects:
 
 ### Tools Used
 
-| Tool | Purpose |
-|------|---------|
+| Tool            | Purpose                                                           |
+| --------------- | ----------------------------------------------------------------- |
 | GitHub Projects | Main project tracker - issues, task assignment, progress tracking |
-| GitHub Issues | Individual task creation and tracking |
-| Discord | Primary team communication channel |
-| Miro | Initial architecture and module planning board |
+| GitHub Issues   | Individual task creation and tracking                             |
+| Discord         | Primary team communication channel                                |
+| Miro            | Initial architecture and module planning board                    |
 
 ### Communication
 
@@ -183,35 +184,35 @@ The team communicated primarily via **Discord** for day-to-day coordination and 
 
 ### Frontend
 
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| Next.js (React) | 16.x | Full-stack framework - React for UI, App Router for routing and SSR |
-| TypeScript | 5.x | Type safety across the codebase |
-| Tailwind CSS | v4 | Utility-first styling |
-| Tiptap | 3.x | Rich text editor for page content |
-| FullCalendar | 6.x | Event calendar UI |
-| React Hook Form | 7.x | Form state management |
-| Zod | 4.x | Schema-based form and API validation |
+| Technology      | Version | Purpose                                                             |
+| --------------- | ------- | ------------------------------------------------------------------- |
+| Next.js (React) | 16.x    | Full-stack framework - React for UI, App Router for routing and SSR |
+| TypeScript      | 5.x     | Type safety across the codebase                                     |
+| Tailwind CSS    | v4      | Utility-first styling                                               |
+| Tiptap          | 3.x     | Rich text editor for page content                                   |
+| FullCalendar    | 6.x     | Event calendar UI                                                   |
+| React Hook Form | 7.x     | Form state management                                               |
+| Zod             | 4.x     | Schema-based form and API validation                                |
 
 ### Backend
 
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| Next.js API Routes | 16.x | Backend route handlers (REST API) |
-| Prisma ORM | 7.x | Type-safe database access and migrations |
-| jose | 6.x | JWT creation and verification |
-| bcryptjs | 3.x | Password hashing and salting |
-| otplib | 13.x | TOTP-based Two-Factor Authentication |
-| nodemailer | 8.x | Transactional email |
-| imagekit | 6.x | Image and file upload/storage |
+| Technology         | Version | Purpose                                  |
+| ------------------ | ------- | ---------------------------------------- |
+| Next.js API Routes | 16.x    | Backend route handlers (REST API)        |
+| Prisma ORM         | 7.x     | Type-safe database access and migrations |
+| jose               | 6.x     | JWT creation and verification            |
+| bcryptjs           | 3.x     | Password hashing and salting             |
+| otplib             | 13.x    | TOTP-based Two-Factor Authentication     |
+| nodemailer         | 8.x     | Transactional email                      |
+| imagekit           | 6.x     | Image and file upload/storage            |
 
 ### Infrastructure
 
-| Technology | Purpose |
-|-----------|---------|
-| PostgreSQL | Relational database |
+| Technology              | Purpose                                        |
+| ----------------------- | ---------------------------------------------- |
+| PostgreSQL              | Relational database                            |
 | Docker / Docker Compose | Containerization and single-command deployment |
-| Nginx | Reverse proxy, HTTPS termination |
+| Nginx                   | Reverse proxy, HTTPS termination               |
 
 ### Justification for Major Technical Choices
 
@@ -311,33 +312,33 @@ Page (static content pages)
 
 ## Features List
 
-| Feature | Description | Team Member(s) |
-|---------|-------------|---------------|
-| User Registration | Sign up with email and password, with validation on both frontend and backend | Hager |
-| User Login | Secure login with JWT session tokens, bcrypt password verification | Mohammad |
-| OAuth 2.0 Login | Login with 42 or GitHub accounts | Mohammad |
-| Two-Factor Authentication | TOTP-based 2FA with QR code setup and verification flow | Mohammad |
-| User Profile | View and edit profile info (name, username, avatar) | Hager |
-| Avatar Upload | Upload and manage profile picture via ImageKit CDN | Hager |
-| Friends System | Send, accept, and remove friend requests; view friends list | Roni |
-| Online Status | See which users are currently online | Roni |
-| Role Management | Admin and moderator roles with elevated permissions | Roni / Mohammad |
-| User Admin Panel | View, manage, and moderate users (admin only) | Roni |
-| Events Calendar | Monthly calendar view of all events | Laurens |
-| Events List | Weekly upcoming events on the homepage with filtering by type | Laurens |
-| Create / Edit Event | Form to create or update events (authenticated users) | Laurens |
-| Event Subscription | Subscribe and unsubscribe from events, view attendee count | Laurens |
-| Project Upload | Upload a project to the database | Aino |
-| Projects Gallery | Paginated grid of student projects with search and filtering | Aino |
-| Create / Edit Project | Form to add or update a project with image upload | Aino |
-| My Projects | Fetch and display the projects the logged-in user has uploaded | Aino |
-| Single project page | Display all information of a selected project on a page | Aino |
-| Public API | Secured REST API for events with API key authentication and rate limiting | Mohammad |
-| API Key Management | Users can generate and manage their own public API keys | Mohammad |
-| Static Pages (CMS) | Rich-text editable informational pages (Privacy Policy, Terms, etc.) | Mohammad |
-| Privacy Policy & Terms | Accessible static pages with relevant legal content | Mohammad |
-| HTTPS + Nginx | Nginx reverse proxy with TLS termination | All members |
-| Docker Deployment | Single-command deployment with Docker Compose | All members |
+| Feature                   | Description                                                                   | Team Member(s)  |
+| ------------------------- | ----------------------------------------------------------------------------- | --------------- |
+| User Registration         | Sign up with email and password, with validation on both frontend and backend | Hager           |
+| User Login                | Secure login with JWT session tokens, bcrypt password verification            | Mohammad        |
+| OAuth 2.0 Login           | Login with 42 or GitHub accounts                                              | Mohammad        |
+| Two-Factor Authentication | TOTP-based 2FA with QR code setup and verification flow                       | Mohammad        |
+| User Profile              | View and edit profile info (name, username, avatar)                           | Hager           |
+| Avatar Upload             | Upload and manage profile picture via ImageKit CDN                            | Hager           |
+| Friends System            | Send, accept, and remove friend requests; view friends list                   | Roni            |
+| Online Status             | See which users are currently online                                          | Roni            |
+| Role Management           | Admin and moderator roles with elevated permissions                           | Roni / Mohammad |
+| User Admin Panel          | View, manage, and moderate users (admin only)                                 | Roni            |
+| Events Calendar           | Monthly calendar view of all events                                           | Laurens         |
+| Events List               | Weekly upcoming events on the homepage with filtering by type                 | Laurens         |
+| Create / Edit Event       | Form to create or update events (authenticated users)                         | Laurens         |
+| Event Subscription        | Subscribe and unsubscribe from events, view attendee count                    | Laurens         |
+| Project Upload            | Upload a project to the database                                              | Aino            |
+| Projects Gallery          | Paginated grid of student projects                                            | Aino            |
+| Create / Edit Project     | Form to add or update a project with image upload                             | Aino            |
+| My Projects               | Fetch and display the projects the logged-in user has uploaded                | Aino            |
+| Single project page       | Display all information of a selected project on a page                       | Aino            |
+| Public API                | Secured REST API for events with API key authentication and rate limiting     | Mohammad        |
+| API Key Management        | Users can generate and manage their own public API keys                       | Mohammad        |
+| Static Pages (CMS)        | Rich-text editable informational pages (Privacy Policy, Terms, etc.)          | Mohammad        |
+| Privacy Policy & Terms    | Accessible static pages with relevant legal content                           | Mohammad        |
+| HTTPS + Nginx             | Nginx reverse proxy with TLS termination                                      | All members     |
+| Docker Deployment         | Single-command deployment with Docker Compose                                 | All members     |
 
 ---
 
@@ -345,24 +346,23 @@ Page (static content pages)
 
 ### Claimed Modules
 
-| # | Module | Type | Points | Who Implemented |
-|---|--------|------|--------|----------------|
-| 1 | **Use a framework for both frontend and backend** (Next.js as full-stack - React frontend + Next.js API routes backend) | Major | 2 | All members |
-| 2 | **Public API** - Secured REST API with API key authentication, rate limiting, and at least 5 endpoints (GET/POST/PUT/DELETE for events) | Major | 2 | All members |
-| 3 | **Standard user management and authentication** - Profile management, avatar upload, friends system, online status, profile pages | Major | 2 | Hager, Mohammad |
-| 4 | **Advanced permissions system** - Admin/moderator/user roles, CRUD on users, different views and actions per role | Major | 2 | Hager, Mohammad |
-| 5 | **ORM** - Prisma used for all database access with type-safe queries and migrations | Minor | 1 | All members |
-| 6 | **OAuth 2.0** - Remote authentication via 42 and/or GitHub OAuth | Minor | 1 | Mohammad |
-| 7 | **Two-Factor Authentication (2FA)** - Complete TOTP-based 2FA system with QR code setup | Minor | 1 | Mohammad |
-| 8 | **Server-Side Rendering (SSR)** - Enabled through Next.js App Router for improved performance and SEO | Minor | 1 | All members |
-| 9 | **File upload and management** - Image uploads for events and projects via ImageKit, with client/server validation | Minor | 1 | All members |
-| 10 | **Custom-made design system** - A library of 10+ reusable components (Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, ConfirmationModal, FormTitle, FunctionalButtons, SubmitFormButton, and more) with consistent color palette, typography, and icons | Minor | 1 | All members |
-| 11 | **User activity analytics and insights dashboard** - Dashboard displaying user activity metrics and insights | Minor | 1 | Roni |
-| 12 | **Module of choice: Static Pages CMS** - A custom content management system allowing admins to create, edit, and manage static informational pages (Privacy Policy, Terms of Service, etc.) via a rich-text editor (Tiptap), stored in the database with unique slugs | Minor | 1 | Mohammad |
-| 13 | **Support for additional browsers** - Full compatibility tested and fixed for at least 2 additional browsers beyond Chrome | Minor | 1 | All members |
-| 14 | **Complete accessibility compliance (WCAG 2.1 AA)** - Screen reader support, keyboard navigation, and assistive technology compatibility throughout the application *(pending confirmation by Laurens)* | Major | 2 | Laurens |
+| #   | Module                                                                                                                                                                                                                                                                | Type  | Points | Who Implemented |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------ | --------------- |
+| 1   | **Use a framework for both frontend and backend** (Next.js as full-stack - React frontend + Next.js API routes backend)                                                                                                                                               | Major | 2      | All members     |
+| 2   | **Public API** - Secured REST API with API key authentication, rate limiting, and at least 5 endpoints (GET/POST/PUT/DELETE for events)                                                                                                                               | Major | 2      | All members     |
+| 3   | **Standard user management and authentication** - Profile management, avatar upload, friends system, online status, profile pages                                                                                                                                     | Major | 2      | Hager, Mohammad |
+| 4   | **Advanced permissions system** - Admin/moderator/user roles, CRUD on users, different views and actions per role                                                                                                                                                     | Major | 2      | Hager, Mohammad |
+| 5   | **ORM** - Prisma used for all database access with type-safe queries and migrations                                                                                                                                                                                   | Minor | 1      | All members     |
+| 6   | **OAuth 2.0** - Remote authentication via 42 and/or GitHub OAuth                                                                                                                                                                                                      | Minor | 1      | Mohammad        |
+| 7   | **Two-Factor Authentication (2FA)** - Complete TOTP-based 2FA system with QR code setup                                                                                                                                                                               | Minor | 1      | Mohammad        |
+| 8   | **Server-Side Rendering (SSR)** - Enabled through Next.js App Router for improved performance and SEO                                                                                                                                                                 | Minor | 1      | All members     |
+| 9   | **File upload and management** - Image uploads for events and projects via ImageKit, with client/server validation                                                                                                                                                    | Minor | 1      | All members     |
+| 10  | **Custom-made design system** - A library of 10+ reusable components (Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, ConfirmationModal, FormTitle, FunctionalButtons, SubmitFormButton, and more) with consistent color palette, typography, and icons    | Minor | 1      | All members     |
+| 11  | **User activity analytics and insights dashboard** - Dashboard displaying user activity metrics and insights                                                                                                                                                          | Minor | 1      | Roni            |
+| 12  | **Module of choice: Static Pages CMS** - A custom content management system allowing admins to create, edit, and manage static informational pages (Privacy Policy, Terms of Service, etc.) via a rich-text editor (Tiptap), stored in the database with unique slugs | Minor | 1      | Mohammad        |
+| 13  | **Support for additional browsers** - Full compatibility tested and fixed for at least 2 additional browsers beyond Chrome                                                                                                                                            | Minor | 1      | All members     |
 
-**Total: 5 × 2 + 8 × 1 = 18 points** *(need Laurens confirmation for module 14)*
+**Total: 4 × 2 + 9 × 1 = 17 points**
 
 ### Module Details
 
@@ -405,42 +405,44 @@ A custom content management system that allows admins to create, edit, and delet
 **13. Support for Additional Browsers (Minor - 1pt)**
 The application was tested and fixed for full compatibility with at least 2 additional browsers beyond Chrome (e.g. Firefox, Safari, Edge). Browser-specific issues were identified and resolved to ensure a consistent UI/UX across all supported browsers.
 
-**14. Complete Accessibility Compliance - WCAG 2.1 AA (Major - 2pts)** *
-Screen reader support, keyboard navigation, and compatibility with assistive technologies implemented throughout the application in compliance with WCAG 2.1 AA guidelines.
-
 ---
 
 ## Individual Contributions
 
 ### Mohammad - Technical Lead / Developer
 
-*(to be filled in by Mohammad)*
+_(to be filled in by Mohammad)_
 
 ### Hager - Project Manager / Developer
 
-*(to be filled in by Hager)*
+Led project coordination across the team. Tracked progress, facilitated decisions, and kept the team aligned throughout the project. Wrote and maintained the project README documentation for the entire team.
+
+Owned the standard user management module, contributing full-stack:
+
+- User registration with email/password and validation
+- User profile page - view and edit profile info (name, username, email, password)
+- Avatar upload via ImageKit CDN
+- Profile pages accessible to other users, showing their projects
 
 ### Roni - Product Owner / Developer
 
-*(to be filled in by Roni)*
+Came up with the name "Beentra" and told some jokes
 
-### Aino - UI/UX Designer / Developer / QA
+### Aino - UI/UX Designer / Developer
 
-Designed the visual identity, component system, and mobile support.
-Conducted quality assurance and accessibility review, carefully picking out a colour palette that takes into account the visually impaired and colourblind.
-Contributed full-stack (frontend + backend) to her assigned features:
+Owned the design of the entire web app — visual identity, UI/UX, color palette, and mobile support with accessibility in mind. Also designed the Beentra logo.
 
-- How users upload their projects onto the platform via React hook form
-- Displaying the projects in a paginated grid
-- Image hosting - researched and compared possibilities (setting up a dedicated server/using Hive's servers/using a third-party image hosting service).
-- Fetching data from the logged-in user to display all of their projects in a dedicated "My Projects" page
-- Display data of a selected project on a separate page
+Contributed full-stack to the projects module:
 
-Also designed the Beentra happy bee logo.
+- Project upload form using React Hook Form
+- Projects gallery displayed in a paginated grid
+- Researched and selected ImageKit as the image hosting solution
+- My Projects page — fetching and displaying the logged-in user's uploaded projects
+- Single project page — displaying all details of a selected project
 
 ### Laurens - Product Owner / Developer
 
-*(to be filled in by Laurens)*
+_(to be filled in by Laurens)_
 
 ---
 

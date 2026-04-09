@@ -65,6 +65,16 @@ body {
   animation: marquee 100s linear infinite;
 }
 
+/* Override web browser autofill background in forms */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #000;
+  box-shadow: 0 0 0px 1000px white inset;
+}
+
+
 /* =============================== */
 /*       FULLCALENDAR STYLE        */
 /* =============================== */
@@ -84,10 +94,12 @@ body {
   font-family: inherit;
 }
 
-/* the weekday numbers */
+/* the weekday numbers in mobile view */
+@media (max-width: 640px) {
 .fc-toolbar-title {
-  font-family: var(--font-afacad-flux);
-  font-size: 0.65rem !important;
+    font-family: var(--font-afacad-flux);
+  font-size: 0.85rem !important;
+}
 }
 
 /* Cell backgrounds — target only content cells, not border/spacer elements */
@@ -194,7 +206,7 @@ body {
 }
 
 .beentra-form-container {
-  @apply flex flex-col items-center content-center w-full rounded-2xl bg-[#CDCEFF];
+    @apply flex flex-col items-center content-center max-w-xl rounded-2xl bg-[#CDCEFF];
 }
 
 .beentra-form {

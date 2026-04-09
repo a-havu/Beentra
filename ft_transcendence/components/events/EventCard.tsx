@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ShowEvent from "./ShowEvent";
 import { EventData } from "@/types/general";
+import Image from "next/image";
 
 type Props = {
   event: EventData;
@@ -48,7 +49,7 @@ const EventCard = ({
         setIsSubscribed(!isSubscribed);
         setSubscriberCount((c) => c + (isSubscribed ? -1 : 1));
         if (isSubscribed) {
-          onUnsubscribe?.(event.id); // 👈 add this
+          onUnsubscribe?.(event.id);
         }
       }
     } finally {
@@ -88,15 +89,51 @@ const EventCard = ({
           <p>
             {from} – {to}
           </p>
-          <p>🧭 {event.location}</p>
+		  <div className="flex items-end mt-2">
+		  {isIntra ? (
+              <Image
+                src="/intra-pin.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            ) : (
+              <Image
+                src="/beentra-pin.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            )}
+          <p className="ml-1 align-middle">{event.location}</p></div>
           {/* {event.description && <p>{event.description}</p>} */}
           {event.maxSpots > 0 && (
             <p>
               {subscriberCount}/{event.maxSpots} spots taken
             </p>
           )}
-          <div className="flex justify-between items-end mt-2">
-            <p className="text-gray-500 text-sm">🤹 {event.organizer}</p>
+          <div className="flex items-end mt-2">
+            {isIntra ? (
+              <Image
+                src="/intra-user.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            ) : (
+              <Image
+                src="/beentra-user.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            )}
+
+			<p className="text-gray-500 text-sm ml-1">{event.organizer}</p>
             {showSubscribeButton && (
               <button
                 className={`absolute bottom-0 right-0 cursor-pointer px-5 py-3 rounded-tl-xl rounded-br-xl text-lg ${

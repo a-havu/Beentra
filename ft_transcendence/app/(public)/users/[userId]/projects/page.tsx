@@ -34,7 +34,7 @@ export default async function UserProjectsPage({
 
   return (
     <div>
-      <h1 className="flex justify-center text-[#44469A] p-9">
+      <h1 className="flex justify-center text-[#44469A] ml-9 mr-9 text-xl md:text-3xl md:ml-0">
         These are your projects, {user.username}!
       </h1>
       {projects.length > 0 ? (
