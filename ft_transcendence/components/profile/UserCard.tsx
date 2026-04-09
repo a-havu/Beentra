@@ -53,13 +53,15 @@ export default function UserCard({
           width={isMobile ? 100 : 150}
           height={isMobile ? 100 : 150}
           priority
-          className="rounded-xl hover:opacity-80 transition-opacity"
+          className="rounded-xl hover:opacity-80 transition-opacity md:h-30 md:w-30 h-20 w-20 object-cover"
         />
       </Link>
+	  <div className="flex gap-2 align-middle">
       <Link href={`/profile/${user.id}`} className="leading-none hover:underline">
         {user.username}
       </Link>
       {isFriend?<FriendStatus user={user} />:<></>}
+	  </div>
       <div className="flex justify-center"><Button
         onClick={handleClick}
         disabled={loading}

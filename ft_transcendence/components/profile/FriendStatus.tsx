@@ -4,6 +4,9 @@ import { User } from "@/lib/generated/prisma/client"
 export default function FriendStatus({ user } : {user: User}){
 
     return(
-    <>{user.isOnline ?  <p className="text-sm text-[#00566A] leading-none">Online</p> : <p className="text-sm text-[#4017c8] leading-none">Offline</p>}</>
+    <>
+	{user.isOnline ?  <span className="w-3 h-3 rounded-full border border-grey-400 bg-[#aae396]"/> 
+	: <span className="w-3 h-3 rounded-full border border-grey-800 bg-white"/>}
+	</>
     )
 }

@@ -13,3 +13,5 @@ export default function PotentialFriends({ potentialFriends, currentUserId }: { 
     </div>
   )
 }
+
+
