@@ -163,6 +163,7 @@ export function UsersTable() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button
+                          disabled={user.email === "admin@beentra.fi"}
                           dashboard={true}
 						  variant="edit"
                           onClick={() => setEditingUser(user)}
