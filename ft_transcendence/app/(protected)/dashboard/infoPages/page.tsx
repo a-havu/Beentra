@@ -26,7 +26,7 @@ export default async function InfoPages() {
       <div>
         <h3> Info pages management</h3>
       </div>
-      <div className="mb-5  ">
+      <div className="mb-5">
         <AddPage />
       </div>
 

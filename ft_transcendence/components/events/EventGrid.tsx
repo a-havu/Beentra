@@ -64,7 +64,7 @@ const EventGrid = ({
   if (events.length === 0) return <p>No events found.</p>;
 
   return (
-    <div className="flex flex-col gap-10 w-[40dvw]">
+    <div className="flex flex-col gap-10 w-full items-center md:w-[40dvw]">
       <div className="flex gap-3">
         <button
           onClick={() => setShowUpcoming((v) => !v)}

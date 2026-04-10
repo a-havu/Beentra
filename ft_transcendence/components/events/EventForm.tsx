@@ -48,6 +48,7 @@ export default function EventForm({
         onSubmit={handleSubmit(submitHandler)}
         className="beentra-form modal-form"
       >
+        <h2> New Event</h2>
         <Input
           label="Title"
           name="title"

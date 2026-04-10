@@ -10,8 +10,8 @@ export default function VerifyLogin({ tempToken }: Props) {
   const router = useRouter();
 
   return (
-    <>
-      <h2>Verify code:</h2>
+    <div className="flex flex-col items-center">
+      <h2 className="mt-6">Verify code:</h2>
       <TfaCodeInput
         temptoken={tempToken}
         apiUrl="/api/auth/2fa/verify"
@@ -21,6 +21,6 @@ export default function VerifyLogin({ tempToken }: Props) {
           router.push("/");
         }}
       />
-    </>
+    </div>
   );
 }

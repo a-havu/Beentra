@@ -20,8 +20,8 @@ const afacadFlux = Afacad_Flux({
 
 export const metadata: Metadata = {
   title: {
-    default: "Beentra", // this will show on the tab when no title is defined
-    template: "Beentra | %s", // here the %s becomes the page's title
+    default: "Beentra",
+    template: "Beentra | %s",
   },
 };
 
@@ -44,7 +44,7 @@ export default async function RootLayout({
 		  <Suspense fallback={<Loading />}>{children}</Suspense>
 		</main>
   
-		<footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
+		<footer className="h-14 shrink-0 mb-7 flex items-center justify-center text-[#7A3D02]">
 		  <Footer />
 		</footer>
 	  </div>

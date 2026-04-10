@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default async function Header() {
   return (
-    <header className="header flex flex-row items-center justify-between md:p-6 h-16 w-full overflow-visible">
+    <header className="header grid grid-cols-3 items-center md:p-6 h-16 w-full overflow-visible">
       <div className="flex flex-row gap-3">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={32} height={32} />
@@ -14,8 +14,12 @@ export default async function Header() {
           <Link href="/">Beentra</Link>
         </h3>
       </div>
+      <div className="flex justify-center">
       <Menu />
+      </div>
+      <div className="flex justify-end">
       <LogHeader />
+      </div>
     </header>
   );
 }

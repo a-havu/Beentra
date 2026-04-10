@@ -2,6 +2,7 @@ import AddEvent from "@/components/dashboard/AddEvent";
 import EventGrid from "@/components/events/EventGrid";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { fetchIntraEvents, formatIntraEvent } from "@/lib/IntraEvents";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
@@ -21,7 +22,7 @@ export default async function EventsPage() {
     },
   });
 
-  const events = raw.map(({ subscriptions, _count, ...rest }) => ({
+  const dbEvents = raw.map(({ subscriptions, _count, ...rest }) => ({
     ...rest,
     date: rest.date.toISOString(),
     timeFrom: rest.timeFrom.toISOString(),
@@ -32,15 +33,24 @@ export default async function EventsPage() {
       : false,
   }));
 
+  const intraResult = await fetchIntraEvents();
+  const intraEvents = intraResult.success
+    ? (intraResult.data ?? []).map(formatIntraEvent)
+    : [];
+
+  const events = [...dbEvents, ...intraEvents].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+
   return (
-    <div className="flex flex-col items-center p-5">
+    <div className="flex flex-col items-center p-6">
       <div className="flex flex-col items-center gap-6">
         <h1>All Beentra Events</h1>
         <div className="flex justify-center">
           <AddEvent />
         </div>
       </div>
-      <div className="flex gap-5 ">
+      <div className="flex gap-5 mt-6">
         <EventGrid
           events={events}
           currentUserId={userId}

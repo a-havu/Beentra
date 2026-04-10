@@ -26,7 +26,6 @@ export default async function ProjectPage({
 
 	return (
     <div className="max-w-4xl mx-auto">
-      {/* Actions */}
       {isCreator && (
         <div className="flex gap-2 justify-center mb-6">
           <EditProject project={project} />
@@ -34,7 +33,6 @@ export default async function ProjectPage({
         </div>
       )}
 
-      {/* Header Section */}
       <div className="flex flex-col items-center text-center mb-8">
         <h1 className="text-3xl font-bold text-[#44469A] mb-2">
           {project.projectName}
@@ -43,7 +41,6 @@ export default async function ProjectPage({
           <h4 className="text-xl mb-4">{project.oneLiner}</h4>
         )}
         
-        {/* Tech Stack */}
         {project.techStack && (
           <div className="flex flex-wrap justify-center gap-2 mb-4">
             {project.techStack.split(',').filter(t => t.trim()).map((tech, index) => (
@@ -57,7 +54,6 @@ export default async function ProjectPage({
           </div>
         )}
 
-        {/* Link */}
         {project.link && (
           <a
 		  	className="text-[#724015] underline font-semibold hover:text-[#5a3210] transition-all duration-200 ease-in-out"
@@ -69,9 +65,8 @@ export default async function ProjectPage({
           </a>
         )}
       </div>
-	{/* Main Content: Image + Description */}
+
       <div className="flex flex-col md:flex-row gap-8 items-start">
-        {/* Image Column */}
         <div className="w-full md:w-1/3 flex justify-center">
           {project.image ? (
             <Image
@@ -83,20 +78,16 @@ export default async function ProjectPage({
               className="w-full h-auto max-h-96 rounded-lg object-contain"
             />
           ) : (
-            //  <span className="w-full px-10 py-4 aspect-square bg-[#e8e1fd] rounded-lg flex items-center justify-center text-6xl">
-            //   🐝
-            // </span>
 			<Image
 				src="/logo.svg"
 				alt="logo"
-				width={32}
-				height={32}
-				className="w-27 px-10 py-4 bg-[#e8e1fd] rounded-lg flex items-center justify-center"
+				width={50}
+				height={50}
+				className=" bg-[#e8e1fd] rounded-lg flex items-center justify-center"
 					/>
           )}
         </div>
 
-        {/* Description Column */}
         <div className="w-full md:w-2/3">
           {project.description && (
             <p className="whitespace-pre-line bg-white p-6 rounded-lg text-lg leading-relaxed shadow-sm border border-gray-100">

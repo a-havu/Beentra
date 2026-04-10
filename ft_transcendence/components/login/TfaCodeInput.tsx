@@ -2,6 +2,7 @@ import Input from "../ui/Input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import { Button } from "../ui/Button"
 
 
 interface TfaCodeInputProps {
@@ -52,6 +53,7 @@ export default function TfaCodeInput({
   };
 
   return (
+	<div className="w-full md:w-200 bg-[#CDCEFF] rounded-xl m-10 p-4">
     <form onSubmit={handleSubmit(checkCode)}>
       <Input
         label="Enter 2FA code"
@@ -63,7 +65,10 @@ export default function TfaCodeInput({
         errors={errors}
       />
 
-      <button type="submit">Submit</button>
+		<div className="flex justify-end gap-3 mt-6">
+      <Button type="submit">Submit</Button>
+			</div>
     </form>
+	</div>
   );
 }

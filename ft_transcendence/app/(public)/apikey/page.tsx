@@ -11,6 +11,7 @@ import Link from "next/link";
 
 export default function ApiKeyPage() {
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error";
@@ -35,6 +36,9 @@ export default function ApiKeyPage() {
   });
 
   const onSubmithandler = async (data: EmailInputType) => {
+    if (submitting || success) return;
+    setSubmitting(true);
+
     try {
       const response = await fetch("/api/apikey", {
         method: "POST",
@@ -52,10 +56,13 @@ export default function ApiKeyPage() {
     } catch (e) {
       console.log("error:", e);
       showToast("Something went wrong.", "error");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
+    <div className="flex justify-center">
     <div className="beentra-form-container">
       {/* Toast */}
       {toast && (
@@ -69,14 +76,13 @@ export default function ApiKeyPage() {
 
       <form className="beentra-form" onSubmit={handleSubmit(onSubmithandler)}>
         <FormTitle
-          title="API KEY generating"
-          subTitle="welcome to our public api"
+          title="API key generating"
+          subTitle="Welcome to our public API"
         />
         <p>
-          You must have an API key, so please add your email to receive a mail
-          with the API key
+          Please add your email to receive an email containing the API key
         </p>
-        <p>if you already have the key just click <Link href="/reference">API Reference</Link></p>
+        <p>If you already have the key, go to: <Link href="/reference" className="underline font-semibold text-[#724015]">API Reference</Link></p>
         <Input
           label="your email"
           name="userEmail"
@@ -92,11 +98,12 @@ export default function ApiKeyPage() {
         <Button
           variant="adding"
           onClick={handleSubmit(onSubmithandler)}
-          disabled={success}
+          disabled={success || submitting}
         >
-          {success ? "Done ✅" : "Submit"}
+          {success ? "Done ✅" : submitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
+    </div>
     </div>
   );
 }

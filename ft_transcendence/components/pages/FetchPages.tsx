@@ -21,8 +21,8 @@ export default async function FetchPages() {
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">Pages Management</h2>
+		<AddPage />
       </div>
-
       <div>
         <table className="w-full">
           <thead className="bg-gray-50 border-b-2 border-gray-200">

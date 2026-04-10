@@ -20,7 +20,7 @@ so the user cannot send huge number of requests.
 */
 
 
-const PUBLIC_PATHS = ["/login", "/registration", "/apikey", "/privacy", "/terms", "/reference"];
+const PUBLIC_PATHS = ["/login", "/registration", "/apikey", "/privacy", "/terms", "/reference", "/logintfa"];
 
 //this for handling calls to dashboard, only the admin can access it.
 export async function handleProtectedRoutes(request: NextRequest, pathname:string) {
@@ -131,7 +131,7 @@ export async function handleApiRoutes(request: NextRequest) {
   return NextResponse.next();
 }
 
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   try{
   const pathname = request.nextUrl.pathname;
 

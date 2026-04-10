@@ -12,6 +12,7 @@ export default function ProjectCard({ project }: { project: LocalProject }) {
               src={project.image}
               alt={`${project.projectName} image`}
               fill
+              loading="eager"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover rounded-t-lg"
             />
@@ -27,7 +28,7 @@ export default function ProjectCard({ project }: { project: LocalProject }) {
         </div>
         <div className="bg-white rounded-b-xl p-1">
           <h2 className="leading-none p-1">{project.projectName}</h2>
-          <p className="p-1 leading-4.5 text-md/7">{project.oneLiner}</p>
+          <p className="p-1 leading-4.5 text-md/7 md:max-w-80">{project.oneLiner}</p>
           {project.techStack && (
             <p className="text-sm p-1 text-gray-500">{project.techStack}</p>
           )}

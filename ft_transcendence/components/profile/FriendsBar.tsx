@@ -28,8 +28,8 @@ function FriendItem({ friend }: { friend: FriendBarItem }) {
           </div>
         )}
         <span
-          className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ${
-            friend.isOnline === true ? "bg-green-400" : "bg-gray-300"
+          className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border border-gray-400 ${
+            friend.isOnline === true ? "bg-[#aae396]" : "bg-white"
           }`}
         />
       </div>

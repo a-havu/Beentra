@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ShowEvent from "./ShowEvent";
 import { EventData } from "@/types/general";
+import Image from "next/image";
 
 type Props = {
   event: EventData;
@@ -23,11 +24,11 @@ const EventCard = ({
   const [showModal, setShowModal] = useState(false);
 
   const date = new Date(event.date).toLocaleDateString();
-  const from = new Date(event.timeFrom).toLocaleTimeString([], {
+  const from = new Date(event.timeFrom).toLocaleTimeString("fi-FI", {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const to = new Date(event.timeTo).toLocaleTimeString([], {
+  const to = new Date(event.timeTo).toLocaleTimeString("fi-FI", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -35,7 +36,8 @@ const EventCard = ({
   const isIntra = event.creatorId === null && event.publicCreatorId === null;
   const isCreator = currentUserId && event.creatorId === currentUserId;
   const isPast = new Date(event.timeTo) < new Date();
-  const showSubscribeButton = currentUserId && !isCreator && !isIntra && !isPast;
+  const showSubscribeButton =
+    currentUserId && !isCreator && !isIntra && !isPast;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
   const handleSubscribe = async () => {
@@ -47,7 +49,7 @@ const EventCard = ({
         setIsSubscribed(!isSubscribed);
         setSubscriberCount((c) => c + (isSubscribed ? -1 : 1));
         if (isSubscribed) {
-          onUnsubscribe?.(event.id); // 👈 add this
+          onUnsubscribe?.(event.id);
         }
       }
     } finally {
@@ -58,7 +60,7 @@ const EventCard = ({
   return (
     <>
       <div
-        className={`relative pt-11 p-4 mt-4 min-w-60 rounded-xl shadow-sm cursor-pointer ${
+        className={`relative pt-11 p-4 mt-4 md:min-w-80 rounded-xl shadow-sm cursor-pointer ${
           isIntra
             ? "border border-[#7e59e4] bg-[#feffee] text-black hover:bg-[#f1ecfb]"
             : "border border-[#3ebdd1] bg-[#feffee] text-black hover:bg-[#f3fbfc]"
@@ -87,15 +89,50 @@ const EventCard = ({
           <p>
             {from} – {to}
           </p>
-          <p>🧭 {event.location}</p>
-          {/* {event.description && <p>{event.description}</p>} */}
-          {event.maxSpots > 0 && (
-            <p>
-              {subscriberCount}/{event.maxSpots} spots taken
-            </p>
-          )}
-          <div className="flex justify-between items-end mt-2">
-            <p className="text-gray-500 text-sm">🤹 {event.organizer}</p>
+		  <div className="flex flex-row gap-4">
+		  <div className="flex items-end align-middle">
+		  {isIntra ? (
+              <Image
+                src="/intra-pin.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            ) : (
+              <Image
+                src="/beentra-pin.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            )}
+          <p className="ml-1">{event.location}</p>
+		  </div>
+          <div className="flex items-end mt-2">
+            {isIntra ? (
+              <Image
+                src="/intra-user.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            ) : (
+              <Image
+                src="/beentra-user.png"
+                alt="Organizer"
+                width={12}
+                height={12}
+                className="w-3 md:w-4 h-auto"
+              />
+            )}
+			<p className="ml-1">{event.organizer}</p>
+			</div>
+
+			<div>
+		  </div>
             {showSubscribeButton && (
               <button
                 className={`absolute bottom-0 right-0 cursor-pointer px-5 py-3 rounded-tl-xl rounded-br-xl text-lg ${
@@ -119,6 +156,11 @@ const EventCard = ({
               </button>
             )}
           </div>
+		    {event.maxSpots > 0 && (
+            <p className="flex align-middle mt-2">
+              {subscriberCount}/{event.maxSpots} spots taken
+            </p>
+          )}
         </div>
       </div>
       <ShowEvent

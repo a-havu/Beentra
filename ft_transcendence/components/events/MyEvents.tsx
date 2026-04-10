@@ -29,9 +29,9 @@ export default async function MyEvents({ userId }: { userId: string }) {
   }));
 
   return (
-    <>
-      <h1 className="mb-5 mt-5 text-[#44469A]">Organizer: {user.username}</h1>
+    <div className="w-full md:w-150">
+      <h1 className="mt-5 text-[#44469A] flex justify-center">Organizer: {user.username}</h1>
       <FullEventList events={events} currentUserId={currentUserId} currentUserRole={currentUserRole} />
-    </>
+    </div>
   )
 }
