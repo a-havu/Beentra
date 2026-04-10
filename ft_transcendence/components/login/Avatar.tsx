@@ -42,25 +42,14 @@ export function Avatar({ avatar_url, userId }: avatarProps) {
         aria-haspopup="true"
         aria-label="User menu"
       >
-        {avatar_url ? (
-          <Image
-            src={avatar_url}
-            alt="Avatar picture"
-            width={32}
-            height={32}
-            className="rounded-full w-8 h-8 object-cover"
-            priority
-          />
-        ) : (
-          <Image
-            src="/default-avatar-icon-of-social-media-user-vector.jpg"
-            alt="Default avatar"
-            width={32}
-            height={32}
-            className="rounded-full w-8 h-8 object-cover"
-            priority
-          />
-        )}
+		<Image
+		src={avatar_url || "/default-profile-picture.jpg"}
+		alt="Avatar picture"
+		width={32}
+		height={32}
+		className="rounded-full w-8 h-8 object-cover hover:cursor-pointer"
+		priority
+		/>
       </button>
 
       {open && (
