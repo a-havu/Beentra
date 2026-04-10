@@ -44,7 +44,7 @@ export default async function RootLayout({
 		  <Suspense fallback={<Loading />}>{children}</Suspense>
 		</main>
   
-		<footer className="h-14 shrink-0 flex items-center justify-center text-[#7A3D02]">
+		<footer className="h-14 shrink-0 mb-7 flex items-center justify-center text-[#7A3D02]">
 		  <Footer />
 		</footer>
 	  </div>

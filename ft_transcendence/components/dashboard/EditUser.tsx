@@ -260,15 +260,15 @@ export default function EditUser({
 
       {/* Footer actions */}
       <div className="flex items-center justify-end gap-3 border-t border-[#6229FF]/20 pt-4">
-        <Button variant="secondary" onClick={onCancel}>
-          Cancel
-        </Button>
         <Button
           variant="edit"
           disabled={isSubmitting}
           onClick={handleSubmit(onSubmit)}
         >
           {isSubmitting ? "Saving..." : "Save Changes"}
+        </Button>
+		<Button variant="secondary" onClick={onCancel}>
+          Cancel
         </Button>
       </div>
     </div>
