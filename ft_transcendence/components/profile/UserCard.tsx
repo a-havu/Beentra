@@ -48,7 +48,7 @@ export default function UserCard({
     <article className="flex flex-col gap-2 items-center w-full">
       <Link href={`/profile/${user.id}`}>
         <Image
-          src={user.avatarUrl ?? "/default-profile-picture.png"}
+          src={user.avatarUrl ?? "/default-profile-picture.jpg"}
           alt="user avatar"
           width={isMobile ? 100 : 150}
           height={isMobile ? 100 : 150}

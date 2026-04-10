@@ -28,7 +28,7 @@ function FriendItem({ friend }: { friend: FriendBarItem }) {
           </div>
         )}
         <span
-          className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border border-grey-500 ${
+          className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border border-gray-400 ${
             friend.isOnline === true ? "bg-[#aae396]" : "bg-white"
           }`}
         />
