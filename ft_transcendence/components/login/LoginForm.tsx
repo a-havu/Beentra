@@ -34,8 +34,9 @@ export function LoginForm() {
         const responseData = await response.json();
         if (responseData.twoFactor) router.push("/logintfa");
         else {
-          router.push("/");
-          router.refresh();
+          {/*router.push("/");
+          router.refresh();*/}
+          window.location.href = "/";
         }
       } else {
         const errorData = await response.json();
@@ -50,7 +51,8 @@ export function LoginForm() {
   return (
 	<div className="flex justify-center">
     <div className="beentra-form-container flex mx-auto">
-      <form className="beentra-form md:w-150!">
+      {/*<form className="beentra-form md:w-150!">*/}
+      <form className="beentra-form md:w-150!" onSubmit={handleSubmit(loginHandler)}>
         <h1 className="p-1 flex justify-center">Welcome to Beentra</h1>
         <p className="p-1 flex justify-center">New here?<Link href="/registration" className="underline ml-1 font-semibold text-[#724015]">Sign Up</Link></p>
 
@@ -78,7 +80,8 @@ export function LoginForm() {
         {errors.root && (
   <p className="text-red-500 text-sm">{errors.root.message}</p>
 )}
-        <Button onClick={handleSubmit(loginHandler)} type="submit"> Login</Button>
+        {/*<Button onClick={handleSubmit(loginHandler)} type="submit"> Login</Button>*/}
+        <Button type="submit"> Login</Button>
 
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 h-px bg-black" />

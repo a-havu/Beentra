@@ -89,6 +89,7 @@ export async function POST(request: Request) {
       },
       data: {
         isOnline: true,
+        lastActive: new Date(),
       },
     });
 
@@ -107,6 +108,7 @@ export async function POST(request: Request) {
       httpOnly: true,
       sameSite: "lax",
       maxAge: 60 * 60 * 24,
+      path: "/", // MAYBE REMOVE
     });
 
     return response;
