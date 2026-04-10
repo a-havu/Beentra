@@ -35,8 +35,8 @@ export default async function ProfilePage({
 
   if (!user) {
     return (
-      <div className="beentra-form-container py-10">
-        <p className="text-gray-600">User not found.</p>
+      <div className="flex items-center justify-center min-h-[50vh] py-10">
+        <p className="text-gray-600 text-center">User not found.</p>
       </div>
     );
   }

@@ -24,11 +24,11 @@ const EventCard = ({
   const [showModal, setShowModal] = useState(false);
 
   const date = new Date(event.date).toLocaleDateString();
-  const from = new Date(event.timeFrom).toLocaleTimeString([], {
+  const from = new Date(event.timeFrom).toLocaleTimeString("fi-FI", {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const to = new Date(event.timeTo).toLocaleTimeString([], {
+  const to = new Date(event.timeTo).toLocaleTimeString("fi-FI", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -36,7 +36,8 @@ const EventCard = ({
   const isIntra = event.creatorId === null && event.publicCreatorId === null;
   const isCreator = currentUserId && event.creatorId === currentUserId;
   const isPast = new Date(event.timeTo) < new Date();
-  const showSubscribeButton = currentUserId && !isCreator && !isIntra && !isPast;
+  const showSubscribeButton =
+    currentUserId && !isCreator && !isIntra && !isPast;
   const isFull = event.maxSpots > 0 && subscriberCount >= event.maxSpots;
 
   const handleSubscribe = async () => {

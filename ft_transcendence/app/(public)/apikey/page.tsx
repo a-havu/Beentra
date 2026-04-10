@@ -11,6 +11,7 @@ import Link from "next/link";
 
 export default function ApiKeyPage() {
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error";
@@ -35,6 +36,9 @@ export default function ApiKeyPage() {
   });
 
   const onSubmithandler = async (data: EmailInputType) => {
+    if (submitting || success) return;
+    setSubmitting(true);
+
     try {
       const response = await fetch("/api/apikey", {
         method: "POST",
@@ -52,6 +56,8 @@ export default function ApiKeyPage() {
     } catch (e) {
       console.log("error:", e);
       showToast("Something went wrong.", "error");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -92,9 +98,9 @@ export default function ApiKeyPage() {
         <Button
           variant="adding"
           onClick={handleSubmit(onSubmithandler)}
-          disabled={success}
+          disabled={success || submitting}
         >
-          {success ? "Done ✅" : "Submit"}
+          {success ? "Done ✅" : submitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </div>

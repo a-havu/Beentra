@@ -12,6 +12,7 @@ export default function ProjectCard({ project }: { project: LocalProject }) {
               src={project.image}
               alt={`${project.projectName} image`}
               fill
+              loading="eager"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover rounded-t-lg"
             />

@@ -4,24 +4,12 @@ import { useEffect } from "react";
 import AddUser from "./AddUser";
 import ShowUser from "./ShowUser";
 import DeleteUser from "./DeleteUser";
-import Input from "../ui/Input";
-import Image from "next/image";
 import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
-import ModalFooter from "../ui/ModalFooter";
 import EditUser from "./EditUser";
 import { User } from "@/lib/generated/prisma/client";
 
-// type User = {
-//   id: string;
-//   username: string;
-//   email: string;
-//   role: string;
-//   fullName?: string | null;
-//   createdAt: string;
-//   isOnline: boolean;
-// };
 
 // The table component
 export function UsersTable() {
@@ -219,11 +207,6 @@ export function UsersTable() {
               onCancel={() => setEditingUser(null)}
             />
           </ModalBody>
-          {/* <ModalFooter>
-            <Button variant="secondary" onClick={() => setEditingUser(null)}>
-              Cancel
-            </Button>
-          </ModalFooter> */}
         </Modal>
       )}
     </>

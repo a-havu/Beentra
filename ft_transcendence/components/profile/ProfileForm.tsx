@@ -58,13 +58,9 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
   const [uploadError, setUploadError] = useState("");
 
   // Saved avatar — shown in the profile header, only updates after a successful save
-  const [selectedAvatar, setSelectedAvatar] = useState(
-    user.avatarUrl || "/default-profile-picture.jpg",
-  );
+  const [selectedAvatar, setSelectedAvatar] = useState(user.avatarUrl ?? "");
   // Pending avatar — tracks picker selection inside the modal before saving
-  const [pendingAvatar, setPendingAvatar] = useState(
-    user.avatarUrl || "/default-profile-picture.jpg",
-  );
+  const [pendingAvatar, setPendingAvatar] = useState(user.avatarUrl ?? "");
 
   // ── Form setup ──────────────────────────────────────────────────────────────
 
@@ -157,13 +153,23 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
           {/* Avatar (overlaps banner via negative margin) + action buttons */}
           <div className="flex items-start justify-between mt-2 mb-3">
             <div className="ring-4 ring-white rounded-full shrink-0 -mt-12">
-              <Image
-                src={selectedAvatar}
-                alt={`${user.username}'s avatar`}
-                width={96}
-                height={96}
-                className="rounded-full object-cover w-24 h-24"
-              />
+                {selectedAvatar ? (
+                  <Image
+                    src={selectedAvatar}
+                    alt={`${user.username}'s avatar`}
+                    width={96}
+                    height={96}
+                    className="rounded-full object-cover w-24 h-24"
+                  />
+                ) : (
+                  <Image
+                    src="/default-avatar-icon-of-social-media-user-vector.jpg"
+                    alt="Default avatar"
+                    width={96}
+                    height={96}
+                    className="rounded-full object-cover w-24 h-24"
+                  />
+                )}
             </div>
 
             <div className="flex items-center gap-6 pb-1">
@@ -407,7 +413,11 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
                   <div className="flex-1 h-px bg-[#6229FF]/30" />
                 </div>
                 <div className="flex items-center gap-4">
-                  <Image src={pendingAvatar} alt="current avatar" width={64} height={64} className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30" />
+                  {pendingAvatar ? (
+                    <Image src={pendingAvatar} alt="current avatar" width={64} height={64} className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30" />
+                  ) : (
+                    <Image src="/default-avatar-icon-of-social-media-user-vector.jpg" alt="Default avatar" width={64} height={64} className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30" />
+                  )}
                   <label
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed text-sm font-medium cursor-pointer transition
                       ${uploadingAvatar ? "border-gray-300 text-gray-400 opacity-60" : "border-[#6229FF]/40 text-[#6229FF]/70 hover:border-[#6229FF] hover:bg-[#6229FF]/5"}`}

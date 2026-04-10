@@ -5,7 +5,7 @@ import LogoutButton from "./LogoutButton";
 import Link from "next/link";
 
 interface avatarProps {
-  avatar_url: string;
+  avatar_url?: string | null;
   userId: string;
 }
 

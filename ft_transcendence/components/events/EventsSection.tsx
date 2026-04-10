@@ -36,9 +36,9 @@ export default function EventsSection({
   };
 
   const todaysEvents = [
-    ...events.filter((e) => isActiveToday(e.date, e.timeTo)),
+    ...events.filter((e) => isSameDay(new Date(e.date))),
     ...formattedIntraEvents.filter((e) => isActiveToday(e.date, e.timeTo)),
-  ];
+  ].sort((a, b) => new Date(a.timeFrom).getTime() - new Date(b.timeFrom).getTime());
 
   function addEvent(event: EventData) {
     setEvents((prev) => [...prev, event]);
