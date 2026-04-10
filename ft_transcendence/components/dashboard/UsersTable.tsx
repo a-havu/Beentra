@@ -170,6 +170,7 @@ export function UsersTable() {
                           Edit
                         </Button>
                         <DeleteUser
+                          role={user.role}
                           id={user.id}
                           onDeleted={() => {
                             setUsers((prev) =>

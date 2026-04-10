@@ -157,13 +157,13 @@ export async function DELETE(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // // Prevent deleting admin users
-    // if (user.role === "admin") {
-    //   return NextResponse.json(
-    //     { error: "Cannot delete admin users" },
-    //     { status: 403 },
-    //   );
-    // }
+     // Prevent deleting admin users
+     if (user.role === "admin") {
+       return NextResponse.json(
+         { error: "Cannot delete admin users" },
+         { status: 403 },
+       );
+     }
 
     // Delete the user
     await prisma.user.delete({
