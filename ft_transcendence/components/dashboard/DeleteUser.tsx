@@ -8,10 +8,16 @@ import { Button } from "../ui/Button";
 type Props = {
   id: string;
   onDeleted?: () => void;
+  role?: string;
 };
 
-function DeleteUser({ id, onDeleted } : Props) {
+function DeleteUser({ id, onDeleted, role } : Props) {
 	const [showModal, setShowModal] = useState(false);
+
+	let admin = false;
+	if (role === "admin") {
+		admin = true;
+	}
 
 	async function handleDelete() {
 		const res = await fetch(`/api/user/${id}`, {
@@ -36,6 +42,7 @@ function DeleteUser({ id, onDeleted } : Props) {
 		<>
 		<Button
 			variant="delete"
+			disabled={admin}
 			dashboard={true}
 			onClick={() => setShowModal(true)}
 			>
