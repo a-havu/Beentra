@@ -12,7 +12,7 @@ type UserPreview = {
   email: string;
   role: string;
   fullName?: string | null;
-  createdAt: string;
+  createdAt: Date | string;
   isOnline: boolean;
 };
 
@@ -62,10 +62,11 @@ function ShowUser({ user, isOpen, onClose }: UserProps) {
             <div className="flex gap-2">
               <strong className="text-gray-700 min-w-[120px]">Role:</strong>
               <span
-                className={`px-3 py-1 rounded-full text-xs font-semibold ${user.role === "admin"
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  user.role === "admin"
                     ? "bg-purple-100 text-purple-800"
                     : "bg-blue-100 text-blue-800"
-                  }`}
+                }`}
               >
                 {user.role}
               </span>

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { User } from "@/lib/generated/prisma/client";
 
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
@@ -42,17 +42,6 @@ const editUserSchema = z
 type FormFields = z.infer<typeof editUserSchema>;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-
-type User = {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  fullName?: string | null;
-  avatarUrl?: string | null;
-  createdAt: string;
-  isOnline: boolean;
-};
 
 type Props = {
   user: User;
@@ -267,7 +256,7 @@ export default function EditUser({
         >
           {isSubmitting ? "Saving..." : "Save Changes"}
         </Button>
-		<Button variant="secondary" onClick={onCancel}>
+        <Button variant="secondary" onClick={onCancel}>
           Cancel
         </Button>
       </div>
