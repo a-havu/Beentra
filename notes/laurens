@@ -1,2 +1,0 @@
-Prisma:
-if models changed: npx prisma migrate reset
