@@ -8,18 +8,19 @@ import { Button } from "../ui/Button";
 import Modal from "../ui/Modal";
 import ModalBody from "../ui/ModalBody";
 import EditUser from "./EditUser";
-import { User } from "@/lib/generated/prisma/client";
+import { User, OauthAccount } from "@/lib/generated/prisma/client";
 
+type UserWithOAuth = User & { oauthAccount?: OauthAccount[] };
 
 // The table component
 export function UsersTable() {
   // Usestates for users, loading screen and for errors.
   const [modalOpen, setModalOpen] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserWithOAuth[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserWithOAuth | null>(null);
+  const [editingUser, setEditingUser] = useState<UserWithOAuth | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -85,7 +86,9 @@ export function UsersTable() {
     <>
       <div className="bg-white rounded-lg shadow p-5">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">Users Management</h2>
+          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">
+            Users Management
+          </h2>
 
           <AddUser onSuccess={onSuccess} />
         </div>
@@ -165,7 +168,7 @@ export function UsersTable() {
                         <Button
                           disabled={user.email === "admin@beentra.fi"}
                           dashboard={true}
-						  variant="edit"
+                          variant="edit"
                           onClick={() => setEditingUser(user)}
                         >
                           Edit
