@@ -3,13 +3,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_URL=https://localhost:8443
     expose:
       - "3000"
     env_file:
       - .env
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('https://localhost:3000').then(() => process.exit(0)).catch(() => process.exit(1))"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000').then(() => process.exit(0)).catch(() => process.exit(1))",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5

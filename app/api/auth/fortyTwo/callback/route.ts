@@ -102,7 +102,9 @@ export async function GET(request: NextRequest) {
 
   if (user.twoFactorEnabled) {
     const tempToken = await createTempToken({ userId: user.id });
-    const response = NextResponse.redirect(new URL("/logintfa", request.url));
+    const response = NextResponse.redirect(
+      new URL("/logintfa", process.env.NEXT_PUBLIC_URL),
+    );
     response.cookies.set("tfa-temp-token", tempToken, {
       httpOnly: true,
       sameSite: "lax",
@@ -128,7 +130,9 @@ export async function GET(request: NextRequest) {
     avatar_url: user.avatarUrl,
   });
 
-  const response = NextResponse.redirect(new URL("/", request.url));
+  const response = NextResponse.redirect(
+    new URL("/", process.env.NEXT_PUBLIC_URL),
+  );
   response.cookies.set("auth-token", token, {
     httpOnly: true,
     sameSite: "lax",
