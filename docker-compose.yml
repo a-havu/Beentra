@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
       args:
         - NEXT_PUBLIC_URL=https://localhost:8443
+        - NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=${NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}
+        - NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=${NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
     expose:
       - "3000"
     env_file:

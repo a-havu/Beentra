@@ -1,12 +1,19 @@
-import crypto from "crypto";
+import ImageKit from "imagekit";
 
 export async function GET() {
-  const token = crypto.randomUUID();
-  const expire = Math.floor(Date.now() / 1000) + 2400;
-  const signature = crypto
-    .createHmac("sha1", process.env.IMAGEKIT_PRIVATE_KEY!)
-    .update(token + expire)
-    .digest("hex");
+  const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
+  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+  const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
 
-  return Response.json({ token, expire, signature });
+  if (!publicKey || !privateKey || !urlEndpoint) {
+    throw new Error("Missing ImageKit env vars");
+  }
+
+  const imagekit = new ImageKit({
+    publicKey,
+    privateKey,
+    urlEndpoint,
+  });
+
+  return Response.json(imagekit.getAuthenticationParameters());
 }
