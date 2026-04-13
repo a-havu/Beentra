@@ -50,9 +50,13 @@ export function UsersTable() {
     }
   };
 
-  const handleEditUser = (updatedUser: User) => {
+  const handleEditUser = (updatedUser: UserWithOAuth) => {
     setUsers((prev) =>
-      prev.map((user) => (user.id === updatedUser.id ? updatedUser : user)),
+      prev.map((user) =>
+        user.id === updatedUser.id
+          ? { ...updatedUser, oauthAccount: user.oauthAccount }
+          : user,
+      ),
     );
     setEditingUser(null);
   };

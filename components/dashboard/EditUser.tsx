@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { User } from "@/lib/generated/prisma/client";
+import { User, OauthAccount } from "@/lib/generated/prisma/client";
 
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
@@ -43,10 +43,12 @@ type FormFields = z.infer<typeof editUserSchema>;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+type UserWithOAuth = User & { oauthAccount?: OauthAccount[] };
+
 type Props = {
-  user: User;
+  user: UserWithOAuth;
   isOAuth?: boolean;
-  onSuccess?: (updatedUser: User) => void;
+  onSuccess?: (updatedUser: UserWithOAuth) => void;
   onCancel?: () => void;
 };
 
