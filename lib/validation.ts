@@ -192,4 +192,5 @@ export const projectSchema = z.object({
   techStack: z.string().max(50, "Tech stack description too long").optional(),
   description: z.string().max(2000, "Description too long").optional(),
   image: z.string().nullable().optional(),
+  imagekitFileId: z.string().nullable().optional(),
 });

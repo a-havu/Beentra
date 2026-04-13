@@ -18,6 +18,16 @@ export function EventsTable() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
 
+  const MAX_PER_PAGE = 10;
+
+  // Pagenation
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(events.length / MAX_PER_PAGE);
+  const paginated = events.slice(
+    (page - 1) * MAX_PER_PAGE,
+    page * MAX_PER_PAGE,
+  );
+
   useEffect(() => {
     fetchEvents();
   }, []);
@@ -52,8 +62,8 @@ export function EventsTable() {
   };
 
   const addSuccess = (event: EventData) => {
-	setEvents((prev) => [... prev, event])
-  }
+    setEvents((prev) => [...prev, event]);
+  };
 
   const reRender = () => {
     fetchEvents();
@@ -85,84 +95,119 @@ export function EventsTable() {
     <>
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex justify-between items-center md:mb-6">
-          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">Event Management</h2>
+          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">
+            Event Management
+          </h2>
 
           <AddEvent onEventCreated={addSuccess} />
         </div>
         <div>
           {/* Table header */}
           <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b-2 border-gray-200">
-              <tr>
-                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
-                  ID
-                </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
-                  Title
-                </th>
-                <th className=" hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
-                  Location
-                </th>
-                <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
-                  Organizer
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-                  Modify
-                </th>
-              </tr>
-            </thead>
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b-2 border-gray-200">
+                <tr>
+                  <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                    ID
+                  </th>
+                  <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                    Title
+                  </th>
+                  <th className=" hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                    Location
+                  </th>
+                  <th className="hidden md:table-cell px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                    Organizer
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                    Modify
+                  </th>
+                </tr>
+              </thead>
 
-            {/* Table Body */}
-            <tbody className="divide-y divide-gray-200">
-              {events.map((event, index) => {
-                return (
-                  <tr
-                    key={event.id}
-                    className="hover:bg-gray-50 transition cursor-pointer"
-                    onClick={() => setSelectedEvent(event)}
-                  >
-                    <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-900">
-                      {index + 1}
-                    </td>
-                    <td className="px6 py-4 text-center text-sm text-gray-600">
-                      {event.title}
-                    </td>
-                    <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-600">
-                      {event.location}
-                    </td>
-                    <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-600">
-                      {event.organizer}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div
-                        className="flex gap-2"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Button
-                          variant="secondary"
-						  dashboard={true}
-                          onClick={() => setEditingId(event.id)}
+              {/* Table Body */}
+              <tbody className="divide-y divide-gray-200">
+                {paginated.map((event, index) => {
+                  return (
+                    <tr
+                      key={event.id}
+                      className="hover:bg-gray-50 transition cursor-pointer"
+                      onClick={() => setSelectedEvent(event)}
+                    >
+                      <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-900">
+                        {index + 1 + (page - 1) * MAX_PER_PAGE}
+                      </td>
+                      <td className="px6 py-4 text-center text-sm text-gray-600">
+                        {event.title}
+                      </td>
+                      <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-600">
+                        {event.location}
+                      </td>
+                      <td className="hidden md:table-cell px6 py-4 text-center text-sm text-gray-600">
+                        {event.organizer}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div
+                          className="flex gap-2"
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          Edit
-                        </Button>
-                        <DeleteEventButton
-                          id={event.id}
-                          onDeleted={() => {
-                            setEvents((prev) =>
-                              prev.filter((e) => e.id !== event.id),
-                            );
-                          }}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                          <Button
+                            variant="secondary"
+                            dashboard={true}
+                            onClick={() => setEditingId(event.id)}
+                          >
+                            Edit
+                          </Button>
+                          <DeleteEventButton
+                            id={event.id}
+                            onDeleted={() => {
+                              setEvents((prev) =>
+                                prev.filter((e) => e.id !== event.id),
+                              );
+                            }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 py-6">
+            <button
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 disabled:opacity-40 hover:bg-gray-200 hover:cursor-pointer"
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`px-4 py-2 rounded-xl ${
+                  p === page
+                    ? "bg-[#255a8b] text-white"
+                    : "bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:cursor-pointer"
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 disabled:opacity-40 hover:bg-gray-200 hover:cursor-pointer"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
       {selectedEvent && (
         <ShowEvent

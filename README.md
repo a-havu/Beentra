@@ -426,7 +426,14 @@ Owned the standard user management module, contributing full-stack:
 
 ### Roni - Product Owner / Developer
 
-Came up with the name "Beentra" and told some jokes
+Together with Laurens, planned and designed how the project should work and features it should have.
+
+Owned the admin dashboard, contributing full-stack:
+
+- Online/offline status tracking with real-time activity monitoring
+- Admin dashboard with full CRUD operations
+- User role management (admin, user) with permissions
+- Creating reusable components for the team (Button, Modal etc.)
 
 ### Aino - UI/UX Designer / Developer
 

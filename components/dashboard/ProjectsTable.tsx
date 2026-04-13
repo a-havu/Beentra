@@ -15,6 +15,16 @@ export function ProjectsTable() {
     null,
   );
 
+  const MAX_PER_PAGE = 10;
+
+  // Pagenation
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(projects.length / MAX_PER_PAGE);
+  const paginated = projects.slice(
+    (page - 1) * MAX_PER_PAGE,
+    page * MAX_PER_PAGE,
+  );
+
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -112,7 +122,7 @@ export function ProjectsTable() {
 
             {/* Table Body */}
             <tbody className="divide-y divide-gray-200">
-              {projects.map((project, index) => {
+              {paginated.map((project, index) => {
                 return (
                   <tr
                     key={project.id}
@@ -120,7 +130,7 @@ export function ProjectsTable() {
                     onClick={() => setSelectedProject(project)}
                   >
                     <td className="px6 py-4 text-center text-sm text-gray-900">
-                      {index + 1}
+                      {index + 1 + (page - 1) * MAX_PER_PAGE}
                     </td>
                     <td className="px6 py-4 text-center text-sm text-gray-900">
                       {project.projectName}
@@ -151,6 +161,39 @@ export function ProjectsTable() {
             </tbody>
           </table>
         </div>
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 py-6">
+            <button
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 disabled:opacity-40 hover:bg-gray-200 hover:cursor-pointer"
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`px-4 py-2 rounded-xl ${
+                  p === page
+                    ? "bg-[#255a8b] text-white"
+                    : "bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:cursor-pointer"
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 disabled:opacity-40 hover:bg-gray-200 hover:cursor-pointer"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
       {selectedProject && (
         <ShowProject
