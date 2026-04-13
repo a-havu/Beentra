@@ -17,7 +17,7 @@ export async function DELETE(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   if (project.imagekitFileId) {
-    const imagekit = getImageKit(); // ← add this
+    const imagekit = getImageKit();
     await imagekit.deleteFile(project.imagekitFileId);
   }
 
@@ -40,12 +40,25 @@ export async function PUT(
 
   const existing = await prisma.project.findUnique({ where: { id } });
 
+    if (
+    parsed.data.imagekitFileId &&
+    existing?.imagekitFileId &&
+    parsed.data.imagekitFileId !== existing.imagekitFileId
+  ) {
+    try {
+      const imagekit = getImageKit();
+      await imagekit.deleteFile(existing.imagekitFileId);
+    } catch (err) {
+      console.error("ImageKit delete old image failed:", err);
+    }
+  }
+
   const updated = await prisma.project.update({
     where: { id },
     data: {
       ...parsed.data,
       image: parsed.data.image ?? existing?.image,
-      imagekitFileId: existing?.imagekitFileId || existing?.imagekitFileId,
+      imagekitFileId: parsed.data.imagekitFileId ?? existing?.imagekitFileId,
     },
   });
 
