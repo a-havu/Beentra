@@ -44,7 +44,11 @@ interface ProfileFormProps {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function ProfileForm({ user, isOwner, projects }: ProfileFormProps) {
+export default function ProfileForm({
+  user,
+  isOwner,
+  projects,
+}: ProfileFormProps) {
   // Modal visibility
   const [modalOpen, setModalOpen] = useState(false);
   const [twoFaOpen, setTwoFaOpen] = useState(false);
@@ -153,23 +157,23 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
           {/* Avatar (overlaps banner via negative margin) + action buttons */}
           <div className="flex items-start justify-between mt-2 mb-3">
             <div className="ring-4 ring-white rounded-full shrink-0 -mt-12">
-                {selectedAvatar ? (
-                  <Image
-                    src={selectedAvatar}
-                    alt={`${user.username}'s avatar`}
-                    width={96}
-                    height={96}
-                    className="rounded-full object-cover w-24 h-24"
-                  />
-                ) : (
-                  <Image
-                    src="/default-avatar-icon-of-social-media-user-vector.jpg"
-                    alt="Default avatar"
-                    width={96}
-                    height={96}
-                    className="rounded-full object-cover w-24 h-24"
-                  />
-                )}
+              {selectedAvatar ? (
+                <Image
+                  src={selectedAvatar}
+                  alt={`${user.username}'s avatar`}
+                  width={96}
+                  height={96}
+                  className="rounded-full object-cover w-24 h-24"
+                />
+              ) : (
+                <Image
+                  src="/default-profile-picture.jpg"
+                  alt="Default avatar"
+                  width={96}
+                  height={96}
+                  className="rounded-full object-cover w-24 h-24"
+                />
+              )}
             </div>
 
             <div className="flex items-center gap-6 pb-1">
@@ -193,9 +197,9 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
               {/* Only the profile owner can edit */}
               {isOwner && (
                 <Button
-					variant="edit"
-					size="small"
-                 	onClick={() => {
+                  variant="edit"
+                  size="small"
+                  onClick={() => {
                     setServerError("");
                     setPendingAvatar(selectedAvatar);
                     setModalOpen(true);
@@ -414,9 +418,21 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
                 </div>
                 <div className="flex items-center gap-4">
                   {pendingAvatar ? (
-                    <Image src={pendingAvatar} alt="current avatar" width={64} height={64} className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30" />
+                    <Image
+                      src={pendingAvatar}
+                      alt="current avatar"
+                      width={64}
+                      height={64}
+                      className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30"
+                    />
                   ) : (
-                    <Image src="/default-avatar-icon-of-social-media-user-vector.jpg" alt="Default avatar" width={64} height={64} className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30" />
+                    <Image
+                      src="/default-avatar-icon-of-social-media-user-vector.jpg"
+                      alt="Default avatar"
+                      width={64}
+                      height={64}
+                      className="rounded-full object-cover w-16 h-16 ring-2 ring-[#6229FF]/30"
+                    />
                   )}
                   <label
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed text-sm font-medium cursor-pointer transition
@@ -424,24 +440,57 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
                   >
                     {uploadingAvatar ? (
                       <>
-                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        <svg
+                          className="w-4 h-4 animate-spin"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8z"
+                          />
                         </svg>
                         Uploading…
                       </>
                     ) : (
                       <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                          />
                         </svg>
                         Upload image
                       </>
                     )}
-                    <input type="file" accept="image/*" className="hidden" disabled={uploadingAvatar} onChange={handleAvatarFile} />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      disabled={uploadingAvatar}
+                      onChange={handleAvatarFile}
+                    />
                   </label>
                 </div>
-                {uploadError && <p className="text-xs text-red-500">{uploadError}</p>}
+                {uploadError && (
+                  <p className="text-xs text-red-500">{uploadError}</p>
+                )}
               </div>
 
               {/* Personal information fields */}
@@ -527,7 +576,7 @@ export default function ProfileForm({ user, isOwner, projects }: ProfileFormProp
               >
                 Save
               </Button>
-			<Button variant="secondary" onClick={() => setModalOpen(false)}>
+              <Button variant="secondary" onClick={() => setModalOpen(false)}>
                 Cancel
               </Button>
             </div>
