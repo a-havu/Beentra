@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 
 const INTERVAL_MS = 3 * 60 * 1000; // 3 minutes
@@ -13,7 +12,6 @@ export function useHeartbeat() {
           method: "POST",
         });
 
-        // 401 is expected if user has logged out
         if (response.status === 401) {
           return;
         }
@@ -29,7 +27,7 @@ export function useHeartbeat() {
       }
     };
 
-    ping(); // immediate ping on mount
+    ping();
     const id = setInterval(ping, INTERVAL_MS);
 
     return () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ShowEvent from "./ShowEvent";
 import { EventData } from "@/types/general";
 import Image from "next/image";
@@ -22,6 +22,15 @@ const EventCard = ({
   const [isSubscribed, setIsSubscribed] = useState(event.isSubscribed);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const date = new Date(event.date).toLocaleDateString();
   const from = new Date(event.timeFrom).toLocaleTimeString("fi-FI", {
@@ -89,50 +98,49 @@ const EventCard = ({
           <p>
             {from} – {to}
           </p>
-		  <div className="flex flex-row gap-4">
-		  <div className="flex items-end align-middle">
-		  {isIntra ? (
-              <Image
-                src="/intra-pin.png"
-                alt="Organizer"
-                width={12}
-                height={12}
-                className="w-3 md:w-4 h-auto"
-              />
-            ) : (
-              <Image
-                src="/beentra-pin.png"
-                alt="Organizer"
-                width={12}
-                height={12}
-                className="w-3 md:w-4 h-auto"
-              />
-            )}
-          <p className="ml-1">{event.location}</p>
-		  </div>
-          <div className="flex items-end mt-2">
-            {isIntra ? (
-              <Image
-                src="/intra-user.png"
-                alt="Organizer"
-                width={12}
-                height={12}
-                className="w-3 md:w-4 h-auto"
-              />
-            ) : (
-              <Image
-                src="/beentra-user.png"
-                alt="Organizer"
-                width={12}
-                height={12}
-                className="w-3 md:w-4 h-auto"
-              />
-            )}
-			<p className="ml-1">{event.organizer}</p>
-			</div>
+          <div className="flex flex-row gap-4">
+            <div className="flex items-end align-middle">
+              {isIntra ? (
+                <Image
+                  src="/intra-pin.png"
+                  alt="Organizer"
+                  width={12}
+                  height={12}
+                  className="w-3 md:w-4 h-auto"
+                />
+              ) : (
+                <Image
+                  src="/beentra-pin.png"
+                  alt="Organizer"
+                  width={12}
+                  height={12}
+                  className="w-3 md:w-4 h-auto"
+                />
+              )}
+              <p className="ml-1">{event.location}</p>
+            </div>
+            <div className="flex items-end mt-2">
+              {isIntra ? (
+                <Image
+                  src="/intra-user.png"
+                  alt="Organizer"
+                  width={12}
+                  height={12}
+                  className="w-3 md:w-4 h-auto"
+                />
+              ) : (
+                <Image
+                  src="/beentra-user.png"
+                  alt="Organizer"
+                  width={12}
+                  height={12}
+                  className="w-3 md:w-4 h-auto"
+                />
+              )}
+              <p className="ml-1">{event.organizer}</p>
+            </div>
 
-			<div>
-		  </div>
+            <div></div>
             {showSubscribeButton && (
               <button
                 className={`absolute bottom-0 right-0 cursor-pointer px-5 py-3 rounded-tl-xl rounded-br-xl text-lg ${
@@ -156,7 +164,7 @@ const EventCard = ({
               </button>
             )}
           </div>
-		    {event.maxSpots > 0 && (
+          {event.maxSpots > 0 && (
             <p className="flex align-middle mt-2">
               {subscriberCount}/{event.maxSpots} spots taken
             </p>
