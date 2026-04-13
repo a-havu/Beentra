@@ -36,6 +36,7 @@ export default function ProjectForm({
   });
 
   const submitHandler: SubmitHandler<FormValues> = async (data) => {
+    // For when editing, it does not create a copy
     if (mode === "edit") {
       let imageData = {};
 
