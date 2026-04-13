@@ -1,14 +1,13 @@
 export async function uploadImage(file: File): Promise<string> {
-  // get auth token from server
-  const auth = await fetch("/api/imagekit-auth").then(r => r.json());
+  const authRes = await fetch("/api/imagekit-auth");
+  const auth = await authRes.json();
 
-  // send image to ImageKit
   const formData = new FormData();
   formData.append("file", file);
   formData.append("fileName", file.name);
-  formData.append("publicKey", process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!);
+  formData.append("publicKey", auth.publicKey);
   formData.append("signature", auth.signature);
-  formData.append("expire", auth.expire);
+  formData.append("expire", String(auth.expire));
   formData.append("token", auth.token);
 
   const res = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
@@ -17,5 +16,7 @@ export async function uploadImage(file: File): Promise<string> {
   });
 
   const data = await res.json();
-  return data.url; // save to Prisma
+  if (!res.ok) throw new Error(data?.message || "ImageKit upload failed");
+
+  return data.url;
 }

@@ -427,7 +427,7 @@ export default function ProfileForm({
                     />
                   ) : (
                     <Image
-                      src="/default-avatar-icon-of-social-media-user-vector.jpg"
+                      src="/default-profile-picture.jpg"
                       alt="Default avatar"
                       width={64}
                       height={64}

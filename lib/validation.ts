@@ -18,8 +18,8 @@ export function validateEnv() {
     "FORTY_TWO_REDIRECT_URI",
     "GMAIL_USER",
     "GMAIL_APP_PASSWORD",
-    "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
-    "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
+    "IMAGEKIT_PUBLIC_KEY",
+    "IMAGEKIT_URL_ENDPOINT",
     "IMAGEKIT_PRIVATE_KEY",
   ];
 
@@ -69,7 +69,7 @@ export const registerSchema = z
           const now = new Date();
           return date < now;
         },
-        { message: "invalid date" }
+        { message: "invalid date" },
       ),
     email: z.string().email("Invalid email"),
     password: z.string().min(8, "Min. 8 characters"),
@@ -90,7 +90,7 @@ const eventSchemaBase = z.object({
     .refine((d) => !isNaN(d.getTime()), "Invalid date")
     .min(
       new Date(new Date().setHours(0, 0, 0, 0)),
-      "Date must be today or in the future"
+      "Date must be today or in the future",
     )
     .max(new Date("2100-12-31"), "Date must be before 2101"),
   timeFrom: z.string().regex(timeRegex, "Invalid time format"),
