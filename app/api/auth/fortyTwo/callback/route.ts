@@ -11,7 +11,6 @@ interface FortyTwoUser {
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-
   const code: string | null = searchParams.get("code");
 
   if (!code) {
