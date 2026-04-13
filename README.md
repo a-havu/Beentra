@@ -434,6 +434,7 @@ Owned the admin dashboard, contributing full-stack:
 - Admin dashboard with full CRUD operations
 - User role management (admin, user) with permissions
 - Creating reusable components for the team (Button, Modal etc.)
+- Came up with the name "Beentra"
 
 ### Aino - UI/UX Designer / Developer
 
