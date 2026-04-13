@@ -24,6 +24,7 @@ const EventCard = ({
   const [showModal, setShowModal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // For hydration error
   useEffect(() => {
     setMounted(true);
   }, []);
