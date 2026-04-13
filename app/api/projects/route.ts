@@ -11,54 +11,45 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // ✅ FIX: use formData instead of json
-    const formData = await request.formData();
-
-    const projectName = formData.get("projectName") as string;
-    const oneLiner = formData.get("oneLiner") as string;
-    const link = formData.get("link") as string;
-    const techStack = formData.get("techStack") as string;
-    const description = formData.get("description") as string;
-    const file = formData.get("image") as File | null;
+    const body = await request.json();
+    const result = projectSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: result.error.issues },
+        { status: 400 },
+      );
+    }
 
     let imageUrl: string | null = null;
     let imagekitFileId: string | null = null;
-
-    if (file) {
-      const buffer = Buffer.from(await file.arrayBuffer());
-
-      const imagekit = getImageKit();
-
+    if (body.image) {
+      const imagekit = getImageKit(); // ← add this
       const uploadResponse = await imagekit.upload({
-        file: buffer,
-        fileName: file.name,
+        file: body.image,
+        fileName: body.imageName ?? "project-image",
         folder: "projects",
       });
-
       imageUrl = uploadResponse.url ?? null;
       imagekitFileId = uploadResponse.fileId ?? null;
     }
 
     const project = await prisma.project.create({
       data: {
-        projectName,
-        oneLiner,
-        link,
-        techStack,
-        description,
+        projectName: body.projectName,
+        oneLiner: body.oneLiner,
+        link: body.link,
+        techStack: body.techStack,
+        description: body.description,
         image: imageUrl,
-        imagekitFileId,
+        imagekitFileId: imagekitFileId,
         creatorId: session.userId,
       },
     });
 
     return NextResponse.json(project);
   } catch (error) {
-    console.error("PROJECT ERROR:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    console.error("Error:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
 

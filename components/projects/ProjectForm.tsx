@@ -8,7 +8,6 @@ import { projectSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { uploadImage } from "@/lib/uploadImage";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 type FormValues = z.input<typeof projectSchema>;
 
@@ -36,37 +35,14 @@ export default function ProjectForm({
     resolver: zodResolver(projectSchema),
   });
 
-  const router = useRouter();
-
   const submitHandler: SubmitHandler<FormValues> = async (data) => {
-    const formData = new FormData();
-
-    formData.append("projectName", data.projectName);
-    formData.append("oneLiner", data.oneLiner);
-    formData.append("link", data.link ?? "");
-    formData.append("techStack", data.techStack ?? "");
-    formData.append("description", data.description ?? "");
-
+    let imageUrl: string | null = null;
     if (imageFile) {
-      formData.append("image", imageFile);
+      imageUrl = await uploadImage(imageFile);
     }
-
-    // 1. create project
-    const res = await fetch("/api/projects", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to create project");
-    }
-
-    // 2. refresh server component (THIS IS THE MAGIC)
-    router.refresh();
-
-    // 3. close modal
-    onCloseAction?.();
+    onSubmit({ ...data, image: imageUrl });
   };
+
   const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
   const [imageError, setImageError] = useState<string | null>(null);

@@ -17,18 +17,20 @@ export default function ProjectCard({ project }: { project: LocalProject }) {
               className="object-cover rounded-t-lg"
             />
           ) : (
-              <Image
+            <Image
               src="/logo.svg"
               alt="logo"
               width={32}
               height={32}
               className="w-27 px-10 py-4 rounded-lg flex items-center justify-center"
-              />
+            />
           )}
         </div>
         <div className="bg-white rounded-b-xl p-1">
           <h2 className="leading-none p-1">{project.projectName}</h2>
-          <p className="p-1 leading-4.5 text-md/7 md:max-w-80">{project.oneLiner}</p>
+          <p className="p-1 leading-4.5 text-md/7 md:max-w-80">
+            {project.oneLiner}
+          </p>
           {project.techStack && (
             <p className="text-sm p-1 text-gray-500">{project.techStack}</p>
           )}
