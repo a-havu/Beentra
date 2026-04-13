@@ -10,7 +10,9 @@ export default function Menu() {
         <Link href="/events">Events</Link>
       </li>
       <li>
-        <Link href="https://room.hive.fi">BookMe</Link>
+        <Link href="https://room.hive.fi" target="_blank">
+          BookMe
+        </Link>
       </li>
     </ul>
   );

@@ -8,7 +8,6 @@ import ModalFooter from "../ui/ModalFooter";
 import { Project } from "@/lib/generated/prisma/client";
 import Link from "next/link";
 import Image from "next/image";
-import { spawn } from "child_process";
 
 type ProjectProps = {
   project: Project | null;
@@ -75,7 +74,6 @@ function ShowProject({ project, isOpen, onClose }: ProjectProps) {
               ) : (
                 <span className="text-gray-900">Not provided</span>
               )}
-              {/* <span className="text-gray-900">{project.link}</span> */}
             </div>
 
             <div className="flex gap-2">
@@ -87,9 +85,6 @@ function ShowProject({ project, isOpen, onClose }: ProjectProps) {
               ) : (
                 <span className="text-gray-900">Not provided</span>
               )}
-              {/* <span className="text-gray-900">
-                {project.techStack ?? "Not provided"}
-              </span> */}
             </div>
             <div className="flex gap-2">
               <strong className="text-gray-700 min-w-[120px]">Created:</strong>
