@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     let imageUrl: string | null = null;
     let imagekitFileId: string | null = null;
     if (body.image) {
-      const imagekit = getImageKit(); // ← add this
+      const imagekit = getImageKit();
       const uploadResponse = await imagekit.upload({
         file: body.image,
         fileName: body.imageName ?? "project-image",
