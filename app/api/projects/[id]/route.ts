@@ -40,7 +40,7 @@ export async function PUT(
 
   const existing = await prisma.project.findUnique({ where: { id } });
 
-    if (
+  if (
     parsed.data.imagekitFileId &&
     existing?.imagekitFileId &&
     parsed.data.imagekitFileId !== existing.imagekitFileId

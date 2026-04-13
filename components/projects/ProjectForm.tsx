@@ -36,6 +36,30 @@ export default function ProjectForm({
   });
 
   const submitHandler: SubmitHandler<FormValues> = async (data) => {
+    // For when editing, it does not create a copy
+    if (mode === "edit") {
+      let imageData = {};
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        const uploadRes = await fetch("/api/projects/upload-image", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (uploadRes.ok) {
+          const { imageUrl, imagekitFileId } = await uploadRes.json();
+          imageData = { image: imageUrl, imagekitFileId };
+        }
+      }
+
+      await onSubmit({ ...data, ...imageData });
+      onCloseAction?.();
+      return;
+    }
+
     let imageUrl: string | null = null;
     if (imageFile) {
       imageUrl = await uploadImage(imageFile);
