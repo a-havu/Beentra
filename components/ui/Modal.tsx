@@ -20,8 +20,10 @@ function Modal({ children, isOpen, onClose, bgColor }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="rounded-xl shadow-2xl p-8 w-full max-w-3xl mx-4"
-        style={bgColor ? { backgroundColor: bgColor } : { backgroundColor: "white" }}
+        className="rounded-xl shadow-2xl p-8 w-auto max-w-3xl mx-4"
+        style={
+          bgColor ? { backgroundColor: bgColor } : { backgroundColor: "white" }
+        }
         onClick={(e) => e.stopPropagation()}
       >
         {children}
