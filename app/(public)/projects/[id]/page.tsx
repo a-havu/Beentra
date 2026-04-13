@@ -40,6 +40,11 @@ export default async function ProjectPage({
         {project.oneLiner && (
           <h4 className="text-xl mb-4">{project.oneLiner}</h4>
         )}
+		{project.creator && (
+            <p className="m-3">
+              {project.creator.username}
+            </p>
+          )}
         
         {project.techStack && (
           <div className="flex flex-wrap justify-center gap-2 mb-4">
