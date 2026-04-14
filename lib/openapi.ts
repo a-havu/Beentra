@@ -60,7 +60,6 @@ export const openApiSpec = {
     },
 
     "/events/{id}": {
-      // ✅ fixed, was nested inside /events
       get: {
         operationId: "getEventById",
         summary: "Get a single event",

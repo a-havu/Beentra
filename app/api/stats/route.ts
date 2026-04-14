@@ -9,7 +9,7 @@ export async function GET() {
 
     const activeUsers = await prisma.user.count({
       where: {
-        lastActive: { gte: fiveMinutes }, // ✅ replaces isOnline: true
+        lastActive: { gte: fiveMinutes },
       },
     });
     const eventCount = await prisma.event.count();
