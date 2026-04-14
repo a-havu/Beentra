@@ -6,7 +6,38 @@ _This project has been created as part of the 42 curriculum by mkhlouf, reerikai
 
 ## Description
 
-**Beentra** is a community platform built for students at Hive Helsinki (42 school). It provides students a central place to discover and manage campus events, share personal projects, and stay updated on what's happening in the community.
+**Beentra** is a full-stack community platform designed for students at Hive Helsinki (42 School). Its primary goal is to centralize student interaction by providing a single platform where users can discover and manage campus events, showcase personal projects, and stay informed about community activity.
+
+The platform was developed as part of the 42 curriculum and emphasizes both practical full-stack development and collaborative software engineering. It integrates modern web technologies and industry-standard practices to deliver a scalable, secure, and user-friendly application.
+
+**Beentra** follows a modular full-stack architecture, where each team member is responsible for the complete development (frontend and backend) of a specific domain. This approach promotes clear ownership, maintainability, and parallel development across the team.
+
+#### The system combines several core domains into one cohesive platform:
+
+- Event management, including a calendar interface, event creation, and subscription system
+- Project sharing, allowing students to present their work with detailed descriptions and media
+- User management, including profiles, avatars, friendships, and activity tracking
+- Authentication and security, with support for email/password login, OAuth 2.0 (42 and GitHub), and Two-Factor Authentication (2FA)
+- Administrative tools, such as role-based access control and an analytics dashboard
+- Public API access, enabling external integrations through secure, rate-limited endpoints
+
+From a technical perspective, **Beentra** is built using a Next.js full-stack architecture, leveraging server-side rendering and API routes within a single framework. The application uses PostgreSQL with Prisma ORM for type-safe database access, and is fully containerized using Docker, with Nginx acting as a reverse proxy for HTTPS support.
+
+Additional features such as a custom design system, rich-text content management (CMS) for static pages, and image handling via a CDN (ImageKit) further enhance the platform’s usability and extensibility.
+
+The project was developed collaboratively using a Kanban workflow, with task tracking, code reviews, and regular team synchronization to ensure steady progress and alignment.
+
+#### Module Distribution
+
+The system is divided into the following modules, each owned and implemented as a full-stack responsibility:
+
+- User Module — Haajar
+- Events Module — Laurance
+- Projects Module — Aino
+- Dashboard Module — Roni
+- Authentication & Public API Module — Mohammad
+
+---
 
 ### Key Features
 
@@ -312,33 +343,33 @@ Page (static content pages)
 
 ## Features List
 
-| Feature                   | Description                                                                   | Team Member(s)  |
-| ------------------------- | ----------------------------------------------------------------------------- | --------------- |
-| User Registration         | Sign up with email and password, with validation on both frontend and backend | Hager           |
-| User Login                | Secure login with JWT session tokens, bcrypt password verification            | Mohammad        |
-| OAuth 2.0 Login           | Login with 42 or GitHub accounts                                              | Mohammad        |
-| Two-Factor Authentication | TOTP-based 2FA with QR code setup and verification flow                       | Mohammad        |
-| User Profile              | View and edit profile info (name, username, avatar)                           | Hager           |
-| Avatar Upload             | Upload and manage profile picture via ImageKit CDN                            | Hager           |
-| Friends System            | Send, accept, and remove friend requests; view friends list                   | Roni            |
-| Online Status             | See which users are currently online                                          | Roni            |
-| Role Management           | Admin and moderator roles with elevated permissions                           | Roni / Mohammad |
-| User Admin Panel          | View, manage, and moderate users (admin only)                                 | Roni            |
-| Events Calendar           | Monthly calendar view of all events                                           | Laurens         |
-| Events List               | Weekly upcoming events on the homepage with filtering by type                 | Laurens         |
-| Create / Edit Event       | Form to create or update events (authenticated users)                         | Laurens         |
-| Event Subscription        | Subscribe and unsubscribe from events, view attendee count                    | Laurens         |
-| Project Upload            | Upload a project to the database                                              | Aino            |
-| Projects Gallery          | Paginated grid of student projects                                            | Aino            |
-| Create / Edit Project     | Form to add or update a project with image upload                             | Aino            |
-| My Projects               | Fetch and display the projects the logged-in user has uploaded                | Aino            |
-| Single project page       | Display all information of a selected project on a page                       | Aino            |
-| Public API                | Secured REST API for events with API key authentication and rate limiting     | Mohammad        |
-| API Key Management        | Users can generate and manage their own public API keys                       | Mohammad        |
-| Static Pages (CMS)        | Rich-text editable informational pages (Privacy Policy, Terms, etc.)          | Mohammad        |
-| Privacy Policy & Terms    | Accessible static pages with relevant legal content                           | Mohammad        |
-| HTTPS + Nginx             | Nginx reverse proxy with TLS termination                                      | All members     |
-| Docker Deployment         | Single-command deployment with Docker Compose                                 | All members     |
+| Feature                   | Description                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| User Registration         | Sign up with email and password, with validation on both frontend and backend |
+| User Login                | Secure login with JWT session tokens, bcrypt password verification            |
+| OAuth 2.0 Login           | Login with 42 or GitHub accounts                                              |
+| Two-Factor Authentication | TOTP-based 2FA with QR code setup and verification flow                       |
+| User Profile              | View and edit profile info (name, username, avatar)                           |
+| Avatar Upload             | Upload and manage profile picture via ImageKit CDN                            |
+| Friends System            | Send, accept, and remove friend requests; view friends list                   |
+| Online Status             | See which users are currently online                                          |
+| Role Management           | Admin and moderator roles with elevated permissions                           |
+| User Admin Panel          | View, manage, and moderate users (admin only)                                 |
+| Events Calendar           | Monthly calendar view of all events                                           |
+| Events List               | Weekly upcoming events on the homepage with filtering by type                 |
+| Create / Edit Event       | Form to create or update events (authenticated users)                         |
+| Event Subscription        | Subscribe and unsubscribe from events, view attendee count                    |
+| Project Upload            | Upload a project to the database                                              |
+| Projects Gallery          | Paginated grid of student projects                                            |
+| Create / Edit Project     | Form to add or update a project with image upload                             |
+| My Projects               | Fetch and display the projects the logged-in user has uploaded                |
+| Single project page       | Display all information of a selected project on a page                       |
+| Public API                | Secured REST API for events with API key authentication and rate limiting     |
+| API Key Management        | Users can generate and manage their own public API keys                       |
+| Static Pages (CMS)        | Rich-text editable informational pages (Privacy Policy, Terms, etc.)          |
+| Privacy Policy & Terms    | Accessible static pages with relevant legal content                           |
+| HTTPS + Nginx             | Nginx reverse proxy with TLS termination                                      |
+| Docker Deployment         | Single-command deployment with Docker Compose                                 |
 
 ---
 
@@ -346,21 +377,21 @@ Page (static content pages)
 
 ### Claimed Modules
 
-| #   | Module                                                                                                                                                                                                                                                                | Type  | Points | Who Implemented |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------ | --------------- |
-| 1   | **Use a framework for both frontend and backend** (Next.js as full-stack - React frontend + Next.js API routes backend)                                                                                                                                               | Major | 2      | All members     |
-| 2   | **Public API** - Secured REST API with API key authentication, rate limiting, and at least 5 endpoints (GET/POST/PUT/DELETE for events)                                                                                                                               | Major | 2      | All members     |
-| 3   | **Standard user management and authentication** - Profile management, avatar upload, friends system, online status, profile pages                                                                                                                                     | Major | 2      | Hager, Mohammad |
-| 4   | **Advanced permissions system** - Admin/moderator/user roles, CRUD on users, different views and actions per role                                                                                                                                                     | Major | 2      | Hager, Mohammad |
-| 5   | **ORM** - Prisma used for all database access with type-safe queries and migrations                                                                                                                                                                                   | Minor | 1      | All members     |
-| 6   | **OAuth 2.0** - Remote authentication via 42 and/or GitHub OAuth                                                                                                                                                                                                      | Minor | 1      | Mohammad        |
-| 7   | **Two-Factor Authentication (2FA)** - Complete TOTP-based 2FA system with QR code setup                                                                                                                                                                               | Minor | 1      | Mohammad        |
-| 8   | **Server-Side Rendering (SSR)** - Enabled through Next.js App Router for improved performance and SEO                                                                                                                                                                 | Minor | 1      | All members     |
-| 9   | **File upload and management** - Image uploads for events and projects via ImageKit, with client/server validation                                                                                                                                                    | Minor | 1      | All members     |
-| 10  | **Custom-made design system** - A library of 10+ reusable components (Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, ConfirmationModal, FormTitle, FunctionalButtons, SubmitFormButton, and more) with consistent color palette, typography, and icons    | Minor | 1      | All members     |
-| 11  | **User activity analytics and insights dashboard** - Dashboard displaying user activity metrics and insights                                                                                                                                                          | Minor | 1      | Roni            |
-| 12  | **Module of choice: Static Pages CMS** - A custom content management system allowing admins to create, edit, and manage static informational pages (Privacy Policy, Terms of Service, etc.) via a rich-text editor (Tiptap), stored in the database with unique slugs | Minor | 1      | Mohammad        |
-| 13  | **Support for additional browsers** - Full compatibility tested and fixed for at least 2 additional browsers beyond Chrome                                                                                                                                            | Minor | 1      | All members     |
+| #   | Module                                                                                                                                                                                                                                                                | Type  | Points |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------ |
+| 1   | **Use a framework for both frontend and backend** (Next.js as full-stack - React frontend + Next.js API routes backend)                                                                                                                                               | Major | 2      |
+| 2   | **Public API** - Secured REST API with API key authentication, rate limiting, and at least 5 endpoints (GET/POST/PUT/DELETE for events)                                                                                                                               | Major | 2      |
+| 3   | **Standard user management and authentication** - Profile management, avatar upload, friends system, online status, profile pages                                                                                                                                     | Major | 2      |
+| 4   | **Advanced permissions system** - Admin/moderator/user roles, CRUD on users, different views and actions per role                                                                                                                                                     | Major | 2      |
+| 5   | **ORM** - Prisma used for all database access with type-safe queries and migrations                                                                                                                                                                                   | Minor | 1      |
+| 6   | **OAuth 2.0** - Remote authentication via 42 and/or GitHub OAuth                                                                                                                                                                                                      | Minor | 1      |
+| 7   | **Two-Factor Authentication (2FA)** - Complete TOTP-based 2FA system with QR code setup                                                                                                                                                                               | Minor | 1      |
+| 8   | **Server-Side Rendering (SSR)** - Enabled through Next.js App Router for improved performance and SEO                                                                                                                                                                 | Minor | 1      |
+| 9   | **File upload and management** - Image uploads for events and projects via ImageKit, with client/server validation                                                                                                                                                    | Minor | 1      |
+| 10  | **Custom-made design system** - A library of 10+ reusable components (Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, ConfirmationModal, FormTitle, FunctionalButtons, SubmitFormButton, and more) with consistent color palette, typography, and icons    | Minor | 1      |
+| 11  | **User activity analytics and insights dashboard** - Dashboard displaying user activity metrics and insights                                                                                                                                                          | Minor | 1      |
+| 12  | **Module of choice: Static Pages CMS** - A custom content management system allowing admins to create, edit, and manage static informational pages (Privacy Policy, Terms of Service, etc.) via a rich-text editor (Tiptap), stored in the database with unique slugs | Minor | 1      |
+| 13  | **Support for additional browsers** - Full compatibility tested and fixed for at least 2 additional browsers beyond Chrome                                                                                                                                            | Minor | 1      |
 
 **Total: 4 × 2 + 9 × 1 = 17 points**
 
@@ -411,7 +442,18 @@ The application was tested and fixed for full compatibility with at least 2 addi
 
 ### Mohammad - Technical Lead / Developer
 
-_(to be filled in by Mohammad)_
+Led the technical direction of the team and collaborated with members to analyze requirements and decide on necessary features. Initiated the project and organized the workload by dividing it into five major modules among the team.
+
+For my assigned module, I implemented the following:
+
+- User authentication using email and password
+- OAuth login integration with Intra
+- OAuth login integration with GitHub
+- Two-factor authentication (2FA) with QR code scanning
+- Public API development using Nodemailer
+- Main page development (header and footer)
+- Avatar dropdown menu
+- Login and 2FA models
 
 ### Hager - Project Manager / Developer
 
