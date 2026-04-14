@@ -32,13 +32,13 @@ const DeleteEventButton = ({ id, onDeleted }: Props) => {
 
   return (
     <>
-	<Button
-		variant="delete"
-		onClick={() => setShowModal(true)}
-		dashboard={true}
-		>
-		Delete
-	</Button>
+      <Button
+        variant="delete"
+        onClick={() => setShowModal(true)}
+        dashboard={true}
+      >
+        Delete
+      </Button>
 
       <ConfirmationModal
         isOpen={showModal}
