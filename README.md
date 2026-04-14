@@ -31,8 +31,8 @@ The project was developed collaboratively using a Kanban workflow, with task tra
 
 The system is divided into the following modules, each owned and implemented as a full-stack responsibility:
 
-- User Module — Haajar
-- Events Module — Laurance
+- User Module — Hager
+- Events Module — Laurens
 - Projects Module — Aino
 - Dashboard Module — Roni
 - Authentication & Public API Module — Mohammad
