@@ -492,7 +492,18 @@ Contributed full-stack to the projects module:
 
 ### Laurens - Product Owner / Developer
 
-_(to be filled in by Laurens)_
+Together with Roni, planned and designed how the project should work and features it should have. 
+Assisted Aino in the UI/UX development.
+
+Owned the Event management logic and event display, contributing full-stack:
+
+- Event create/ edit using React Hook Form.
+- Event subscription.
+- Event page creation.
+- combining Intra and Beentra events and display events together in the FullCalendar as well as the daily calendar.
+- data validation with Zod in Backend and Frontend.
+- database models with Prisma ORM.
+- api calls for events and intra events.
 
 ---
 
