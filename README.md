@@ -365,7 +365,7 @@ Page (static content pages)
 | My Projects               | Fetch and display the projects the logged-in user has uploaded                |
 | Single project page       | Display all information of a selected project on a page                       |
 | Public API                | Secured REST API for events with API key authentication and rate limiting     |
-| API Key Management        | Users can generate and manage their own public API keys                       |
+| API Key Management        | Users can generate their own public API keys                                  |
 | Static Pages (CMS)        | Rich-text editable informational pages (Privacy Policy, Terms, etc.)          |
 | Privacy Policy & Terms    | Accessible static pages with relevant legal content                           |
 | HTTPS + Nginx             | Nginx reverse proxy with TLS termination                                      |
@@ -450,7 +450,7 @@ For my assigned module, I implemented the following:
 - OAuth login integration with Intra
 - OAuth login integration with GitHub
 - Two-factor authentication (2FA) with QR code scanning
-- Public API development using Nodemailer
+- Public API development with secure API key and rate limit.
 - Main page development (header and footer)
 - Avatar dropdown menu
 - Login and 2FA models
@@ -492,7 +492,7 @@ Contributed full-stack to the projects module:
 
 ### Laurens - Product Owner / Developer
 
-Together with Roni, planned and designed how the project should work and features it should have. 
+Together with Roni, planned and designed how the project should work and features it should have.
 Assisted Aino in the UI/UX development.
 
 Owned the Event management logic and event display, contributing full-stack:
