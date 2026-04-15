@@ -63,47 +63,55 @@ export default function ApiKeyPage() {
 
   return (
     <div className="flex justify-center">
-    <div className="beentra-form-container">
-      {/* Toast */}
-      {toast && (
-        <div
-          className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all
+      <div className="beentra-form-container">
+        {/* Toast */}
+        {toast && (
+          <div
+            className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all
             ${toast.type === "success" ? "bg-green-600" : "bg-red-600"}`}
-        >
-          {toast.message}
-        </div>
-      )}
+          >
+            {toast.message}
+          </div>
+        )}
 
-      <form className="beentra-form" onSubmit={handleSubmit(onSubmithandler)}>
-        <FormTitle
-          title="API key generating"
-          subTitle="Welcome to our public API"
-        />
-        <p>
-          Please add your email to receive an email containing the API key
-        </p>
-        <p>If you already have the key, go to: <Link href="/reference" className="underline font-semibold text-[#724015]">API Reference</Link></p>
-        <Input
-          label="your email"
-          name="userEmail"
-          placeholder="enter your Email"
-          id="userEmail"
-          required
-          type="email"
-          register={register}
-        />
-        <p>
-          <span className="bg-red-600">{errors?.userEmail?.message}</span>
-        </p>
-        <Button
-          variant="adding"
-          onClick={handleSubmit(onSubmithandler)}
-          disabled={success || submitting}
-        >
-          {success ? "Done ✅" : submitting ? "Submitting..." : "Submit"}
-        </Button>
-      </form>
-    </div>
+        <form className="beentra-form" onSubmit={handleSubmit(onSubmithandler)}>
+          <FormTitle
+            title="API key generating"
+            subTitle="Welcome to our public API"
+          />
+          <p>
+            Please add your email to receive an email containing the API key
+          </p>
+          <p>
+            If you already have the key, go to:{" "}
+            <Link
+              href="/reference"
+              className="underline font-semibold text-[#724015]"
+            >
+              API Reference
+            </Link>
+          </p>
+          <Input
+            label="your email"
+            name="userEmail"
+            placeholder="enter your Email"
+            id="userEmail"
+            required
+            type="email"
+            register={register}
+          />
+          <p>
+            <span className="bg-red-600">{errors?.userEmail?.message}</span>
+          </p>
+          <Button
+            variant="adding"
+            onClick={handleSubmit(onSubmithandler)}
+            disabled={success || submitting}
+          >
+            {success ? "Done ✅" : submitting ? "Submitting..." : "Submit"}
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

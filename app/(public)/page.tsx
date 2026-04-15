@@ -5,6 +5,10 @@ import { fetchIntraEvents, IntraEventInput } from "@/lib/IntraEvents";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
+export const metadata = {
+  title: "Beentra Main Page",
+};
+
 export default async function HomePage() {
   const [result, session] = await Promise.all([
     fetchIntraEvents(),

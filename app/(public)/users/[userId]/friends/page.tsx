@@ -1,23 +1,26 @@
-import FriendsSection from "@/components/profile/FriendsSection"
-import { prisma } from "@/lib/prisma"
+import FriendsSection from "@/components/profile/FriendsSection";
+import { prisma } from "@/lib/prisma";
 
-export default async function FriendsPage({ params }: { params: Promise<{ userId: string }> }) {
+export const metadata = {
+  title: "My Friends",
+};
 
-  const { userId } = await params
+export default async function FriendsPage({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) {
+  const { userId } = await params;
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
       friends: {
-        include: { friend: true }
-      }
-    }
-  })
-  if (!user) return <div>User not found</div>
-  const myFriends = user.friends.map(f => f.friend)
+        include: { friend: true },
+      },
+    },
+  });
+  if (!user) return <div>User not found</div>;
+  const myFriends = user.friends.map((f) => f.friend);
 
-
-  return (
-      <FriendsSection myFriends={myFriends} id={user.id} />
-  )
-
+  return <FriendsSection myFriends={myFriends} id={user.id} />;
 }

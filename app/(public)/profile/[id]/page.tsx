@@ -2,6 +2,10 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import ProfileForm from "@/components/profile/ProfileForm";
 
+export const metadata = {
+  title: "Events Page",
+};
+
 export default async function ProfilePage({
   params,
 }: {
