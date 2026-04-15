@@ -64,18 +64,21 @@ export async function getAccessToken() {
     return { success: false, error: "cannot get token from intra" };
 
   const data = await tokenResponse.json();
-  cachedToken = { token: data.access_token, expiresAt: Date.now() + (data.expires_in - 60) * 1000 };
+  cachedToken = {
+    token: data.access_token,
+    expiresAt: Date.now() + (data.expires_in - 60) * 1000,
+  };
   return { success: true, access_token: data.access_token };
 }
 
-export async function fetchIntraEvents() {
+export async function fetchIntraEvents(pageNumber: number = 1) {
   const tokenResponse = await getAccessToken();
 
   if (!tokenResponse.success)
-    return { success: false, error: tokenResponse.error }; // fixed check
+    return { success: false, error: tokenResponse.error };
 
   const eventsResponse = await fetch(
-    "https://api.intra.42.fr/v2/campus/13/events",
+    `https://api.intra.42.fr/v2/campus/13/events?page[number]=${pageNumber}&page[size]=100`,
     {
       headers: {
         Authorization: `Bearer ${tokenResponse.access_token}`,
