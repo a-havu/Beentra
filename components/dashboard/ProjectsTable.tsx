@@ -1,0 +1,207 @@
+"use client";
+import { useState } from "react";
+import { useEffect } from "react";
+import ShowProject from "./ShowProject";
+import AddProject from "./AddProject";
+import EditProject from "../projects/EditProject";
+import DeleteProject from "../projects/DeleteProject";
+import { LocalProject } from "@/types/general";
+
+export function ProjectsTable() {
+  const [projects, setProjects] = useState<LocalProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<LocalProject | null>(
+    null,
+  );
+
+  const MAX_PER_PAGE = 10;
+
+  // Pagenation
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(projects.length / MAX_PER_PAGE);
+  const paginated = projects.slice(
+    (page - 1) * MAX_PER_PAGE,
+    page * MAX_PER_PAGE,
+  );
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await fetch("/api/projects", {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch Projects");
+      }
+
+      const data = await response.json();
+
+      setProjects(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching projects: ", err);
+      setError("Failed to load Projects. Please try again");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const reRender = () => {
+    fetchProjects();
+  };
+
+  const handleEditSuccess = (updatedProject: LocalProject) => {
+    setProjects((prev) =>
+      prev.map((project) =>
+        project.id === updatedProject.id ? updatedProject : project,
+      ),
+    );
+  };
+
+  const handleDeleteSuccess = (deleteId: string) => {
+    setProjects((prev) => prev.filter((project) => project.id !== deleteId));
+  };
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-lg shadow p-12 text-center">
+        <p className="text-gray-600">Loading projects...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-white rounded-lg p-12 text-center">
+        <p className="text-red-600">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-lg md:text-2xl font-bold text-[#255a8b]">
+            Project Management
+          </h2>
+          <AddProject onSuccess={reRender} />
+        </div>
+        <div>
+          {/* Table header */}
+          <table className="w-full">
+            <thead className="bg-gray-50 border-b-2 border-gray-200">
+              <tr>
+                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                  ID
+                </th>
+                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                  Project Name
+                </th>
+                <th className="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                  Creator
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                  Modify
+                </th>
+              </tr>
+            </thead>
+
+            {/* Table Body */}
+            <tbody className="divide-y divide-gray-200">
+              {paginated.map((project, index) => {
+                return (
+                  <tr
+                    key={project.id}
+                    className="hover:bg-gray-50 transition cursor-pointer"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <td className="px6 py-4 text-center text-sm text-gray-900">
+                      {index + 1 + (page - 1) * MAX_PER_PAGE}
+                    </td>
+                    <td className="px6 py-4 text-center text-sm text-gray-900">
+                      {project.projectName}
+                    </td>
+                    <td className="px6 py-4 text-center text-sm text-gray-900">
+                      {project.creator?.username ?? "Unknown"}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="flex gap-2"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <EditProject
+                          project={project}
+                          dashboard={true}
+                          onSuccess={handleEditSuccess}
+                        />
+                        <DeleteProject
+                          projectId={project.id}
+                          dashBoard={true}
+                          onDeleted={() => handleDeleteSuccess(project.id)}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 py-6">
+            <button
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 disabled:opacity-40 hover:bg-gray-200 hover:cursor-pointer"
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`px-4 py-2 rounded-xl ${
+                  p === page
+                    ? "bg-[#255a8b] text-white"
+                    : "bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:cursor-pointer"
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 disabled:opacity-40 hover:bg-gray-200 hover:cursor-pointer"
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+      {selectedProject && (
+        <ShowProject
+          project={selectedProject}
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
+    </>
+  );
+}

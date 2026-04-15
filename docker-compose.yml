@@ -1,0 +1,42 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_URL=https://localhost:8443
+        - NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=${IMAGEKIT_PUBLIC_KEY}
+        - NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=${IMAGEKIT_URL_ENDPOINT}
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    environment:
+      IMAGEKIT_PUBLIC_KEY: ${IMAGEKIT_PUBLIC_KEY}
+      IMAGEKIT_PRIVATE_KEY: ${IMAGEKIT_PRIVATE_KEY}
+      IMAGEKIT_URL_ENDPOINT: ${IMAGEKIT_URL_ENDPOINT}
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000').then(() => process.exit(0)).catch(() => process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+      - "8443:443"
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
